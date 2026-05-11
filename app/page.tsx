@@ -231,7 +231,8 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      <section className="grid lg:grid-cols-[1fr_340px] border-b border-zinc-200">
+      <section className="border-b border-zinc-200">
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-[1fr_340px]">
         {/* Featured item */}
         <div className="bg-zinc-950 px-8 py-12 lg:px-14 lg:py-16 flex flex-col justify-between min-h-[460px]">
           <div>
@@ -281,6 +282,7 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
         </div>
       </section>
 
