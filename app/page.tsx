@@ -297,7 +297,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Teaching ────────────────────────────────────────────────────────── */}
-      <section className="border-t border-zinc-100 bg-zinc-50 py-14 lg:py-16">
+      <section className="section-pattern border-t border-zinc-100 bg-zinc-50 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader title="Teaching" href="/teaching" />
           <TeachingCarousel />

@@ -137,7 +137,6 @@
   color: #27272a;
   font-size: 1.0625rem;
   line-height: 1.8;
-  max-width: 68ch;
 }
 .article-prose h2 {
   font-size: 1.375rem;
@@ -202,6 +201,29 @@
 /* scripture block shorthand — Austin can use > for scripture quotations */
 .article-prose blockquote p {
   margin-bottom: 0.5rem;
+}
+
+/* ── Teaching section background pattern ────────────────────────────────────── */
+/*
+  Art-deco diamond lattice: large diamond outline + concentric inner diamond +
+  dots at cardinal vertices. Tiles seamlessly at 48×48px. Barely visible on
+  zinc-50 background at low opacity.
+*/
+.section-pattern {
+  position: relative;
+}
+.section-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='48' height='48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 0L48 24L24 48L0 24Z' fill='none' stroke='%23a1a1aa' stroke-width='0.6'/%3E%3Cpath d='M24 12L36 24L24 36L12 24Z' fill='none' stroke='%23a1a1aa' stroke-width='0.35'/%3E%3Ccircle cx='24' cy='0' r='1' fill='%23a1a1aa'/%3E%3Ccircle cx='48' cy='24' r='1' fill='%23a1a1aa'/%3E%3Ccircle cx='24' cy='48' r='1' fill='%23a1a1aa'/%3E%3Ccircle cx='0' cy='24' r='1' fill='%23a1a1aa'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.section-pattern > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Print styles ───────────────────────────────────────────────────────────── */
