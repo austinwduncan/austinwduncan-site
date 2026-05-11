@@ -1,65 +1,152 @@
-import Image from "next/image";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import {
+  Mic,
+  BookOpen,
+  MessageCircle,
+  Scroll,
+  Globe,
+  Library,
+  ArrowRight,
+} from 'lucide-react'
+import Greeting from '@/components/greeting'
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Austin W. Duncan',
+  description:
+    'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+}
+
+const sections = [
+  {
+    href: '/sermons',
+    icon: Mic,
+    title: 'Sermons',
+    description: 'Weekly expository messages from Sunday worship.',
+  },
+  {
+    href: '/teaching',
+    icon: BookOpen,
+    title: 'Teaching',
+    description: 'Multi-part series: expositional book studies and topical surveys.',
+  },
+  {
+    href: '/word-for-word',
+    icon: MessageCircle,
+    title: 'Word for Word',
+    description: 'Honest answers to honest questions about Christianity.',
+  },
+  {
+    href: '/exegetica',
+    icon: Scroll,
+    title: 'Exegetica',
+    description: 'Scholarly biblical articles engaging the text in its original languages.',
+  },
+  {
+    href: '/forum-and-pulpit',
+    icon: Globe,
+    title: 'Forum & Pulpit',
+    description: 'Cultural commentary and current events through a biblical lens.',
+  },
+  {
+    href: '/resources',
+    icon: Library,
+    title: 'Resources',
+    description: 'Carefully curated book recommendations by category.',
+  },
+]
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Hero */}
+      <section className="relative flex min-h-[82vh] flex-col justify-center px-6 lg:px-8">
+        {/* Subtle gold rule — left edge accent */}
+        <div
+          className="absolute left-0 top-0 h-full w-px opacity-20"
+          style={{ background: 'linear-gradient(to bottom, transparent, #cdb079 30%, #cdb079 70%, transparent)' }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+
+        <div className="mx-auto w-full max-w-4xl">
+          <Greeting />
+
+          <h1 className="mt-4 text-[3.25rem] leading-[1.08] tracking-[-0.03em] font-light text-zinc-900 sm:text-7xl lg:text-8xl">
+            Austin W.
+            <br />
+            Duncan
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="mt-5 text-base text-zinc-500 tracking-wide uppercase text-sm font-light">
+            Pastor &nbsp;·&nbsp; Teacher &nbsp;·&nbsp; Theologian
           </p>
+
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-zinc-600 font-light">
+            Committed to the faithful exposition of Scripture — in the pulpit, the classroom,
+            and on the page.
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/sermons"
+              className="inline-flex items-center gap-2 rounded-none border px-6 py-3 text-sm font-light tracking-wide transition-colors hover:bg-zinc-950 hover:text-white"
+              style={{ borderColor: '#cdb079', color: '#cdb079' }}
+            >
+              Latest Sermons
+              <ArrowRight size={14} />
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 rounded-none border border-zinc-200 px-6 py-3 text-sm font-light tracking-wide text-zinc-600 transition-colors hover:border-zinc-400 hover:text-zinc-900"
+            >
+              About Austin
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Decorative bottom border */}
+        <div
+          className="absolute bottom-0 left-6 right-6 lg:left-8 lg:right-8 h-px opacity-30"
+          style={{ backgroundColor: '#cdb079' }}
+        />
+      </section>
+
+      {/* Sections grid */}
+      <section className="px-6 lg:px-8 py-20">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-xs font-medium tracking-[0.2em] uppercase text-zinc-400 mb-12">
+            Explore
+          </h2>
+
+          <div className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3 bg-zinc-100">
+            {sections.map(({ href, icon: Icon, title, description }) => (
+              <Link
+                key={href}
+                href={href}
+                className="group bg-white p-8 transition-colors hover:bg-zinc-50"
+              >
+                <Icon
+                  size={18}
+                  className="mb-5 transition-colors"
+                  style={{ color: '#cdb079' }}
+                />
+                <h3 className="text-base font-medium text-zinc-900 mb-2 group-hover:text-zinc-700 transition-colors">
+                  {title}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-500 font-light">
+                  {description}
+                </p>
+                <span
+                  className="mt-6 inline-flex items-center gap-1.5 text-xs tracking-wide uppercase font-light transition-colors group-hover:gap-2.5"
+                  style={{ color: '#cdb079' }}
+                >
+                  Browse
+                  <ArrowRight size={11} />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+    </>
+  )
 }
