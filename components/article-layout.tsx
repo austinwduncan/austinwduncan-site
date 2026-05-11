@@ -57,11 +57,8 @@ export default function ArticleLayout({
           <PrintButton />
         </div>
 
-        {/* Reading column — centered within the outer frame */}
-        <div className="mx-auto max-w-[780px]">
-
-          {/* Article header */}
-          <div className="pb-10 border-b border-zinc-100">
+        {/* Article header */}
+        <div className="pb-10 border-b border-zinc-100">
             {/* Gold accent bar */}
             <div className="h-[2px] w-8 mb-5" style={{ backgroundColor: '#cdb079' }} />
 
@@ -135,7 +132,6 @@ export default function ArticleLayout({
               </div>
             )}
           </div>
-        </div>
       </div>
     </>
   )
