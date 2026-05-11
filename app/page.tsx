@@ -232,9 +232,12 @@ export default function HomePage() {
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section className="border-b border-zinc-200">
-        <div className="mx-auto max-w-7xl grid lg:grid-cols-[1fr_340px]">
-        {/* Featured item */}
-        <div className="bg-zinc-950 px-8 py-12 lg:px-14 lg:py-16 flex flex-col justify-between min-h-[460px]">
+        <div className="grid lg:grid-cols-[1fr_340px]">
+        {/* Featured item — dark bg is full-bleed; left padding tracks the nav's centered left edge */}
+        <div
+          className="bg-zinc-950 pr-8 py-12 lg:pr-14 lg:py-16 flex flex-col justify-between min-h-[460px]"
+          style={{ paddingLeft: 'max(2rem, calc((100vw - 80rem) / 2 + 2rem))' }}
+        >
           <div>
             <Greeting />
             <div className="flex items-center gap-2 mt-5">
