@@ -9,13 +9,14 @@ const CONTENT_DIR = path.join(process.cwd(), 'content')
 export type SermonFrontmatter = {
   title: string
   date: string
-  scripture: string
-  series?: string
   excerpt: string
+  tags?: string[]
   youtube?: string
+  image?: string
+  scripture?: string
+  series?: string
   podcast?: string
   duration?: string
-  image?: string
 }
 
 export type TeachingFrontmatter = {
@@ -30,10 +31,11 @@ export type TeachingFrontmatter = {
 export type ArticleFrontmatter = {
   title: string
   date: string
-  category: string
   excerpt: string
-  scripture?: string
+  tags?: string[]
   image?: string
+  category?: string
+  scripture?: string
 }
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
