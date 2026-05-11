@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -129,3 +130,85 @@
     @apply font-sans;
   }
 }
+
+/* ── Article prose ─────────────────────────────────────────────────────────── */
+.article-prose {
+  color: #27272a;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  max-width: 68ch;
+}
+.article-prose h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: #18181b;
+}
+.article-prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #18181b;
+}
+.article-prose p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+.article-prose blockquote {
+  border-left: 3px solid #cdb079;
+  padding-left: 1.25rem;
+  margin-left: 0;
+  margin-right: 0;
+  color: #52525b;
+  font-style: italic;
+}
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.article-prose li {
+  margin-bottom: 0.375rem;
+}
+.article-prose a {
+  color: #cdb079;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-prose a:hover {
+  opacity: 0.75;
+}
+.article-prose strong {
+  font-weight: 600;
+  color: #18181b;
+}
+.article-prose hr {
+  border-color: #e4e4e7;
+  margin: 2.5rem 0;
+}
+.article-prose code {
+  font-family: var(--font-geist-mono);
+  font-size: 0.875em;
+  background: #f4f4f5;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+/* scripture block shorthand — Austin can use > for scripture quotations */
+.article-prose blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+/* ── Print styles ───────────────────────────────────────────────────────────── */
+@media print {
+  header, footer, .reading-progress, .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { font-size: 12pt; color: #000; }
+  .article-prose { max-width: 100%; font-size: 11pt; line-height: 1.6; }
+  a { color: #000; text-decoration: none; }
+}
+.print-only { display: none; }

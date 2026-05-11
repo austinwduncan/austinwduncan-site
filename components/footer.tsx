@@ -28,13 +28,15 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="max-w-xs">
-            <Link
-              href="/"
-              className="text-white text-sm font-light tracking-[0.18em] uppercase hover:text-gold transition-colors"
-            >
-              Austin W. Duncan
+            <Link href="/" className="inline-flex items-center hover:opacity-70 transition-opacity">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/AWDLogoWhite.svg"
+                alt="Austin W. Duncan"
+                className="h-8 w-auto"
+              />
             </Link>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+            <p className="mt-4 text-sm leading-relaxed text-zinc-500">
               Pastor, teacher, and theologian — committed to faithful exposition of Scripture.
             </p>
           </div>
@@ -42,7 +44,7 @@ export default function Footer() {
           {/* Nav columns */}
           {sections.map((section) => (
             <div key={section.heading}>
-              <p className="text-xs font-medium tracking-widest uppercase text-zinc-600 mb-4">
+              <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-600 mb-4">
                 {section.heading}
               </p>
               <ul className="space-y-2">
@@ -66,10 +68,7 @@ export default function Footer() {
           <p className="text-xs text-zinc-600">
             &copy; {new Date().getFullYear()} Austin W. Duncan. All rights reserved.
           </p>
-          <div
-            className="w-6 h-px"
-            style={{ backgroundColor: '#cdb079', opacity: 0.6 }}
-          />
+          <div className="w-6 h-px" style={{ backgroundColor: '#cdb079', opacity: 0.5 }} />
         </div>
       </div>
     </footer>
