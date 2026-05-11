@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/nav'
 import Footer from '@/components/footer'
 import './globals.css'
@@ -47,6 +48,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <SpeedInsights />
       </body>
 
       {/* Google Analytics 4 */}
