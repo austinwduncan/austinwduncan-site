@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import Greeting from '@/components/greeting'
+import TeachingCarousel from '@/components/teaching-carousel'
 
 export const metadata: Metadata = {
   title: 'Austin W. Duncan',
@@ -18,6 +19,7 @@ type Article = {
   scripture?: string
   href: string
   date: string
+  image?: string
 }
 
 // ─── Placeholder content — replace with CMS data ─────────────────────────────
@@ -79,39 +81,6 @@ const sermons: Article[] = [
     scripture: 'Genesis 17:1–8',
     href: '/sermons/genesis-17',
     date: 'Apr 27, 2025',
-  },
-]
-
-const teachingFeatured: Article = {
-  category: 'Expositional',
-  title: 'The Letter to the Romans',
-  excerpt:
-    "A verse-by-verse walk through Paul's definitive statement of the gospel — from the wrath of God through justification by faith to the doxology of chapters 9–11 and the renewed ethics of 12–16. This series is currently in progress.",
-  href: '/teaching/expositional/romans',
-  date: 'Ongoing',
-}
-
-const teachingOther: Article[] = [
-  {
-    category: 'Topical',
-    title: 'The Doctrines of Grace',
-    excerpt: 'Five sessions on the TULIP: what the Reformation recovered, and why it still matters.',
-    href: '/teaching/topical/doctrines-of-grace',
-    date: '12 parts',
-  },
-  {
-    category: 'Expositional',
-    title: 'A Walk through Philippians',
-    excerpt: "Paul's letter of joy from a Roman prison cell.",
-    href: '/teaching/expositional/philippians',
-    date: '8 parts',
-  },
-  {
-    category: 'Topical',
-    title: 'What Is the Church?',
-    excerpt: 'An ecclesiology series for the local congregation.',
-    href: '/teaching/topical/ecclesiology',
-    date: '6 parts',
   },
 ]
 
@@ -198,7 +167,7 @@ const forumPulpit: Article[] = [
 function CategoryLabel({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="text-[10px] font-semibold tracking-[0.14em] uppercase"
+      className="text-[11px] font-semibold tracking-[0.14em] uppercase"
       style={{ color: '#cdb079' }}
     >
       {children}
@@ -212,7 +181,7 @@ function SectionHeader({ title, href }: { title: string; href: string }) {
       className="flex items-center gap-3 mb-10 pb-3"
       style={{ borderBottom: '2px solid #cdb079' }}
     >
-      <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+      <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
         {title}
       </span>
       <div className="flex-1" />
@@ -230,16 +199,26 @@ function ArticleCard({ item }: { item: Article }) {
   return (
     <article className="group border-t border-zinc-200 pt-5">
       <Link href={item.href} className="block">
+        {item.image && (
+          <div className="mb-4 overflow-hidden bg-zinc-100 aspect-[16/9]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.image}
+              alt=""
+              className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+            />
+          </div>
+        )}
         <div className="space-y-2">
           <CategoryLabel>{item.category}</CategoryLabel>
           {item.scripture && (
-            <p className="text-[10px] text-zinc-400 tracking-wide">{item.scripture}</p>
+            <p className="text-[11px] text-zinc-400 tracking-wide">{item.scripture}</p>
           )}
-          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-zinc-900 group-hover:text-zinc-500 transition-colors">
+          <h3 className="text-[16px] font-semibold leading-snug tracking-tight text-zinc-900 group-hover:text-zinc-500 transition-colors">
             {item.title}
           </h3>
-          <p className="text-[13px] text-zinc-500 leading-relaxed line-clamp-3">{item.excerpt}</p>
-          <p className="text-[11px] text-zinc-400 pt-1">{item.date}</p>
+          <p className="text-[14px] text-zinc-500 leading-relaxed line-clamp-3">{item.excerpt}</p>
+          <p className="text-[12px] text-zinc-400 pt-1">{item.date}</p>
         </div>
       </Link>
     </article>
@@ -260,44 +239,45 @@ export default function HomePage() {
             <div className="flex items-center gap-2 mt-5">
               <CategoryLabel>{heroFeatured.category}</CategoryLabel>
               <span className="text-zinc-700 text-xs">·</span>
-              <span className="text-[10px] text-zinc-500 tracking-wide">
+              <span className="text-[11px] text-zinc-500 tracking-wide">
                 {heroFeatured.reference}
               </span>
             </div>
             <h1 className="mt-3 text-3xl sm:text-4xl lg:text-[2.65rem] font-bold text-white leading-[1.06] tracking-tight max-w-xl">
               {heroFeatured.title}
             </h1>
-            <p className="mt-5 text-[15px] text-zinc-400 leading-relaxed max-w-lg font-light">
+            <p className="mt-5 text-[16px] text-zinc-400 leading-relaxed max-w-lg font-light">
               {heroFeatured.excerpt}
             </p>
           </div>
           <div className="mt-10 flex items-center gap-6">
             <Link
               href={heroFeatured.href}
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-wide hover:opacity-75 transition-opacity"
+              className="inline-flex items-center gap-2 text-[14px] font-medium tracking-wide hover:opacity-75 transition-opacity"
               style={{ color: '#cdb079' }}
             >
               Listen Now <ArrowRight size={13} />
             </Link>
-            <span className="text-zinc-600 text-[12px]">{heroFeatured.date}</span>
+            <span className="text-zinc-600 text-[13px]">{heroFeatured.date}</span>
           </div>
         </div>
 
         {/* Secondary picks */}
-        <div className="bg-white border-t-4 lg:border-t-0 lg:border-l border-zinc-200 px-8 py-10 flex flex-col"
+        <div
+          className="bg-white border-t-4 lg:border-t-0 lg:border-l border-zinc-200 px-8 py-10 flex flex-col"
           style={{ borderTopColor: '#cdb079' }}
         >
-          <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-400 mb-7">
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-zinc-400 mb-7">
             Also —
           </p>
           <div className="flex flex-col flex-1 divide-y divide-zinc-100">
             {heroPicks.map((pick) => (
               <Link key={pick.href} href={pick.href} className="group py-5 first:pt-0 last:pb-0">
                 <CategoryLabel>{pick.category}</CategoryLabel>
-                <h3 className="mt-2 text-[14px] font-semibold leading-snug text-zinc-800 group-hover:text-zinc-500 transition-colors">
+                <h3 className="mt-2 text-[15px] font-semibold leading-snug text-zinc-800 group-hover:text-zinc-500 transition-colors">
                   {pick.title}
                 </h3>
-                <p className="mt-2 text-[11px] text-zinc-400">{pick.date}</p>
+                <p className="mt-2 text-[12px] text-zinc-400">{pick.date}</p>
               </Link>
             ))}
           </div>
@@ -320,38 +300,7 @@ export default function HomePage() {
       <section className="border-t border-zinc-100 bg-zinc-50 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader title="Teaching" href="/teaching" />
-          <div className="grid lg:grid-cols-[1fr_240px] gap-10 lg:gap-14 xl:gap-20">
-            {/* Featured series */}
-            <article className="group bg-white border border-zinc-200 p-8 lg:p-10">
-              <CategoryLabel>{teachingFeatured.category}</CategoryLabel>
-              <h3 className="mt-3 text-2xl lg:text-[1.6rem] font-bold leading-tight tracking-tight text-zinc-900 group-hover:text-zinc-600 transition-colors">
-                {teachingFeatured.title}
-              </h3>
-              <p className="mt-4 text-[14px] text-zinc-500 leading-relaxed">
-                {teachingFeatured.excerpt}
-              </p>
-              <Link
-                href={teachingFeatured.href}
-                className="mt-7 inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em] uppercase hover:opacity-75 transition-opacity"
-                style={{ color: '#cdb079' }}
-              >
-                Continue Series <ArrowRight size={11} />
-              </Link>
-            </article>
-
-            {/* Other series */}
-            <div className="divide-y divide-zinc-100">
-              {teachingOther.map((item) => (
-                <Link key={item.href} href={item.href} className="group block py-5 first:pt-0">
-                  <CategoryLabel>{item.category}</CategoryLabel>
-                  <h4 className="mt-1.5 text-[14px] font-semibold leading-snug text-zinc-800 group-hover:text-zinc-500 transition-colors">
-                    {item.title}
-                  </h4>
-                  <p className="mt-1 text-[11px] text-zinc-400">{item.date}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
+          <TeachingCarousel />
         </div>
       </section>
 

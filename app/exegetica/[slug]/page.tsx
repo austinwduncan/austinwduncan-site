@@ -41,6 +41,7 @@ export default async function ExegeticaArticlePage({ params }: { params: Params 
       category={fm.category}
       title={fm.title}
       date={fm.date}
+      image={fm.image}
       readingMinutes={minutes}
     >
       <MDXRemote source={content} components={mdxComponents} />

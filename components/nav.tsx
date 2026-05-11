@@ -32,47 +32,43 @@ export default function Nav() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [teachingOpen, setTeachingOpen] = useState(false)
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-zinc-200">
+    <header className="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-[60px] items-center justify-between">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center hover:opacity-70 transition-opacity">
+          {/* Logo + name */}
+          <Link href="/" className="flex items-center gap-3 hover:opacity-75 transition-opacity">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/AWDLogoWhite.svg"
               alt="Austin W. Duncan"
               className="h-8 w-auto"
-              style={{ filter: 'brightness(0)' }}
             />
+            <span className="text-white font-semibold text-[15px] tracking-tight">
+              Austin W. Duncan
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav
-            className="hidden lg:flex items-center gap-6 xl:gap-8"
-            onMouseLeave={() => setHoveredIdx(null)}
-          >
-            {navLinks.map((link, i) => {
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            {navLinks.map((link) => {
               const active = isActive(pathname, link.href, link.exact)
-              const dimmed = hoveredIdx !== null && hoveredIdx !== i && !active
-              const linkStyle = {
-                color: active ? '#cdb079' : 'rgb(82,82,91)',
-                opacity: dimmed ? 0.4 : 1,
-                transition: 'opacity 0.15s ease, color 0.15s ease',
-              }
 
               if (link.children) {
                 return (
                   <div
                     key={link.href}
                     className="relative"
-                    onMouseEnter={() => { setHoveredIdx(i); setTeachingOpen(true) }}
+                    onMouseEnter={() => setTeachingOpen(true)}
                     onMouseLeave={() => setTeachingOpen(false)}
                   >
-                    <button className="flex items-center gap-1 text-[13px]" style={linkStyle}>
+                    <button
+                      className={`flex items-center gap-1 text-[14px] transition-colors ${
+                        active ? 'text-[#cdb079]' : 'text-white/75 hover:text-[#cdb079]'
+                      }`}
+                    >
                       {link.label}
                       <ChevronDown
                         size={12}
@@ -81,13 +77,16 @@ export default function Nav() {
                     </button>
                     {teachingOpen && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                        <div className="bg-white border border-zinc-200 py-1 min-w-[164px] shadow-lg">
+                        <div className="bg-zinc-900 border border-zinc-700 py-1 min-w-[164px] shadow-xl">
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block px-4 py-2.5 text-[13px] text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 transition-colors"
-                              style={{ color: isActive(pathname, child.href) ? '#cdb079' : undefined }}
+                              className={`block px-4 py-2.5 text-[13px] transition-colors ${
+                                isActive(pathname, child.href)
+                                  ? 'text-[#cdb079]'
+                                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
+                              }`}
                               onClick={() => setTeachingOpen(false)}
                             >
                               {child.label}
@@ -104,9 +103,9 @@ export default function Nav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[13px]"
-                  style={linkStyle}
-                  onMouseEnter={() => setHoveredIdx(i)}
+                  className={`text-[14px] transition-colors ${
+                    active ? 'text-[#cdb079]' : 'text-white/75 hover:text-[#cdb079]'
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -116,7 +115,7 @@ export default function Nav() {
 
           {/* Mobile toggle */}
           <button
-            className="lg:hidden text-zinc-500 hover:text-zinc-900 transition-colors"
+            className="lg:hidden text-zinc-400 hover:text-white transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -127,7 +126,7 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-zinc-200 bg-white px-6 py-5">
+        <div className="lg:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-5">
           <nav className="flex flex-col">
             {navLinks.map((link) => {
               const active = isActive(pathname, link.href, link.exact)
@@ -136,23 +135,23 @@ export default function Nav() {
                   <div key={link.href}>
                     <Link
                       href={link.href}
-                      className="block py-2.5 text-[13px] transition-colors"
-                      style={{ color: active ? '#cdb079' : 'rgb(82,82,91)' }}
+                      className={`block py-2.5 text-[14px] transition-colors ${
+                        active ? 'text-[#cdb079]' : 'text-zinc-300 hover:text-white'
+                      }`}
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.label}
                     </Link>
-                    <div className="ml-4 pl-4 border-l border-zinc-200 mb-1">
+                    <div className="ml-4 pl-4 border-l border-zinc-700 mb-1">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block py-2 text-[13px] transition-colors"
-                          style={{
-                            color: isActive(pathname, child.href)
-                              ? '#cdb079'
-                              : 'rgb(113,113,122)',
-                          }}
+                          className={`block py-2 text-[13px] transition-colors ${
+                            isActive(pathname, child.href)
+                              ? 'text-[#cdb079]'
+                              : 'text-zinc-400 hover:text-zinc-200'
+                          }`}
                           onClick={() => setMobileOpen(false)}
                         >
                           {child.label}
@@ -166,8 +165,9 @@ export default function Nav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block py-2.5 text-[13px] transition-colors"
-                  style={{ color: active ? '#cdb079' : 'rgb(82,82,91)' }}
+                  className={`block py-2.5 text-[14px] transition-colors ${
+                    active ? 'text-[#cdb079]' : 'text-zinc-300 hover:text-white'
+                  }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

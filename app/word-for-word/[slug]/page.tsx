@@ -41,6 +41,7 @@ export default async function WordForWordArticlePage({ params }: { params: Param
       category={fm.category}
       title={fm.title}
       date={fm.date}
+      image={fm.image}
       readingMinutes={minutes}
     >
       <MDXRemote source={content} components={mdxComponents} />

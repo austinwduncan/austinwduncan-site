@@ -44,6 +44,7 @@ export default async function SermonPage({ params }: { params: Params }) {
       title={fm.title}
       date={fm.date}
       scripture={fm.scripture}
+      image={fm.image}
       youtube={fm.youtube}
       esvText={esvText}
       readingMinutes={minutes}

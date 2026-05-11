@@ -15,6 +15,7 @@ export type SermonFrontmatter = {
   youtube?: string
   podcast?: string
   duration?: string
+  image?: string
 }
 
 export type TeachingFrontmatter = {
@@ -32,6 +33,7 @@ export type ArticleFrontmatter = {
   category: string
   excerpt: string
   scripture?: string
+  image?: string
 }
 
 // ─── Utilities ───────────────────────────────────────────────────────────────

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, Printer, Clock } from 'lucide-react'
+import { ArrowLeft, Clock } from 'lucide-react'
 import ReadingProgress from '@/components/reading-progress'
 import PrintButton from '@/components/print-button'
 
@@ -10,6 +10,7 @@ interface Props {
   title: string
   date?: string
   scripture?: string
+  image?: string
   youtube?: string
   esvText?: string | null
   readingMinutes: number
@@ -23,6 +24,7 @@ export default function ArticleLayout({
   title,
   date,
   scripture,
+  image,
   youtube,
   esvText,
   readingMinutes,
@@ -31,6 +33,18 @@ export default function ArticleLayout({
   return (
     <>
       <ReadingProgress />
+
+      {/* Hero image — full bleed */}
+      {image && (
+        <div className="w-full h-[45vh] max-h-[520px] min-h-[260px] overflow-hidden bg-zinc-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={image}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
@@ -51,7 +65,7 @@ export default function ArticleLayout({
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 {category && (
                   <span
-                    className="text-[10px] font-semibold tracking-[0.14em] uppercase"
+                    className="text-[11px] font-semibold tracking-[0.14em] uppercase"
                     style={{ color: '#cdb079' }}
                   >
                     {category}
@@ -61,7 +75,7 @@ export default function ArticleLayout({
                   <span className="text-zinc-300 text-xs">·</span>
                 )}
                 {scripture && (
-                  <span className="text-[11px] text-zinc-500 tracking-wide">{scripture}</span>
+                  <span className="text-[12px] text-zinc-500 tracking-wide">{scripture}</span>
                 )}
               </div>
             )}
@@ -72,9 +86,7 @@ export default function ArticleLayout({
 
             <div className="flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
               {date && <span>{date}</span>}
-              {date && (
-                <span className="text-zinc-200">·</span>
-              )}
+              {date && <span className="text-zinc-200">·</span>}
               <span className="inline-flex items-center gap-1">
                 <Clock size={11} />
                 {readingMinutes} min read
