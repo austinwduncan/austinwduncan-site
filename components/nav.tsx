@@ -37,24 +37,32 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-[60px] items-center justify-between">
 
           {/* Wordmark */}
           <Link
             href="/"
-            className="text-white text-sm font-light tracking-[0.18em] uppercase hover:text-gold transition-colors"
+            className="text-white text-[13px] font-normal tracking-[0.2em] uppercase hover:opacity-80 transition-opacity"
           >
             Austin W. Duncan
           </Link>
 
           {/* Desktop nav */}
           <nav
-            className="hidden lg:flex items-center gap-7"
+            className="hidden lg:flex items-center gap-6 xl:gap-8"
             onMouseLeave={() => setHoveredIdx(null)}
           >
             {navLinks.map((link, i) => {
               const active = isActive(pathname, link.href, link.exact)
-              const dimmed = hoveredIdx !== null && hoveredIdx !== i
+              // Active items never dim; non-active items dim when a sibling is hovered
+              const dimmed = hoveredIdx !== null && hoveredIdx !== i && !active
+
+              const linkColor = active ? '#cdb079' : 'rgb(161,161,170)'
+              const linkStyle = {
+                color: linkColor,
+                opacity: dimmed ? 0.4 : 1,
+                transition: 'opacity 0.15s ease, color 0.15s ease',
+              }
 
               if (link.children) {
                 return (
@@ -68,26 +76,23 @@ export default function Nav() {
                     onMouseLeave={() => setTeachingOpen(false)}
                   >
                     <button
-                      className="flex items-center gap-1 text-sm transition-all duration-150"
-                      style={{
-                        color: active ? '#cdb079' : dimmed ? 'rgba(161,161,170,0.5)' : 'rgb(161,161,170)',
-                        opacity: dimmed ? 0.5 : 1,
-                      }}
+                      className="flex items-center gap-1 text-[13px]"
+                      style={linkStyle}
                     >
                       {link.label}
                       <ChevronDown
-                        size={13}
+                        size={12}
                         className={`transition-transform duration-150 ${teachingOpen ? 'rotate-180' : ''}`}
                       />
                     </button>
                     {teachingOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3">
-                        <div className="bg-zinc-900 border border-zinc-700 rounded-md py-1 min-w-[160px] shadow-xl">
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                        <div className="bg-zinc-900 border border-zinc-700/60 py-1 min-w-[164px] shadow-2xl">
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block px-4 py-2 text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
+                              className="block px-4 py-2.5 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
                               style={{
                                 color: isActive(pathname, child.href) ? '#cdb079' : undefined,
                               }}
@@ -107,11 +112,8 @@ export default function Nav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm transition-all duration-150"
-                  style={{
-                    color: active ? '#cdb079' : dimmed ? 'rgba(161,161,170,0.5)' : 'rgb(161,161,170)',
-                    opacity: dimmed ? 0.5 : 1,
-                  }}
+                  className="text-[13px]"
+                  style={linkStyle}
                   onMouseEnter={() => setHoveredIdx(i)}
                 >
                   {link.label}
@@ -120,7 +122,7 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Mobile menu button */}
+          {/* Mobile toggle */}
           <button
             className="lg:hidden text-zinc-400 hover:text-white transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -133,8 +135,8 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-zinc-950 border-t border-zinc-800 px-6 py-4">
-          <nav className="flex flex-col gap-1">
+        <div className="lg:hidden border-t border-zinc-800 px-6 py-5">
+          <nav className="flex flex-col">
             {navLinks.map((link) => {
               const active = isActive(pathname, link.href, link.exact)
               if (link.children) {
@@ -142,20 +144,22 @@ export default function Nav() {
                   <div key={link.href}>
                     <Link
                       href={link.href}
-                      className="block py-2 text-sm transition-colors"
+                      className="block py-2.5 text-[13px] transition-colors"
                       style={{ color: active ? '#cdb079' : 'rgb(161,161,170)' }}
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.label}
                     </Link>
-                    <div className="pl-4 border-l border-zinc-800">
+                    <div className="ml-4 pl-4 border-l border-zinc-800 mb-1">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block py-2 text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
+                          className="block py-2 text-[13px] transition-colors"
                           style={{
-                            color: isActive(pathname, child.href) ? '#cdb079' : undefined,
+                            color: isActive(pathname, child.href)
+                              ? '#cdb079'
+                              : 'rgb(113,113,122)',
                           }}
                           onClick={() => setMobileOpen(false)}
                         >
@@ -170,7 +174,7 @@ export default function Nav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block py-2 text-sm transition-colors"
+                  className="block py-2.5 text-[13px] transition-colors"
                   style={{ color: active ? '#cdb079' : 'rgb(161,161,170)' }}
                   onClick={() => setMobileOpen(false)}
                 >
