@@ -120,7 +120,9 @@ export default function ResourcesPage() {
       </section>
 
       {/* ── Books grid ──────────────────────────────────────────────────── */}
-      <section className="py-12 lg:py-16">
+      <section className="pb-16 pt-0">
+        {/* Gold accent divider */}
+        <div className="h-[3px] w-full" style={{ backgroundColor: '#cdb079' }} />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <ResourcesBooks books={typedBooks} categories={availableCategories} />
         </div>
