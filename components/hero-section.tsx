@@ -1,6 +1,3 @@
-'use client'
-
-import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import Greeting from '@/components/greeting'
@@ -37,44 +34,33 @@ function CategoryLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Art-deco diamond lattice: outer diamond + concentric inner diamond +
+// ornamental dots at vertices and corners. Gold on dark, tiles at 60×60px.
+const DECO_PATTERN = "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23cdb079' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23cdb079' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%23cdb079'/%3E%3C/svg%3E"
+
 export default function HeroSection({ featured, picks }: Props) {
-  const imgRef = useRef<HTMLImageElement>(null)
-  const hasImage = Boolean(featured.image)
-
-  useEffect(() => {
-    if (!hasImage) return
-    const onScroll = () => {
-      if (imgRef.current) {
-        imgRef.current.style.transform = `scale(1.12) translateY(${window.scrollY * 0.28}px)`
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [hasImage])
-
   return (
     <section className="border-b border-zinc-200">
       <div className="grid lg:grid-cols-[1fr_340px]">
 
-        {/* Featured panel — full-bleed dark with optional parallax image */}
+        {/* Featured panel */}
         <div className="relative flex flex-col justify-between min-h-[460px] overflow-hidden">
 
-          {/* Background layer */}
-          <div className="absolute inset-0">
-            {hasImage && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                ref={imgRef}
-                src={featured.image}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ transform: 'scale(1.12) translateY(0px)', filter: 'blur(3px)' }}
-              />
-            )}
-            {/* Dark overlay — full black when no image, 75% when image present */}
+          {/* Background: dark + art-deco pattern + subtle gold glow */}
+          <div className="absolute inset-0 bg-zinc-950">
             <div
-              className="absolute inset-0 bg-zinc-950"
-              style={{ opacity: hasImage ? 0.75 : 1 }}
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url("${DECO_PATTERN}")`,
+                backgroundSize: '60px 60px',
+                opacity: 0.18,
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: 'radial-gradient(ellipse at 28% 55%, rgba(205,176,121,0.07) 0%, transparent 60%)',
+              }}
             />
           </div>
 

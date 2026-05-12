@@ -31,7 +31,7 @@ const categoryOrder = [
   'Faith',
   'Finance',
   'God/Theology Proper',
-  'Grief and Comfort',
+  'Grief & Comfort',
   'Hermeneutics',
   'Leadership',
   'Love & Marriage',

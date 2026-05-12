@@ -4,19 +4,25 @@ import { useMemo, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
 
 export type ResourceBook = {
-  asin: string
-  amazonUrl: string
-  coverImage: string
-  title?: string
+  title: string
+  author: string
   category: string
+  subcategory: string
+  amazonUrl: string
 }
 
-type ResourcesBooksProps = {
+type Props = {
   books: ResourceBook[]
   categories: string[]
 }
 
-export default function ResourcesBooks({ books, categories }: ResourcesBooksProps) {
+function buildAmazonUrl(baseUrl: string): string {
+  const affiliateId = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_ID
+  if (!affiliateId || baseUrl.includes('&tag=')) return baseUrl
+  return `${baseUrl}&tag=${affiliateId}`
+}
+
+export default function ResourcesBooks({ books, categories }: Props) {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   const visibleBooks = useMemo(() => {
@@ -26,11 +32,11 @@ export default function ResourcesBooks({ books, categories }: ResourcesBooksProp
 
   return (
     <div className="space-y-10">
+      {/* Category filters */}
       <div className="border-y border-zinc-200 py-4">
         <div className="flex gap-2 overflow-x-auto pb-1">
           {['All', ...categories].map((category) => {
             const isSelected = category === selectedCategory
-
             return (
               <button
                 key={category}
@@ -50,6 +56,7 @@ export default function ResourcesBooks({ books, categories }: ResourcesBooksProp
         </div>
       </div>
 
+      {/* Count + clear */}
       <div className="flex items-baseline justify-between gap-4">
         <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-zinc-400">
           {visibleBooks.length} {visibleBooks.length === 1 ? 'Book' : 'Books'}
@@ -65,51 +72,37 @@ export default function ResourcesBooks({ books, categories }: ResourcesBooksProp
         )}
       </div>
 
+      {/* Grid */}
       {visibleBooks.length > 0 ? (
-        <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visibleBooks.map((book) => (
-            <article key={book.asin} className="group">
-              <a href={book.amazonUrl} target="_blank" rel="noreferrer sponsored" className="block">
-                <div className="flex aspect-[2/3] items-center justify-center overflow-hidden border border-zinc-200 bg-zinc-50">
-                  {book.coverImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={book.coverImage}
-                      alt={book.title ? `${book.title} cover` : ''}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span className="px-3 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-300">
-                      Cover unavailable
-                    </span>
-                  )}
-                </div>
-                <div className="mt-3 space-y-1.5">
-                  <p
-                    className="text-[10px] font-semibold uppercase tracking-[0.14em]"
-                    style={{ color: '#cdb079' }}
-                  >
-                    {book.category}
-                  </p>
-                  {book.title && (
-                    <h3 className="line-clamp-2 text-[14px] font-semibold leading-snug tracking-tight text-zinc-900 transition-colors group-hover:text-zinc-500">
-                      {book.title}
-                    </h3>
-                  )}
-                  <p className="flex items-center gap-1.5 text-[12px] text-zinc-400">
-                    Amazon <ExternalLink size={12} />
-                  </p>
-                </div>
+            <article key={`${book.title}-${book.author}`} className="group border-t border-zinc-200 pt-5 pb-6 pr-6">
+              <a
+                href={buildAmazonUrl(book.amazonUrl)}
+                target="_blank"
+                rel="noreferrer sponsored"
+                className="block"
+              >
+                <span
+                  className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+                  style={{ color: '#cdb079' }}
+                >
+                  {book.subcategory || book.category}
+                </span>
+                <h3 className="mt-2 text-[14px] font-semibold leading-snug tracking-tight text-zinc-900 transition-colors group-hover:text-zinc-500 line-clamp-2">
+                  {book.title}
+                </h3>
+                <p className="mt-1 text-[13px] text-zinc-500">{book.author}</p>
+                <p className="mt-3 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.1em] text-zinc-400 transition-colors group-hover:text-zinc-600">
+                  Amazon <ExternalLink size={10} />
+                </p>
               </a>
             </article>
           ))}
         </div>
       ) : (
         <div className="border border-dashed border-zinc-200 px-6 py-14 text-center">
-          <p className="text-sm text-zinc-500">
-            No books found for this category yet.
-          </p>
+          <p className="text-sm text-zinc-500">No books found for this category yet.</p>
         </div>
       )}
     </div>
