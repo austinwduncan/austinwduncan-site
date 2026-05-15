@@ -19,7 +19,7 @@ const navLinks = [
   { href: '/word-for-word', label: 'Word for Word' },
   { href: '/exegetica', label: 'Exegetica' },
   { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
-  { href: '/resources', label: 'Resources' },
+  { href: '/library', label: 'Library' },
   { href: '/about', label: 'About' },
 ]
 
