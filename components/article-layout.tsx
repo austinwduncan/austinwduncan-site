@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, Clock } from 'lucide-react'
+import { ArrowLeft, Clock, Play } from 'lucide-react'
 import ReadingProgress from '@/components/reading-progress'
 import PrintButton from '@/components/print-button'
 
@@ -17,6 +17,57 @@ interface Props {
   children: React.ReactNode
 }
 
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return ''
+  const [y, m, d] = dateStr.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+function HeroMeta({
+  category,
+  title,
+  formattedDate,
+  scripture,
+  readingMinutes,
+}: {
+  category?: string
+  title: string
+  formattedDate: string
+  scripture?: string
+  readingMinutes: number
+}) {
+  return (
+    <>
+      {category && (
+        <p
+          className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em]"
+          style={{ color: '#cdb079' }}
+        >
+          {category}
+        </p>
+      )}
+      <h1 className="max-w-[600px] text-[1.9rem] font-bold leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
+        {title}
+      </h1>
+      <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px] text-white/55">
+        {formattedDate && <span>{formattedDate}</span>}
+        {formattedDate && scripture && <span className="text-white/25">·</span>}
+        {scripture && <span>{scripture}</span>}
+        {(formattedDate || scripture) && <span className="text-white/25">·</span>}
+        <span className="inline-flex items-center gap-1.5">
+          <Clock size={12} />
+          {readingMinutes} min read
+        </span>
+      </div>
+    </>
+  )
+}
+
 export default function ArticleLayout({
   section,
   sectionHref,
@@ -30,26 +81,59 @@ export default function ArticleLayout({
   readingMinutes,
   children,
 }: Props) {
+  const formattedDate = formatDate(date)
+
   return (
     <>
       <ReadingProgress />
 
-      {/* Hero image — full bleed */}
-      {image && (
-        <div className="w-full h-[48vh] max-h-[560px] min-h-[280px] overflow-hidden bg-zinc-100">
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
+      {image ? (
+        <div className="relative h-[380px] overflow-hidden bg-zinc-950">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="" className="w-full h-full object-cover" />
+          <img src={image} alt="" className="h-full w-full object-cover opacity-45" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, rgba(20,18,16,0.1) 0%, rgba(20,18,16,0.3) 40%, rgba(20,18,16,0.88) 100%)',
+            }}
+          />
+          <div className="absolute bottom-0 left-0 right-0 px-6 pb-8">
+            <HeroMeta
+              category={category}
+              title={title}
+              formattedDate={formattedDate}
+              scripture={scripture}
+              readingMinutes={readingMinutes}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="bg-zinc-950 py-14 text-white">
+          <div className="mx-auto max-w-[720px] px-6">
+            <HeroMeta
+              category={category}
+              title={title}
+              formattedDate={formattedDate}
+              scripture={scripture}
+              readingMinutes={readingMinutes}
+            />
+          </div>
         </div>
       )}
 
-      {/* Outer frame — matches nav width */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      {/* Gold accent strip */}
+      <div className="h-[3px] w-full" style={{ backgroundColor: '#cdb079' }} />
 
-        {/* Back nav + Print */}
-        <div className="flex items-center justify-between pt-8 pb-8">
+      {/* ── Article column ────────────────────────────────────────────────── */}
+      <div className="mx-auto max-w-[720px] px-6">
+
+        {/* Toolbar */}
+        <div className="flex items-center justify-between border-b border-zinc-100 pb-6 pt-7">
           <Link
             href={sectionHref}
-            className="inline-flex items-center gap-1.5 text-[12px] tracking-[0.1em] uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.1em] text-zinc-400 transition-colors hover:text-zinc-700"
           >
             <ArrowLeft size={11} />
             {section}
@@ -57,81 +141,46 @@ export default function ArticleLayout({
           <PrintButton />
         </div>
 
-        {/* Article header */}
-        <div className="pb-10 border-b border-zinc-100">
-            {/* Gold accent bar */}
-            <div className="h-[2px] w-8 mb-5" style={{ backgroundColor: '#cdb079' }} />
+        {/* MDX content */}
+        <div className="article-prose pb-8 pt-10">{children}</div>
 
-            {/* Category + scripture */}
-            {(category || scripture) && (
-              <div className="flex flex-wrap items-center gap-2 mb-4">
-                {category && (
-                  <span
-                    className="text-[11px] font-semibold tracking-[0.14em] uppercase"
-                    style={{ color: '#cdb079' }}
-                  >
-                    {category}
-                  </span>
-                )}
-                {category && scripture && <span className="text-zinc-300 text-xs">·</span>}
-                {scripture && (
-                  <span className="text-[12px] text-zinc-500 tracking-wide">{scripture}</span>
-                )}
-              </div>
-            )}
-
-            {/* Title */}
-            <h1 className="text-[2rem] sm:text-[2.5rem] font-bold leading-[1.1] tracking-tight text-zinc-900">
-              {title}
-            </h1>
-
-            {/* Date + reading time */}
-            <div className="mt-5 flex flex-wrap items-center gap-3 text-[13px] text-zinc-400">
-              {date && <span>{date}</span>}
-              {date && <span className="text-zinc-200">·</span>}
-              <span className="inline-flex items-center gap-1.5">
-                <Clock size={12} />
-                {readingMinutes} min read
+        {/* ── Video — after content ────────────────────────────────────────── */}
+        {youtube && (
+          <div className="mb-10 overflow-hidden rounded-sm border border-zinc-200">
+            <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3">
+              <Play size={13} style={{ color: '#cdb079' }} />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
+                Watch the Message
               </span>
             </div>
+            <div className="aspect-video w-full bg-zinc-950">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${youtube}`}
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={title}
+              />
+            </div>
           </div>
+        )}
 
-          {/* Body */}
-          <div className="pt-10 pb-16 lg:pb-20">
-
-            {/* YouTube embed */}
-            {youtube && (
-              <div className="mb-10">
-                <div className="aspect-video w-full bg-zinc-950">
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${youtube}`}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title={title}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* MDX content */}
-            <div className="article-prose">{children}</div>
-
-            {/* ESV passage — print only */}
-            {esvText && (
-              <div className="print-only mt-10 pt-10 border-t border-zinc-200">
-                <p
-                  className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-4"
-                  style={{ color: '#cdb079' }}
-                >
-                  Scripture Text ({scripture})
-                </p>
-                <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-zinc-700">
-                  {esvText}
-                </pre>
-              </div>
-            )}
+        {/* ESV passage — print only */}
+        {esvText && (
+          <div className="print-only mt-10 border-t border-zinc-200 pt-10">
+            <p
+              className="mb-4 text-[10px] font-semibold uppercase tracking-[0.16em]"
+              style={{ color: '#cdb079' }}
+            >
+              Scripture Text ({scripture})
+            </p>
+            <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-zinc-700">
+              {esvText}
+            </pre>
           </div>
+        )}
+
+        <div className="pb-16 lg:pb-20" />
       </div>
     </>
   )
