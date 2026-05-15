@@ -199,13 +199,13 @@ function BookCard({
         aria-label={`View details for ${book.title}`}
       >
         {/* Cover */}
-        <div className="relative overflow-hidden bg-zinc-100" style={{ flex: '0 0 65%' }}>
+        <div className="relative bg-zinc-100 p-3" style={{ flex: '0 0 65%' }}>
           {hasImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={book.coverImageUrl}
               alt={`${book.title} cover`}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain drop-shadow-md"
               loading="lazy"
               onError={() => setImgFailed(true)}
             />
