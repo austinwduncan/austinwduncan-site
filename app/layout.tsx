@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Cormorant_Garamond } from 'next/font/google'
+import { Geist, Geist_Mono, Cormorant_Garamond, Source_Serif_4 } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/nav'
@@ -14,6 +14,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+})
+
+const sourceSerif = Source_Serif_4({
+  variable: '--font-source-serif',
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 })
 
 const cormorant = Cormorant_Garamond({
@@ -50,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-zinc-900">
         <Nav />

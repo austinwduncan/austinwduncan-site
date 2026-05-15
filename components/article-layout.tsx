@@ -123,11 +123,20 @@ export default function ArticleLayout({
         </div>
       )}
 
-      {/* Gold accent strip */}
-      <div className="h-[3px] w-full" style={{ backgroundColor: '#cdb079' }} />
+      {/* Textured amber strip */}
+      <div
+        className="relative h-[14px] w-full"
+        style={{
+          backgroundColor: '#7A5C1E',
+          backgroundImage: `
+            repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
+            repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
+          `,
+        }}
+      />
 
       {/* ── Article column ────────────────────────────────────────────────── */}
-      <div className="mx-auto max-w-[720px] px-6">
+      <div className="mx-auto max-w-[720px] px-6" style={{ backgroundColor: '#FAFAF7' }}>
 
         {/* Toolbar */}
         <div className="flex items-center justify-between border-b border-zinc-100 pb-6 pt-7">
