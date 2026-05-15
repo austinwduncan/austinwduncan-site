@@ -62,7 +62,7 @@ const categoryOrder = [
 ]
 
 const availableCategories = categoryOrder.filter((cat) =>
-  books.some((b) => b.category === cat),
+  books.some((b) => b.categories.includes(cat)),
 )
 
 const allAudienceTags = [

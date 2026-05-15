@@ -39,7 +39,8 @@ while ((m = trRe.exec(html)) !== null) {
   rows.push(m[1])
 }
 
-const books = []
+// Keyed by "title||author" so duplicates (same book in multiple categories) are merged
+const bookMap = new Map()
 let skipped = 0
 
 for (const row of rows) {
@@ -53,7 +54,7 @@ for (const row of rows) {
     cells.push(cellText(td[1]))
   }
 
-  // Must have at least 28 columns; skip header row
+  // Must have at least 26 columns; skip header row
   if (cells.length < 26) continue
   if (cells[2] === 'Title') continue
 
@@ -65,15 +66,26 @@ for (const row of rows) {
     continue
   }
 
-  const amazonUrl = cells[25]
+  const key = `${title.toLowerCase()}||${author.toLowerCase()}`
+  const category = cells[6]
 
-  books.push({
+  if (bookMap.has(key)) {
+    // Merge: add this category to the existing entry's categories array
+    const existing = bookMap.get(key)
+    if (!existing.categories.includes(category)) {
+      existing.categories.push(category)
+    }
+    continue
+  }
+
+  bookMap.set(key, {
     id: cells[0] ? Number(cells[0]) : undefined,
     slug: cells[1] || undefined,
     title,
     author,
     additionalAuthors: cells[4] || undefined,
-    category: cells[6],
+    category,
+    categories: [category],
     subcategory: cells[7] || undefined,
     topicTags: splitTags(cells[8]),
     audienceTags: splitTags(cells[9]),
@@ -87,20 +99,24 @@ for (const row of rows) {
     internalNotes: cells[20] || undefined,
     coverImageUrl: cells[22] || undefined,
     isbn13: cells[23] || undefined,
-    amazonUrl: amazonUrl || undefined,
+    amazonUrl: cells[25] || undefined,
     publisher: cells[26] || undefined,
     publicationYear: cells[27] ? Number(cells[27]) : undefined,
   })
 }
 
+const books = Array.from(bookMap.values())
+
 fs.writeFileSync(OUTPUT_PATH, JSON.stringify(books, null, 2))
 
 const categories = {}
 for (const b of books) {
-  categories[b.category] = (categories[b.category] || 0) + 1
+  for (const cat of b.categories) {
+    categories[cat] = (categories[cat] || 0) + 1
+  }
 }
 
-console.log(`\n✓ ${books.length} books written to data/books.json`)
+console.log(`\n✓ ${books.length} unique books written to data/books.json`)
 if (skipped) console.log(`  ${skipped} rows skipped (blank title or author)`)
 console.log(`\n  ${Object.keys(categories).length} categories:`)
 for (const [cat, count] of Object.entries(categories).sort()) {

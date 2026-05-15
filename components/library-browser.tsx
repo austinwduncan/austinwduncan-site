@@ -18,6 +18,7 @@ export type LibraryBook = {
   author: string
   additionalAuthors?: string
   category: string
+  categories: string[]
   subcategory?: string
   topicTags: string[]
   audienceTags: string[]
@@ -81,7 +82,7 @@ function buildAmazonUrl(url?: string): string {
 }
 
 function matchesFilters(book: LibraryBook, f: Filters, exclude?: keyof Filters): boolean {
-  if (exclude !== 'category' && f.category !== 'All' && book.category !== f.category) return false
+  if (exclude !== 'category' && f.category !== 'All' && !book.categories.includes(f.category)) return false
   if (
     exclude !== 'readingLevels' &&
     f.readingLevels.length > 0 &&
@@ -474,7 +475,7 @@ export default function LibraryBrowser({
       return counts
     }
     return {
-      category: countFor('category', (b) => [b.category]),
+      category: countFor('category', (b) => b.categories),
       readingLevels: countFor('readingLevels', (b) => (b.readingLevel ? [b.readingLevel] : [])),
       recLevels: countFor('recLevels', (b) => (b.recommendationLevel ? [b.recommendationLevel] : [])),
       audienceTags: countFor('audienceTags', (b) => b.audienceTags),
