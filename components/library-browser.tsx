@@ -212,6 +212,12 @@ function BookCard({
           ) : (
             <CoverPlaceholder title={book.title} author={book.author} />
           )}
+          {/* Rec level badge — overlaid on cover so info section stays clean */}
+          {book.recommendationLevel && (
+            <span className="absolute left-2 top-2">
+              <RecBadge level={book.recommendationLevel} />
+            </span>
+          )}
           {book.featured && (
             <span
               className="absolute right-2 top-2 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em] text-white"
@@ -223,14 +229,11 @@ function BookCard({
         </div>
 
         {/* Title + author */}
-        <div className="flex flex-1 flex-col justify-between overflow-hidden border-t border-zinc-100 px-3 py-2.5 text-left">
-          <div className="min-h-0 space-y-0.5">
-            <h3 className="line-clamp-2 text-[12px] font-semibold leading-snug tracking-tight text-zinc-900">
-              {book.title}
-            </h3>
-            <p className="line-clamp-1 text-[11px] text-zinc-500">{book.author}</p>
-          </div>
-          <RecBadge level={book.recommendationLevel} />
+        <div className="flex flex-1 flex-col justify-center overflow-hidden border-t border-zinc-100 px-3 py-2.5 text-left">
+          <h3 className="line-clamp-2 text-[12px] font-semibold leading-snug tracking-tight text-zinc-900">
+            {book.title}
+          </h3>
+          <p className="mt-0.5 line-clamp-1 text-[11px] text-zinc-500">{book.author}</p>
         </div>
       </button>
 
