@@ -7,7 +7,6 @@ import {
   SlidersHorizontal,
   ChevronDown,
   ChevronUp,
-  AlertTriangle,
 } from 'lucide-react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -298,7 +297,8 @@ function BookModal({
           <X size={16} />
         </button>
 
-        <div className="flex flex-1 flex-col overflow-y-auto sm:flex-row">
+        {/* Cover + scrollable details */}
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto sm:flex-row">
           {/* Cover — fills the left panel at full height */}
           <div className="relative shrink-0 bg-zinc-100 sm:w-[220px] sm:self-stretch">
             {hasImage ? (
@@ -317,7 +317,7 @@ function BookModal({
           </div>
 
           {/* Details */}
-          <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-6">
+          <div className="flex flex-1 flex-col gap-5 overflow-y-auto p-6">
             {/* Title + meta */}
             <div>
               <RecBadge level={book.recommendationLevel} />
@@ -330,118 +330,43 @@ function BookModal({
                   <span className="text-zinc-400"> &amp; {book.additionalAuthors}</span>
                 )}
               </p>
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
+              <div className="mt-1.5 flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
                 {book.publicationYear && <span>{book.publicationYear}</span>}
                 {book.publisher && <span>{book.publisher}</span>}
-                {book.readingLevel && (
-                  <span className="rounded-sm bg-zinc-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-500">
-                    {book.readingLevel}
-                  </span>
-                )}
               </div>
             </div>
 
-            {/* Short recommendation */}
+            {/* Austin's thoughts */}
             {book.shortRecommendation && (
-              <p className="border-l-2 pl-4 text-[13px] leading-relaxed text-zinc-700" style={{ borderColor: GOLD }}>
-                {book.shortRecommendation}
-              </p>
-            )}
-
-            {/* Public caution */}
-            {book.publicCaution && (
-              <div className="flex gap-2 rounded bg-amber-50 p-3">
-                <AlertTriangle size={14} className="mt-0.5 shrink-0 text-amber-600" />
-                <p className="text-[12px] leading-relaxed text-amber-800">{book.publicCaution}</p>
-              </div>
-            )}
-
-            {/* Tags */}
-            <div className="space-y-2">
               <div>
-                <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                  Category
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-400">
+                  Austin&rsquo;s Thoughts on {book.title}
                 </p>
-                <span className="inline-block rounded-full border border-zinc-200 px-2.5 py-1 text-[11px] text-zinc-600">
-                  {book.category}
-                  {book.subcategory && ` · ${book.subcategory}`}
-                </span>
+                <p className="border-l-2 pl-4 text-[13px] leading-relaxed text-zinc-700" style={{ borderColor: GOLD }}>
+                  {book.shortRecommendation}
+                </p>
               </div>
-
-              {book.topicTags.length > 0 && (
-                <div>
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                    Topics
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {book.topicTags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-zinc-200 px-2.5 py-1 text-[11px] text-zinc-600"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {book.audienceTags.length > 0 && (
-                <div>
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                    Audience
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {book.audienceTags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-zinc-200 px-2.5 py-1 text-[11px] text-zinc-600"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {book.useCaseTags.length > 0 && (
-                <div>
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                    Use Case
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {book.useCaseTags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-zinc-200 px-2.5 py-1 text-[11px] text-zinc-600"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
 
             {/* ISBN */}
             {book.isbn13 && (
               <p className="text-[11px] text-zinc-400">ISBN-13: {book.isbn13}</p>
             )}
-
-            {/* Amazon link */}
-            {href && (
-              <a
-                href={href}
-                target="_blank"
-                rel="noreferrer sponsored"
-                className="mt-auto inline-flex items-center gap-2 self-start py-2 text-[13px] font-semibold transition-opacity hover:opacity-70"
-                style={{ color: GOLD }}
-              >
-                View on Amazon →
-              </a>
-            )}
           </div>
         </div>
+
+        {/* Sticky Amazon CTA */}
+        {href && (
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer sponsored"
+            className="flex shrink-0 items-center justify-center py-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-white transition-opacity hover:opacity-90"
+            style={{ backgroundColor: GOLD }}
+          >
+            View on Amazon
+          </a>
+        )}
       </div>
     </div>
   )
