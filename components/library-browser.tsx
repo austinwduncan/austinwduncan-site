@@ -681,8 +681,10 @@ export default function LibraryBrowser({
 
       {/* ── Main layout ──────────────────────────────────────────────────── */}
       <div className="flex gap-8 pt-6">
-        {/* Desktop sidebar */}
-        <div className="hidden lg:block">{FilterSidebar}</div>
+        {/* Desktop sidebar — sticky with independent scroll */}
+        <div className="hidden lg:sticky lg:top-[170px] lg:block lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto lg:pr-1">
+          {FilterSidebar}
+        </div>
 
         {/* Book grid */}
         <div className="min-w-0 flex-1">
