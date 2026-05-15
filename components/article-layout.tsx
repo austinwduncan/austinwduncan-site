@@ -17,6 +17,9 @@ interface Props {
   children: React.ReactNode
 }
 
+const DECO_PATTERN =
+  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23cdb079' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23cdb079' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%23cdb079'/%3E%3C/svg%3E"
+
 function formatDate(dateStr?: string): string {
   if (!dateStr) return ''
   const [y, m, d] = dateStr.split('-').map(Number)
@@ -28,46 +31,6 @@ function formatDate(dateStr?: string): string {
   })
 }
 
-function HeroMeta({
-  category,
-  title,
-  formattedDate,
-  scripture,
-  readingMinutes,
-}: {
-  category?: string
-  title: string
-  formattedDate: string
-  scripture?: string
-  readingMinutes: number
-}) {
-  return (
-    <>
-      {category && (
-        <p
-          className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em]"
-          style={{ color: '#cdb079' }}
-        >
-          {category}
-        </p>
-      )}
-      <h1 className="max-w-[600px] text-[1.9rem] font-bold leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
-        {title}
-      </h1>
-      <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px] text-white/55">
-        {formattedDate && <span>{formattedDate}</span>}
-        {formattedDate && scripture && <span className="text-white/25">·</span>}
-        {scripture && <span>{scripture}</span>}
-        {(formattedDate || scripture) && <span className="text-white/25">·</span>}
-        <span className="inline-flex items-center gap-1.5">
-          <Clock size={12} />
-          {readingMinutes} min read
-        </span>
-      </div>
-    </>
-  )
-}
-
 export default function ArticleLayout({
   section,
   sectionHref,
@@ -75,7 +38,6 @@ export default function ArticleLayout({
   title,
   date,
   scripture,
-  image,
   youtube,
   esvText,
   readingMinutes,
@@ -87,45 +49,74 @@ export default function ArticleLayout({
     <>
       <ReadingProgress />
 
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      {image ? (
-        <div className="relative h-[380px] overflow-hidden bg-zinc-950">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="" className="h-full w-full object-cover opacity-45" />
-          <div
-            className="absolute inset-0"
+      {/* ── Hero — typographic, no image ──────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-zinc-950 pb-12 pt-14 text-white">
+        {/* Art-deco pattern */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage: `url("${DECO_PATTERN}")`,
+            backgroundSize: '60px 60px',
+            opacity: 0.14,
+          }}
+        />
+        {/* Radial gold glow — lower-left */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 15% 80%, rgba(205,176,121,0.09) 0%, transparent 55%)',
+          }}
+        />
+
+        <div className="relative mx-auto max-w-[720px] px-6">
+          {/* Series / category label */}
+          {category && (
+            <p
+              className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]"
+              style={{ color: '#cdb079' }}
+            >
+              <span
+                className="inline-block h-px w-5"
+                style={{ backgroundColor: '#cdb079' }}
+              />
+              {category}
+            </p>
+          )}
+
+          {/* Title */}
+          <h1
+            className="max-w-[600px] leading-[1.08] tracking-tight text-white"
             style={{
-              background:
-                'linear-gradient(to bottom, rgba(20,18,16,0.1) 0%, rgba(20,18,16,0.3) 40%, rgba(20,18,16,0.88) 100%)',
+              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
+              fontWeight: 500,
             }}
-          />
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-8">
-            <HeroMeta
-              category={category}
-              title={title}
-              formattedDate={formattedDate}
-              scripture={scripture}
-              readingMinutes={readingMinutes}
-            />
+          >
+            {title}
+          </h1>
+
+          {/* Meta row */}
+          <div className="mt-5 flex flex-wrap items-center gap-2.5 text-[12px] text-white/50">
+            {formattedDate && <span>{formattedDate}</span>}
+            {formattedDate && scripture && (
+              <span className="h-[3px] w-[3px] rounded-full bg-white/25" />
+            )}
+            {scripture && <span>{scripture}</span>}
+            {(formattedDate || scripture) && (
+              <span className="h-[3px] w-[3px] rounded-full bg-white/25" />
+            )}
+            <span className="inline-flex items-center gap-1.5">
+              <Clock size={11} />
+              {readingMinutes} min read
+            </span>
           </div>
         </div>
-      ) : (
-        <div className="bg-zinc-950 py-14 text-white">
-          <div className="mx-auto max-w-[720px] px-6">
-            <HeroMeta
-              category={category}
-              title={title}
-              formattedDate={formattedDate}
-              scripture={scripture}
-              readingMinutes={readingMinutes}
-            />
-          </div>
-        </div>
-      )}
+      </section>
 
       {/* Textured amber strip */}
       <div
-        className="relative h-[14px] w-full"
+        className="h-[14px] w-full"
         style={{
           backgroundColor: '#7A5C1E',
           backgroundImage: `
@@ -153,7 +144,7 @@ export default function ArticleLayout({
         {/* MDX content */}
         <div className="article-prose pb-8 pt-10">{children}</div>
 
-        {/* ── Video — after content ────────────────────────────────────────── */}
+        {/* Video — after content */}
         {youtube && (
           <div className="mb-10 overflow-hidden rounded-sm border border-zinc-200">
             <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3">
