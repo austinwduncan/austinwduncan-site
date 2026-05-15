@@ -188,17 +188,19 @@ function BookCard({
 }) {
   const [imgFailed, setImgFailed] = useState(false)
   const hasImage = Boolean(book.coverImageUrl) && !imgFailed
+  const href = buildAmazonUrl(book.amazonUrl)
 
   return (
-    <article className="group h-full">
+    <article className="group flex h-full flex-col overflow-hidden bg-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
+      {/* Cover + title info — clickable to open modal */}
       <button
         type="button"
         onClick={() => onClick(book)}
-        className="flex h-full w-full flex-col overflow-hidden bg-white shadow-sm transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cdb079]"
-        aria-label={`${book.title} by ${book.author}`}
+        className="flex min-h-0 flex-1 flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cdb079]"
+        aria-label={`View details for ${book.title}`}
       >
-        {/* Cover — 65% */}
-        <div className="relative overflow-hidden bg-zinc-100" style={{ height: '65%' }}>
+        {/* Cover */}
+        <div className="relative overflow-hidden bg-zinc-100" style={{ flex: '0 0 65%' }}>
           {hasImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -221,20 +223,34 @@ function BookCard({
           )}
         </div>
 
-        {/* Info — 35% */}
-        <div
-          className="flex flex-col justify-between overflow-hidden border-t border-zinc-100 bg-white px-3 py-3"
-          style={{ height: '35%' }}
-        >
-          <div className="min-h-0 space-y-1">
-            <h3 className="line-clamp-2 text-left text-[12px] font-semibold leading-snug tracking-tight text-zinc-900">
+        {/* Title + author */}
+        <div className="flex flex-1 flex-col justify-between overflow-hidden border-t border-zinc-100 px-3 py-2.5 text-left">
+          <div className="min-h-0 space-y-0.5">
+            <h3 className="line-clamp-2 text-[12px] font-semibold leading-snug tracking-tight text-zinc-900">
               {book.title}
             </h3>
-            <p className="line-clamp-1 text-left text-[11px] text-zinc-500">{book.author}</p>
+            <p className="line-clamp-1 text-[11px] text-zinc-500">{book.author}</p>
           </div>
           <RecBadge level={book.recommendationLevel} />
         </div>
       </button>
+
+      {/* Amazon CTA — full-width bottom strip */}
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer sponsored"
+          onClick={(e) => e.stopPropagation()}
+          className="flex shrink-0 items-center justify-center gap-1.5 border-t border-zinc-100 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-70"
+          style={{ color: GOLD }}
+          aria-label={`Buy ${book.title} on Amazon`}
+        >
+          View on Amazon →
+        </a>
+      ) : (
+        <div className="shrink-0 border-t border-zinc-100 py-2.5" />
+      )}
     </article>
   )
 }
@@ -283,22 +299,18 @@ function BookModal({
         </button>
 
         <div className="flex flex-1 flex-col overflow-y-auto sm:flex-row">
-          {/* Cover */}
-          <div
-            className="shrink-0 bg-zinc-100 sm:w-[200px]"
-            style={{ minHeight: hasImage ? undefined : '200px' }}
-          >
+          {/* Cover — fills the left panel at full height */}
+          <div className="relative shrink-0 bg-zinc-100 sm:w-[220px] sm:self-stretch">
             {hasImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={book.coverImageUrl}
                 alt={`${book.title} cover`}
-                className="h-full w-full object-cover sm:h-full sm:max-h-none"
-                style={{ maxHeight: '220px' }}
+                className="h-full max-h-[280px] w-full object-cover sm:absolute sm:inset-0 sm:max-h-none"
                 onError={() => setImgFailed(true)}
               />
             ) : (
-              <div className="flex h-full min-h-[180px] w-full items-center justify-center sm:min-h-0">
+              <div className="flex min-h-[200px] w-full items-center justify-center sm:absolute sm:inset-0 sm:min-h-0">
                 <CoverPlaceholder title={book.title} author={book.author} />
               </div>
             )}
