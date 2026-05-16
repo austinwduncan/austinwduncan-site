@@ -136,28 +136,19 @@ export default function SermonsPage() {
         </div>
       </div>
 
-      {/* ── Start Here — full-bleed warm section ────────────────────────── */}
-      <div
-        style={{
-          backgroundColor: '#F6F1E4',
-          backgroundImage: `repeating-linear-gradient(
-            45deg, transparent, transparent 12px,
-            rgba(184,137,46,0.045) 12px, rgba(184,137,46,0.045) 13px
-          )`,
-          borderBottom: '1px solid #E2DACE',
-        }}
-      >
+      {/* ── Start Here — full-bleed dark section ────────────────────────── */}
+      <div style={{ background: '#141210', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-16">
           {/* Label */}
           <div
             className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-8"
-            style={{ color: '#7A5C1E' }}
+            style={{ color: '#B8892E' }}
           >
             <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             If you&rsquo;re new here
-            <span className="flex-1 h-px" style={{ background: '#C8BFA8' }} />
+            <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
           </div>
 
           {/* Horizontal editorial card */}
@@ -168,8 +159,8 @@ export default function SermonsPage() {
             {/* Image */}
             <div className="w-full lg:w-[42%] shrink-0">
               <div
-                className="relative rounded-md overflow-hidden border transition-shadow duration-300 group-hover:shadow-lg"
-                style={{ aspectRatio: '4/3', background: '#E8E0D0', borderColor: '#C8BFA8' }}
+                className="relative rounded-md overflow-hidden transition-opacity duration-300 group-hover:opacity-90"
+                style={{ aspectRatio: '4/3', background: '#1C1916', border: '1px solid rgba(255,255,255,0.08)' }}
               >
                 {startHere.image && (
                   <Image
@@ -188,25 +179,25 @@ export default function SermonsPage() {
             <div className="flex-1 min-w-0">
               <p
                 className="text-[0.88rem] italic mb-3"
-                style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.38)' }}
               >
                 A good place to begin
               </p>
               {(startHere.scripture ?? startHere.primaryBook) && (
                 <div
                   className="text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-3"
-                  style={{ color: '#7A5C1E' }}
+                  style={{ color: '#B8892E' }}
                 >
                   {startHere.scripture ?? startHere.primaryBook}
                 </div>
               )}
               <h2
-                className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
+                className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#B8892E]"
                 style={{
                   fontFamily: 'var(--font-cormorant)',
                   fontSize: 'clamp(1.9rem, 3vw, 2.6rem)',
                   fontWeight: 500,
-                  color: '#1A1714',
+                  color: '#F9F6F0',
                 }}
               >
                 {startHere.title}
@@ -214,24 +205,24 @@ export default function SermonsPage() {
               {startHere.excerpt && (
                 <p
                   className="text-[0.95rem] leading-[1.75] mb-5 line-clamp-4"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.55)' }}
                 >
                   {startHere.excerpt.replace(/\*\*/g, '')}
                 </p>
               )}
               <div
-                className="flex items-center gap-2 text-[0.72rem] mb-5"
-                style={{ color: '#9A9189' }}
+                className="flex items-center gap-2 text-[0.72rem] mb-6"
+                style={{ color: 'rgba(255,255,255,0.3)' }}
               >
                 {startHere.formattedDate && <span>{startHere.formattedDate}</span>}
                 {startHere.formattedDate && (
-                  <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: '#C8BFA8' }} />
+                  <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: 'rgba(255,255,255,0.2)' }} />
                 )}
                 <span>{startHere.readingMinutes} min read</span>
               </div>
               <span
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-[0.76rem] font-medium tracking-[0.04em] text-white transition-colors"
-                style={{ background: '#7A5C1E' }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-[0.76rem] font-medium tracking-[0.04em] transition-opacity group-hover:opacity-85"
+                style={{ background: '#B8892E', color: '#141210' }}
               >
                 Read this sermon
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
