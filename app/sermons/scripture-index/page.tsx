@@ -63,7 +63,7 @@ export default function ScriptureIndexPage() {
 
   const ntBooks = toIndexBooks(NT_BOOKS, 'nt')
   const otBooks = toIndexBooks(OT_BOOKS, 'ot')
-  const allBooks = [...ntBooks, ...otBooks]
+  const allBooks = [...otBooks, ...ntBooks]
 
   const totalSermons = raw.length
   const totalBooks = allBooks.length

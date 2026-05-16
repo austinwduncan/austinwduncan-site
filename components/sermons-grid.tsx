@@ -19,6 +19,25 @@ export type SermonListItem = {
 
 const PAGE_SIZE = 9
 
+const NT_BOOKS = new Set([
+  'Matthew','Mark','Luke','John','Acts',
+  'Romans','1 Corinthians','2 Corinthians','Galatians','Ephesians',
+  'Philippians','Colossians','1 Thessalonians','2 Thessalonians',
+  '1 Timothy','2 Timothy','Titus','Philemon',
+  'Hebrews','James','1 Peter','2 Peter','1 John','2 John','3 John','Jude','Revelation',
+])
+
+const OT_BOOKS = new Set([
+  'Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Ruth',
+  '1 Samuel','2 Samuel','1 Kings','2 Kings','1 Chronicles','2 Chronicles',
+  'Ezra','Nehemiah','Esther','Job','Psalms','Proverbs','Ecclesiastes','Song of Solomon',
+  'Isaiah','Jeremiah','Lamentations','Ezekiel','Daniel',
+  'Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum',
+  'Habakkuk','Zephaniah','Haggai','Zechariah','Malachi',
+])
+
+type Testament = 'all' | 'ot' | 'nt'
+
 export default function SermonsGrid({
   sermons,
   availableBooks,
@@ -26,53 +45,71 @@ export default function SermonsGrid({
   sermons: SermonListItem[]
   availableBooks: string[]
 }) {
+  const [testament, setTestament] = useState<Testament>('all')
   const [activeBook, setActiveBook] = useState<string>('all')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  const filtered = activeBook === 'all'
-    ? sermons
-    : sermons.filter((s) => s.allBooks.includes(activeBook))
+  const otAvailable = availableBooks.filter((b) => OT_BOOKS.has(b))
+  const ntAvailable = availableBooks.filter((b) => NT_BOOKS.has(b))
+
+  const otCount = sermons.filter((s) => s.allBooks.some((b) => OT_BOOKS.has(b))).length
+  const ntCount = sermons.filter((s) => s.allBooks.some((b) => NT_BOOKS.has(b))).length
+
+  const filtered = (() => {
+    if (activeBook !== 'all') return sermons.filter((s) => s.allBooks.includes(activeBook))
+    if (testament === 'ot') return sermons.filter((s) => s.allBooks.some((b) => OT_BOOKS.has(b)))
+    if (testament === 'nt') return sermons.filter((s) => s.allBooks.some((b) => NT_BOOKS.has(b)))
+    return sermons
+  })()
 
   const visible = filtered.slice(0, visibleCount)
   const hasMore = visibleCount < filtered.length
+
+  function selectTestament(t: Testament) {
+    setTestament(t)
+    setActiveBook('all')
+    setVisibleCount(PAGE_SIZE)
+  }
 
   function selectBook(book: string) {
     setActiveBook(book)
     setVisibleCount(PAGE_SIZE)
   }
 
+  const level2Books = testament === 'ot' ? otAvailable : testament === 'nt' ? ntAvailable : []
+
   return (
     <div>
-      {/* Filter bar */}
+      {/* Filter — level 1: testament */}
       <div
-        className="flex flex-wrap items-stretch gap-0 mb-8 rounded-md border p-1.5"
+        className="flex flex-wrap items-center gap-0 mb-2 rounded-t-md border border-b-0 p-1.5"
         style={{ background: '#fff', borderColor: '#E2DACE' }}
       >
         <span
-          className="flex items-center text-[0.65rem] font-medium tracking-[0.1em] uppercase pr-3 pl-1 border-r mr-1.5 shrink-0"
+          className="flex items-center text-[0.65rem] font-medium tracking-[0.1em] uppercase pr-3 pl-1 border-r mr-1.5 shrink-0 self-stretch"
           style={{ color: '#9A9189', borderColor: '#E2DACE' }}
         >
-          Book
+          Filter
         </span>
         <div className="flex flex-wrap gap-1 flex-1">
           <FilterPill
             label="All"
             count={sermons.length}
-            active={activeBook === 'all'}
-            onClick={() => selectBook('all')}
+            active={testament === 'all'}
+            onClick={() => selectTestament('all')}
           />
-          {availableBooks.map((book) => {
-            const count = sermons.filter((s) => s.allBooks.includes(book)).length
-            return (
-              <FilterPill
-                key={book}
-                label={book}
-                count={count}
-                active={activeBook === book}
-                onClick={() => selectBook(book)}
-              />
-            )
-          })}
+          <FilterPill
+            label="Old Testament"
+            count={otCount}
+            active={testament === 'ot'}
+            onClick={() => selectTestament('ot')}
+          />
+          <FilterPill
+            label="New Testament"
+            count={ntCount}
+            active={testament === 'nt'}
+            onClick={() => selectTestament('nt')}
+          />
         </div>
         <Link
           href="/sermons/scripture-index"
@@ -87,9 +124,59 @@ export default function SermonsGrid({
         </Link>
       </div>
 
+      {/* Filter — level 2: specific book (only when OT or NT selected) */}
+      {level2Books.length > 0 && (
+        <div
+          className="flex flex-wrap items-center gap-1 mb-2 border border-b-0 px-2.5 py-2"
+          style={{ background: '#F9F6F2', borderColor: '#E2DACE' }}
+        >
+          <span
+            className="text-[0.62rem] font-medium tracking-[0.1em] uppercase mr-1 shrink-0"
+            style={{ color: '#9A9189' }}
+          >
+            {testament === 'ot' ? 'OT' : 'NT'}:
+          </span>
+          <button
+            onClick={() => selectBook('all')}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[0.7rem] tracking-[0.02em] transition-all"
+            style={
+              activeBook === 'all'
+                ? { background: '#7A5C1E', color: '#fff' }
+                : { color: '#5A544C' }
+            }
+          >
+            All
+          </button>
+          {level2Books.map((book) => {
+            const count = sermons.filter((s) => s.allBooks.includes(book)).length
+            return (
+              <button
+                key={book}
+                onClick={() => selectBook(book)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[0.7rem] tracking-[0.02em] transition-all"
+                style={
+                  activeBook === book
+                    ? { background: '#7A5C1E', color: '#fff' }
+                    : { color: '#5A544C' }
+                }
+              >
+                {book}
+                <span style={{ opacity: 0.55, fontSize: '0.62rem' }}>{count}</span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {/* Bottom border for filter area */}
+      <div
+        className="mb-7 rounded-b-md border-x border-b h-1"
+        style={{ borderColor: '#E2DACE', background: '#fff' }}
+      />
+
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="col-span-3 text-center py-16">
+        <div className="text-center py-16">
           <div
             className="text-3xl font-light mb-2"
             style={{ fontFamily: 'var(--font-cormorant)', color: '#9A9189' }}
@@ -152,10 +239,7 @@ function FilterPill({
       }
     >
       {label}
-      <span
-        className="text-[0.65rem]"
-        style={{ opacity: active ? 0.6 : 0.55 }}
-      >
+      <span className="text-[0.65rem]" style={{ opacity: active ? 0.6 : 0.55 }}>
         {count}
       </span>
     </button>
@@ -171,7 +255,6 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
       className="group flex flex-col rounded-md overflow-hidden border bg-white transition-all duration-200 hover:-translate-y-0.5"
       style={{ borderColor: '#E2DACE' }}
     >
-      {/* Image */}
       <div
         className="relative overflow-hidden shrink-0"
         style={{ aspectRatio: '3/2', background: '#F2EFE7' }}
@@ -185,16 +268,12 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         )}
-        {/* Gold accent bar on hover */}
         <div
           className="absolute bottom-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-          style={{
-            background: 'linear-gradient(90deg, #7A5C1E, #B8892E 50%, transparent)',
-          }}
+          style={{ background: 'linear-gradient(90deg, #7A5C1E, #B8892E 50%, transparent)' }}
         />
       </div>
 
-      {/* Body */}
       <div className="flex flex-col flex-1 px-5 py-5">
         {label && (
           <div
@@ -206,11 +285,7 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
         )}
         <h3
           className="font-medium leading-snug mb-2.5 flex-1 transition-colors group-hover:text-[#7A5C1E]"
-          style={{
-            fontFamily: 'var(--font-cormorant)',
-            fontSize: '1.2rem',
-            color: '#1A1714',
-          }}
+          style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.2rem', color: '#1A1714' }}
         >
           {sermon.title}
         </h3>
