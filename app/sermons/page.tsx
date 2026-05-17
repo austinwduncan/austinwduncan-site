@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   description: 'Expository sermons preached verse by verse through books of the Bible.',
 }
 
+// Interlocking circles pattern — unique to the Latest Message section
+const CIRCLES_PATTERN =
+  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='0' cy='0' r='29' fill='none' stroke='%23cdb079' stroke-width='0.75'/%3E%3Ccircle cx='60' cy='0' r='29' fill='none' stroke='%23cdb079' stroke-width='0.75'/%3E%3Ccircle cx='0' cy='60' r='29' fill='none' stroke='%23cdb079' stroke-width='0.75'/%3E%3Ccircle cx='60' cy='60' r='29' fill='none' stroke='%23cdb079' stroke-width='0.75'/%3E%3Ccircle cx='30' cy='30' r='29' fill='none' stroke='%23cdb079' stroke-width='0.75'/%3E%3C/svg%3E"
+
 const BOOK_ORDER = [
   'Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Ruth',
   '1 Samuel','2 Samuel','1 Kings','2 Kings','1 Chronicles','2 Chronicles',
@@ -136,19 +140,19 @@ export default function SermonsPage() {
         </div>
       </div>
 
-      {/* ── Start Here — full-bleed dark section ────────────────────────── */}
-      <div style={{ background: '#141210', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      {/* ── Start Here — full-bleed light section ───────────────────────── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid #E2DACE' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-16">
           {/* Label */}
           <div
             className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-8"
-            style={{ color: '#B8892E' }}
+            style={{ color: '#7A5C1E' }}
           >
             <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             If you&rsquo;re new here
-            <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
           </div>
 
           {/* Horizontal editorial card */}
@@ -159,8 +163,8 @@ export default function SermonsPage() {
             {/* Image */}
             <div className="w-full lg:w-[42%] shrink-0">
               <div
-                className="relative rounded-md overflow-hidden transition-opacity duration-300 group-hover:opacity-90"
-                style={{ aspectRatio: '4/3', background: '#1C1916', border: '1px solid rgba(255,255,255,0.08)' }}
+                className="relative rounded-md overflow-hidden border transition-shadow duration-300 group-hover:shadow-lg"
+                style={{ aspectRatio: '4/3', background: '#F2EFE7', borderColor: '#E2DACE' }}
               >
                 {startHere.image && (
                   <Image
@@ -179,25 +183,25 @@ export default function SermonsPage() {
             <div className="flex-1 min-w-0">
               <p
                 className="text-[0.88rem] italic mb-3"
-                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.38)' }}
+                style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
               >
                 A good place to begin
               </p>
               {(startHere.scripture ?? startHere.primaryBook) && (
                 <div
                   className="text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-3"
-                  style={{ color: '#B8892E' }}
+                  style={{ color: '#7A5C1E' }}
                 >
                   {startHere.scripture ?? startHere.primaryBook}
                 </div>
               )}
               <h2
-                className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#B8892E]"
+                className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
                 style={{
                   fontFamily: 'var(--font-cormorant)',
                   fontSize: 'clamp(1.9rem, 3vw, 2.6rem)',
                   fontWeight: 500,
-                  color: '#F9F6F0',
+                  color: '#1A1714',
                 }}
               >
                 {startHere.title}
@@ -205,24 +209,24 @@ export default function SermonsPage() {
               {startHere.excerpt && (
                 <p
                   className="text-[0.95rem] leading-[1.75] mb-5 line-clamp-4"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.55)' }}
+                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
                 >
                   {startHere.excerpt.replace(/\*\*/g, '')}
                 </p>
               )}
               <div
                 className="flex items-center gap-2 text-[0.72rem] mb-6"
-                style={{ color: 'rgba(255,255,255,0.3)' }}
+                style={{ color: '#9A9189' }}
               >
                 {startHere.formattedDate && <span>{startHere.formattedDate}</span>}
                 {startHere.formattedDate && (
-                  <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: 'rgba(255,255,255,0.2)' }} />
+                  <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: '#C8BFA8' }} />
                 )}
                 <span>{startHere.readingMinutes} min read</span>
               </div>
               <span
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-[0.76rem] font-medium tracking-[0.04em] transition-opacity group-hover:opacity-85"
-                style={{ background: '#B8892E', color: '#141210' }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-[0.76rem] font-medium tracking-[0.04em] text-white transition-opacity group-hover:opacity-85"
+                style={{ background: '#7A5C1E' }}
               >
                 Read this sermon
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -234,20 +238,33 @@ export default function SermonsPage() {
         </div>
       </div>
 
-      {/* ── Latest Message — full-bleed white section ────────────────────── */}
+      {/* ── Latest Message — dark section, interlocking circles, parallax ── */}
       {showLatestSeparately && (
-        <div style={{ background: '#fff', borderBottom: '1px solid #E2DACE' }}>
-          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-10 lg:py-12">
+        <div className="relative" style={{ background: '#141210' }}>
+          {/* Parallax interlocking-circles pattern */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url("${CIRCLES_PATTERN}")`,
+              backgroundSize: '60px 60px',
+              backgroundAttachment: 'fixed',
+              backgroundPosition: 'center',
+              opacity: 0.14,
+            }}
+          />
+
+          <div className="relative mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-14" style={{ zIndex: 1 }}>
             {/* Label */}
             <div
-              className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-7"
-              style={{ color: '#9A9189' }}
+              className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-8"
+              style={{ color: '#B8892E' }}
             >
               Latest Message
-              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+              <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
             </div>
 
-            {/* Horizontal strip — content left, image right */}
+            {/* Content left, image right */}
             <Link
               href={`/sermons/${latest.slug}`}
               className="group flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12"
@@ -257,18 +274,18 @@ export default function SermonsPage() {
                 {(latest.scripture ?? latest.primaryBook) && (
                   <div
                     className="text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-2.5"
-                    style={{ color: '#7A5C1E' }}
+                    style={{ color: '#B8892E' }}
                   >
                     {latest.scripture ?? latest.primaryBook}
                   </div>
                 )}
                 <h2
-                  className="leading-snug tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
+                  className="leading-snug tracking-tight mb-3 transition-colors group-hover:text-[#B8892E]"
                   style={{
                     fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                    fontSize: 'clamp(1.7rem, 2.5vw, 2.3rem)',
                     fontWeight: 500,
-                    color: '#1A1714',
+                    color: '#F9F6F0',
                   }}
                 >
                   {latest.title}
@@ -276,24 +293,24 @@ export default function SermonsPage() {
                 {latest.excerpt && (
                   <p
                     className="text-[0.92rem] leading-[1.7] mb-4 line-clamp-2"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.52)' }}
                   >
                     {latest.excerpt.replace(/\*\*/g, '')}
                   </p>
                 )}
                 <div
-                  className="flex items-center gap-2 text-[0.72rem] mb-5"
-                  style={{ color: '#9A9189' }}
+                  className="flex items-center gap-2 text-[0.72rem] mb-6"
+                  style={{ color: 'rgba(255,255,255,0.28)' }}
                 >
                   {latest.formattedDate && <span>{latest.formattedDate}</span>}
                   {latest.formattedDate && (
-                    <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: '#C8BFA8' }} />
+                    <span className="h-[3px] w-[3px] rounded-full inline-block" style={{ background: 'rgba(255,255,255,0.18)' }} />
                   )}
                   <span>{latest.readingMinutes} min read</span>
                 </div>
                 <span
-                  className="inline-flex items-center gap-1.5 text-[0.76rem] font-medium tracking-[0.04em] pb-px border-b transition-colors"
-                  style={{ color: '#7A5C1E', borderColor: '#EFE3C4' }}
+                  className="inline-flex items-center gap-1.5 text-[0.76rem] font-medium tracking-[0.04em] pb-px border-b transition-colors group-hover:border-[#B8892E] group-hover:text-[#B8892E]"
+                  style={{ color: 'rgba(255,255,255,0.6)', borderColor: 'rgba(255,255,255,0.18)' }}
                 >
                   Read this sermon
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -305,8 +322,8 @@ export default function SermonsPage() {
               {/* Image */}
               <div className="w-full lg:w-[38%] shrink-0">
                 <div
-                  className="relative rounded-md overflow-hidden border transition-shadow duration-300 group-hover:shadow-md"
-                  style={{ aspectRatio: '16/9', background: '#F2EFE7', borderColor: '#E2DACE' }}
+                  className="relative rounded-md overflow-hidden transition-opacity duration-300 group-hover:opacity-90"
+                  style={{ aspectRatio: '16/9', background: '#1C1916', border: '1px solid rgba(255,255,255,0.09)' }}
                 >
                   {latest.image && (
                     <Image
@@ -318,10 +335,9 @@ export default function SermonsPage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   )}
-                  {/* "New" indicator */}
                   <span
                     className="absolute top-3 right-3 text-[0.6rem] font-semibold tracking-[0.12em] uppercase px-2 py-1 rounded"
-                    style={{ background: 'rgba(20,18,16,0.75)', color: '#B8892E', backdropFilter: 'blur(4px)' }}
+                    style={{ background: 'rgba(20,18,16,0.8)', color: '#B8892E', backdropFilter: 'blur(4px)' }}
                   >
                     Latest
                   </span>
