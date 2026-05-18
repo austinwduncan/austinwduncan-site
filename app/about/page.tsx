@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AboutHero } from '@/components/about-hero'
+import { AboutBioHeadshot } from '@/components/about-bio-headshot'
 
 export const metadata: Metadata = {
   title: 'About',
   description: 'Pastor, teacher, and student of Holy Scripture — Austin W. Duncan.',
 }
 
-const DECO =
-  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23cdb079' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23cdb079' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.5' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='30' r='1.5' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='60' r='1.5' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='30' r='1.5' fill='%23cdb079'/%3E%3C/svg%3E"
 
 const MISSION = [
   { n: '01', title: 'Reach the Lost',      body: 'Locally, nationally, and internationally.',   ref: 'Mark 16:15 · Acts 1:8' },
@@ -36,106 +36,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ background: '#141210' }}>
-
-        {/* Diamond lattice texture */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage: `url("${DECO}")`,
-            backgroundSize: '60px 60px',
-            opacity: 0.07,
-          }}
-        />
-
-        <div className="relative mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-16">
-
-            {/* Left — text */}
-            <div className="flex-1 min-w-0">
-
-              {/* Eyebrow */}
-              <div
-                className="flex items-center gap-2.5 mb-8 text-[0.63rem] font-medium tracking-[0.2em] uppercase"
-                style={{ color: '#B8892E' }}
-              >
-                <span className="inline-block h-px w-5 shrink-0" style={{ background: '#B8892E' }} />
-                Associate Pastor&nbsp;&nbsp;·&nbsp;&nbsp;Crosswalk Church&nbsp;&nbsp;·&nbsp;&nbsp;Brentwood, TN
-              </div>
-
-              {/* Name */}
-              <h1 className="leading-[0.92] tracking-tight mb-0">
-                <span
-                  className="block"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(3.4rem, 5.5vw, 5rem)',
-                    fontWeight: 300,
-                    color: '#F9F6F0',
-                  }}
-                >
-                  Austin
-                </span>
-                <span
-                  className="block"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(3.4rem, 5.5vw, 5rem)',
-                    fontWeight: 300,
-                    fontStyle: 'italic',
-                    color: '#C9984A',
-                  }}
-                >
-                  W. Duncan
-                </span>
-              </h1>
-
-              {/* Rule */}
-              <div className="my-7 h-px w-12" style={{ background: '#7A5C1E' }} />
-
-              {/* Descriptor */}
-              <p
-                className="text-[1rem] leading-[1.8] max-w-sm"
-                style={{
-                  fontFamily: 'var(--font-source-serif)',
-                  fontStyle: 'italic',
-                  color: 'rgba(249,246,240,0.4)',
-                }}
-              >
-                Pastor. Teacher.<br />
-                Student of Holy Scripture.
-              </p>
-            </div>
-
-            {/* Right — portrait with offset frame */}
-            <div className="hidden lg:block shrink-0" style={{ width: 256, paddingBottom: 14, paddingRight: 14 }}>
-              <div className="relative">
-                {/* Gold shadow frame */}
-                <div
-                  className="absolute pointer-events-none"
-                  style={{
-                    inset: 0,
-                    transform: 'translate(14px, 14px)',
-                    border: '1.5px solid #7A5C1E',
-                  }}
-                />
-                {/* Photo */}
-                <div className="relative overflow-hidden" style={{ width: 256, height: 320 }}>
-                  <Image
-                    src="/images/Headshots/37fdc3a2-c0c8-4ccd-a8d4-741d6f636a55.jpg"
-                    alt="Austin W. Duncan"
-                    fill
-                    className="object-cover object-top"
-                    sizes="256px"
-                    priority
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <AboutHero />
 
       {/* ── AMBER STRIP ───────────────────────────────────────────────────── */}
       <div
@@ -195,29 +96,8 @@ export default function AboutPage() {
               </blockquote>
             </div>
 
-            {/* Right column — B&W preaching photo */}
-            <div className="flex flex-col gap-7">
-              <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
-                <Image
-                  src="/images/Headshots/Austin Duncan Preaching B&W.jpg"
-                  alt=""
-                  fill
-                  className="object-cover object-top"
-                  sizes="300px"
-                />
-              </div>
-              <div className="pl-4 border-l-2" style={{ borderColor: '#E2DACE' }}>
-                <p className="text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-1" style={{ color: '#9A9189' }}>
-                  Currently serving at
-                </p>
-                <p style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.25rem', color: '#1A1714' }}>
-                  Crosswalk Church
-                </p>
-                <p className="text-[0.82rem] mt-0.5" style={{ color: '#5A544C' }}>
-                  Brentwood, Tennessee
-                </p>
-              </div>
-            </div>
+            {/* Right column — interactive portrait */}
+            <AboutBioHeadshot />
           </div>
         </div>
       </section>
