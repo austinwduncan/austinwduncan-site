@@ -1,0 +1,1646 @@
+{
+  "startedAt": "2026-05-14T20:48:03.414Z",
+  "total": 234,
+  "saved": [
+    {
+      "slug": "another-gospel",
+      "title": "Another Gospel?",
+      "coverImageLocation": "/book-covers/another-gospel.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1591766471i/53928614.jpg"
+    },
+    {
+      "slug": "7-days-that-divide-the-world",
+      "title": "7 Days that Divide the World",
+      "coverImageLocation": "/book-covers/7-days-that-divide-the-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1748875341i/219449244.jpg"
+    },
+    {
+      "slug": "introducing-christianity-to-mormons",
+      "title": "Introducing Christianity to Mormons",
+      "coverImageLocation": "/book-covers/introducing-christianity-to-mormons.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1660923466i/59921080.jpg"
+    },
+    {
+      "slug": "confessions-of-a-french-atheist",
+      "title": "Confessions of a French Atheist",
+      "coverImageLocation": "/book-covers/confessions-of-a-french-atheist.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1631902223i/59015983.jpg"
+    },
+    {
+      "slug": "the-comprehensive-guide-to-apologetics",
+      "title": "The Comprehensive Guide to Apologetics",
+      "coverImageLocation": "/book-covers/the-comprehensive-guide-to-apologetics.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1633062736i/57825692.jpg"
+    },
+    {
+      "slug": "why-is-there-suffering",
+      "title": "Why is there Suffering?",
+      "coverImageLocation": "/book-covers/why-is-there-suffering.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1637109542i/59640570.jpg"
+    },
+    {
+      "slug": "the-air-we-breathe",
+      "title": "The Air We Breathe",
+      "coverImageLocation": "/book-covers/the-air-we-breathe.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1749018064i/228980033.jpg"
+    },
+    {
+      "slug": "josephus-the-complete-works",
+      "title": "Josephus: The Complete Works",
+      "coverImageLocation": "/book-covers/josephus-the-complete-works.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677815163i/28304946.jpg"
+    },
+    {
+      "slug": "seven-things-i-wish-christians-knew-about-the-bible",
+      "title": "Seven Things I Wish Christians Knew About the Bible",
+      "coverImageLocation": "/book-covers/seven-things-i-wish-christians-knew-about-the-bible.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1613467186i/57096101.jpg"
+    },
+    {
+      "slug": "excavating-the-evidence-for-jesus",
+      "title": "Excavating the Evidence for Jesus",
+      "coverImageLocation": "/book-covers/excavating-the-evidence-for-jesus.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1635481348i/58852872.jpg"
+    },
+    {
+      "slug": "enneagram-theology-is-it-christian",
+      "title": "Enneagram Theology: Is It Christian?",
+      "coverImageLocation": "/book-covers/enneagram-theology-is-it-christian.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "nelsons-new-illustrated-bible-manners-and-customs",
+      "title": "Nelson's New Illustrated Bible Manners and Customs",
+      "coverImageLocation": "/book-covers/nelsons-new-illustrated-bible-manners-and-customs.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1386902384i/19405910.jpg"
+    },
+    {
+      "slug": "israel-and-the-nations",
+      "title": "Israel and the Nations",
+      "coverImageLocation": "/book-covers/israel-and-the-nations.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1347358090i/11351717.jpg"
+    },
+    {
+      "slug": "stuck-in-the-present",
+      "title": "Stuck in the Present",
+      "coverImageLocation": "/book-covers/stuck-in-the-present.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1618888691i/57798907.jpg"
+    },
+    {
+      "slug": "the-bedrock-of-christianity",
+      "title": "The Bedrock of Christianity",
+      "coverImageLocation": "/book-covers/the-bedrock-of-christianity.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1590700495i/53585609.jpg"
+    },
+    {
+      "slug": "liturgical-works",
+      "title": "Liturgical Works",
+      "coverImageLocation": "/book-covers/liturgical-works.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677818074i/29679435.jpg"
+    },
+    {
+      "slug": "archaeology-and-the-new-testament",
+      "title": "Archaeology and the New Testament",
+      "coverImageLocation": "/book-covers/archaeology-and-the-new-testament.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1743108907i/230475650.jpg"
+    },
+    {
+      "slug": "jesus-and-the-dead-sea-scrolls",
+      "title": "Jesus and the Dead Sea Scrolls",
+      "coverImageLocation": "/book-covers/jesus-and-the-dead-sea-scrolls.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1562589930i/44107538.jpg"
+    },
+    {
+      "slug": "refuge-reimagined",
+      "title": "Refuge Reimagined",
+      "coverImageLocation": "/book-covers/refuge-reimagined.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1613537976i/57104209.jpg"
+    },
+    {
+      "slug": "created-and-creating",
+      "title": "Created and Creating",
+      "coverImageLocation": "/book-covers/created-and-creating.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1487694389i/34368555.jpg"
+    },
+    {
+      "slug": "lexham-geographic-commentary",
+      "title": "Lexham Geographic Commentary",
+      "coverImageLocation": "/book-covers/lexham-geographic-commentary.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1776709169i/245422729.jpg"
+    },
+    {
+      "slug": "vines-complete-expository-dictionary",
+      "title": "Vine's Complete Expository Dictionary",
+      "coverImageLocation": "/book-covers/vines-complete-expository-dictionary.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "nelsons-illustrated-bible-dictionary",
+      "title": "Nelson's Illustrated Bible Dictionary",
+      "coverImageLocation": "/book-covers/nelsons-illustrated-bible-dictionary.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1415582042i/14816162.jpg"
+    },
+    {
+      "slug": "biblical-greek-vocabulary-in-context",
+      "title": "Biblical Greek Vocabulary in Context",
+      "coverImageLocation": "/book-covers/biblical-greek-vocabulary-in-context.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1619544756i/57468006.jpg"
+    },
+    {
+      "slug": "exegetical-gems-from-biblical-hebrew",
+      "title": "Exegetical Gems from Biblical Hebrew",
+      "coverImageLocation": "/book-covers/exegetical-gems-from-biblical-hebrew.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1547483796i/42245032.jpg"
+    },
+    {
+      "slug": "the-bible-recap",
+      "title": "The Bible Recap",
+      "coverImageLocation": "/book-covers/the-bible-recap.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1772629309i/249031866.jpg"
+    },
+    {
+      "slug": "the-truth-and-beauty",
+      "title": "The Truth and Beauty",
+      "coverImageLocation": "/book-covers/the-truth-and-beauty.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1643152520i/60214347.jpg"
+    },
+    {
+      "slug": "hes-where-the-joy-is",
+      "title": "He's Where the Joy Is",
+      "coverImageLocation": "/book-covers/hes-where-the-joy-is.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677556196i/83820551.jpg"
+    },
+    {
+      "slug": "life-lessons-from-revelation",
+      "title": "Life Lessons From Revelation",
+      "coverImageLocation": "/book-covers/life-lessons-from-revelation.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1543436131i/38915844.jpg"
+    },
+    {
+      "slug": "revelation-the-ultimate-hope-in-christ",
+      "title": "Revelation: The Ultimate Hope in Christ",
+      "coverImageLocation": "/book-covers/revelation-the-ultimate-hope-in-christ.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1626534213i/58573906.jpg"
+    },
+    {
+      "slug": "tell-me-the-stories-of-jesus",
+      "title": "Tell Me The Stories of Jesus",
+      "coverImageLocation": "/book-covers/tell-me-the-stories-of-jesus.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1655180193i/61286482.jpg"
+    },
+    {
+      "slug": "everyday-theology",
+      "title": "Everyday Theology",
+      "coverImageLocation": "/book-covers/everyday-theology.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1643679868i/58934252.jpg"
+    },
+    {
+      "slug": "how-to-read-the-bible-book-by-book",
+      "title": "How to Read the Bible Book by Book",
+      "coverImageLocation": "/book-covers/how-to-read-the-bible-book-by-book.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1699040624i/14876224.jpg"
+    },
+    {
+      "slug": "parables",
+      "title": "Parables",
+      "coverImageLocation": "/book-covers/parables.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1378708146i/17321708.jpg"
+    },
+    {
+      "slug": "the-new-testament-in-its-world",
+      "title": "The New Testament in Its World",
+      "coverImageLocation": "/book-covers/the-new-testament-in-its-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1571442380i/48502428.jpg"
+    },
+    {
+      "slug": "the-seven-churches-of-revelation",
+      "title": "The Seven Churches of Revelation",
+      "coverImageLocation": "/book-covers/the-seven-churches-of-revelation.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1745992937i/232418080.jpg"
+    },
+    {
+      "slug": "chronology-of-the-bible",
+      "title": "Chronology of the Bible",
+      "coverImageLocation": "/book-covers/chronology-of-the-bible.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "chronology-of-israels-kings-prophets",
+      "title": "Chronology of Israel's Kings & Prophets",
+      "coverImageLocation": "/book-covers/chronology-of-israels-kings-prophets.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1558326235i/45889470.jpg"
+    },
+    {
+      "slug": "strongest-strongs-exhaustive-concordance",
+      "title": "Strongest Strong's Exhaustive Concordance",
+      "coverImageLocation": "/book-covers/strongest-strongs-exhaustive-concordance.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1665113446i/16217838.jpg"
+    },
+    {
+      "slug": "50-bible-stories-every-adult-should-know",
+      "title": "50 Bible Stories Every Adult Should Know",
+      "coverImageLocation": "/book-covers/50-bible-stories-every-adult-should-know.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1629822660i/58797769.jpg"
+    },
+    {
+      "slug": "read-to-lead",
+      "title": "Read to Lead",
+      "coverImageLocation": "/book-covers/read-to-lead.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1630395967i/58896532.jpg"
+    },
+    {
+      "slug": "the-come-back-culture",
+      "title": "The Come Back Culture",
+      "coverImageLocation": "/book-covers/the-come-back-culture.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677903243i/74605308.jpg"
+    },
+    {
+      "slug": "whos-holding-your-ladder",
+      "title": "Who's Holding Your Ladder?",
+      "coverImageLocation": "/book-covers/whos-holding-your-ladder.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1523679925i/27818030.jpg"
+    },
+    {
+      "slug": "you-are-not-your-own-belonging-to-god-in-an-unhamn-world",
+      "title": "You Are Not Your Own: Belonging to God in an Unhamn World",
+      "coverImageLocation": "/book-covers/you-are-not-your-own-belonging-to-god-in-an-unhamn-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1747992236i/213784588.jpg"
+    },
+    {
+      "slug": "a-still-and-quiet-mind",
+      "title": "A Still and Quiet Mind",
+      "coverImageLocation": "/book-covers/a-still-and-quiet-mind.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1652560668i/60333355.jpg"
+    },
+    {
+      "slug": "companions-in-suffering",
+      "title": "Companions in Suffering",
+      "coverImageLocation": "/book-covers/companions-in-suffering.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1591675622i/53913875.jpg"
+    },
+    {
+      "slug": "live-your-truth-and-other-lies",
+      "title": "Live Your Truth and Other Lies",
+      "coverImageLocation": "/book-covers/live-your-truth-and-other-lies.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1647808134i/60510573.jpg"
+    },
+    {
+      "slug": "kingdom-values",
+      "title": "Kingdom Values",
+      "coverImageLocation": "/book-covers/kingdom-values.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1644338730i/60324191.jpg"
+    },
+    {
+      "slug": "the-believers-joy",
+      "title": "The Believers Joy",
+      "coverImageLocation": "/book-covers/the-believers-joy.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1399166085i/12260982.jpg"
+    },
+    {
+      "slug": "practical-religion",
+      "title": "Practical Religion",
+      "coverImageLocation": "/book-covers/practical-religion.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1709058379i/209230088.jpg"
+    },
+    {
+      "slug": "a-godward-life",
+      "title": "A Godward Life",
+      "coverImageLocation": "/book-covers/a-godward-life.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1775118896i/247582166.jpg"
+    },
+    {
+      "slug": "fighting-satan",
+      "title": "Fighting Satan",
+      "coverImageLocation": "/book-covers/fighting-satan.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1436569669i/25886072.jpg"
+    },
+    {
+      "slug": "letters-to-my-students",
+      "title": "Letters to My Students",
+      "coverImageLocation": "/book-covers/letters-to-my-students.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1563662915l/49848587.jpg"
+    },
+    {
+      "slug": "life-in-christ",
+      "title": "Life in Christ",
+      "coverImageLocation": "/book-covers/life-in-christ.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1390057151i/20570341.jpg"
+    },
+    {
+      "slug": "christology-a-guide-for-the-perplexed",
+      "title": "Christology: A Guide for the Perplexed",
+      "coverImageLocation": "/book-covers/christology-a-guide-for-the-perplexed.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1347646076i/4203991.jpg"
+    },
+    {
+      "slug": "jesus-without-borders",
+      "title": "Jesus without Borders",
+      "coverImageLocation": "/book-covers/jesus-without-borders.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1425077903i/22574071.jpg"
+    },
+    {
+      "slug": "the-glory-of-christ",
+      "title": "The Glory of Christ",
+      "coverImageLocation": "/book-covers/the-glory-of-christ.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1698887429i/70071478.jpg"
+    },
+    {
+      "slug": "the-person-and-work-of-christ",
+      "title": "The Person and Work of Christ",
+      "coverImageLocation": "/book-covers/the-person-and-work-of-christ.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1681804857i/122946978.jpg"
+    },
+    {
+      "slug": "incarnation",
+      "title": "Incarnation",
+      "coverImageLocation": "/book-covers/incarnation.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1669109633i/13102803.jpg"
+    },
+    {
+      "slug": "the-story-of-christianity-2-volumes",
+      "title": "The Story of Christianity (2 Volumes)",
+      "coverImageLocation": "/book-covers/the-story-of-christianity-2-volumes.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1460248118i/29492008.jpg"
+    },
+    {
+      "slug": "church-history-in-plain-language",
+      "title": "Church History in Plain Language",
+      "coverImageLocation": "/book-covers/church-history-in-plain-language.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1683268908i/148030850.jpg"
+    },
+    {
+      "slug": "heresies-heresy-and-orthodoxy-in-the-history-of-the-church",
+      "title": "Heresies: Heresy and Orthodoxy in the History of the Church",
+      "coverImageLocation": "/book-covers/heresies-heresy-and-orthodoxy-in-the-history-of-the-church.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1454290093i/27982779.jpg"
+    },
+    {
+      "slug": "historical-theology",
+      "title": "Historical Theology",
+      "coverImageLocation": "/book-covers/historical-theology.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1697944303i/195718902.jpg"
+    },
+    {
+      "slug": "five-pioneer-missionaries",
+      "title": "Five Pioneer Missionaries",
+      "coverImageLocation": "/book-covers/five-pioneer-missionaries.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1266911564i/2544801.jpg"
+    },
+    {
+      "slug": "life-together",
+      "title": "Life Together",
+      "coverImageLocation": "/book-covers/life-together.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1722964834i/217233304.jpg"
+    },
+    {
+      "slug": "what-if-jesus-was-serious-about-the-church",
+      "title": "What If Jesus Was Serious About the Church?",
+      "coverImageLocation": "/book-covers/what-if-jesus-was-serious-about-the-church.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1650599627i/60859819.jpg"
+    },
+    {
+      "slug": "rediscover-church",
+      "title": "Rediscover Church",
+      "coverImageLocation": "/book-covers/rediscover-church.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1628692685i/58749439.jpg"
+    },
+    {
+      "slug": "knowing-god",
+      "title": "Knowing God",
+      "coverImageLocation": "/book-covers/knowing-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1687061388i/179019539.jpg"
+    },
+    {
+      "slug": "the-cost-of-discipleship",
+      "title": "The Cost of Discipleship",
+      "coverImageLocation": "/book-covers/the-cost-of-discipleship.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742817006i/230258164.jpg"
+    },
+    {
+      "slug": "the-christians-secret-to-a-happy-life",
+      "title": "The Christian's Secret to a Happy Life",
+      "coverImageLocation": "/book-covers/the-christians-secret-to-a-happy-life.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677897449i/73340770.jpg"
+    },
+    {
+      "slug": "morning-and-evening",
+      "title": "Morning and Evening",
+      "coverImageLocation": "/book-covers/morning-and-evening.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1750172148i/236707317.jpg"
+    },
+    {
+      "slug": "the-overcoming-life",
+      "title": "The Overcoming Life",
+      "coverImageLocation": "/book-covers/the-overcoming-life.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1681630521i/121806700.jpg"
+    },
+    {
+      "slug": "the-problem-of-pain",
+      "title": "The Problem of Pain",
+      "coverImageLocation": "/book-covers/the-problem-of-pain.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1188629986i/1808191.jpg"
+    },
+    {
+      "slug": "the-abolition-of-man",
+      "title": "The Abolition of Man",
+      "coverImageLocation": "/book-covers/the-abolition-of-man.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1311971700i/258.jpg"
+    },
+    {
+      "slug": "foxes-book-of-martyrs",
+      "title": "Foxe's Book of Martyrs",
+      "coverImageLocation": "/book-covers/foxes-book-of-martyrs.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1492585681i/34886077.jpg"
+    },
+    {
+      "slug": "prayer-and-spiritual-warfare",
+      "title": "Prayer and Spiritual Warfare",
+      "coverImageLocation": "/book-covers/prayer-and-spiritual-warfare.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1734367976i/222665611.jpg"
+    },
+    {
+      "slug": "encouragement-for-the-depressed",
+      "title": "Encouragement for the Depressed",
+      "coverImageLocation": "/book-covers/encouragement-for-the-depressed.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1612817868i/50611078.jpg"
+    },
+    {
+      "slug": "holy-spirit-power",
+      "title": "Holy Spirit Power",
+      "coverImageLocation": "/book-covers/holy-spirit-power.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "in-his-steps",
+      "title": "In His Steps",
+      "coverImageLocation": "/book-covers/in-his-steps.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1490190326i/34635325.jpg"
+    },
+    {
+      "slug": "power-of-the-blood-of-christ",
+      "title": "Power of the Blood of Christ",
+      "coverImageLocation": "/book-covers/power-of-the-blood-of-christ.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1394306401i/21159026.jpg"
+    },
+    {
+      "slug": "all-of-grace",
+      "title": "All Of Grace",
+      "coverImageLocation": "/book-covers/all-of-grace.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1687156811i/171955076.jpg"
+    },
+    {
+      "slug": "the-emotional-life-of-our-lord",
+      "title": "The Emotional Life of Our Lord",
+      "coverImageLocation": "/book-covers/the-emotional-life-of-our-lord.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1678255954i/80574465.jpg"
+    },
+    {
+      "slug": "fighting-for-holiness",
+      "title": "Fighting for Holiness",
+      "coverImageLocation": "/book-covers/fighting-for-holiness.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1623121952i/58152493.jpg"
+    },
+    {
+      "slug": "charity-and-its-fruits",
+      "title": "Charity and Its Fruits",
+      "coverImageLocation": "/book-covers/charity-and-its-fruits.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1698847745i/183316724.jpg"
+    },
+    {
+      "slug": "exploring-islam",
+      "title": "Exploring Islam",
+      "coverImageLocation": "/book-covers/exploring-islam.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1776999459i/251137305.jpg"
+    },
+    {
+      "slug": "true-religion",
+      "title": "True Religion",
+      "coverImageLocation": "/book-covers/true-religion.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1678891348i/99480924.jpg"
+    },
+    {
+      "slug": "questioning-islam",
+      "title": "Questioning Islam",
+      "coverImageLocation": "/book-covers/questioning-islam.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1530023274i/40626335.jpg"
+    },
+    {
+      "slug": "the-third-jihad",
+      "title": "The Third Jihad",
+      "coverImageLocation": "/book-covers/the-third-jihad.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1530029774i/40637488.jpg"
+    },
+    {
+      "slug": "are-we-together",
+      "title": "Are We Together?",
+      "coverImageLocation": "/book-covers/are-we-together.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1740485783i/198218278.jpg"
+    },
+    {
+      "slug": "engaging-with-jewish-people",
+      "title": "Engaging with Jewish People",
+      "coverImageLocation": "/book-covers/engaging-with-jewish-people.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1478138023i/32862174.jpg"
+    },
+    {
+      "slug": "world-religions",
+      "title": "World Religions",
+      "coverImageLocation": "/book-covers/world-religions.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "truth-over-fear",
+      "title": "Truth Over Fear",
+      "coverImageLocation": "/book-covers/truth-over-fear.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1574509047i/48918958.jpg"
+    },
+    {
+      "slug": "remember-death",
+      "title": "Remember Death",
+      "coverImageLocation": "/book-covers/remember-death.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1750281448i/236840881.jpg"
+    },
+    {
+      "slug": "when-mountains-crumble",
+      "title": "When Mountains Crumble",
+      "coverImageLocation": "/book-covers/when-mountains-crumble.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1646624389i/60564003.jpg"
+    },
+    {
+      "slug": "shattered-surviving-the-loss-of-a-child",
+      "title": "Shattered: Surviving the Loss of a Child",
+      "coverImageLocation": "/book-covers/shattered-surviving-the-loss-of-a-child.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1654650144i/61247782.jpg"
+    },
+    {
+      "slug": "for-all-who-grieve",
+      "title": "For All Who Grieve",
+      "coverImageLocation": "/book-covers/for-all-who-grieve.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1583370399i/52097396.jpg"
+    },
+    {
+      "slug": "good-night-i-love-you",
+      "title": "Good Night, I Love You",
+      "coverImageLocation": "/book-covers/good-night-i-love-you.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1723086300i/36707718.jpg"
+    },
+    {
+      "slug": "love-stronger-than-death",
+      "title": "Love Stronger than Death",
+      "coverImageLocation": "/book-covers/love-stronger-than-death.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1482390171i/33514410.jpg"
+    },
+    {
+      "slug": "call-no-one-on-earth-your-father",
+      "title": "Call No One on Earth Your Father",
+      "coverImageLocation": "/book-covers/call-no-one-on-earth-your-father.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677898988i/73683164.jpg"
+    },
+    {
+      "slug": "the-extended-family",
+      "title": "The Extended Family",
+      "coverImageLocation": "/book-covers/the-extended-family.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1472210767i/31683710.jpg"
+    },
+    {
+      "slug": "the-unwritten-book",
+      "title": "The Unwritten Book",
+      "coverImageLocation": "/book-covers/the-unwritten-book.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677820135i/30956276.jpg"
+    },
+    {
+      "slug": "denominational-stew-american-style",
+      "title": "Denominational Stew: American Style",
+      "coverImageLocation": "/book-covers/denominational-stew-american-style.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1671896739i/73567071.jpg"
+    },
+    {
+      "slug": "the-american-muhammad-joseph-smith",
+      "title": "The American Muhammad: Joseph Smith",
+      "coverImageLocation": "/book-covers/the-american-muhammad-joseph-smith.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1365394433i/16241653.jpg"
+    },
+    {
+      "slug": "from-the-apostolic-apple-to-the-denominational-oranges",
+      "title": "From the Apostolic Apple to the Denominational Oranges",
+      "coverImageLocation": "/book-covers/from-the-apostolic-apple-to-the-denominational-oranges.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1355104793i/16192467.jpg"
+    },
+    {
+      "slug": "journeys-of-faith",
+      "title": "Journeys of Faith",
+      "coverImageLocation": "/book-covers/journeys-of-faith.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1687805780i/181330746.jpg"
+    },
+    {
+      "slug": "journey-to-the-cross",
+      "title": "Journey to the Cross",
+      "coverImageLocation": "/book-covers/journey-to-the-cross.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1593993844i/54101438.jpg"
+    },
+    {
+      "slug": "songs-of-suffering",
+      "title": "Songs of Suffering",
+      "coverImageLocation": "/book-covers/songs-of-suffering.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1644340559i/60331403.jpg"
+    },
+    {
+      "slug": "tozer-on-the-holy-spirit",
+      "title": "Tozer on the Holy Spirit",
+      "coverImageLocation": "/book-covers/tozer-on-the-holy-spirit.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1425496553i/25070494.jpg"
+    },
+    {
+      "slug": "the-walk",
+      "title": "The Walk",
+      "coverImageLocation": "/book-covers/the-walk.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1347446361i/6878371.jpg"
+    },
+    {
+      "slug": "rooted",
+      "title": "Rooted",
+      "coverImageLocation": "/book-covers/rooted.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765882261i/245336772.jpg"
+    },
+    {
+      "slug": "multiply",
+      "title": "Multiply",
+      "coverImageLocation": "/book-covers/multiply.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1718905711i/209379773.jpg"
+    },
+    {
+      "slug": "discipling",
+      "title": "Discipling",
+      "coverImageLocation": "/book-covers/discipling.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1729362034i/220577312.jpg"
+    },
+    {
+      "slug": "the-disciple-makers-handbook",
+      "title": "The Disciple Maker's Handbook",
+      "coverImageLocation": "/book-covers/the-disciple-makers-handbook.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1484191379i/33841373.jpg"
+    },
+    {
+      "slug": "bold-moves",
+      "title": "Bold Moves",
+      "coverImageLocation": "/book-covers/bold-moves.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1750952938i/237357345.jpg"
+    },
+    {
+      "slug": "transforming-discipleship",
+      "title": "Transforming Discipleship",
+      "coverImageLocation": "/book-covers/transforming-discipleship.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1681118320i/126132932.jpg"
+    },
+    {
+      "slug": "the-book-of-revelation",
+      "title": "The Book of Revelation",
+      "coverImageLocation": "/book-covers/the-book-of-revelation.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1632613243i/59076062.jpg"
+    },
+    {
+      "slug": "revelation-revealed",
+      "title": "Revelation Revealed",
+      "coverImageLocation": "/book-covers/revelation-revealed.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1666997075i/63121747.jpg"
+    },
+    {
+      "slug": "the-book-of-signs",
+      "title": "The Book of Signs",
+      "coverImageLocation": "/book-covers/the-book-of-signs.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1550610413i/44028149.jpg"
+    },
+    {
+      "slug": "essential-eschatology",
+      "title": "Essential Eschatology",
+      "coverImageLocation": "/book-covers/essential-eschatology.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1388785004i/20428471.jpg"
+    },
+    {
+      "slug": "the-future-of-everything",
+      "title": "The Future of Everything",
+      "coverImageLocation": "/book-covers/the-future-of-everything.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1550174536i/44011763.jpg"
+    },
+    {
+      "slug": "heaven-on-earth",
+      "title": "Heaven on Earth",
+      "coverImageLocation": "/book-covers/heaven-on-earth.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1516849002i/37491105.jpg"
+    },
+    {
+      "slug": "ethics-for-a-brave-new-world",
+      "title": "Ethics for a Brave New World",
+      "coverImageLocation": "/book-covers/ethics-for-a-brave-new-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1369818794i/9654700.jpg"
+    },
+    {
+      "slug": "ethics-as-worship",
+      "title": "Ethics as Worship",
+      "coverImageLocation": "/book-covers/ethics-as-worship.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1629898757i/58854041.jpg"
+    },
+    {
+      "slug": "before-you-share-your-faith",
+      "title": "Before You Share Your Faith",
+      "coverImageLocation": "/book-covers/before-you-share-your-faith.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1641530945i/60052213.jpg"
+    },
+    {
+      "slug": "gospel-above-all",
+      "title": "Gospel Above All",
+      "coverImageLocation": "/book-covers/gospel-above-all.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1699718806i/197631534.jpg"
+    },
+    {
+      "slug": "reimagining-evangelism",
+      "title": "Reimagining Evangelism",
+      "coverImageLocation": "/book-covers/reimagining-evangelism.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1348472021i/11096603.jpg"
+    },
+    {
+      "slug": "the-soul-winner",
+      "title": "The Soul Winner",
+      "coverImageLocation": "/book-covers/the-soul-winner.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1699460432i/64311315.jpg"
+    },
+    {
+      "slug": "sharing-jesus-without-freaking-out",
+      "title": "Sharing Jesus Without Freaking Out",
+      "coverImageLocation": "/book-covers/sharing-jesus-without-freaking-out.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1589011460i/48662326.jpg"
+    },
+    {
+      "slug": "the-gospel-and-personal-evangelism",
+      "title": "The Gospel and Personal Evangelism",
+      "coverImageLocation": "/book-covers/the-gospel-and-personal-evangelism.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1736888484i/223624260.jpg"
+    },
+    {
+      "slug": "if-jesus-is-the-answer-what-is-the-question",
+      "title": "If Jesus is the Answer, What is the Question?",
+      "coverImageLocation": "/book-covers/if-jesus-is-the-answer-what-is-the-question.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1480377332i/33107710.jpg"
+    },
+    {
+      "slug": "how-to-revive-evangelism",
+      "title": "How To Revive Evangelism",
+      "coverImageLocation": "/book-covers/how-to-revive-evangelism.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1614059032i/57182319.jpg"
+    },
+    {
+      "slug": "story-bearer",
+      "title": "Story Bearer",
+      "coverImageLocation": "/book-covers/story-bearer.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1590613175i/53509681.jpg"
+    },
+    {
+      "slug": "the-scandal-of-evangelism",
+      "title": "The Scandal of Evangelism",
+      "coverImageLocation": "/book-covers/the-scandal-of-evangelism.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1528252684i/40396031.jpg"
+    },
+    {
+      "slug": "how-to-climb-everest",
+      "title": "How to Climb Everest",
+      "coverImageLocation": "/book-covers/how-to-climb-everest.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677851049i/57693017.jpg"
+    },
+    {
+      "slug": "why-believe",
+      "title": "Why Believe?",
+      "coverImageLocation": "/book-covers/why-believe.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1632865234i/59092219.jpg"
+    },
+    {
+      "slug": "basic-christianity",
+      "title": "Basic Christianity",
+      "coverImageLocation": "/book-covers/basic-christianity.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1719017299i/214015123.jpg"
+    },
+    {
+      "slug": "jesus-the-god-who-knows-your-name",
+      "title": "Jesus: The God Who Knows Your Name",
+      "coverImageLocation": "/book-covers/jesus-the-god-who-knows-your-name.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1556575007i/45362780.jpg"
+    },
+    {
+      "slug": "a-habit-called-faith",
+      "title": "A Habit Called Faith",
+      "coverImageLocation": "/book-covers/a-habit-called-faith.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1611555293i/54883740.jpg"
+    },
+    {
+      "slug": "the-christian-book-of-mystical-verse",
+      "title": "The Christian Book of Mystical Verse",
+      "coverImageLocation": "/book-covers/the-christian-book-of-mystical-verse.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1456189076i/27882838.jpg"
+    },
+    {
+      "slug": "gods-wisdom-for-a-fair-and-just-world",
+      "title": "God's Wisdom For A Fair and Just World",
+      "coverImageLocation": "/book-covers/gods-wisdom-for-a-fair-and-just-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1600881063i/55436102.jpg"
+    },
+    {
+      "slug": "crazy-love",
+      "title": "Crazy Love",
+      "coverImageLocation": "/book-covers/crazy-love.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1371519739i/15850440.jpg"
+    },
+    {
+      "slug": "the-four-loves",
+      "title": "The Four Loves",
+      "coverImageLocation": "/book-covers/the-four-loves.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1684784923i/158988529.jpg"
+    },
+    {
+      "slug": "does-the-gospel-promise-health-and-prosperity",
+      "title": "Does the Gospel Promise Health and Prosperity?",
+      "coverImageLocation": "/book-covers/does-the-gospel-promise-health-and-prosperity.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1623116224i/58152487.jpg"
+    },
+    {
+      "slug": "oxen",
+      "title": "Oxen",
+      "coverImageLocation": "/book-covers/oxen.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1387733534i/20048169.jpg"
+    },
+    {
+      "slug": "a-disruptive-generosity",
+      "title": "A Disruptive Generosity",
+      "coverImageLocation": "/book-covers/a-disruptive-generosity.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1490206276i/34663499.jpg"
+    },
+    {
+      "slug": "names-of-god",
+      "title": "Names of God",
+      "coverImageLocation": "/book-covers/names-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1688523218i/183946830.jpg"
+    },
+    {
+      "slug": "gods-empowering-presence",
+      "title": "God's Empowering Presence",
+      "coverImageLocation": "/book-covers/gods-empowering-presence.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1748531878i/223128012.jpg"
+    },
+    {
+      "slug": "providence",
+      "title": "Providence",
+      "coverImageLocation": "/book-covers/providence.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1682138404i/124795352.jpg"
+    },
+    {
+      "slug": "the-existence-and-attributes-of-god",
+      "title": "The Existence and Attributes of God",
+      "coverImageLocation": "/book-covers/the-existence-and-attributes-of-god.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1704440827i/204887317.jpg"
+    },
+    {
+      "slug": "father-son-and-spirit-the-trinity-and-johns-gospel",
+      "title": "Father, Son and Spirit: The Trinity and John's Gospel",
+      "coverImageLocation": "/book-covers/father-son-and-spirit-the-trinity-and-johns-gospel.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1356488450i/8599481.jpg"
+    },
+    {
+      "slug": "god-is-a-devotional-guide-to-the-attributes-of-god",
+      "title": "God Is: A Devotional Guide to the Attributes of God",
+      "coverImageLocation": "/book-covers/god-is-a-devotional-guide-to-the-attributes-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1499450716i/35618160.jpg"
+    },
+    {
+      "slug": "desiring-god",
+      "title": "Desiring God",
+      "coverImageLocation": "/book-covers/desiring-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1747250953i/227856515.jpg"
+    },
+    {
+      "slug": "what-about-evil",
+      "title": "What About Evil?",
+      "coverImageLocation": "/book-covers/what-about-evil.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1606763913i/56119751.jpg"
+    },
+    {
+      "slug": "chance-and-the-sovereignty-of-god",
+      "title": "Chance and the Sovereignty of God",
+      "coverImageLocation": "/book-covers/chance-and-the-sovereignty-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1401562466i/18475487.jpg"
+    },
+    {
+      "slug": "be-still-my-soul",
+      "title": "Be Still My Soul",
+      "coverImageLocation": "/book-covers/be-still-my-soul.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "surprised-by-suffering",
+      "title": "Surprised by Suffering",
+      "coverImageLocation": "/book-covers/surprised-by-suffering.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1697572131i/198218282.jpg"
+    },
+    {
+      "slug": "seasons-of-sorrow",
+      "title": "Seasons of Sorrow",
+      "coverImageLocation": "/book-covers/seasons-of-sorrow.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1661865842i/60693246.jpg"
+    },
+    {
+      "slug": "faith-doesnt-erase-grief",
+      "title": "Faith Doesn't Erase Grief",
+      "coverImageLocation": "/book-covers/faith-doesnt-erase-grief.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1658509747i/61655507.jpg"
+    },
+    {
+      "slug": "healing-after-loss",
+      "title": "Healing After Loss",
+      "coverImageLocation": "/book-covers/healing-after-loss.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1413280818i/57.jpg"
+    },
+    {
+      "slug": "hermeneutics-an-introduction",
+      "title": "Hermeneutics: An Introduction",
+      "coverImageLocation": "/book-covers/hermeneutics-an-introduction.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1617554422i/57625062.jpg"
+    },
+    {
+      "slug": "biblical-hermeneutics",
+      "title": "Biblical Hermeneutics",
+      "coverImageLocation": "/book-covers/biblical-hermeneutics.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1428780716i/25342273.jpg"
+    },
+    {
+      "slug": "in-all-the-scriptures",
+      "title": "In All the Scriptures",
+      "coverImageLocation": "/book-covers/in-all-the-scriptures.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1361869698i/17414690.jpg"
+    },
+    {
+      "slug": "how-to-read-the-bible-through-the-jesus-lens",
+      "title": "How To Read the Bible Through the Jesus Lens",
+      "coverImageLocation": "/book-covers/how-to-read-the-bible-through-the-jesus-lens.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1394207710i/18924698.jpg"
+    },
+    {
+      "slug": "the-word-of-god-for-the-people-of-god",
+      "title": "The Word of God for the People of God",
+      "coverImageLocation": "/book-covers/the-word-of-god-for-the-people-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1347716303i/9031491.jpg"
+    },
+    {
+      "slug": "deacons-how-they-serve-and-strengthen-the-church",
+      "title": "Deacons: How They Serve and Strengthen the Church",
+      "coverImageLocation": "/book-covers/deacons-how-they-serve-and-strengthen-the-church.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1604477767i/55476503.jpg"
+    },
+    {
+      "slug": "predictable-success",
+      "title": "Predictable Success",
+      "coverImageLocation": "/book-covers/predictable-success.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1660338595i/61948851.jpg"
+    },
+    {
+      "slug": "workers-for-your-joy",
+      "title": "Workers For Your Joy",
+      "coverImageLocation": "/book-covers/workers-for-your-joy.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1644339733i/60354452.jpg"
+    },
+    {
+      "slug": "servant-leader-strong",
+      "title": "Servant Leader Strong",
+      "coverImageLocation": "/book-covers/servant-leader-strong.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577962457i/50248359.jpg"
+    },
+    {
+      "slug": "marriage-conflict-talking-as-teammates",
+      "title": "Marriage Conflict: Talking as Teammates",
+      "coverImageLocation": "/book-covers/marriage-conflict-talking-as-teammates.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1591008968i/53733542.jpg"
+    },
+    {
+      "slug": "living-in-a-godly-marriage",
+      "title": "Living in a Godly Marriage",
+      "coverImageLocation": "/book-covers/living-in-a-godly-marriage.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1452090273i/28464410.jpg"
+    },
+    {
+      "slug": "marriage",
+      "title": "Marriage",
+      "coverImageLocation": "/book-covers/marriage.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1616845324i/57541934.jpg"
+    },
+    {
+      "slug": "this-momentary-marriage",
+      "title": "This Momentary Marriage",
+      "coverImageLocation": "/book-covers/this-momentary-marriage.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1678535484i/91087578.jpg"
+    },
+    {
+      "slug": "wild-at-heart",
+      "title": "Wild at Heart",
+      "coverImageLocation": "/book-covers/wild-at-heart.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677820265i/31016712.jpg"
+    },
+    {
+      "slug": "aha",
+      "title": "AHA",
+      "coverImageLocation": "/book-covers/aha.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711649471i/210486222.jpg"
+    },
+    {
+      "slug": "the-foundations",
+      "title": "The Foundations",
+      "coverImageLocation": "/book-covers/the-foundations.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677871653i/67391373.jpg"
+    },
+    {
+      "slug": "dare-to-be-uncommon",
+      "title": "Dare To Be Uncommon",
+      "coverImageLocation": "/book-covers/dare-to-be-uncommon.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1348982692i/6738519.jpg"
+    },
+    {
+      "slug": "identity",
+      "title": "Identity",
+      "coverImageLocation": "/book-covers/identity.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677904546i/74888644.jpg"
+    },
+    {
+      "slug": "family-shepherds",
+      "title": "Family Shepherds",
+      "coverImageLocation": "/book-covers/family-shepherds.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1369822359i/11797884.jpg"
+    },
+    {
+      "slug": "parenting",
+      "title": "Parenting",
+      "coverImageLocation": "/book-covers/parenting.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1665698257i/61816604.jpg"
+    },
+    {
+      "slug": "effective-parenting-in-a-defective-world",
+      "title": "Effective Parenting in a Defective World",
+      "coverImageLocation": "/book-covers/effective-parenting-in-a-defective-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1347314968i/14456837.jpg"
+    },
+    {
+      "slug": "it-starts-at-home",
+      "title": "It Starts at Home",
+      "coverImageLocation": "/book-covers/it-starts-at-home.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1595677884i/54669020.jpg"
+    },
+    {
+      "slug": "the-path-to-being-a-pastor",
+      "title": "The Path to Being a Pastor",
+      "coverImageLocation": "/book-covers/the-path-to-being-a-pastor.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1767588355i/246136209.jpg"
+    },
+    {
+      "slug": "lead-12-gospel-principles-for-leadership-in-the-church",
+      "title": "Lead: 12 Gospel Principles for Leadership in the Church",
+      "coverImageLocation": "/book-covers/lead-12-gospel-principles-for-leadership-in-the-church.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1719015288i/213898804.jpg"
+    },
+    {
+      "slug": "soundtracks",
+      "title": "Soundtracks",
+      "coverImageLocation": "/book-covers/soundtracks.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1682355909i/129248823.jpg"
+    },
+    {
+      "slug": "finding-the-right-hills-to-die-on",
+      "title": "Finding the Right Hills to Die On",
+      "coverImageLocation": "/book-covers/finding-the-right-hills-to-die-on.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "the-man-of-god",
+      "title": "The Man of God",
+      "coverImageLocation": "/book-covers/the-man-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1531219638i/40755624.jpg"
+    },
+    {
+      "slug": "city-of-god",
+      "title": "City of God",
+      "coverImageLocation": "/book-covers/city-of-god.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1746891280i/222271906.jpg"
+    },
+    {
+      "slug": "on-christian-doctrine",
+      "title": "On Christian Doctrine",
+      "coverImageLocation": "/book-covers/on-christian-doctrine.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1750096909i/236606487.jpg"
+    },
+    {
+      "slug": "seven-days-that-divide-the-world",
+      "title": "Seven Days that Divide the World",
+      "coverImageLocation": "/book-covers/seven-days-that-divide-the-world.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1655738506i/61320248.jpg"
+    },
+    {
+      "slug": "the-complete-works-of-e-m-bounds-on-prayer",
+      "title": "The Complete Works of E. M. Bounds on Prayer",
+      "coverImageLocation": "/book-covers/the-complete-works-of-e-m-bounds-on-prayer.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1699882882i/62927718.jpg"
+    },
+    {
+      "slug": "a-call-to-prayer",
+      "title": "A Call to Prayer",
+      "coverImageLocation": "/book-covers/a-call-to-prayer.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1598626401i/55153405.jpg"
+    },
+    {
+      "slug": "praying",
+      "title": "Praying",
+      "coverImageLocation": "/book-covers/praying.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1680804744i/125698392.jpg"
+    },
+    {
+      "slug": "biblical-preaching",
+      "title": "Biblical Preaching",
+      "coverImageLocation": "/book-covers/biblical-preaching.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1726744689i/219237962.jpg"
+    },
+    {
+      "slug": "preaching-preachers",
+      "title": "Preaching & Preachers",
+      "coverImageLocation": "/book-covers/preaching-preachers.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1394391994i/21184643.jpg"
+    },
+    {
+      "slug": "the-preaching-life",
+      "title": "The Preaching Life",
+      "coverImageLocation": "/book-covers/the-preaching-life.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1394422078i/21227843.jpg"
+    },
+    {
+      "slug": "preaching-the-whole-bible-as-christian-scripture",
+      "title": "Preaching the Whole Bible as Christian Scripture",
+      "coverImageLocation": "/book-covers/preaching-the-whole-bible-as-christian-scripture.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1427169255i/25206483.jpg"
+    },
+    {
+      "slug": "the-life-and-times-of-jesus-the-messiah",
+      "title": "The Life and Times of Jesus the Messiah",
+      "coverImageLocation": "/book-covers/the-life-and-times-of-jesus-the-messiah.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1661871385i/62113408.jpg"
+    },
+    {
+      "slug": "strongs-exhaustive-concordance",
+      "title": "Strong's Exhaustive Concordance",
+      "coverImageLocation": "/book-covers/strongs-exhaustive-concordance.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1665113446i/16217838.jpg"
+    },
+    {
+      "slug": "chosen-but-free",
+      "title": "Chosen But Free",
+      "coverImageLocation": "/book-covers/chosen-but-free.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1348843234i/8541397.jpg"
+    },
+    {
+      "slug": "preach-for-a-year",
+      "title": "Preach for a Year",
+      "coverImageLocation": "/book-covers/preach-for-a-year.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1379897358i/10908090.jpg"
+    },
+    {
+      "slug": "the-lost-sermons-of-charles-h-spurgeon",
+      "title": "The Lost Sermons of Charles H. Spurgeon",
+      "coverImageLocation": "/book-covers/the-lost-sermons-of-charles-h-spurgeon.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1647801510i/59802300.jpg"
+    },
+    {
+      "slug": "the-worlds-greatest-sermons-and-preachers",
+      "title": "The World's Greatest Sermons and Preachers",
+      "coverImageLocation": "/book-covers/the-worlds-greatest-sermons-and-preachers.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677867516i/66567751.jpg"
+    },
+    {
+      "slug": "cultural-counterfeits",
+      "title": "Cultural Counterfeits",
+      "coverImageLocation": "/book-covers/cultural-counterfeits.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1633494330i/58399806.jpg"
+    },
+    {
+      "slug": "not-in-it-to-win-it",
+      "title": "Not In It To Win It",
+      "coverImageLocation": "/book-covers/not-in-it-to-win-it.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1646229763i/60536203.jpg"
+    },
+    {
+      "slug": "no-reason-to-hide",
+      "title": "No Reason to Hide",
+      "coverImageLocation": "/book-covers/no-reason-to-hide.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1661123852i/62046410.jpg"
+    },
+    {
+      "slug": "a-rebels-manifesto",
+      "title": "A Rebel's Manifesto",
+      "coverImageLocation": "/book-covers/a-rebels-manifesto.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1635261140i/59448274.jpg"
+    },
+    {
+      "slug": "world-on-fire",
+      "title": "World on Fire",
+      "coverImageLocation": "/book-covers/world-on-fire.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1626485754i/58570824.jpg"
+    },
+    {
+      "slug": "victory-over-the-darkness",
+      "title": "Victory Over the Darkness",
+      "coverImageLocation": "/book-covers/victory-over-the-darkness.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1348560412i/10259714.jpg"
+    },
+    {
+      "slug": "precious-remedies-against-satans-devices",
+      "title": "Precious Remedies Against Satan's Devices",
+      "coverImageLocation": "/book-covers/precious-remedies-against-satans-devices.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1585647216i/52823227.jpg"
+    },
+    {
+      "slug": "the-christian-in-complete-armour",
+      "title": "The Christian in Complete Armour",
+      "coverImageLocation": "/book-covers/the-christian-in-complete-armour.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677842871i/45119674.jpg"
+    },
+    {
+      "slug": "essentials-of-spiritual-warfare",
+      "title": "Essentials of Spiritual Warfare",
+      "coverImageLocation": "/book-covers/essentials-of-spiritual-warfare.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1348891106i/8204406.jpg"
+    },
+    {
+      "slug": "demon-possession-and-allied-themes",
+      "title": "Demon Possession and Allied Themes",
+      "coverImageLocation": "/book-covers/demon-possession-and-allied-themes.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677832190i/34967602.jpg"
+    },
+    {
+      "slug": "ten-words-to-live-by",
+      "title": "Ten Words to Live By",
+      "coverImageLocation": "/book-covers/ten-words-to-live-by.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "adam-and-the-covenant-of-works",
+      "title": "Adam and the Covenant of Works",
+      "coverImageLocation": "/book-covers/adam-and-the-covenant-of-works.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1636888150i/59615291.jpg"
+    },
+    {
+      "slug": "40-questions-about-typology-and-allegory",
+      "title": "40 Questions About Typology and Allegory",
+      "coverImageLocation": "/book-covers/40-questions-about-typology-and-allegory.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1601000450i/52542288.jpg"
+    },
+    {
+      "slug": "free-to-believe",
+      "title": "Free to Believe",
+      "coverImageLocation": "/book-covers/free-to-believe.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1561183404l/52310201.jpg"
+    },
+    {
+      "slug": "the-cross-before-me",
+      "title": "The Cross Before Me",
+      "coverImageLocation": "/book-covers/the-cross-before-me.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1567646252l/52851432.jpg"
+    },
+    {
+      "slug": "faith-among-the-faithless",
+      "title": "Faith Among the Faithless",
+      "coverImageLocation": "/book-covers/faith-among-the-faithless.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1505317357i/35554154.jpg"
+    },
+    {
+      "slug": "journeys-with-jesus",
+      "title": "Journeys with Jesus",
+      "coverImageLocation": "/book-covers/journeys-with-jesus.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1527513410i/40227347.jpg"
+    },
+    {
+      "slug": "women-of-the-word",
+      "title": "Women of the Word",
+      "coverImageLocation": "/book-covers/women-of-the-word.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1614085888i/57183135.jpg"
+    },
+    {
+      "slug": "you-are-a-theologian",
+      "title": "You Are a Theologian",
+      "coverImageLocation": "/book-covers/you-are-a-theologian.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1685984651i/173862412.jpg"
+    },
+    {
+      "slug": "word-filled-womens-ministry",
+      "title": "Word-Filled Women's Ministry",
+      "coverImageLocation": "/book-covers/word-filled-womens-ministry.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1680488038i/111658039.jpg"
+    },
+    {
+      "slug": "blessed",
+      "title": "Blessed",
+      "coverImageLocation": "/book-covers/blessed.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653862399i/59863839.jpg"
+    },
+    {
+      "slug": "finding-my-father",
+      "title": "Finding My Father",
+      "coverImageLocation": "/book-covers/finding-my-father.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1622802593i/57072423.jpg"
+    },
+    {
+      "slug": "growing-together",
+      "title": "Growing Together",
+      "coverImageLocation": "/book-covers/growing-together.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1568129585l/52891118.jpg"
+    },
+    {
+      "slug": "teach-me-to-feel",
+      "title": "Teach Me to Feel",
+      "coverImageLocation": "/book-covers/teach-me-to-feel.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577854832i/50234481.jpg"
+    },
+    {
+      "slug": "5-things-to-pray-for-your-heart",
+      "title": "5 Things to Pray for Your Heart",
+      "coverImageLocation": "/book-covers/5-things-to-pray-for-your-heart.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1526297145i/40118924.jpg"
+    },
+    {
+      "slug": "handbook-of-religion",
+      "title": "Handbook of Religion",
+      "coverImageLocation": "/book-covers/handbook-of-religion.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1649033846i/60610056.jpg"
+    },
+    {
+      "slug": "world-religions-in-seven-sentences",
+      "title": "World Religions in Seven Sentences",
+      "coverImageLocation": "/book-covers/world-religions-in-seven-sentences.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1682526931i/142010583.jpg"
+    },
+    {
+      "slug": "the-cross-and-the-bodhi-tree",
+      "title": "The Cross and the Bodhi Tree",
+      "coverImageLocation": "/book-covers/the-cross-and-the-bodhi-tree.webp",
+      "source": "goodreads-asin",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1777651334i/251706601.jpg"
+    },
+    {
+      "slug": "worship",
+      "title": "Worship",
+      "coverImageLocation": "/book-covers/worship.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1671283323i/68953173.jpg"
+    },
+    {
+      "slug": "rhythms-of-grace",
+      "title": "Rhythms of Grace",
+      "coverImageLocation": "/book-covers/rhythms-of-grace.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://s.gr-assets.com/assets/facebook/goodreads_wide-e23f6858b6bf20dcaf8493237a214a0e.png"
+    },
+    {
+      "slug": "reformation-worship",
+      "title": "Reformation Worship",
+      "coverImageLocation": "/book-covers/reformation-worship.webp",
+      "source": "goodreads-isbn13",
+      "sourceUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1524134923i/39892956.jpg"
+    }
+  ],
+  "skippedExisting": [
+    {
+      "slug": "confessions",
+      "title": "Confessions",
+      "coverImageLocation": "/book-covers/confessions.webp"
+    }
+  ],
+  "failed": [],
+  "finishedAt": "2026-05-14T20:57:00.238Z"
+}

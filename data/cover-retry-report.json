@@ -1,0 +1,2804 @@
+{
+  "startedAt": "2026-05-14T20:25:16.983Z",
+  "total": 317,
+  "saved": [
+    {
+      "slug": "i-dont-have-enough-faith-to-be-an-atheist",
+      "title": "I Don't Have Enough Faith to be an Atheist",
+      "coverImageLocation": "/book-covers/i-dont-have-enough-faith-to-be-an-atheist.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/842158-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "tactics",
+      "title": "Tactics",
+      "coverImageLocation": "/book-covers/tactics.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10175130-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-bible-archaeology",
+      "title": "The Bible & Archaeology",
+      "coverImageLocation": "/book-covers/the-bible-archaeology.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14711646-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-archaeology-of-qumran-and-the-dead-sea-scrolls",
+      "title": "The Archaeology of Qumran and the Dead Sea Scrolls",
+      "coverImageLocation": "/book-covers/the-archaeology-of-qumran-and-the-dead-sea-scrolls.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/572161-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-complete-dictionary-of-biblical-names",
+      "title": "The Complete Dictionary of Biblical Names",
+      "coverImageLocation": "/book-covers/the-complete-dictionary-of-biblical-names.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14687605-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "how-to-choose-a-translation-for-all-its-worth",
+      "title": "How to Choose a Translation for All Its Worth",
+      "coverImageLocation": "/book-covers/how-to-choose-a-translation-for-all-its-worth.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/2364804-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "30-days-to-understanding-the-bible",
+      "title": "30 Days to Understanding the Bible",
+      "coverImageLocation": "/book-covers/30-days-to-understanding-the-bible.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/762774-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "leveling-up",
+      "title": "Leveling Up",
+      "coverImageLocation": "/book-covers/leveling-up.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14770096-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "chasing-failure",
+      "title": "Chasing Failure",
+      "coverImageLocation": "/book-covers/chasing-failure.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/8965844-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "redeeming-your-time",
+      "title": "Redeeming Your Time",
+      "coverImageLocation": "/book-covers/redeeming-your-time.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/13232801-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "family-discipleship-leading-your-home",
+      "title": "Family Discipleship: Leading Your Home",
+      "coverImageLocation": "/book-covers/family-discipleship-leading-your-home.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/13136596-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "tell-the-truth",
+      "title": "Tell the Truth",
+      "coverImageLocation": "/book-covers/tell-the-truth.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/633812-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "war-of-words",
+      "title": "War of Words",
+      "coverImageLocation": "/book-covers/war-of-words.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/12970814-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "jesus-and-the-last-supper",
+      "title": "Jesus and the Last Supper",
+      "coverImageLocation": "/book-covers/jesus-and-the-last-supper.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/13133367-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "intentional-churches",
+      "title": "Intentional Churches",
+      "coverImageLocation": "/book-covers/intentional-churches.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/13195152-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-beautiful-community",
+      "title": "The Beautiful Community",
+      "coverImageLocation": "/book-covers/the-beautiful-community.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10515718-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-pilgrims-progress",
+      "title": "The Pilgrim's Progress",
+      "coverImageLocation": "/book-covers/the-pilgrims-progress.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/8229224-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-knowledge-of-the-holy",
+      "title": "The Knowledge of the Holy",
+      "coverImageLocation": "/book-covers/the-knowledge-of-the-holy.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14639910-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "how-to-pray",
+      "title": "How to Pray",
+      "coverImageLocation": "/book-covers/how-to-pray.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/1392294-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-pursuit-of-god",
+      "title": "The Pursuit of God",
+      "coverImageLocation": "/book-covers/the-pursuit-of-god.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/666870-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "abide-in-christ",
+      "title": "Abide in Christ",
+      "coverImageLocation": "/book-covers/abide-in-christ.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/12971245-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-return-of-the-prodigal-son",
+      "title": "The Return of the Prodigal Son",
+      "coverImageLocation": "/book-covers/the-return-of-the-prodigal-son.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/240748-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "they-say-we-are-infidels",
+      "title": "They Say We Are Infidels",
+      "coverImageLocation": "/book-covers/they-say-we-are-infidels.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/7421080-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "engaging-with-muslims",
+      "title": "Engaging with Muslims",
+      "coverImageLocation": "/book-covers/engaging-with-muslims.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10229155-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-facts-on-roman-catholicism",
+      "title": "The Facts on Roman Catholicism",
+      "coverImageLocation": "/book-covers/the-facts-on-roman-catholicism.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/12860463-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "catholics-and-evangelicals-for-the-common-good",
+      "title": "Catholics and Evangelicals for the Common Good",
+      "coverImageLocation": "/book-covers/catholics-and-evangelicals-for-the-common-good.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/9221405-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "tozer-on-the-almighty-god",
+      "title": "Tozer on the Almighty God",
+      "coverImageLocation": "/book-covers/tozer-on-the-almighty-god.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/2009142-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "four-chair-discipling",
+      "title": "Four Chair Discipling",
+      "coverImageLocation": "/book-covers/four-chair-discipling.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/9002050-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "principles-of-conduct",
+      "title": "Principles of Conduct",
+      "coverImageLocation": "/book-covers/principles-of-conduct.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/571871-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "contagious-faith",
+      "title": "Contagious Faith",
+      "coverImageLocation": "/book-covers/contagious-faith.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/13952716-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-confessions",
+      "title": "The Confessions",
+      "coverImageLocation": "/book-covers/the-confessions.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10331895-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-attributes-of-god",
+      "title": "The Attributes of God",
+      "coverImageLocation": "/book-covers/the-attributes-of-god.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/563758-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-catalyst-leader",
+      "title": "The Catalyst Leader",
+      "coverImageLocation": "/book-covers/the-catalyst-leader.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/9026314-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-meaning-of-marriage",
+      "title": "The Meaning of Marriage",
+      "coverImageLocation": "/book-covers/the-meaning-of-marriage.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/6895683-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "you-and-me-forever",
+      "title": "You and Me Forever",
+      "coverImageLocation": "/book-covers/you-and-me-forever.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10125591-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "the-love-dare",
+      "title": "The Love Dare",
+      "coverImageLocation": "/book-covers/the-love-dare.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/9037332-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "his-needs-her-needs",
+      "title": "His Needs, Her Needs",
+      "coverImageLocation": "/book-covers/his-needs-her-needs.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10863166-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "orthodoxy",
+      "title": "Orthodoxy",
+      "coverImageLocation": "/book-covers/orthodoxy.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/6268135-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "confessions",
+      "title": "Confessions",
+      "coverImageLocation": "/book-covers/confessions.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14582486-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "love-your-god-with-all-your-mind",
+      "title": "Love Your God with All Your Mind",
+      "coverImageLocation": "/book-covers/love-your-god-with-all-your-mind.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/876669-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "smiths-bible-dictionary",
+      "title": "Smith's Bible Dictionary",
+      "coverImageLocation": "/book-covers/smiths-bible-dictionary.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/5756625-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "hebrew-greek-keyword-study-bible",
+      "title": "Hebrew-Greek Keyword Study Bible",
+      "coverImageLocation": "/book-covers/hebrew-greek-keyword-study-bible.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/12707846-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "spurgeons-sermon-notes",
+      "title": "Spurgeon's Sermon Notes",
+      "coverImageLocation": "/book-covers/spurgeons-sermon-notes.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/7242529-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "god-and-the-transgender-debate",
+      "title": "God and the Transgender Debate",
+      "coverImageLocation": "/book-covers/god-and-the-transgender-debate.webp",
+      "source": "open-library-search-amazon-asin-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/8069287-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "powers-of-evil",
+      "title": "Powers of Evil",
+      "coverImageLocation": "/book-covers/powers-of-evil.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14138077-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "6-ways-the-old-testament-speaks-today",
+      "title": "6 Ways The Old Testament Speaks Today",
+      "coverImageLocation": "/book-covers/6-ways-the-old-testament-speaks-today.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/9223719-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "unsinkable-faith",
+      "title": "Unsinkable Faith",
+      "coverImageLocation": "/book-covers/unsinkable-faith.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/10769780-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "flourish",
+      "title": "Flourish",
+      "coverImageLocation": "/book-covers/flourish.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/11144628-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "finding-god-in-my-loneliness",
+      "title": "Finding God in My Loneliness",
+      "coverImageLocation": "/book-covers/finding-god-in-my-loneliness.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/14466346-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    },
+    {
+      "slug": "identity-theft",
+      "title": "Identity Theft",
+      "coverImageLocation": "/book-covers/identity-theft.webp",
+      "source": "open-library-search-isbn13-l",
+      "sourceUrl": "https://covers.openlibrary.org/b/id/12562993-L.jpg?default=false",
+      "googleTitle": "",
+      "googleAuthors": []
+    }
+  ],
+  "skippedExisting": [
+    {
+      "slug": "misreading-scripture-with-individualist-eyes",
+      "title": "Misreading Scripture with Individualist Eyes",
+      "coverImageLocation": "/book-covers/misreading-scripture-with-individualist-eyes.webp"
+    },
+    {
+      "slug": "dark-clouds-deep-mercy",
+      "title": "Dark Clouds, Deep Mercy",
+      "coverImageLocation": "/book-covers/dark-clouds-deep-mercy.webp"
+    },
+    {
+      "slug": "eschatology",
+      "title": "Eschatology",
+      "coverImageLocation": "/book-covers/eschatology.webp"
+    },
+    {
+      "slug": "eschatology",
+      "title": "Eschatology",
+      "coverImageLocation": "/book-covers/eschatology.webp"
+    },
+    {
+      "slug": "tactics",
+      "title": "Tactics",
+      "coverImageLocation": "/book-covers/tactics.webp"
+    },
+    {
+      "slug": "the-pursuit-of-god",
+      "title": "The Pursuit of God",
+      "coverImageLocation": "/book-covers/the-pursuit-of-god.webp"
+    },
+    {
+      "slug": "the-knowledge-of-the-holy",
+      "title": "The Knowledge of the Holy",
+      "coverImageLocation": "/book-covers/the-knowledge-of-the-holy.webp"
+    },
+    {
+      "slug": "gods-love",
+      "title": "God's Love",
+      "coverImageLocation": "/book-covers/gods-love.webp"
+    },
+    {
+      "slug": "gods-love",
+      "title": "God's Love",
+      "coverImageLocation": "/book-covers/gods-love.webp"
+    },
+    {
+      "slug": "dark-clouds-deep-mercy",
+      "title": "Dark Clouds, Deep Mercy",
+      "coverImageLocation": "/book-covers/dark-clouds-deep-mercy.webp"
+    },
+    {
+      "slug": "misreading-scripture-with-individualist-eyes",
+      "title": "Misreading Scripture with Individualist Eyes",
+      "coverImageLocation": "/book-covers/misreading-scripture-with-individualist-eyes.webp"
+    },
+    {
+      "slug": "the-return-of-the-prodigal-son",
+      "title": "The Return of the Prodigal Son",
+      "coverImageLocation": "/book-covers/the-return-of-the-prodigal-son.webp"
+    },
+    {
+      "slug": "how-to-pray",
+      "title": "How to Pray",
+      "coverImageLocation": "/book-covers/how-to-pray.webp"
+    },
+    {
+      "slug": "the-knowledge-of-the-holy",
+      "title": "The Knowledge of the Holy",
+      "coverImageLocation": "/book-covers/the-knowledge-of-the-holy.webp"
+    },
+    {
+      "slug": "dark-clouds-deep-mercy",
+      "title": "Dark Clouds, Deep Mercy",
+      "coverImageLocation": "/book-covers/dark-clouds-deep-mercy.webp"
+    }
+  ],
+  "failed": [
+    {
+      "slug": "another-gospel",
+      "title": "Another Gospel?",
+      "author": "Alisa Childers",
+      "isbn13": "9781496441744",
+      "isbn10": "1496441745",
+      "amazonAsin": "1496441737",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "7-days-that-divide-the-world",
+      "title": "7 Days that Divide the World",
+      "author": "John C. Lennox",
+      "isbn13": "9781040235416",
+      "isbn10": "1040235417",
+      "amazonAsin": "1138760560",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "introducing-christianity-to-mormons",
+      "title": "Introducing Christianity to Mormons",
+      "author": "Eric Johnson",
+      "isbn13": "9780736985499",
+      "isbn10": "736985492",
+      "amazonAsin": "0736985492",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "confessions-of-a-french-atheist",
+      "title": "Confessions of a French Atheist",
+      "author": "Guillaume Bignon",
+      "isbn13": "9781496443021",
+      "isbn10": "1496443020",
+      "amazonAsin": "1496443020",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-comprehensive-guide-to-apologetics",
+      "title": "The Comprehensive Guide to Apologetics",
+      "author": "Joseph M. Holden",
+      "isbn13": "9780736985734",
+      "isbn10": "736985735",
+      "amazonAsin": "0736985735",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "why-is-there-suffering",
+      "title": "Why is there Suffering?",
+      "author": "Bethany N. Sollereder",
+      "isbn13": "9780310109037",
+      "isbn10": "310109035",
+      "amazonAsin": "0310109027",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-air-we-breathe",
+      "title": "The Air We Breathe",
+      "author": "Glen Scrivener",
+      "isbn13": "9781912699735",
+      "isbn10": "1912699737",
+      "amazonAsin": "1912699737",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "josephus-the-complete-works",
+      "title": "Josephus: The Complete Works",
+      "author": "William Whiston",
+      "isbn13": "9781343987395",
+      "isbn10": "1343987393",
+      "amazonAsin": "1293697540",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "seven-things-i-wish-christians-knew-about-the-bible",
+      "title": "Seven Things I Wish Christians Knew About the Bible",
+      "author": "Michael F. Bird",
+      "isbn13": "9780310538868",
+      "isbn10": "310538866",
+      "amazonAsin": "0310538858",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "excavating-the-evidence-for-jesus",
+      "title": "Excavating the Evidence for Jesus",
+      "author": "Titus Kennedy",
+      "isbn13": "9780736984683",
+      "isbn10": "736984682",
+      "amazonAsin": "0736984682",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "enneagram-theology-is-it-christian",
+      "title": "Enneagram Theology: Is It Christian?",
+      "author": "Rhenn Cherry",
+      "isbn13": "9781666715972",
+      "isbn10": "1666715972",
+      "amazonAsin": "1666715956",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "nelsons-new-illustrated-bible-manners-and-customs",
+      "title": "Nelson's New Illustrated Bible Manners and Customs",
+      "author": "Howard F. Vos",
+      "isbn13": "9781418585686",
+      "isbn10": "1418585688",
+      "amazonAsin": "0310139260",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "israel-and-the-nations",
+      "title": "Israel and the Nations",
+      "author": "F. F. Bruce",
+      "isbn13": "9781614270515",
+      "isbn10": "1614270511",
+      "amazonAsin": "1614270511",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "stuck-in-the-present",
+      "title": "Stuck in the Present",
+      "author": "David George Moore",
+      "isbn13": "9781684264605",
+      "isbn10": "168426460X",
+      "amazonAsin": "168426460X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-bedrock-of-christianity",
+      "title": "The Bedrock of Christianity",
+      "author": "Justin Bass",
+      "isbn13": "9781683593614",
+      "isbn10": "1683593618",
+      "amazonAsin": "168359360X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "liturgical-works",
+      "title": "Liturgical Works",
+      "author": "James R. Davila",
+      "isbn13": "9781340729684",
+      "isbn10": "1340729687",
+      "amazonAsin": "1287719961",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "archaeology-and-the-new-testament",
+      "title": "Archaeology and the New Testament",
+      "author": "John McRay",
+      "isbn13": "9781493451661",
+      "isbn10": "1493451669",
+      "amazonAsin": "154096096X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "jesus-and-the-dead-sea-scrolls",
+      "title": "Jesus and the Dead Sea Scrolls",
+      "author": "John Bergsma",
+      "isbn13": "9781984823120",
+      "isbn10": "1984823124",
+      "amazonAsin": "1984823124",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "refuge-reimagined",
+      "title": "Refuge Reimagined",
+      "author": "Mark R. Glanville",
+      "isbn13": "9780830853823",
+      "isbn10": "830853820",
+      "amazonAsin": "0830853812",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "created-and-creating",
+      "title": "Created and Creating",
+      "author": "William Edgar",
+      "isbn13": "9781783595488",
+      "isbn10": "1783595485",
+      "amazonAsin": "1783595485",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "lexham-geographic-commentary",
+      "title": "Lexham Geographic Commentary",
+      "author": "Barry J. Beitzel",
+      "isbn13": "9781493465330",
+      "isbn10": "1493465333",
+      "amazonAsin": "1683598105",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "vines-complete-expository-dictionary",
+      "title": "Vine's Complete Expository Dictionary",
+      "author": "W. E. Vine",
+      "isbn13": "9780946351510",
+      "isbn10": "946351511",
+      "amazonAsin": "0946351511",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "nelsons-illustrated-bible-dictionary",
+      "title": "Nelson's Illustrated Bible Dictionary",
+      "author": "Ronald F. Youngblood",
+      "isbn13": "9780529106247",
+      "isbn10": "529106248",
+      "amazonAsin": "0840756364",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "biblical-greek-vocabulary-in-context",
+      "title": "Biblical Greek Vocabulary in Context",
+      "author": "Miles V. Van Pelt",
+      "isbn13": "9780310114673",
+      "isbn10": "310114675",
+      "amazonAsin": "0310114667",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "exegetical-gems-from-biblical-hebrew",
+      "title": "Exegetical Gems from Biblical Hebrew",
+      "author": "H. H. Hardy II",
+      "isbn13": "9780801098765",
+      "isbn10": "801098769",
+      "amazonAsin": "0801098769",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-bible-recap",
+      "title": "The Bible Recap",
+      "author": "Tara-Leigh Cobble",
+      "isbn13": "9780764247606",
+      "isbn10": "764247603",
+      "amazonAsin": "0764244140",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-truth-and-beauty",
+      "title": "The Truth and Beauty",
+      "author": "Andrew Klavan",
+      "isbn13": "9780310364627",
+      "isbn10": "310364620",
+      "amazonAsin": "0310364612",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "hes-where-the-joy-is",
+      "title": "He's Where the Joy Is",
+      "author": "Tara-Leigh Cobble",
+      "isbn13": "9781087785486",
+      "isbn10": "1087785480",
+      "amazonAsin": "1087785480",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "life-lessons-from-revelation",
+      "title": "Life Lessons From Revelation",
+      "author": "Max Lucado",
+      "isbn13": "9780310086666",
+      "isbn10": "310086663",
+      "amazonAsin": "0310086663",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "revelation-the-ultimate-hope-in-christ",
+      "title": "Revelation: The Ultimate Hope in Christ",
+      "author": "David Jeremiah",
+      "isbn13": "9780310091875",
+      "isbn10": "031009187X",
+      "amazonAsin": "0310091861",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "tell-me-the-stories-of-jesus",
+      "title": "Tell Me The Stories of Jesus",
+      "author": "R. Albert Mohler Jr.",
+      "isbn13": "9780718099220",
+      "isbn10": "718099222",
+      "amazonAsin": "0718099168",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "everyday-theology",
+      "title": "Everyday Theology",
+      "author": "Mary Wiley",
+      "isbn13": "9781087762449",
+      "isbn10": "1087762448",
+      "amazonAsin": "1087762448",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "how-to-read-the-bible-book-by-book",
+      "title": "How to Read the Bible Book by Book",
+      "author": "Gordon D. Fee",
+      "isbn13": "9780310285731",
+      "isbn10": "310285739",
+      "amazonAsin": "B0GXKP7SBL",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "parables",
+      "title": "Parables",
+      "author": "William Barclay",
+      "isbn13": "9780861537402",
+      "isbn10": "861537408",
+      "amazonAsin": "0715209329",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-new-testament-in-its-world",
+      "title": "The New Testament in Its World",
+      "author": "N. T. Wright",
+      "isbn13": "9780281082711",
+      "isbn10": "281082715",
+      "amazonAsin": "0281082715",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-seven-churches-of-revelation",
+      "title": "The Seven Churches of Revelation",
+      "author": "Rose Publishing",
+      "isbn13": "9798385048885",
+      "isbn10": "1628622555",
+      "amazonAsin": "B0F6JJVKR5",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "chronology-of-the-bible",
+      "title": "Chronology of the Bible",
+      "author": "Rose Publishing",
+      "isbn13": "9781628629460",
+      "isbn10": "1628629460",
+      "amazonAsin": "1628629460",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "chronology-of-israels-kings-prophets",
+      "title": "Chronology of Israel's Kings & Prophets",
+      "author": "Rose Publishing",
+      "isbn13": "9781628628050",
+      "isbn10": "1628628057",
+      "amazonAsin": "1628628057",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "strongest-strongs-exhaustive-concordance",
+      "title": "Strongest Strong's Exhaustive Concordance",
+      "author": "John R. Kohlenberger III",
+      "isbn13": "9780310606901",
+      "isbn10": "031060690X",
+      "amazonAsin": "031060690X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "50-bible-stories-every-adult-should-know",
+      "title": "50 Bible Stories Every Adult Should Know",
+      "author": "Matthew Lockhart",
+      "isbn13": "9780830784554",
+      "isbn10": "830784551",
+      "amazonAsin": "0830784551",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "read-to-lead",
+      "title": "Read to Lead",
+      "author": "Jeff Brown",
+      "isbn13": "9781493430253",
+      "isbn10": "1493430254",
+      "amazonAsin": "1540901203",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-come-back-culture",
+      "title": "The Come Back Culture",
+      "author": "Jason Young",
+      "isbn13": "9781493436163",
+      "isbn10": "1493436163",
+      "amazonAsin": "1540901971",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "whos-holding-your-ladder",
+      "title": "Who's Holding Your Ladder?",
+      "author": "Samuel R. Chand",
+      "isbn13": "9781629116129",
+      "isbn10": "1629116122",
+      "amazonAsin": "1629116122",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "you-are-not-your-own-belonging-to-god-in-an-unhamn-world",
+      "title": "You Are Not Your Own: Belonging to God in an Unhamn World",
+      "author": "Alan Noble",
+      "isbn13": "9781514010952",
+      "isbn10": "151401095X",
+      "amazonAsin": "151401095X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-still-and-quiet-mind",
+      "title": "A Still and Quiet Mind",
+      "author": "Esther Smith",
+      "isbn13": "9781629959214",
+      "isbn10": "1629959219",
+      "amazonAsin": "1629959219",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "companions-in-suffering",
+      "title": "Companions in Suffering",
+      "author": "Wendy Alsup",
+      "isbn13": "9780830843855",
+      "isbn10": "083084385X",
+      "amazonAsin": "0830845860",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "live-your-truth-and-other-lies",
+      "title": "Live Your Truth and Other Lies",
+      "author": "Alisa Childers",
+      "isbn13": "9781496455666",
+      "isbn10": "1496455665",
+      "amazonAsin": "1496455665",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "kingdom-values",
+      "title": "Kingdom Values",
+      "author": "Tony Evans",
+      "isbn13": "9780764238833",
+      "isbn10": "764238833",
+      "amazonAsin": "0764238833",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-believers-joy",
+      "title": "The Believers Joy",
+      "author": "R. M. McCheyne",
+      "isbn13": "9780385029711",
+      "isbn10": "385029713",
+      "amazonAsin": "0385029713",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "practical-religion",
+      "title": "Practical Religion",
+      "author": "J. C. Ryle",
+      "isbn13": "9798889363316",
+      "isbn10": "",
+      "amazonAsin": "B0CWN3X3ZZ",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-godward-life",
+      "title": "A Godward Life",
+      "author": "John Piper",
+      "isbn13": "9781433596001",
+      "isbn10": "1433596008",
+      "amazonAsin": "1433596008",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "fighting-satan",
+      "title": "Fighting Satan",
+      "author": "Joel Beeke",
+      "isbn13": "9781601784124",
+      "isbn10": "1601784120",
+      "amazonAsin": "1601784112",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "letters-to-my-students",
+      "title": "Letters to My Students",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9781535941150",
+      "isbn10": "1535941154",
+      "amazonAsin": "1535941146",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "life-in-christ",
+      "title": "Life in Christ",
+      "author": "Jeremy Walker",
+      "isbn13": "9781601782755",
+      "isbn10": "1601782756",
+      "amazonAsin": "1601782748",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "christology-a-guide-for-the-perplexed",
+      "title": "Christology: A Guide for the Perplexed",
+      "author": "Alan Spence",
+      "isbn13": "9780567031952",
+      "isbn10": "567031950",
+      "amazonAsin": "0567031950",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "jesus-without-borders",
+      "title": "Jesus without Borders",
+      "author": "Gene L. Green",
+      "isbn13": "9780310325543",
+      "isbn10": "310325544",
+      "amazonAsin": "0310325544",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-glory-of-christ",
+      "title": "The Glory of Christ",
+      "author": "John Owen",
+      "isbn13": "9781618980588",
+      "isbn10": "1618980580",
+      "amazonAsin": "1800400705",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-person-and-work-of-christ",
+      "title": "The Person and Work of Christ",
+      "author": "Benjamin B. Warfield",
+      "isbn13": "9781629958972",
+      "isbn10": "1629958972",
+      "amazonAsin": "1629958972",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "incarnation",
+      "title": "Incarnation",
+      "author": "T. F. Torrance",
+      "isbn13": "9781257637461",
+      "isbn10": "1257637460",
+      "amazonAsin": "1257637460",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-story-of-christianity-2-volumes",
+      "title": "The Story of Christianity (2 Volumes)",
+      "author": "Justo Gonzalez",
+      "isbn13": "9788494452789",
+      "isbn10": "8494452789",
+      "amazonAsin": "8494452789",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "church-history-in-plain-language",
+      "title": "Church History in Plain Language",
+      "author": "Bruce L. Shelley",
+      "isbn13": "9781912699193",
+      "isbn10": "1912699192",
+      "amazonAsin": "1912699192",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "heresies-heresy-and-orthodoxy-in-the-history-of-the-church",
+      "title": "Heresies: Heresy and Orthodoxy in the History of the Church",
+      "author": "Harold O. J. Brown",
+      "isbn13": "9781619708235",
+      "isbn10": "161970823X",
+      "amazonAsin": "161970823X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "historical-theology",
+      "title": "Historical Theology",
+      "author": "William Cunningham",
+      "isbn13": "9783348101288",
+      "isbn10": "334810128X",
+      "amazonAsin": "334810128X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "five-pioneer-missionaries",
+      "title": "Five Pioneer Missionaries",
+      "author": "S. M. Houghton",
+      "isbn13": "9780851511177",
+      "isbn10": "851511171",
+      "amazonAsin": "0851511171",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "life-together",
+      "title": "Life Together",
+      "author": "Dietrich Bonhoeffer",
+      "isbn13": "9780334066491",
+      "isbn10": "334066492",
+      "amazonAsin": "0334066484",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "what-if-jesus-was-serious-about-the-church",
+      "title": "What If Jesus Was Serious About the Church?",
+      "author": "Skye Jethani",
+      "isbn13": "9780802499899",
+      "isbn10": "802499899",
+      "amazonAsin": "0802424279",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "rediscover-church",
+      "title": "Rediscover Church",
+      "author": "Collin Hansen",
+      "isbn13": "9781433579585",
+      "isbn10": "1433579588",
+      "amazonAsin": "1958168491",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "knowing-god",
+      "title": "Knowing God",
+      "author": "J. I. Packer",
+      "isbn13": "9781399809603",
+      "isbn10": "1399809601",
+      "amazonAsin": "1399809601",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-cost-of-discipleship",
+      "title": "The Cost of Discipleship",
+      "author": "Dietrich Bonhoeffer",
+      "isbn13": "9798990295483",
+      "isbn10": "",
+      "amazonAsin": "B0F29NBHNW",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "life-together",
+      "title": "Life Together",
+      "author": "Dietrich Bonhoeffer",
+      "isbn13": "9780334066491",
+      "isbn10": "334066492",
+      "amazonAsin": "0334066484",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-christians-secret-to-a-happy-life",
+      "title": "The Christian's Secret to a Happy Life",
+      "author": "Hannah Whitall Smith",
+      "isbn13": "9791029912702",
+      "isbn10": "",
+      "amazonAsin": "150282485X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "morning-and-evening",
+      "title": "Morning and Evening",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9798874905514",
+      "isbn10": "",
+      "amazonAsin": "1433598663",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "letters-to-my-students",
+      "title": "Letters to My Students",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9781535941150",
+      "isbn10": "1535941154",
+      "amazonAsin": "1535941146",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-overcoming-life",
+      "title": "The Overcoming Life",
+      "author": "Dwight L. Moody",
+      "isbn13": "9798837094897",
+      "isbn10": "",
+      "amazonAsin": "B0B45G7GKM",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-problem-of-pain",
+      "title": "The Problem of Pain",
+      "author": "C. S. Lewis",
+      "isbn13": "9780805420494",
+      "isbn10": "805420495",
+      "amazonAsin": "B000NVGQL8",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-abolition-of-man",
+      "title": "The Abolition of Man",
+      "author": "C. S. Lewis",
+      "isbn13": "9798587278479",
+      "isbn10": "",
+      "amazonAsin": "B00HTK25Y8",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "foxes-book-of-martyrs",
+      "title": "Foxe's Book of Martyrs",
+      "author": "John Foxe",
+      "isbn13": "9781515408185",
+      "isbn10": "1515408183",
+      "amazonAsin": "1985784793",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "prayer-and-spiritual-warfare",
+      "title": "Prayer and Spiritual Warfare",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9781931635219",
+      "isbn10": "1931635218",
+      "amazonAsin": "9363114678",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "encouragement-for-the-depressed",
+      "title": "Encouragement for the Depressed",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9781433570636",
+      "isbn10": "1433570637",
+      "amazonAsin": "1433570637",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "holy-spirit-power",
+      "title": "Holy Spirit Power",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9789360514402",
+      "isbn10": "9360514403",
+      "amazonAsin": "9360514403",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "in-his-steps",
+      "title": "In His Steps",
+      "author": "Charles M. Sheldon",
+      "isbn13": "9781544666242",
+      "isbn10": "1544666241",
+      "amazonAsin": "1986271188",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "power-of-the-blood-of-christ",
+      "title": "Power of the Blood of Christ",
+      "author": "Andrew Murray",
+      "isbn13": "9781603743525",
+      "isbn10": "1603743529",
+      "amazonAsin": "1481216090",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "all-of-grace",
+      "title": "All Of Grace",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9783348097314",
+      "isbn10": "3348097312",
+      "amazonAsin": "3348097312",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-emotional-life-of-our-lord",
+      "title": "The Emotional Life of Our Lord",
+      "author": "Benjamin B. Warfield",
+      "isbn13": "9781648630965",
+      "isbn10": "1648630960",
+      "amazonAsin": "1648630960",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "fighting-for-holiness",
+      "title": "Fighting for Holiness",
+      "author": "J. C. Ryle",
+      "isbn13": "9781433580116",
+      "isbn10": "143358011X",
+      "amazonAsin": "143358008X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "charity-and-its-fruits",
+      "title": "Charity and Its Fruits",
+      "author": "Jonathan Edwards",
+      "isbn13": "9781088184042",
+      "isbn10": "1088184049",
+      "amazonAsin": "1015587348",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "confessions",
+      "title": "Confessions",
+      "author": "Augustine",
+      "isbn13": "9781544764948",
+      "isbn10": "1544764944",
+      "amazonAsin": "1505132223",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "exploring-islam",
+      "title": "Exploring Islam",
+      "author": "James Anderson",
+      "isbn13": "9781678213244",
+      "isbn10": "1678213241",
+      "amazonAsin": "1678213241",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "true-religion",
+      "title": "True Religion",
+      "author": "R. C. Sproul",
+      "isbn13": "9781014461179",
+      "isbn10": "1014461170",
+      "amazonAsin": "1014461170",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "questioning-islam",
+      "title": "Questioning Islam",
+      "author": "Peter Townsend",
+      "isbn13": "9780648313229",
+      "isbn10": "648313220",
+      "amazonAsin": "0648313220",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-third-jihad",
+      "title": "The Third Jihad",
+      "author": "Michael Youssef",
+      "isbn13": "9781496431523",
+      "isbn10": "1496431529",
+      "amazonAsin": "1496431502",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "are-we-together",
+      "title": "Are We Together?",
+      "author": "R. C. Sproul",
+      "isbn13": "9781642895971",
+      "isbn10": "1642895970",
+      "amazonAsin": "1642895970",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "engaging-with-jewish-people",
+      "title": "Engaging with Jewish People",
+      "author": "Randy Newman",
+      "isbn13": "9781784980726",
+      "isbn10": "1784980722",
+      "amazonAsin": "1784980528",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "world-religions",
+      "title": "World Religions",
+      "author": "Gerald R. McDermott",
+      "isbn13": "9781401675530",
+      "isbn10": "1401675530",
+      "amazonAsin": "141854597X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "truth-over-fear",
+      "title": "Truth Over Fear",
+      "author": "Charles Kimball",
+      "isbn13": "9781611649673",
+      "isbn10": "1611649676",
+      "amazonAsin": "066426462X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "remember-death",
+      "title": "Remember Death",
+      "author": "Matthew McCullough",
+      "isbn13": "9798874908171",
+      "isbn10": "",
+      "amazonAsin": "1433569647",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "when-mountains-crumble",
+      "title": "When Mountains Crumble",
+      "author": "Danita Jenae",
+      "isbn13": "9780802476388",
+      "isbn10": "802476384",
+      "amazonAsin": "0802425569",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "shattered-surviving-the-loss-of-a-child",
+      "title": "Shattered: Surviving the Loss of a Child",
+      "author": "Gary Roe",
+      "isbn13": "9781950382712",
+      "isbn10": "1950382710",
+      "amazonAsin": "1950382710",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "for-all-who-grieve",
+      "title": "For All Who Grieve",
+      "author": "Colin S. Smith",
+      "isbn13": "9781913278281",
+      "isbn10": "191327828X",
+      "amazonAsin": "191327828X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "good-night-i-love-you",
+      "title": "Good Night, I Love You",
+      "author": "Jene Ray Barranco",
+      "isbn13": "9781455598434",
+      "isbn10": "1455598437",
+      "amazonAsin": "1455598445",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "love-stronger-than-death",
+      "title": "Love Stronger than Death",
+      "author": "Peter Kreeft",
+      "isbn13": "9781519151117",
+      "isbn10": "151915111X",
+      "amazonAsin": "151915111X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "are-we-together",
+      "title": "Are We Together?",
+      "author": "R. C. Sproul",
+      "isbn13": "9781642895971",
+      "isbn10": "1642895970",
+      "amazonAsin": "1642895970",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "call-no-one-on-earth-your-father",
+      "title": "Call No One on Earth Your Father",
+      "author": "Josephine E. Armour",
+      "isbn13": "9781532674266",
+      "isbn10": "1532674260",
+      "amazonAsin": "1532674244",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-extended-family",
+      "title": "The Extended Family",
+      "author": "Michael Hooton",
+      "isbn13": "9781498280860",
+      "isbn10": "1498280862",
+      "amazonAsin": "1498280854",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-unwritten-book",
+      "title": "The Unwritten Book",
+      "author": "Willy Q. Friesen",
+      "isbn13": "9781498476911",
+      "isbn10": "1498476910",
+      "amazonAsin": "1498476910",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "denominational-stew-american-style",
+      "title": "Denominational Stew: American Style",
+      "author": "Dr. Lyndel M. Stephenson",
+      "isbn13": "9781973656944",
+      "isbn10": "1973656949",
+      "amazonAsin": "1490833803",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-american-muhammad-joseph-smith",
+      "title": "The American Muhammad: Joseph Smith",
+      "author": "Alvin Schmidt",
+      "isbn13": "9780758640291",
+      "isbn10": "758640293",
+      "amazonAsin": "0758640293",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "from-the-apostolic-apple-to-the-denominational-oranges",
+      "title": "From the Apostolic Apple to the Denominational Oranges",
+      "author": "Henry G. Mulle",
+      "isbn13": "9781622307692",
+      "isbn10": "1622307690",
+      "amazonAsin": "1622307690",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "journeys-of-faith",
+      "title": "Journeys of Faith",
+      "author": "Francis J. Beckwith",
+      "isbn13": "9781666774030",
+      "isbn10": "1666774030",
+      "amazonAsin": "1666774014",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "journey-to-the-cross",
+      "title": "Journey to the Cross",
+      "author": "Paul David Tripp",
+      "isbn13": "9781433567704",
+      "isbn10": "1433567709",
+      "amazonAsin": "1433567679",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "songs-of-suffering",
+      "title": "Songs of Suffering",
+      "author": "Joni Eareckson Tada",
+      "isbn13": "9781433576409",
+      "isbn10": "1433576406",
+      "amazonAsin": "1433576406",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "morning-and-evening",
+      "title": "Morning and Evening",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9798874905514",
+      "isbn10": "",
+      "amazonAsin": "1433598663",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "tozer-on-the-holy-spirit",
+      "title": "Tozer on the Holy Spirit",
+      "author": "A. W. Tozer",
+      "isbn13": "9781600669156",
+      "isbn10": "1600669158",
+      "amazonAsin": "0802419690",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-walk",
+      "title": "The Walk",
+      "author": "Stephen Smallman",
+      "isbn13": "9781596380936",
+      "isbn10": "1596380934",
+      "amazonAsin": "1596380934",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "rooted",
+      "title": "Rooted",
+      "author": "Mariner's Church",
+      "isbn13": "9781003861836",
+      "isbn10": "1003861830",
+      "amazonAsin": "1032391782",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "multiply",
+      "title": "Multiply",
+      "author": "Francis Chan",
+      "isbn13": "9781958708224",
+      "isbn10": "1958708224",
+      "amazonAsin": "1958708224",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "discipling",
+      "title": "Discipling",
+      "author": "Mark Dever",
+      "isbn13": "9781958708781",
+      "isbn10": "195870878X",
+      "amazonAsin": "195870878X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-disciple-makers-handbook",
+      "title": "The Disciple Maker's Handbook",
+      "author": "Bobby Harrington",
+      "isbn13": "9780310525288",
+      "isbn10": "310525284",
+      "amazonAsin": "0310525276",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-cost-of-discipleship",
+      "title": "The Cost of Discipleship",
+      "author": "Dietrich Bonhoeffer",
+      "isbn13": "9798990295483",
+      "isbn10": "",
+      "amazonAsin": "B0F29NBHNW",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "bold-moves",
+      "title": "Bold Moves",
+      "author": "Craig Etheridge",
+      "isbn13": "9798899616051",
+      "isbn10": "",
+      "amazonAsin": "B0FB8Y6MLJ",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "transforming-discipleship",
+      "title": "Transforming Discipleship",
+      "author": "Greg Ogden",
+      "isbn13": "9781912699247",
+      "isbn10": "1912699249",
+      "amazonAsin": "1912699249",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-book-of-revelation",
+      "title": "The Book of Revelation",
+      "author": "G. K. Beale",
+      "isbn13": "9781467422307",
+      "isbn10": "1467422304",
+      "amazonAsin": "0802871070",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "revelation-revealed",
+      "title": "Revelation Revealed",
+      "author": "Robert I. Adams",
+      "isbn13": "9781666792492",
+      "isbn10": "1666792497",
+      "amazonAsin": "1666735426",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-book-of-signs",
+      "title": "The Book of Signs",
+      "author": "David Jeremiah",
+      "isbn13": "9780310109723",
+      "isbn10": "310109728",
+      "amazonAsin": "0310109728",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "essential-eschatology",
+      "title": "Essential Eschatology",
+      "author": "John E. Phelan Jr.",
+      "isbn13": "9780830864652",
+      "isbn10": "830864652",
+      "amazonAsin": "0830840257",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-future-of-everything",
+      "title": "The Future of Everything",
+      "author": "William Boekestein",
+      "isbn13": "9781601786876",
+      "isbn10": "1601786875",
+      "amazonAsin": "1601786875",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "heaven-on-earth",
+      "title": "Heaven on Earth",
+      "author": "Derek W. H. Thomas",
+      "isbn13": "9781527101456",
+      "isbn10": "1527101452",
+      "amazonAsin": "1527101452",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "ethics-for-a-brave-new-world",
+      "title": "Ethics for a Brave New World",
+      "author": "John and Paul Feinberg",
+      "isbn13": "9781581347128",
+      "isbn10": "158134712X",
+      "amazonAsin": "158134712X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "practical-religion",
+      "title": "Practical Religion",
+      "author": "J. C. Ryle",
+      "isbn13": "9798889363316",
+      "isbn10": "",
+      "amazonAsin": "B0CWN3X3ZZ",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "ethics-as-worship",
+      "title": "Ethics as Worship",
+      "author": "Mark D. Liederbach",
+      "isbn13": "9781629952635",
+      "isbn10": "162995263X",
+      "amazonAsin": "1629952621",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-air-we-breathe",
+      "title": "The Air We Breathe",
+      "author": "Glen Scrivener",
+      "isbn13": "9781912699735",
+      "isbn10": "1912699737",
+      "amazonAsin": "1912699737",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "before-you-share-your-faith",
+      "title": "Before You Share Your Faith",
+      "author": "Matt Smethurst",
+      "isbn13": "9781913896843",
+      "isbn10": "1913896846",
+      "amazonAsin": "1913896846",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "gospel-above-all",
+      "title": "Gospel Above All",
+      "author": "J. D. Greear",
+      "isbn13": "9781430095583",
+      "isbn10": "143009558X",
+      "amazonAsin": "143009558X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "reimagining-evangelism",
+      "title": "Reimagining Evangelism",
+      "author": "Rick Richardson",
+      "isbn13": "9781458756190",
+      "isbn10": "145875619X",
+      "amazonAsin": "145875619X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-soul-winner",
+      "title": "The Soul Winner",
+      "author": "Charles H. Spurgeon",
+      "isbn13": "9781644399330",
+      "isbn10": "1644399334",
+      "amazonAsin": "1644399334",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "sharing-jesus-without-freaking-out",
+      "title": "Sharing Jesus Without Freaking Out",
+      "author": "D. Scott Hildreth",
+      "isbn13": "9781535982184",
+      "isbn10": "1535982187",
+      "amazonAsin": "1535982187",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-gospel-and-personal-evangelism",
+      "title": "The Gospel and Personal Evangelism",
+      "author": "Mark Dever",
+      "isbn13": "9781958708903",
+      "isbn10": "1958708909",
+      "amazonAsin": "1958708909",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "if-jesus-is-the-answer-what-is-the-question",
+      "title": "If Jesus is the Answer, What is the Question?",
+      "author": "Ben Jack",
+      "isbn13": "9781512762976",
+      "isbn10": "1512762970",
+      "amazonAsin": "1512762970",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "how-to-revive-evangelism",
+      "title": "How To Revive Evangelism",
+      "author": "Craig Springer",
+      "isbn13": "9780310114703",
+      "isbn10": "310114705",
+      "amazonAsin": "0310114691",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "story-bearer",
+      "title": "Story Bearer",
+      "author": "Phil Knox",
+      "isbn13": "9781789741544",
+      "isbn10": "1789741548",
+      "amazonAsin": "1789741556",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-scandal-of-evangelism",
+      "title": "The Scandal of Evangelism",
+      "author": "Elmer John Thiessen",
+      "isbn13": "9781498242936",
+      "isbn10": "1498242936",
+      "amazonAsin": "1532617887",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "how-to-climb-everest",
+      "title": "How to Climb Everest",
+      "author": "Kami Rita Sherpa",
+      "isbn13": "9781529409611",
+      "isbn10": "1529409616",
+      "amazonAsin": "1529409616",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "why-believe",
+      "title": "Why Believe?",
+      "author": "Neil Shenvi",
+      "isbn13": "9781433579417",
+      "isbn10": "1433579413",
+      "amazonAsin": "1433579383",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "basic-christianity",
+      "title": "Basic Christianity",
+      "author": "John Stott",
+      "isbn13": "9789887018872",
+      "isbn10": "9887018872",
+      "amazonAsin": "9887018872",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "knowing-god",
+      "title": "Knowing God",
+      "author": "J. I. Packer",
+      "isbn13": "9781677334537",
+      "isbn10": "1677334533",
+      "amazonAsin": "1433579383",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "jesus-the-god-who-knows-your-name",
+      "title": "Jesus: The God Who Knows Your Name",
+      "author": "Max Lucado",
+      "isbn13": "9781400214709",
+      "isbn10": "140021470X",
+      "amazonAsin": "1400214726",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-habit-called-faith",
+      "title": "A Habit Called Faith",
+      "author": "Jen Pollock Michel",
+      "isbn13": "9781540901477",
+      "isbn10": "1540901475",
+      "amazonAsin": "1540900533",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-christian-book-of-mystical-verse",
+      "title": "The Christian Book of Mystical Verse",
+      "author": "A. W. Tozer",
+      "isbn13": "9781600668005",
+      "isbn10": "1600668003",
+      "amazonAsin": "1600668003",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-abolition-of-man",
+      "title": "The Abolition of Man",
+      "author": "C. S. Lewis",
+      "isbn13": "9798587278479",
+      "isbn10": "",
+      "amazonAsin": "B00HTK25Y8",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "gods-wisdom-for-a-fair-and-just-world",
+      "title": "God's Wisdom For A Fair and Just World",
+      "author": "Jim Richards",
+      "isbn13": "9781953247063",
+      "isbn10": "1953247067",
+      "amazonAsin": "1953247067",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "crazy-love",
+      "title": "Crazy Love",
+      "author": "Francis Chan",
+      "isbn13": "9782924595169",
+      "isbn10": "2924595169",
+      "amazonAsin": "1434705943",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-four-loves",
+      "title": "The Four Loves",
+      "author": "C. S. Lewis",
+      "isbn13": "9781462144433",
+      "isbn10": "1462144438",
+      "amazonAsin": "146214442X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "does-the-gospel-promise-health-and-prosperity",
+      "title": "Does the Gospel Promise Health and Prosperity?",
+      "author": "Sean DeMars",
+      "isbn13": "9781433578540",
+      "isbn10": "1433578549",
+      "amazonAsin": "1433578514",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "oxen",
+      "title": "Oxen",
+      "author": "Joseph Sangl",
+      "isbn13": "9780615682068",
+      "isbn10": "615682065",
+      "amazonAsin": "0615682065",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-disruptive-generosity",
+      "title": "A Disruptive Generosity",
+      "author": "Mac Pier",
+      "isbn13": "9781493412327",
+      "isbn10": "1493412329",
+      "amazonAsin": "0801075653",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "names-of-god",
+      "title": "Names of God",
+      "author": "Douglas Connelly",
+      "isbn13": "9780369376770",
+      "isbn10": "369376773",
+      "amazonAsin": "0369376773",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "gods-empowering-presence",
+      "title": "God's Empowering Presence",
+      "author": "Gordon D. Fee",
+      "isbn13": "9781735495491",
+      "isbn10": "1735495492",
+      "amazonAsin": "1735495492",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "providence",
+      "title": "Providence",
+      "author": "John Piper",
+      "isbn13": "9781958708125",
+      "isbn10": "1958708127",
+      "amazonAsin": "1958708127",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-existence-and-attributes-of-god",
+      "title": "The Existence and Attributes of God",
+      "author": "Stephen Charnock",
+      "isbn13": "9781433581755",
+      "isbn10": "1433581752",
+      "amazonAsin": "9359321737",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "father-son-and-spirit-the-trinity-and-johns-gospel",
+      "title": "Father, Son and Spirit: The Trinity and John's Gospel",
+      "author": "Andreas J. Kostenberger",
+      "isbn13": "9781844742530",
+      "isbn10": "1844742539",
+      "amazonAsin": "1844742539",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "god-is-a-devotional-guide-to-the-attributes-of-god",
+      "title": "God Is: A Devotional Guide to the Attributes of God",
+      "author": "Mark Jones",
+      "isbn13": "9781433555657",
+      "isbn10": "1433555654",
+      "amazonAsin": "1433574233",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "desiring-god",
+      "title": "Desiring God",
+      "author": "John Piper",
+      "isbn13": "9781433595974",
+      "isbn10": "1433595974",
+      "amazonAsin": "1433595974",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "what-about-evil",
+      "title": "What About Evil?",
+      "author": "Scott Christensen",
+      "isbn13": "9781629955353",
+      "isbn10": "1629955353",
+      "amazonAsin": "1629955353",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "chance-and-the-sovereignty-of-god",
+      "title": "Chance and the Sovereignty of God",
+      "author": "Vern Sheridan Poythress",
+      "isbn13": "9781433536953",
+      "isbn10": "1433536951",
+      "amazonAsin": "1433536951",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "be-still-my-soul",
+      "title": "Be Still My Soul",
+      "author": "David Martyn Lloyd-Jones",
+      "isbn13": "9780892838882",
+      "isbn10": "892838884",
+      "amazonAsin": "0892838884",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "surprised-by-suffering",
+      "title": "Surprised by Suffering",
+      "author": "R. C. Sproul",
+      "isbn13": "9781642895964",
+      "isbn10": "1642895962",
+      "amazonAsin": "1642895962",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-problem-of-pain",
+      "title": "The Problem of Pain",
+      "author": "C. S. Lewis",
+      "isbn13": "9780805420494",
+      "isbn10": "805420495",
+      "amazonAsin": "B000NVGQL8",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "songs-of-suffering",
+      "title": "Songs of Suffering",
+      "author": "Joni Eareckson Tada",
+      "isbn13": "9781433576409",
+      "isbn10": "1433576406",
+      "amazonAsin": "1433576406",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "seasons-of-sorrow",
+      "title": "Seasons of Sorrow",
+      "author": "Tim Challies",
+      "isbn13": "9780310136736",
+      "isbn10": "310136733",
+      "amazonAsin": "0310136733",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "faith-doesnt-erase-grief",
+      "title": "Faith Doesn't Erase Grief",
+      "author": "Kate J. Meyer",
+      "isbn13": "9781957687032",
+      "isbn10": "1957687037",
+      "amazonAsin": "1957687029",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "healing-after-loss",
+      "title": "Healing After Loss",
+      "author": "Nelson Mira",
+      "isbn13": "9781496481337",
+      "isbn10": "149648133X",
+      "amazonAsin": "B0GW5KJT7T",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "hermeneutics-an-introduction",
+      "title": "Hermeneutics: An Introduction",
+      "author": "Anthony C. Thiselton",
+      "isbn13": "9781467433952",
+      "isbn10": "1467433950",
+      "amazonAsin": "0802864104",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "biblical-hermeneutics",
+      "title": "Biblical Hermeneutics",
+      "author": "Stanley E. Porter",
+      "isbn13": "9781780783123",
+      "isbn10": "1780783124",
+      "amazonAsin": "184227788X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "in-all-the-scriptures",
+      "title": "In All the Scriptures",
+      "author": "Nicholas G. Piotrowski",
+      "isbn13": "9781433681721",
+      "isbn10": "1433681722",
+      "amazonAsin": "1433681722",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "how-to-read-the-bible-through-the-jesus-lens",
+      "title": "How To Read the Bible Through the Jesus Lens",
+      "author": "Michael Williams",
+      "isbn13": "9780310429647",
+      "isbn10": "310429641",
+      "amazonAsin": "031033165X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-word-of-god-for-the-people-of-god",
+      "title": "The Word of God for the People of God",
+      "author": "J. Todd Billings",
+      "isbn13": "9780802862358",
+      "isbn10": "802862357",
+      "amazonAsin": "0802862357",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "deacons-how-they-serve-and-strengthen-the-church",
+      "title": "Deacons: How They Serve and Strengthen the Church",
+      "author": "Matt Smethurst",
+      "isbn13": "9781433571657",
+      "isbn10": "143357165X",
+      "amazonAsin": "1433571625",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "predictable-success",
+      "title": "Predictable Success",
+      "author": "Les McKeown",
+      "isbn13": "9781626340619",
+      "isbn10": "1626340617",
+      "amazonAsin": "1632995646",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "workers-for-your-joy",
+      "title": "Workers For Your Joy",
+      "author": "David Mathis",
+      "isbn13": "9781433578106",
+      "isbn10": "1433578107",
+      "amazonAsin": "1433578077",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "servant-leader-strong",
+      "title": "Servant Leader Strong",
+      "author": "Tom R. Harper",
+      "isbn13": "9780999467114",
+      "isbn10": "999467115",
+      "amazonAsin": "0999467115",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "marriage-conflict-talking-as-teammates",
+      "title": "Marriage Conflict: Talking as Teammates",
+      "author": "Steve Hoppe",
+      "isbn13": "9781629956879",
+      "isbn10": "1629956872",
+      "amazonAsin": "1629956856",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "living-in-a-godly-marriage",
+      "title": "Living in a Godly Marriage",
+      "author": "James A. La Belle",
+      "isbn13": "9781601784636",
+      "isbn10": "1601784635",
+      "amazonAsin": "1601784635",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "marriage",
+      "title": "Marriage",
+      "author": "Paul David Tripp",
+      "isbn13": "9781433576461",
+      "isbn10": "1433576465",
+      "amazonAsin": "1433573105",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-four-loves",
+      "title": "The Four Loves",
+      "author": "C. S. Lewis",
+      "isbn13": "9781462144433",
+      "isbn10": "1462144438",
+      "amazonAsin": "146214442X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "this-momentary-marriage",
+      "title": "This Momentary Marriage",
+      "author": "John Piper",
+      "isbn13": "9781844749669",
+      "isbn10": "1844749665",
+      "amazonAsin": "B0GSR2JV3W",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "wild-at-heart",
+      "title": "Wild at Heart",
+      "author": "John Eldredge",
+      "isbn13": "9781535158657",
+      "isbn10": "1535158654",
+      "amazonAsin": "1400225264",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "aha",
+      "title": "AHA",
+      "author": "Kyle Idleman",
+      "isbn13": "9783417227765",
+      "isbn10": "3417227763",
+      "amazonAsin": "3417265959",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "crazy-love",
+      "title": "Crazy Love",
+      "author": "Francis Chan",
+      "isbn13": "9782924595169",
+      "isbn10": "2924595169",
+      "amazonAsin": "1434705943",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-foundations",
+      "title": "The Foundations",
+      "author": "Jeff Voth",
+      "isbn13": "9783752316360",
+      "isbn10": "3752316365",
+      "amazonAsin": "3752316365",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "dare-to-be-uncommon",
+      "title": "Dare To Be Uncommon",
+      "author": "Tony Dungy",
+      "isbn13": "9780764439186",
+      "isbn10": "764439189",
+      "amazonAsin": "0764439189",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "identity",
+      "title": "Identity",
+      "author": "Eric Mason",
+      "isbn13": "9780197617212",
+      "isbn10": "197617212",
+      "amazonAsin": "0197617190",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "family-shepherds",
+      "title": "Family Shepherds",
+      "author": "Voddie Baucham",
+      "isbn13": "9781433523694",
+      "isbn10": "1433523698",
+      "amazonAsin": "1433523698",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "parenting",
+      "title": "Parenting",
+      "author": "Paul David Tripp",
+      "isbn13": "9781433577161",
+      "isbn10": "143357716X",
+      "amazonAsin": "143357716X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "effective-parenting-in-a-defective-world",
+      "title": "Effective Parenting in a Defective World",
+      "author": "Chip Ingram",
+      "isbn13": "9781605930305",
+      "isbn10": "160593030X",
+      "amazonAsin": "160593030X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "it-starts-at-home",
+      "title": "It Starts at Home",
+      "author": "Gary Thomas",
+      "isbn13": "9781734946512",
+      "isbn10": "1734946512",
+      "amazonAsin": "1734946504",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-path-to-being-a-pastor",
+      "title": "The Path to Being a Pastor",
+      "author": "Bobby Jamieson",
+      "isbn13": "9798892182225",
+      "isbn10": "",
+      "amazonAsin": "B0GD8WKXYT",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "lead-12-gospel-principles-for-leadership-in-the-church",
+      "title": "Lead: 12 Gospel Principles for Leadership in the Church",
+      "author": "Paul David Tripp",
+      "isbn13": "9781433599316",
+      "isbn10": "1433599317",
+      "amazonAsin": "1433599317",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "soundtracks",
+      "title": "Soundtracks",
+      "author": "Jon Acuff",
+      "isbn13": "9783962675394",
+      "isbn10": "3962675396",
+      "amazonAsin": "3868819460",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "finding-the-right-hills-to-die-on",
+      "title": "Finding the Right Hills to Die On",
+      "author": "Gavin Ortlund",
+      "isbn13": "9781433567452",
+      "isbn10": "1433567458",
+      "amazonAsin": "1433567423",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-man-of-god",
+      "title": "The Man of God",
+      "author": "Albert N. Martin",
+      "isbn13": "9781943608119",
+      "isbn10": "1943608113",
+      "amazonAsin": "1943608113",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "city-of-god",
+      "title": "City of God",
+      "author": "St. Augustine",
+      "isbn13": "9781923260368",
+      "isbn10": "1923260367",
+      "amazonAsin": "1923260367",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "on-christian-doctrine",
+      "title": "On Christian Doctrine",
+      "author": "St. Augustine",
+      "isbn13": "9783988687012",
+      "isbn10": "3988687014",
+      "amazonAsin": "3988687014",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "seven-days-that-divide-the-world",
+      "title": "Seven Days that Divide the World",
+      "author": "John C. Lennox",
+      "isbn13": "9780310127826",
+      "isbn10": "310127823",
+      "amazonAsin": "0310127815",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-complete-works-of-e-m-bounds-on-prayer",
+      "title": "The Complete Works of E. M. Bounds on Prayer",
+      "author": "E. M. Bounds",
+      "isbn13": "9780768471670",
+      "isbn10": "768471672",
+      "amazonAsin": "0768471672",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-call-to-prayer",
+      "title": "A Call to Prayer",
+      "author": "J. C. Ryle",
+      "isbn13": "9781611047905",
+      "isbn10": "1611047900",
+      "amazonAsin": "1611047900",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "praying",
+      "title": "Praying",
+      "author": "J. I. Packer",
+      "isbn13": "9781514007891",
+      "isbn10": "1514007894",
+      "amazonAsin": "1514007886",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "biblical-preaching",
+      "title": "Biblical Preaching",
+      "author": "Haddon Robinson",
+      "isbn13": "9781493449521",
+      "isbn10": "1493449524",
+      "amazonAsin": "1540967913",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "preaching-preachers",
+      "title": "Preaching & Preachers",
+      "author": "D. Martyn Lloyd-Jones",
+      "isbn13": "9781444750287",
+      "isbn10": "1444750283",
+      "amazonAsin": "1444750283",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-preaching-life",
+      "title": "The Preaching Life",
+      "author": "Barbara Brown Taylor",
+      "isbn13": "9781848253186",
+      "isbn10": "1848253184",
+      "amazonAsin": "1848253184",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "preaching-the-whole-bible-as-christian-scripture",
+      "title": "Preaching the Whole Bible as Christian Scripture",
+      "author": "Graeme Goldsworthy",
+      "isbn13": "9780980629378",
+      "isbn10": "980629373",
+      "amazonAsin": "0980629373",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-life-and-times-of-jesus-the-messiah",
+      "title": "The Life and Times of Jesus the Messiah",
+      "author": "Alfred Edersheim",
+      "isbn13": "9783337436872",
+      "isbn10": "3337436870",
+      "amazonAsin": "3337436870",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "strongs-exhaustive-concordance",
+      "title": "Strong's Exhaustive Concordance",
+      "author": "James Strong",
+      "isbn13": "9780310606901",
+      "isbn10": "031060690X",
+      "amazonAsin": "031060690X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "vines-complete-expository-dictionary",
+      "title": "Vine's Complete Expository Dictionary",
+      "author": "W. E. Vine",
+      "isbn13": "9780946351510",
+      "isbn10": "946351511",
+      "amazonAsin": "0946351511",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "chosen-but-free",
+      "title": "Chosen But Free",
+      "author": "Norman L. Geisler",
+      "isbn13": "9780764208447",
+      "isbn10": "764208446",
+      "amazonAsin": "0764208446",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "foxes-book-of-martyrs",
+      "title": "Foxe's Book of Martyrs",
+      "author": "John Foxe",
+      "isbn13": "9781515408185",
+      "isbn10": "1515408183",
+      "amazonAsin": "1985784793",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "preach-for-a-year",
+      "title": "Preach for a Year",
+      "author": "Roger Campbell",
+      "isbn13": "9780825426797",
+      "isbn10": "825426790",
+      "amazonAsin": "0825426790",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-lost-sermons-of-charles-h-spurgeon",
+      "title": "The Lost Sermons of Charles H. Spurgeon",
+      "author": "Jason G. Duesing",
+      "isbn13": "9781087733746",
+      "isbn10": "108773374X",
+      "amazonAsin": "108773374X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-worlds-greatest-sermons-and-preachers",
+      "title": "The World's Greatest Sermons and Preachers",
+      "author": "Ray Comfort",
+      "isbn13": "9781436535267",
+      "isbn10": "1436535263",
+      "amazonAsin": "0530243865",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "cultural-counterfeits",
+      "title": "Cultural Counterfeits",
+      "author": "Jen Oshman",
+      "isbn13": "9781433576355",
+      "isbn10": "143357635X",
+      "amazonAsin": "1433576325",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "not-in-it-to-win-it",
+      "title": "Not In It To Win It",
+      "author": "Andy Stanley",
+      "isbn13": "9780310138938",
+      "isbn10": "310138930",
+      "amazonAsin": "0310138922",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "no-reason-to-hide",
+      "title": "No Reason to Hide",
+      "author": "Erwin W. Lutzer",
+      "isbn13": "9780736986908",
+      "isbn10": "736986901",
+      "amazonAsin": "0736986898",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "a-rebels-manifesto",
+      "title": "A Rebel's Manifesto",
+      "author": "Sean McDowell",
+      "isbn13": "9781496443922",
+      "isbn10": "1496443926",
+      "amazonAsin": "1496443926",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "world-on-fire",
+      "title": "World on Fire",
+      "author": "Hannah Anderson",
+      "isbn13": "9781087753836",
+      "isbn10": "108775383X",
+      "amazonAsin": "1087753740",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "victory-over-the-darkness",
+      "title": "Victory Over the Darkness",
+      "author": "Neil T. Anderson",
+      "isbn13": "9781459606609",
+      "isbn10": "1459606604",
+      "amazonAsin": "1459606604",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "precious-remedies-against-satans-devices",
+      "title": "Precious Remedies Against Satan's Devices",
+      "author": "Thomas Brooks",
+      "isbn13": "9781951497378",
+      "isbn10": "1951497376",
+      "amazonAsin": "1951497376",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-christian-in-complete-armour",
+      "title": "The Christian in Complete Armour",
+      "author": "William Gurnall",
+      "isbn13": "9780530132464",
+      "isbn10": "053013246X",
+      "amazonAsin": "053013246X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "essentials-of-spiritual-warfare",
+      "title": "Essentials of Spiritual Warfare",
+      "author": "Scott A. Moreau",
+      "isbn13": "9781725221932",
+      "isbn10": "1725221934",
+      "amazonAsin": "1556358598",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "demon-possession-and-allied-themes",
+      "title": "Demon Possession and Allied Themes",
+      "author": "John Livingston Nevius",
+      "isbn13": "9781296401924",
+      "isbn10": "1296401928",
+      "amazonAsin": "1296401928",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "ten-words-to-live-by",
+      "title": "Ten Words to Live By",
+      "author": "Jen Wilkin",
+      "isbn13": "9781433566370",
+      "isbn10": "1433566370",
+      "amazonAsin": "1433566346",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "adam-and-the-covenant-of-works",
+      "title": "Adam and the Covenant of Works",
+      "author": "J. V. Fesko",
+      "isbn13": "9781527108509",
+      "isbn10": "1527108503",
+      "amazonAsin": "1527107280",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "40-questions-about-typology-and-allegory",
+      "title": "40 Questions About Typology and Allegory",
+      "author": "Mitch Chase",
+      "isbn13": "9780825446382",
+      "isbn10": "825446384",
+      "amazonAsin": "0825446384",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "everyday-theology",
+      "title": "Everyday Theology",
+      "author": "Mary Wiley",
+      "isbn13": "9781087762449",
+      "isbn10": "1087762448",
+      "amazonAsin": "1087762448",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "free-to-believe",
+      "title": "Free to Believe",
+      "author": "Luke Goodrich",
+      "isbn13": "9780525652915",
+      "isbn10": "525652914",
+      "amazonAsin": "0525652906",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-cross-before-me",
+      "title": "The Cross Before Me",
+      "author": "Rankin Wilbourne",
+      "isbn13": "9780830778591",
+      "isbn10": "830778594",
+      "amazonAsin": "0781413338",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "faith-among-the-faithless",
+      "title": "Faith Among the Faithless",
+      "author": "Mike Cosper",
+      "isbn13": "9780718097479",
+      "isbn10": "718097475",
+      "amazonAsin": "0718097475",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "journeys-with-jesus",
+      "title": "Journeys with Jesus",
+      "author": "Dennis E. Johnson",
+      "isbn13": "9781629955384",
+      "isbn10": "1629955388",
+      "amazonAsin": "1629955388",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "women-of-the-word",
+      "title": "Women of the Word",
+      "author": "Jen Wilkin",
+      "isbn13": "9781433577185",
+      "isbn10": "1433577186",
+      "amazonAsin": "1433577186",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "ten-words-to-live-by",
+      "title": "Ten Words to Live By",
+      "author": "Jen Wilkin",
+      "isbn13": "9781433566370",
+      "isbn10": "1433566370",
+      "amazonAsin": "1433566346",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "you-are-a-theologian",
+      "title": "You Are a Theologian",
+      "author": "Jen Wilkin",
+      "isbn13": "9781087746432",
+      "isbn10": "1087746434",
+      "amazonAsin": "1087746426",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "word-filled-womens-ministry",
+      "title": "Word-Filled Women's Ministry",
+      "author": "Gloria Furman",
+      "isbn13": "9782362494260",
+      "isbn10": "2362494268",
+      "amazonAsin": "2362494268",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "blessed",
+      "title": "Blessed",
+      "author": "Nancy Guthrie",
+      "isbn13": "9781433580208",
+      "isbn10": "1433580209",
+      "amazonAsin": "1433580209",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "finding-my-father",
+      "title": "Finding My Father",
+      "author": "Blair Linne",
+      "isbn13": "9781784986469",
+      "isbn10": "1784986461",
+      "amazonAsin": "1784986461",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "growing-together",
+      "title": "Growing Together",
+      "author": "Melissa Kruger",
+      "isbn13": "9781433568046",
+      "isbn10": "1433568047",
+      "amazonAsin": "1433568012",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "teach-me-to-feel",
+      "title": "Teach Me to Feel",
+      "author": "Courtney Reissig",
+      "isbn13": "9781784985134",
+      "isbn10": "1784985139",
+      "amazonAsin": "1784988057",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "5-things-to-pray-for-your-heart",
+      "title": "5 Things to Pray for Your Heart",
+      "author": "Rachel Jones",
+      "isbn13": "9781784983383",
+      "isbn10": "1784983381",
+      "amazonAsin": "1784982822",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "handbook-of-religion",
+      "title": "Handbook of Religion",
+      "author": "Terry C. Muck",
+      "isbn13": "9781441220738",
+      "isbn10": "1441220739",
+      "amazonAsin": "1540966240",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "world-religions-in-seven-sentences",
+      "title": "World Religions in Seven Sentences",
+      "author": "Douglas Groothuis",
+      "isbn13": "9781514005835",
+      "isbn10": "1514005832",
+      "amazonAsin": "1514005824",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "introducing-christianity-to-mormons",
+      "title": "Introducing Christianity to Mormons",
+      "author": "Eric Johnson",
+      "isbn13": "9780736985499",
+      "isbn10": "736985492",
+      "amazonAsin": "0736985492",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "the-cross-and-the-bodhi-tree",
+      "title": "The Cross and the Bodhi Tree",
+      "author": "Daniel Jeyaraj",
+      "isbn13": "9781632710147",
+      "isbn10": "1632710145",
+      "amazonAsin": "1739472578",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "worship",
+      "title": "Worship",
+      "author": "A. W. Tozer",
+      "isbn13": "9789356610545",
+      "isbn10": "9356610541",
+      "amazonAsin": "935661055X",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "rhythms-of-grace",
+      "title": "Rhythms of Grace",
+      "author": "Mike Cosper",
+      "isbn13": "9781433533457",
+      "isbn10": "1433533456",
+      "amazonAsin": "1433533421",
+      "reason": "No cover found from any source"
+    },
+    {
+      "slug": "reformation-worship",
+      "title": "Reformation Worship",
+      "author": "Jonathan Gibson",
+      "isbn13": "9781948130226",
+      "isbn10": "194813022X",
+      "amazonAsin": "1948130211",
+      "reason": "No cover found from any source"
+    }
+  ],
+  "finishedAt": "2026-05-14T20:37:30.103Z"
+}
