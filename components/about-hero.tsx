@@ -25,7 +25,7 @@ export function AboutHero() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ height: 'min(88vh, 740px)', minHeight: 520 }}
+      style={{ height: 'min(46vh, 400px)', minHeight: 300 }}
     >
       {/* Parallax background */}
       <div
@@ -53,8 +53,8 @@ export function AboutHero() {
 
       {/* Text — bottom-left */}
       <div className="absolute bottom-0 left-0 right-0">
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pb-14 lg:pb-18">
-          <div className="aw-eyebrow flex items-center gap-2.5 mb-7">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pb-10 lg:pb-12">
+          <div className="aw-eyebrow flex items-center gap-2.5 mb-5">
             <span className="inline-block h-px w-5 shrink-0" style={{ background: '#B8892E' }} />
             <span
               className="text-[0.63rem] font-medium tracking-[0.2em] uppercase"
@@ -64,33 +64,20 @@ export function AboutHero() {
             </span>
           </div>
 
-          <h1 className="aw-name leading-[0.9] tracking-tight mb-6">
-            <span
-              className="block"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(4rem, 7.5vw, 6.8rem)',
-                fontWeight: 300,
-                color: '#F9F6F0',
-              }}
-            >
-              Austin
-            </span>
-            <span
-              className="block"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(4rem, 7.5vw, 6.8rem)',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                color: '#C9984A',
-              }}
-            >
-              W. Duncan
-            </span>
+          <h1
+            className="aw-name leading-none tracking-tight mb-5 whitespace-nowrap"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
+              fontWeight: 300,
+              color: '#F9F6F0',
+            }}
+          >
+            Austin{' '}
+            <span style={{ fontStyle: 'italic', color: '#C9984A' }}>W. Duncan</span>
           </h1>
 
-          <div className="aw-rule h-px w-12 mb-6" style={{ background: '#7A5C1E' }} />
+          <div className="aw-rule h-px w-12 mb-4" style={{ background: '#7A5C1E' }} />
 
           <p
             className="aw-desc text-[1rem] leading-[1.8]"
