@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import {
   getAll,
   sortByDate,
+  primaryBookFromScripture,
   type SermonFrontmatter,
   type ArticleFrontmatter,
 } from '@/lib/content'
@@ -122,7 +123,7 @@ export default function HomePage() {
   const featuredSermon = allSermons[0]
   const heroFeatured = featuredSermon
     ? {
-        category: featuredSermon.frontmatter.tags?.[0] ?? 'Sermon',
+        category: primaryBookFromScripture(featuredSermon.frontmatter.scripture) ?? 'Sermon',
         title:    featuredSermon.frontmatter.title,
         excerpt:  cleanExcerpt(featuredSermon.frontmatter.excerpt),
         href:     `/sermons/${featuredSermon.slug}`,
@@ -155,7 +156,7 @@ export default function HomePage() {
 
   // ── Section grids: 3 most recent each ─────────────────────────────────────
   const sermonCards: CardItem[] = allSermons.slice(0, 3).map(({ frontmatter: fm, slug }) => ({
-    category: fm.tags?.[0] ?? 'Sermon',
+    category: primaryBookFromScripture(fm.scripture) ?? 'Sermon',
     title:    fm.title,
     excerpt:  cleanExcerpt(fm.excerpt),
     href:     `/sermons/${slug}`,
