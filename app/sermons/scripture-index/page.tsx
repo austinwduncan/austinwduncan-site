@@ -3,7 +3,7 @@ import {
   getAll,
   sortByDate,
   readingTime,
-  bibleBooksFromTags,
+  primaryBookFromScripture,
   formatDate,
   type SermonFrontmatter,
 } from '@/lib/content'
@@ -38,21 +38,19 @@ export default function ScriptureIndexPage() {
   const bookMap = new Map<string, IndexBook['sermons']>()
 
   for (const { frontmatter: fm, content, slug } of raw) {
-    const books = bibleBooksFromTags(fm.tags)
-    if (books.length === 0) continue
+    const book = primaryBookFromScripture(fm.scripture)
+    if (!book) continue
 
-    for (const book of books) {
-      if (!bookMap.has(book)) bookMap.set(book, [])
-      bookMap.get(book)!.push({
-        slug,
-        title: fm.title,
-        formattedDate: formatDate(fm.date),
-        readingMinutes: readingTime(content),
-        passage: fm.scripture
-          ? fm.scripture.replace(new RegExp(`^${book}\\s*`), '').trim() || undefined
-          : undefined,
-      })
-    }
+    if (!bookMap.has(book)) bookMap.set(book, [])
+    bookMap.get(book)!.push({
+      slug,
+      title: fm.title,
+      formattedDate: formatDate(fm.date),
+      readingMinutes: readingTime(content),
+      passage: fm.scripture
+        ? fm.scripture.replace(new RegExp(`^(${book}|Psalm)\\s*`), '').trim() || undefined
+        : undefined,
+    })
   }
 
   function toIndexBooks(bookList: string[], testament: 'ot' | 'nt'): IndexBook[] {

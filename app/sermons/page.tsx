@@ -5,8 +5,7 @@ import {
   getAll,
   sortByDate,
   readingTime,
-  bibleBooksFromTags,
-  primaryBookFromTags,
+  primaryBookFromScripture,
   formatDate,
   BIBLE_BOOKS,
   type SermonFrontmatter,
@@ -47,8 +46,8 @@ export default function SermonsPage() {
     excerpt: fm.excerpt ?? '',
     image: fm.image,
     scripture: fm.scripture,
-    primaryBook: primaryBookFromTags(fm.tags),
-    allBooks: bibleBooksFromTags(fm.tags),
+    primaryBook: primaryBookFromScripture(fm.scripture) ?? 'Sermon',
+    allBooks: primaryBookFromScripture(fm.scripture) ? [primaryBookFromScripture(fm.scripture)!] : [],
     readingMinutes: readingTime(content),
   }))
 

@@ -45,6 +45,22 @@ export function primaryBookFromTags(tags?: string[]): string {
   return bibleBooksFromTags(tags)[0] ?? 'Sermon'
 }
 
+// Extract the primary Bible book from a scripture reference string.
+// "Mark 2:1–12" → "Mark", "Psalm 37" → "Psalms", "Genesis 22 / Luke 10:27" → "Genesis"
+// Returns null for "Multiple texts…" or unrecognised values.
+export function primaryBookFromScripture(scripture?: string): string | null {
+  if (!scripture) return null
+  const first = scripture.split(' / ')[0].trim()
+  if (/^multiple/i.test(first)) return null
+  for (const book of BIBLE_BOOKS) {
+    if (first === book || first.startsWith(book + ' ') || first.startsWith(book + ':')) {
+      return book
+    }
+  }
+  if (first === 'Psalm' || /^Psalm\s/.test(first)) return 'Psalms'
+  return null
+}
+
 export function formatDate(dateStr?: string): string {
   if (!dateStr) return ''
   const [y, m, d] = dateStr.split('-').map(Number)
