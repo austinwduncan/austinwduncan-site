@@ -93,23 +93,12 @@ export default function ExegeticaPage() {
             style={{ borderColor: 'rgba(255,255,255,0.07)' }}
           >
             <div>
-              <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
-                style={{ color: '#B8892E' }}
-              >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
-                Writing
-              </div>
-              <h1 className="leading-none">
-                <Image
-                  src="/images/Logos/Exegetica Logo.png"
-                  alt="Exegetica"
-                  width={1500}
-                  height={299}
-                  priority
-                  style={{ height: 44, width: 'auto' }}
-                />
-              </h1>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/Logos/Exegetica%20Logo.png"
+                alt="Exegetica"
+                style={{ height: 68, width: 'auto', display: 'block' }}
+              />
             </div>
             <div className="text-right pb-0.5 shrink-0">
               <p

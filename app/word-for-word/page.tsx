@@ -30,23 +30,12 @@ export default function WordForWordPage() {
             style={{ borderColor: 'rgba(255,255,255,0.07)' }}
           >
             <div>
-              <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
-                style={{ color: '#B8892E' }}
-              >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
-                Writing
-              </div>
-              <h1 className="leading-none">
-                <Image
-                  src="/images/Logos/Word for Word Logo.webp"
-                  alt="Word for Word"
-                  width={1200}
-                  height={300}
-                  priority
-                  style={{ height: 48, width: 'auto' }}
-                />
-              </h1>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/Logos/Word%20for%20Word%20Logo.webp"
+                alt="Word for Word"
+                style={{ height: 64, width: 'auto', display: 'block' }}
+              />
             </div>
             <div className="text-right pb-0.5 shrink-0">
               <p

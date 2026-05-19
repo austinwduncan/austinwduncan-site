@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
 import { FPTicker, type TickerItem } from '@/components/fp-ticker'
+import { FPSectionCarousel, type CarouselSection } from '@/components/fp-section-carousel'
 
 export const metadata: Metadata = {
   title: 'Forum & Pulpit — Austin W. Duncan',
@@ -66,7 +67,7 @@ const SECTIONS = [
 
 export default function ForumAndPulpitPage() {
   const raw = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
-  const [primary, second, third] = raw
+  const [primary] = raw
 
   const bySlug = Object.fromEntries(raw.map((a) => [a.slug, a]))
 
@@ -74,7 +75,6 @@ export default function ForumAndPulpitPage() {
     const date = formatDate(a.frontmatter.date)
     const items: TickerItem[] = [{ title: a.frontmatter.title, date, slug: a.slug }]
 
-    // Pull bold statements from content as extra headlines
     const boldMatches = [...a.content.matchAll(/\*\*([^*]{25,130})\*\*/g)]
     const boldHeadlines = boldMatches
       .map((m) => m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim())
@@ -94,33 +94,41 @@ export default function ForumAndPulpitPage() {
     return items
   })
 
+  // Prepare carousel data server-side (lede extraction, reading time)
+  const carouselSections: CarouselSection[] = SECTIONS.map((section) => ({
+    id: section.id,
+    number: section.number,
+    title: section.title,
+    desc: section.desc,
+    articles: section.slugs
+      .map((s) => bySlug[s])
+      .filter(Boolean)
+      .map((a) => ({
+        slug: a.slug,
+        title: a.frontmatter.title,
+        date: formatDate(a.frontmatter.date),
+        image: a.frontmatter.image,
+        lede: extractLede(a.content, a.frontmatter.excerpt ?? ''),
+        readMins: readingTime(a.content),
+      })),
+  })).filter((s) => s.articles.length > 0)
+
   return (
     <>
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-12 pb-10">
           <div
-            className="flex items-end justify-between gap-8 pb-10 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+            className="flex items-end justify-between gap-8 border-b"
+            style={{ borderColor: 'rgba(255,255,255,0.07)', paddingBottom: '2rem' }}
           >
             <div>
-              <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
-                style={{ color: '#B8892E' }}
-              >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
-                Writing
-              </div>
-              <h1 className="leading-none">
-                <Image
-                  src="/images/Logos/ForumAndPulpit Logo White.png"
-                  alt="Forum & Pulpit"
-                  width={1710}
-                  height={499}
-                  priority
-                  style={{ height: 52, width: 'auto' }}
-                />
-              </h1>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/Logos/ForumAndPulpit%20Logo%20White.png"
+                alt="Forum & Pulpit"
+                style={{ height: 76, width: 'auto', display: 'block' }}
+              />
             </div>
             <div className="text-right pb-0.5 shrink-0">
               <p
@@ -159,343 +167,210 @@ export default function ForumAndPulpitPage() {
       {/* ── Breaking news ticker ───────────────────────────────────────────── */}
       <FPTicker items={tickerItems} />
 
-      {/* ── Front Page ─────────────────────────────────────────────────────── */}
+      {/* ── Topographic Feature Callout ────────────────────────────────────── */}
       {primary && (
-        <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
-          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-14">
+        <div style={{ position: 'relative', background: '#0D0B09', overflow: 'hidden' }}>
 
-            {/* Dateline */}
-            <div
-              className="flex items-center gap-4 pb-4 mb-8 border-b text-[0.6rem] font-medium tracking-[0.14em] uppercase"
-              style={{ borderColor: '#E2DACE', color: '#9A9189' }}
-            >
-              <span style={{ color: '#7A5C1E' }}>Forum &amp; Pulpit</span>
-              <span>·</span>
-              <span>Christian Public Witness</span>
-              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-              <span>{formatDate(primary.frontmatter.date)}</span>
-            </div>
+          {/* Topographic contour pattern */}
+          <svg
+            aria-hidden
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+            preserveAspectRatio="xMidYMid slice"
+          >
+            <defs>
+              <pattern id="fp-topo" x="0" y="0" width="340" height="260" patternUnits="userSpaceOnUse">
+                <ellipse cx="170" cy="130" rx="155" ry="115" fill="none" stroke="#B8892E" strokeWidth="0.6" opacity="0.14"/>
+                <ellipse cx="170" cy="130" rx="122" ry="88" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.11"/>
+                <ellipse cx="170" cy="130" rx="90" ry="64" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.09"/>
+                <ellipse cx="170" cy="130" rx="60" ry="42" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+                <ellipse cx="170" cy="130" rx="32" ry="22" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.07"/>
+                <ellipse cx="0" cy="0" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
+                <ellipse cx="0" cy="0" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+                <ellipse cx="0" cy="0" rx="28" ry="18" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.06"/>
+                <ellipse cx="340" cy="260" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
+                <ellipse cx="340" cy="260" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+                <ellipse cx="340" cy="0" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+                <ellipse cx="0" cy="260" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#fp-topo)"/>
+          </svg>
 
-            {/* Two-column newspaper */}
-            <div className="flex flex-col lg:flex-row gap-0">
+          {/* Vignette overlay */}
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'radial-gradient(ellipse 110% 100% at 60% 50%, transparent 0%, rgba(13,11,9,0.55) 100%)',
+            }}
+          />
 
-              {/* Primary (left 58%) */}
+          <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row" style={{ minHeight: 440 }}>
+
+              {/* Column 1: Column identity */}
               <div
-                className="flex-1 min-w-0 lg:pr-8 lg:border-r"
-                style={{ borderColor: '#E2DACE' }}
+                className="hidden lg:flex flex-col justify-between py-12 pr-10 shrink-0"
+                style={{ width: 260, borderRight: '1px solid rgba(255,255,255,0.06)' }}
               >
-                <Link href={`/forum-and-pulpit/${primary.slug}`} className="group block">
-                  {primary.frontmatter.image && (
-                    <div className="overflow-hidden mb-5" style={{ aspectRatio: '16/10' }}>
-                      <div className="relative w-full h-full overflow-hidden">
-                        <Image
-                          src={primary.frontmatter.image}
-                          alt=""
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                          sizes="(min-width: 1024px) 58vw, 100vw"
-                          priority
-                        />
-                      </div>
-                    </div>
-                  )}
+                <div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/Logos/ForumAndPulpit%20Logo%20White.png"
+                    alt="Forum & Pulpit"
+                    style={{ height: 38, width: 'auto', marginBottom: 20, opacity: 0.8 }}
+                  />
+                  <p
+                    className="text-[0.78rem] leading-[1.75] italic"
+                    style={{
+                      fontFamily: 'var(--font-source-serif)',
+                      color: 'rgba(249,246,240,0.38)',
+                      maxWidth: 210,
+                    }}
+                  >
+                    Christian reflection on the moments that demand a response — from the pulpit and in the public square.
+                  </p>
+                </div>
+                <div>
                   <div
-                    className="text-[0.58rem] font-medium tracking-[0.14em] uppercase mb-3"
+                    className="text-[0.52rem] font-bold tracking-[0.2em] uppercase mb-4"
                     style={{ color: '#7A5C1E' }}
                   >
-                    {formatDate(primary.frontmatter.date)} · {readingTime(primary.content)} min read
+                    Sections
                   </div>
+                  <div className="space-y-3">
+                    {SECTIONS.map((s) => (
+                      <div key={s.id} className="flex items-start gap-3">
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: '0.78rem',
+                            fontStyle: 'italic',
+                            color: '#C9984A',
+                            lineHeight: 1.4,
+                            flexShrink: 0,
+                          }}
+                        >
+                          {s.number}.
+                        </span>
+                        <span
+                          className="text-[0.7rem] leading-[1.5]"
+                          style={{ color: 'rgba(249,246,240,0.4)' }}
+                        >
+                          {s.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    className="mt-6 text-[0.52rem] font-medium tracking-[0.1em] uppercase"
+                    style={{ color: 'rgba(255,255,255,0.15)' }}
+                  >
+                    {raw.length} essays
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 2: Article image */}
+              {primary.frontmatter.image ? (
+                <div
+                  className="relative overflow-hidden shrink-0"
+                  style={{ width: 'clamp(180px, 32%, 380px)', minHeight: 300 }}
+                >
+                  <Image
+                    src={primary.frontmatter.image}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 32vw, 100vw"
+                    priority
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'linear-gradient(to right, transparent 55%, rgba(13,11,9,0.6) 100%), linear-gradient(to top, rgba(13,11,9,0.5) 0%, transparent 35%)',
+                    }}
+                  />
+                </div>
+              ) : null}
+
+              {/* Column 3: Article content */}
+              <div className="flex-1 min-w-0 py-12 lg:pl-10 flex flex-col justify-center">
+                <div
+                  className="text-[0.52rem] font-bold tracking-[0.22em] uppercase mb-5"
+                  style={{ color: '#7A5C1E' }}
+                >
+                  Latest Essay
+                </div>
+                <Link href={`/forum-and-pulpit/${primary.slug}`} className="group block">
                   <h2
-                    className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#7A5C1E]"
+                    className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#C9984A]"
                     style={{
                       fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
+                      fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
                       fontWeight: 400,
-                      color: '#1A1714',
+                      color: '#F9F6F0',
                     }}
                   >
                     {primary.frontmatter.title}
                   </h2>
-                  {(() => {
-                    const lede = extractLede(primary.content, primary.frontmatter.excerpt ?? '')
-                    return lede ? (
-                      <p
-                        className="text-[0.93rem] leading-[1.8] mb-5"
-                        style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                      >
-                        {lede}
-                      </p>
-                    ) : null
-                  })()}
-                  <span
-                    className="inline-flex items-center gap-1.5 text-[0.68rem] tracking-[0.06em] uppercase font-medium transition-colors group-hover:text-[#7A5C1E]"
-                    style={{ color: '#B8892E' }}
+                </Link>
+                {(() => {
+                  const lede = extractLede(primary.content, primary.frontmatter.excerpt ?? '')
+                  return lede ? (
+                    <p
+                      className="text-[0.9rem] leading-[1.85] mb-8"
+                      style={{
+                        fontFamily: 'var(--font-source-serif)',
+                        color: 'rgba(249,246,240,0.48)',
+                        maxWidth: 480,
+                      }}
+                    >
+                      {lede}
+                    </p>
+                  ) : null
+                })()}
+                <div className="flex flex-wrap items-center gap-5">
+                  <Link
+                    href={`/forum-and-pulpit/${primary.slug}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-all hover:opacity-80"
+                    style={{ background: '#7A5C1E', color: '#F9F6F0' }}
                   >
-                    Read essay
+                    Read Essay
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
+                  </Link>
+                  <span
+                    className="text-[0.6rem] font-medium tracking-[0.1em] uppercase"
+                    style={{ color: 'rgba(255,255,255,0.25)' }}
+                  >
+                    {formatDate(primary.frontmatter.date)} · {readingTime(primary.content)} min read
                   </span>
-                </Link>
+                </div>
               </div>
 
-              {/* Secondary stories (right 42%) */}
-              <div className="lg:w-[38%] shrink-0 lg:pl-8 mt-8 lg:mt-0 space-y-0">
-                {[second, third].filter(Boolean).map((story, i) => story && (
-                  <div key={story.slug}>
-                    <Link href={`/forum-and-pulpit/${story.slug}`} className="group flex flex-col sm:flex-row lg:flex-col gap-4 py-6">
-                      {story.frontmatter.image && (
-                        <div className="w-full sm:w-[160px] lg:w-full shrink-0 overflow-hidden" style={{ aspectRatio: '16/10' }}>
-                          <div className="relative w-full h-full overflow-hidden">
-                            <Image
-                              src={story.frontmatter.image}
-                              alt=""
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 160px, 100vw"
-                              priority
-                            />
-                          </div>
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div
-                          className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2"
-                          style={{ color: '#7A5C1E' }}
-                        >
-                          {formatDate(story.frontmatter.date)}
-                        </div>
-                        <h3
-                          className="leading-[1.2] tracking-tight mb-2 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{
-                            fontFamily: 'var(--font-cormorant)',
-                            fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
-                            fontWeight: 400,
-                            color: '#1A1714',
-                          }}
-                        >
-                          {story.frontmatter.title}
-                        </h3>
-                        {(() => {
-                          const lede = extractLede(story.content, story.frontmatter.excerpt ?? '')
-                          return lede ? (
-                            <p
-                              className="text-[0.82rem] leading-relaxed line-clamp-3"
-                              style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
-                            >
-                              {lede}
-                            </p>
-                          ) : null
-                        })()}
-                      </div>
-                    </Link>
-                    {i === 0 && (
-                      <div className="h-px" style={{ background: '#E2DACE' }} />
-                    )}
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* ── Sticky bottom ticker (fixed, appears on scroll) ───────────────── */}
-      <FPTicker items={tickerItems} sticky />
-
-      {/* ── Topic Sections ─────────────────────────────────────────────────── */}
+      {/* ── Topic Sections (carousel) + Sidebar ────────────────────────────── */}
       <div style={{ background: '#FAFAF7' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14 pb-24">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-0 pb-24">
           <div className="flex gap-10 xl:gap-14 items-start">
 
-            {/* ── Main content ─────────────────────────────────────────── */}
+            {/* ── Carousel ─────────────────────────────────────────────── */}
             <div className="flex-1 min-w-0">
-          {SECTIONS.map((section, si) => {
-            const articles = section.slugs
-              .map((s) => bySlug[s])
-              .filter(Boolean)
-            if (!articles.length) return null
-
-            const [lead, ...rest] = articles
-
-            return (
-              <div key={section.id} className={si > 0 ? 'mt-16 pt-14 border-t' : ''} style={{ borderColor: '#E2DACE' }}>
-
-                {/* Section header */}
-                <div className="flex items-center gap-5 mb-10">
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '0.8rem',
-                      fontStyle: 'italic',
-                      color: '#C9984A',
-                      fontWeight: 500,
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    {section.number}
-                  </span>
-                  <div className="h-px flex-none w-6" style={{ background: '#B8892E' }} />
-                  <h2
-                    className="shrink-0 tracking-tight"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(1.4rem, 2vw, 1.75rem)',
-                      fontWeight: 500,
-                      color: '#1A1714',
-                    }}
-                  >
-                    {section.title}
-                  </h2>
-                  <div className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-                  <p
-                    className="shrink-0 text-[0.62rem] font-medium tracking-[0.1em] uppercase hidden sm:block"
-                    style={{ color: '#B0A898' }}
-                  >
-                    {section.desc}
-                  </p>
-                </div>
-
-                {/* Lead article */}
-                <div
-                  className="flex flex-col lg:flex-row gap-0 pb-10 mb-10 border-b"
-                  style={{ borderColor: '#E2DACE' }}
-                >
-                  {lead.frontmatter.image && (
-                    <Link
-                      href={`/forum-and-pulpit/${lead.slug}`}
-                      className="group w-full lg:w-[50%] shrink-0 overflow-hidden mb-6 lg:mb-0 lg:mr-8"
-                    >
-                      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/10' }}>
-                        <Image
-                          src={lead.frontmatter.image}
-                          alt=""
-                          fill
-                          className="object-cover transition-transform duration-600 group-hover:scale-[1.03]"
-                          sizes="(min-width: 1024px) 50vw, 100vw"
-                        />
-                      </div>
-                    </Link>
-                  )}
-                  <div className={lead.frontmatter.image ? 'flex-1 min-w-0' : 'w-full'}>
-                    <div
-                      className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase mb-3"
-                      style={{ color: '#7A5C1E' }}
-                    >
-                      {section.title.toUpperCase()} · {formatDate(lead.frontmatter.date)}
-                    </div>
-                    <Link href={`/forum-and-pulpit/${lead.slug}`} className="group block">
-                      <h3
-                        className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
-                        style={{
-                          fontFamily: 'var(--font-cormorant)',
-                          fontSize: lead.frontmatter.image
-                            ? 'clamp(1.35rem, 2.2vw, 1.9rem)'
-                            : 'clamp(1.7rem, 2.8vw, 2.4rem)',
-                          fontWeight: 500,
-                          color: '#1A1714',
-                        }}
-                      >
-                        {lead.frontmatter.title}
-                      </h3>
-                    </Link>
-                    {(() => {
-                      const lede = extractLede(lead.content, lead.frontmatter.excerpt ?? '')
-                      return lede ? (
-                        <p
-                          className="text-[0.92rem] leading-[1.85] mb-5"
-                          style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                        >
-                          {lede.slice(0, 480)}{lede.length > 480 ? '…' : ''}
-                        </p>
-                      ) : null
-                    })()}
-                    <div className="flex items-center gap-5">
-                      <Link
-                        href={`/forum-and-pulpit/${lead.slug}`}
-                        className="inline-flex items-center gap-1.5 text-[0.68rem] tracking-[0.06em] uppercase font-medium transition-colors hover:text-[#7A5C1E]"
-                        style={{ color: '#B8892E' }}
-                      >
-                        Read essay
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                      <span className="text-[0.6rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#C8BFA8' }}>
-                        {readingTime(lead.content)} min read
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Remaining articles in section */}
-                {rest.length > 0 && (
-                  <div className={`grid gap-8 ${rest.length === 1 ? 'lg:grid-cols-1' : rest.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
-                    {rest.map((article) => {
-                      const lede = extractLede(article.content, article.frontmatter.excerpt ?? '')
-                      return (
-                        <Link
-                          key={article.slug}
-                          href={`/forum-and-pulpit/${article.slug}`}
-                          className="group flex flex-col"
-                        >
-                          {article.frontmatter.image ? (
-                            <div className="overflow-hidden mb-4" style={{ aspectRatio: '16/10' }}>
-                              <div className="relative w-full h-full overflow-hidden">
-                                <Image
-                                  src={article.frontmatter.image}
-                                  alt=""
-                                  fill
-                                  className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-                                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                                />
-                              </div>
-                            </div>
-                          ) : (
-                            <div
-                              className="overflow-hidden mb-4 flex items-center justify-center"
-                              style={{ aspectRatio: '16/10', background: '#1A1714' }}
-                            >
-                              <span className="text-[0.58rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#7A5C1E' }}>
-                                Forum &amp; Pulpit
-                              </span>
-                            </div>
-                          )}
-                          <div className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2" style={{ color: '#B8892E' }}>
-                            {formatDate(article.frontmatter.date)}
-                          </div>
-                          <h4
-                            className="leading-[1.25] tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
-                            style={{
-                              fontFamily: 'var(--font-cormorant)',
-                              fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
-                              fontWeight: 500,
-                              color: '#1A1714',
-                            }}
-                          >
-                            {article.frontmatter.title}
-                          </h4>
-                          {lede && (
-                            <p
-                              className="text-[0.85rem] leading-[1.75] line-clamp-4"
-                              style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
-                            >
-                              {lede}
-                            </p>
-                          )}
-                        </Link>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            )
-          })}
-            </div>{/* end main content */}
+              <FPSectionCarousel sections={carouselSections} />
+            </div>
 
             {/* ── Sidebar ──────────────────────────────────────────────── */}
             <aside className="hidden lg:block shrink-0 w-[220px] xl:w-[240px]">
-              <div className="sticky top-8 space-y-8">
+              <div className="sticky top-8 space-y-8 pt-[4.5rem]">
 
                 {/* About */}
                 <div>
@@ -579,9 +454,12 @@ export default function ForumAndPulpitPage() {
               </div>
             </aside>
 
-          </div>{/* end flex */}
+          </div>
         </div>
       </div>
+
+      {/* ── Sticky bottom ticker ───────────────────────────────────────────── */}
+      <FPTicker items={tickerItems} sticky />
     </>
   )
 }

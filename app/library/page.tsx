@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { type LibraryBook } from '@/components/library-browser'
 import { LibraryEssentialGrid, type EssentialBook } from '@/components/library-essential-grid'
 import { LibraryCategoryExpander } from '@/components/library-category-expander'
+import { LibraryReviewSpotlight, type ReviewItem } from '@/components/library-review-spotlight'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
@@ -76,7 +77,7 @@ const allCategories = ALL_CATEGORY_ORDER
   .map((cat) => ({ name: cat, count: allBooks.filter((b) => b.categories.includes(cat)).length }))
 
 // Placeholder book reviews — one per major section
-const BOOK_REVIEWS = [
+const BOOK_REVIEWS: ReviewItem[] = [
   {
     slug: 'the-knowledge-of-the-holy',
     category: 'Theology',
@@ -86,6 +87,7 @@ const BOOK_REVIEWS = [
     pullQuote: 'Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery.',
     excerpt:
       'There are few books that have shaped my theology more than this brief, luminous meditation on the character of God. Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery. Every sentence carries weight. I return to it every few years and leave more humbled than when I started.',
+    amazonUrl: 'https://www.amazon.com/dp/0060724579',
   },
   {
     slug: 'the-reason-for-god',
@@ -93,8 +95,10 @@ const BOOK_REVIEWS = [
     book: 'The Reason for God',
     author: 'Timothy Keller',
     cover: '/book-covers/the-reason-for-god.webp',
+    pullQuote: 'Keller takes the skeptic\'s best objections seriously and answers them with intellectual rigor and pastoral warmth.',
     excerpt:
       'Keller does what few apologists manage: he takes the skeptic\'s best objections seriously and answers them with intellectual rigor and pastoral warmth. This is the book I hand to every thoughtful unbeliever I know — and to every believer who has stopped asking hard questions.',
+    amazonUrl: 'https://www.amazon.com/dp/1594483493',
   },
   {
     slug: 'mere-christianity',
@@ -102,8 +106,10 @@ const BOOK_REVIEWS = [
     book: 'Mere Christianity',
     author: 'C. S. Lewis',
     cover: '/book-covers/mere-christianity.webp',
+    pullQuote: 'Lewis writes with a clarity that makes difficult things feel obvious in the best way.',
     excerpt:
       'Lewis writes with a clarity that makes difficult things feel obvious in the best way. His moral argument for God\'s existence alone is worth the price of the book. I have read this at least six times and find something new on every pass. It remains one of the most important books in my library.',
+    amazonUrl: 'https://www.amazon.com/dp/0060652926',
   },
   {
     slug: 'how-to-read-the-bible-for-all-its-worth',
@@ -111,8 +117,10 @@ const BOOK_REVIEWS = [
     book: 'How to Read the Bible for All Its Worth',
     author: 'Gordon D. Fee & Douglas Stuart',
     cover: '/book-covers/how-to-read-the-bible-for-all-its-worth.webp',
+    pullQuote: 'If I could require one book for every church member, it might be this one.',
     excerpt:
       'If I could require one book for every church member, it might be this one. Fee and Stuart equip ordinary readers to engage Scripture with intelligence and humility — honoring the text\'s genre, history, and original audience — without requiring seminary training to do so.',
+    amazonUrl: 'https://www.amazon.com/dp/0310246040',
   },
   {
     slug: 'gentle-and-lowly',
@@ -120,8 +128,10 @@ const BOOK_REVIEWS = [
     book: 'Gentle and Lowly',
     author: 'Dane Ortlund',
     cover: '/book-covers/gentle-and-lowly.webp',
+    pullQuote: 'I\'ve watched this book quietly change people. Pastors especially need it — perhaps more than anyone.',
     excerpt:
       'Ortlund draws from the Puritans and the Gospels to make the case that the deepest truth about Jesus is his tenderness toward sinners and sufferers. I\'ve watched this book quietly change people. Pastors especially need it — perhaps more than anyone.',
+    amazonUrl: 'https://www.amazon.com/dp/1433566257',
   },
   {
     slug: 'the-valley-of-vision',
@@ -129,8 +139,10 @@ const BOOK_REVIEWS = [
     book: 'The Valley of Vision',
     author: 'Arthur Bennett (ed.)',
     cover: '/book-covers/the-valley-of-vision.webp',
+    pullQuote: 'These are the most honest, theologically rich prayers I have ever encountered. My copy is worn from daily use.',
     excerpt:
       'The Puritan prayers in this collection are the most honest, theologically rich prayers I have ever encountered. They have taught me to pray with more precision and more desperation. My copy is worn from daily use. There is nothing else quite like it.',
+    amazonUrl: 'https://www.amazon.com/dp/0851512283',
   },
   {
     slug: 'biblical-preaching',
@@ -138,8 +150,10 @@ const BOOK_REVIEWS = [
     book: 'Biblical Preaching',
     author: 'Haddon Robinson',
     cover: '/book-covers/biblical-preaching.webp',
+    pullQuote: 'Required reading for anyone who stands behind a pulpit.',
     excerpt:
       'Robinson\'s exposition of expository preaching formed an entire generation of preachers, and for good reason. The "big idea" method he teaches keeps the text in the driver\'s seat and the preacher where he belongs — as a herald, not a performer. Required reading for anyone who stands behind a pulpit.',
+    amazonUrl: 'https://www.amazon.com/dp/0801049121',
   },
   {
     slug: 'the-cost-of-discipleship',
@@ -147,8 +161,10 @@ const BOOK_REVIEWS = [
     book: 'The Cost of Discipleship',
     author: 'Dietrich Bonhoeffer',
     cover: '/book-covers/the-cost-of-discipleship.webp',
+    pullQuote: 'Bonhoeffer wrote this from a position of costly obedience — and it shows on every page.',
     excerpt:
       'Bonhoeffer wrote this from a position of costly obedience, and it shows. His distinction between cheap grace and costly grace remains one of the most important diagnoses of contemporary Christianity. Difficult, searching, and ultimately transformative.',
+    amazonUrl: 'https://www.amazon.com/dp/0684815001',
   },
 ]
 
@@ -348,129 +364,8 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      {/* ── From the Desk — pull-quote spotlight ─────────────────────────── */}
-      {(() => {
-        const review = BOOK_REVIEWS[0]
-        return (
-          <div style={{ background: '#F5F0E6', borderTop: '1px solid #DDD5C4' }}>
-            <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
-
-              {/* Section label */}
-              <div
-                className="flex items-center gap-3 mb-14"
-                style={{ borderBottom: '1px solid #DDD5C4', paddingBottom: '0.875rem' }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: '1rem',
-                    fontStyle: 'italic',
-                    color: '#7A5C1E',
-                  }}
-                >
-                  From the Desk
-                </span>
-                <span className="flex-1 h-px" style={{ background: '#DDD5C4' }} />
-                <span
-                  className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase"
-                  style={{ color: '#B0A080' }}
-                >
-                  Book Reviews
-                </span>
-              </div>
-
-              {/* Pull-quote card */}
-              <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
-
-                {/* Left: editorial text */}
-                <div className="flex-1 min-w-0 relative">
-                  {/* Decorative opening mark */}
-                  <div
-                    aria-hidden
-                    className="absolute -top-4 -left-3 select-none pointer-events-none"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '9rem',
-                      lineHeight: 1,
-                      color: '#C9984A',
-                      opacity: 0.12,
-                    }}
-                  >
-                    &#8220;
-                  </div>
-
-                  {/* Category pill */}
-                  <div
-                    className="inline-flex items-center gap-1.5 mb-6 px-3 py-1 text-[0.55rem] font-bold tracking-[0.18em] uppercase"
-                    style={{ background: '#EDE4D0', color: '#7A5C1E', border: '1px solid #D4C4A0' }}
-                  >
-                    {review.category}
-                  </div>
-
-                  {/* Pull quote */}
-                  <blockquote
-                    className="leading-[1.65] mb-8 relative z-10"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontStyle: 'italic',
-                      fontWeight: 400,
-                      fontSize: 'clamp(1.45rem, 2.2vw, 1.9rem)',
-                      color: '#1A1410',
-                    }}
-                  >
-                    {review.pullQuote}
-                  </blockquote>
-
-                  {/* Attribution */}
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-px" style={{ background: '#B8892E' }} />
-                    <p
-                      className="text-[0.72rem] tracking-[0.04em]"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#6A5E52', fontStyle: 'italic' }}
-                    >
-                      Austin Duncan, on{' '}
-                      <em style={{ fontStyle: 'normal', color: '#3A2E24' }}>{review.book}</em>
-                      {' '}by {review.author}
-                    </p>
-                  </div>
-
-                  {/* CTA */}
-                  <Link
-                    href={`/library/browse?category=${encodeURIComponent(review.category)}`}
-                    className="inline-flex items-center gap-2.5 px-6 py-3 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-all duration-200 hover:opacity-80"
-                    style={{ background: '#7A5C1E', color: '#F9F6F0' }}
-                  >
-                    More books like this
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-
-                {/* Right: book cover */}
-                <div className="shrink-0 lg:w-[180px] xl:w-[200px] w-[140px]">
-                  <div
-                    className="relative overflow-hidden"
-                    style={{
-                      aspectRatio: '2/3',
-                      boxShadow: '6px 12px 32px rgba(26,20,10,0.22), 2px 4px 8px rgba(26,20,10,0.14)',
-                    }}
-                  >
-                    <Image
-                      src={review.cover}
-                      alt={review.book}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1024px) 200px, 140px"
-                    />
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        )
-      })()}
+      {/* ── From the Desk — rotating review spotlight ─────────────────────── */}
+      <LibraryReviewSpotlight reviews={BOOK_REVIEWS} />
 
       {/* ── Explore CTA ───────────────────────────────────────────────────── */}
       <div style={{ background: '#0E0C0A' }}>
