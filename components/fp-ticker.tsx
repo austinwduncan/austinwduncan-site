@@ -47,11 +47,9 @@ export function FPTicker({ items }: { items: TickerItem[] }) {
                 {item.date}
               </span>
               <span
-                className="text-[0.72rem] transition-colors group-hover:text-[#F9F6F0]"
+                className="text-[0.72rem] font-semibold transition-colors group-hover:text-[#F9F6F0]"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
-                  fontStyle: 'italic',
-                  color: 'rgba(249,246,240,0.4)',
+                  color: 'rgba(249,246,240,0.55)',
                 }}
               >
                 {item.title}

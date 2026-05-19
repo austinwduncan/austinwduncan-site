@@ -144,18 +144,18 @@ export default function ForumAndPulpitPage() {
 
       {/* ── Front Page ─────────────────────────────────────────────────────── */}
       {primary && (
-        <div style={{ background: '#141210' }}>
+        <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
           <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-14">
 
             {/* Dateline */}
             <div
               className="flex items-center gap-4 pb-4 mb-8 border-b text-[0.6rem] font-medium tracking-[0.14em] uppercase"
-              style={{ borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.22)' }}
+              style={{ borderColor: '#E2DACE', color: '#9A9189' }}
             >
               <span style={{ color: '#7A5C1E' }}>Forum &amp; Pulpit</span>
               <span>·</span>
               <span>Christian Public Witness</span>
-              <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
               <span>{formatDate(primary.frontmatter.date)}</span>
             </div>
 
@@ -165,7 +165,7 @@ export default function ForumAndPulpitPage() {
               {/* Primary (left 58%) */}
               <div
                 className="flex-1 min-w-0 lg:pr-8 lg:border-r"
-                style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+                style={{ borderColor: '#E2DACE' }}
               >
                 <Link href={`/forum-and-pulpit/${primary.slug}`} className="group block">
                   {primary.frontmatter.image && (
@@ -189,12 +189,12 @@ export default function ForumAndPulpitPage() {
                     {formatDate(primary.frontmatter.date)} · {readingTime(primary.content)} min read
                   </div>
                   <h2
-                    className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#B8892E]"
+                    className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#7A5C1E]"
                     style={{
                       fontFamily: 'var(--font-cormorant)',
                       fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
                       fontWeight: 400,
-                      color: '#F9F6F0',
+                      color: '#1A1714',
                     }}
                   >
                     {primary.frontmatter.title}
@@ -204,15 +204,15 @@ export default function ForumAndPulpitPage() {
                     return lede ? (
                       <p
                         className="text-[0.93rem] leading-[1.8] mb-5"
-                        style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.5)' }}
+                        style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
                       >
                         {lede}
                       </p>
                     ) : null
                   })()}
                   <span
-                    className="inline-flex items-center gap-1.5 text-[0.68rem] tracking-[0.06em] uppercase font-medium transition-colors group-hover:text-[#B8892E]"
-                    style={{ color: '#7A5C1E' }}
+                    className="inline-flex items-center gap-1.5 text-[0.68rem] tracking-[0.06em] uppercase font-medium transition-colors group-hover:text-[#7A5C1E]"
+                    style={{ color: '#B8892E' }}
                   >
                     Read essay
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -249,12 +249,12 @@ export default function ForumAndPulpitPage() {
                           {formatDate(story.frontmatter.date)}
                         </div>
                         <h3
-                          className="leading-[1.2] tracking-tight mb-2 transition-colors group-hover:text-[#B8892E]"
+                          className="leading-[1.2] tracking-tight mb-2 transition-colors group-hover:text-[#7A5C1E]"
                           style={{
                             fontFamily: 'var(--font-cormorant)',
                             fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
                             fontWeight: 400,
-                            color: '#F9F6F0',
+                            color: '#1A1714',
                           }}
                         >
                           {story.frontmatter.title}
@@ -264,7 +264,7 @@ export default function ForumAndPulpitPage() {
                           return lede ? (
                             <p
                               className="text-[0.82rem] leading-relaxed line-clamp-3"
-                              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.35)' }}
+                              style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
                             >
                               {lede}
                             </p>
@@ -273,7 +273,7 @@ export default function ForumAndPulpitPage() {
                       </div>
                     </Link>
                     {i === 0 && (
-                      <div className="h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+                      <div className="h-px" style={{ background: '#E2DACE' }} />
                     )}
                   </div>
                 ))}
