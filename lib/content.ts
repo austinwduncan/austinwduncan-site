@@ -131,6 +131,34 @@ export function readingTime(content: string): number {
   return Math.max(1, Math.ceil(words / 200))
 }
 
+export function formatReadingTime(minutes: number): string {
+  if (minutes < 60) return `${minutes} min read`
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return m > 0 ? `${h}h ${m}m read` : `${h}h read`
+}
+
+export type TocItem = { id: string; level: 2 | 3; text: string }
+
+function headingToId(text: string): string {
+  return text
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+export function extractToc(content: string): TocItem[] {
+  const matches = [...content.matchAll(/^(#{2,3})\s+(.+)$/gm)]
+  return matches.map((m) => {
+    const level = m[1].length as 2 | 3
+    const raw = m[2].replace(/\*\*/g, '').replace(/\*/g, '').replace(/`/g, '').trim()
+    return { id: headingToId(raw), level, text: raw }
+  })
+}
+
 export function sortByDate<T extends { frontmatter: { date?: string } }>(
   items: T[]
 ): T[] {

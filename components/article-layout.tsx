@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, Play } from 'lucide-react'
 import ReadingProgress from '@/components/reading-progress'
 import PrintButton from '@/components/print-button'
+import { ExegeticaTOC } from '@/components/exegetica-toc'
+import { formatReadingTime, type TocItem } from '@/lib/content'
 
 interface Props {
   section: string
@@ -14,6 +16,7 @@ interface Props {
   youtube?: string
   esvText?: string | null
   readingMinutes: number
+  toc?: TocItem[]
   children: React.ReactNode
 }
 
@@ -41,6 +44,7 @@ export default function ArticleLayout({
   youtube,
   esvText,
   readingMinutes,
+  toc,
   children,
 }: Props) {
   const formattedDate = formatDate(date)
@@ -108,7 +112,7 @@ export default function ArticleLayout({
             )}
             <span className="inline-flex items-center gap-1.5">
               <Clock size={11} />
-              {readingMinutes} min read
+              {formatReadingTime(readingMinutes)}
             </span>
           </div>
         </div>
@@ -126,61 +130,71 @@ export default function ArticleLayout({
         }}
       />
 
-      {/* ── Article column ────────────────────────────────────────────────── */}
-      <div className="mx-auto max-w-[720px] px-6" style={{ backgroundColor: '#FAFAF7' }}>
+      {/* ── Article column (+ optional TOC sidebar) ───────────────────────── */}
+      <div style={{ backgroundColor: '#FAFAF7' }}>
+        <div
+          className="mx-auto flex items-start gap-0"
+          style={{ maxWidth: toc && toc.length > 0 ? 980 : 720, padding: '0 1.5rem' }}
+        >
+          {/* Article content */}
+          <div className="flex-1 min-w-0" style={{ maxWidth: 720 }}>
+            {/* Toolbar */}
+            <div className="flex items-center justify-between border-b border-zinc-100 pb-6 pt-7">
+              <Link
+                href={sectionHref}
+                className="inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.1em] text-zinc-400 transition-colors hover:text-zinc-700"
+              >
+                <ArrowLeft size={11} />
+                {section}
+              </Link>
+              <PrintButton />
+            </div>
 
-        {/* Toolbar */}
-        <div className="flex items-center justify-between border-b border-zinc-100 pb-6 pt-7">
-          <Link
-            href={sectionHref}
-            className="inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.1em] text-zinc-400 transition-colors hover:text-zinc-700"
-          >
-            <ArrowLeft size={11} />
-            {section}
-          </Link>
-          <PrintButton />
+            {/* MDX content */}
+            <div className="article-prose pb-8 pt-10">{children}</div>
+
+            {/* Video — after content */}
+            {youtube && (
+              <div className="mb-10 overflow-hidden rounded-sm border border-zinc-200">
+                <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3">
+                  <Play size={13} style={{ color: '#cdb079' }} />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
+                    Watch the Message
+                  </span>
+                </div>
+                <div className="aspect-video w-full bg-zinc-950">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${youtube}`}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title={title}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* ESV passage — print only */}
+            {esvText && (
+              <div className="print-only mt-10 border-t border-zinc-200 pt-10">
+                <p
+                  className="mb-4 text-[10px] font-semibold uppercase tracking-[0.16em]"
+                  style={{ color: '#cdb079' }}
+                >
+                  Scripture Text ({scripture})
+                </p>
+                <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-zinc-700">
+                  {esvText}
+                </pre>
+              </div>
+            )}
+
+            <div className="pb-16 lg:pb-20" />
+          </div>
+
+          {/* TOC sidebar (Exegetica only) */}
+          {toc && toc.length > 0 && <ExegeticaTOC items={toc} />}
         </div>
-
-        {/* MDX content */}
-        <div className="article-prose pb-8 pt-10">{children}</div>
-
-        {/* Video — after content */}
-        {youtube && (
-          <div className="mb-10 overflow-hidden rounded-sm border border-zinc-200">
-            <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3">
-              <Play size={13} style={{ color: '#cdb079' }} />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
-                Watch the Message
-              </span>
-            </div>
-            <div className="aspect-video w-full bg-zinc-950">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${youtube}`}
-                className="h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title={title}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* ESV passage — print only */}
-        {esvText && (
-          <div className="print-only mt-10 border-t border-zinc-200 pt-10">
-            <p
-              className="mb-4 text-[10px] font-semibold uppercase tracking-[0.16em]"
-              style={{ color: '#cdb079' }}
-            >
-              Scripture Text ({scripture})
-            </p>
-            <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-zinc-700">
-              {esvText}
-            </pre>
-          </div>
-        )}
-
-        <div className="pb-16 lg:pb-20" />
       </div>
     </>
   )

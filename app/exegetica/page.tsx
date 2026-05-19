@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getAll, sortByDate, formatDate, readingTime, formatReadingTime, type ArticleFrontmatter } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Exegetica — Austin W. Duncan',
@@ -211,7 +211,7 @@ export default function ExegeticaPage() {
                       </svg>
                     </span>
                     <span className="text-[0.63rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#C8BFA8' }}>
-                      {mins} min · {words.toLocaleString()} words
+                      {formatReadingTime(mins)} · {words.toLocaleString()} words
                     </span>
                   </div>
                 </div>
@@ -353,7 +353,7 @@ export default function ExegeticaPage() {
                           </span>
                           <span className="inline-block h-[3px] w-[3px] rounded-full shrink-0" style={{ background: '#C8BFA8' }} />
                           <span className="text-[0.6rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#B0A898' }}>
-                            {mins} min read
+                            {formatReadingTime(mins)}
                           </span>
                         </div>
 

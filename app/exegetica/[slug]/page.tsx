@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getBySlug, getSlugs, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getBySlug, getSlugs, readingTime, extractToc, type ArticleFrontmatter } from '@/lib/content'
 import ArticleLayout from '@/components/article-layout'
 import { mdxComponents } from '@/lib/mdx-components'
 
@@ -33,6 +33,7 @@ export default async function ExegeticaArticlePage({ params }: { params: Params 
 
   const { frontmatter: fm, content } = file
   const minutes = readingTime(content)
+  const toc = extractToc(content)
 
   return (
     <ArticleLayout
@@ -43,6 +44,7 @@ export default async function ExegeticaArticlePage({ params }: { params: Params 
       date={fm.date}
       image={fm.image}
       readingMinutes={minutes}
+      toc={toc}
     >
       <MDXRemote source={content} components={mdxComponents} />
     </ArticleLayout>
