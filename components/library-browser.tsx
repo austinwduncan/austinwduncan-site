@@ -53,6 +53,7 @@ type Props = {
   recLevels: string[]
   audienceTags: string[]
   useCaseTags: string[]
+  initialCategory?: string
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -446,8 +447,12 @@ export default function LibraryBrowser({
   recLevels,
   audienceTags,
   useCaseTags,
+  initialCategory,
 }: Props) {
-  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
+  const [filters, setFilters] = useState<Filters>(() => ({
+    ...EMPTY_FILTERS,
+    category: (initialCategory && categories.includes(initialCategory)) ? initialCategory : 'All',
+  }))
   const [sortKey, setSortKey] = useState<SortKey>('essential-first')
   const [rawQuery, setRawQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type LibraryBook } from '@/components/library-browser'
+import { LibraryEssentialGrid, type EssentialBook } from '@/components/library-essential-grid'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
@@ -15,9 +16,9 @@ const allBooks: LibraryBook[] = (rawBooks as (LibraryBook & { internalNotes?: st
   ({ internalNotes, ...rest }) => rest,
 )
 
-// Deduplicated essential books with covers for the landing
+// Deduplicated essential books for the landing
 const seen = new Set<string>()
-const essentialBooks = allBooks
+const essentialBooks: EssentialBook[] = (allBooks as LibraryBook[])
   .filter((b) => {
     if (b.recommendationLevel !== 'Essential' || !b.coverImageUrl || !b.featured) return false
     if (seen.has(b.title)) return false
@@ -25,12 +26,21 @@ const essentialBooks = allBooks
     return true
   })
   .slice(0, 12)
+  .map((b) => ({
+    title: b.title,
+    author: b.author,
+    coverImageUrl: b.coverImageUrl!,
+    shortRecommendation: b.shortRecommendation,
+    recommendationLevel: b.recommendationLevel,
+    amazonUrl: b.amazonUrl,
+    categories: b.categories,
+  }))
 
-// Hero display — 6 books across 2 columns
+// Hero display — first 6 essential books
 const heroBooks = essentialBooks.slice(0, 6)
 
-// Category cards — one cover image per category
-const CATEGORY_DEFS: { name: string; cover?: string }[] = [
+// Category tiles for the featured section
+const CATEGORY_DEFS: { name: string; cover: string }[] = [
   { name: 'Theology',       cover: '/book-covers/knowing-god.webp' },
   { name: 'Apologetics',    cover: '/book-covers/another-gospel.webp' },
   { name: 'Classics',       cover: '/book-covers/mere-christianity.webp' },
@@ -45,10 +55,100 @@ const CATEGORY_DEFS: { name: string; cover?: string }[] = [
   { name: 'Christology',    cover: '/book-covers/the-reason-for-god.webp' },
 ]
 
-const categories = CATEGORY_DEFS.map((def) => ({
+const featuredCategories = CATEGORY_DEFS.map((def) => ({
   ...def,
   count: allBooks.filter((b) => b.categories.includes(def.name)).length,
 })).filter((c) => c.count > 0)
+
+// All available categories for the "View All" section
+const ALL_CATEGORY_ORDER = [
+  'Apologetics', 'Archaeology & Biblical History', 'Bible Dictionaries', 'Bible Languages/Tools',
+  'Bible Study', 'Biblical Reference', 'Business', 'Christian Living', 'Christology', 'Church History',
+  'Church Life', 'Classics', 'Comparative Religions', 'Death/Dying', 'Denominational Concerns',
+  'Devotionals', 'Discipleship', 'Eschatology/End Times', 'Ethics', 'Evangelism', 'Faith', 'Finance',
+  'God/Theology Proper', 'Grief & Comfort', 'Hermeneutics', 'Leadership', 'Love & Marriage', 'Men',
+  'Parenting', 'Pastoral', 'Philosophy', 'Prayer', 'Preaching', 'Reference', 'Sermons', 'Social Issues',
+  'Spiritual Warfare', 'Theology', 'Women', 'World Religions', 'Worship',
+]
+const allCategories = ALL_CATEGORY_ORDER
+  .filter((cat) => allBooks.some((b) => b.categories.includes(cat)))
+  .map((cat) => ({ name: cat, count: allBooks.filter((b) => b.categories.includes(cat)).length }))
+
+// Placeholder book reviews — one per major section
+const BOOK_REVIEWS = [
+  {
+    slug: 'the-knowledge-of-the-holy',
+    category: 'Theology',
+    book: 'The Knowledge of the Holy',
+    author: 'A. W. Tozer',
+    cover: '/book-covers/the-knowledge-of-the-holy.webp',
+    excerpt:
+      'There are few books that have shaped my theology more than this brief, luminous meditation on the character of God. Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery. Every sentence carries weight. I return to it every few years and leave more humbled than when I started.',
+  },
+  {
+    slug: 'the-reason-for-god',
+    category: 'Apologetics',
+    book: 'The Reason for God',
+    author: 'Timothy Keller',
+    cover: '/book-covers/the-reason-for-god.webp',
+    excerpt:
+      'Keller does what few apologists manage: he takes the skeptic\'s best objections seriously and answers them with intellectual rigor and pastoral warmth. This is the book I hand to every thoughtful unbeliever I know — and to every believer who has stopped asking hard questions.',
+  },
+  {
+    slug: 'mere-christianity',
+    category: 'Classics',
+    book: 'Mere Christianity',
+    author: 'C. S. Lewis',
+    cover: '/book-covers/mere-christianity.webp',
+    excerpt:
+      'Lewis writes with a clarity that makes difficult things feel obvious in the best way. His moral argument for God\'s existence alone is worth the price of the book. I have read this at least six times and find something new on every pass. It remains one of the most important books in my library.',
+  },
+  {
+    slug: 'how-to-read-the-bible-for-all-its-worth',
+    category: 'Bible Study',
+    book: 'How to Read the Bible for All Its Worth',
+    author: 'Gordon D. Fee & Douglas Stuart',
+    cover: '/book-covers/how-to-read-the-bible-for-all-its-worth.webp',
+    excerpt:
+      'If I could require one book for every church member, it might be this one. Fee and Stuart equip ordinary readers to engage Scripture with intelligence and humility — honoring the text\'s genre, history, and original audience — without requiring seminary training to do so.',
+  },
+  {
+    slug: 'gentle-and-lowly',
+    category: 'Christian Living',
+    book: 'Gentle and Lowly',
+    author: 'Dane Ortlund',
+    cover: '/book-covers/gentle-and-lowly.webp',
+    excerpt:
+      'Ortlund draws from the Puritans and the Gospels to make the case that the deepest truth about Jesus is his tenderness toward sinners and sufferers. I\'ve watched this book quietly change people. Pastors especially need it — perhaps more than anyone.',
+  },
+  {
+    slug: 'the-valley-of-vision',
+    category: 'Prayer',
+    book: 'The Valley of Vision',
+    author: 'Arthur Bennett (ed.)',
+    cover: '/book-covers/the-valley-of-vision.webp',
+    excerpt:
+      'The Puritan prayers in this collection are the most honest, theologically rich prayers I have ever encountered. They have taught me to pray with more precision and more desperation. My copy is worn from daily use. There is nothing else quite like it.',
+  },
+  {
+    slug: 'biblical-preaching',
+    category: 'Preaching',
+    book: 'Biblical Preaching',
+    author: 'Haddon Robinson',
+    cover: '/book-covers/biblical-preaching.webp',
+    excerpt:
+      'Robinson\'s exposition of expository preaching formed an entire generation of preachers, and for good reason. The "big idea" method he teaches keeps the text in the driver\'s seat and the preacher where he belongs — as a herald, not a performer. Required reading for anyone who stands behind a pulpit.',
+  },
+  {
+    slug: 'the-cost-of-discipleship',
+    category: 'Discipleship',
+    book: 'The Cost of Discipleship',
+    author: 'Dietrich Bonhoeffer',
+    cover: '/book-covers/the-cost-of-discipleship.webp',
+    excerpt:
+      'Bonhoeffer wrote this from a position of costly obedience, and it shows. His distinction between cheap grace and costly grace remains one of the most important diagnoses of contemporary Christianity. Difficult, searching, and ultimately transformative.',
+  },
+]
 
 export default function LibraryPage() {
   return (
@@ -197,7 +297,7 @@ export default function LibraryPage() {
                     style={{ aspectRatio: '2/3' }}
                   >
                     <Image
-                      src={book.coverImageUrl!}
+                      src={book.coverImageUrl}
                       alt={book.title}
                       fill
                       className="object-cover"
@@ -215,73 +315,21 @@ export default function LibraryPage() {
       {/* ── Essential Reading ──────────────────────────────────────────────── */}
       <div id="essential" style={{ background: '#FAFAF7', borderTop: '1px solid #E2DACE', borderBottom: '1px solid #E2DACE' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
-
           <div
             className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
             style={{ color: '#9A9189' }}
           >
             Essential Reading
             <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-            <span style={{ color: '#B8892E' }}>Must-read titles</span>
+            <span style={{ color: '#B8892E' }}>Click any book for details &amp; Amazon link</span>
           </div>
 
-          {/* Portrait book grid — 4 columns desktop */}
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-5 mb-10">
-            {essentialBooks.map((book) => (
-              <Link
-                key={book.title}
-                href="/library/browse"
-                className="group block relative overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
-                style={{ aspectRatio: '2/3' }}
-                title={book.title}
-              >
-                <Image
-                  src={book.coverImageUrl!}
-                  alt={book.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                  sizes="(min-width: 1024px) 15vw, (min-width: 640px) 22vw, 30vw"
-                />
-                {/* Hover overlay */}
-                <div
-                  className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(14,12,10,0.97) 0%, rgba(14,12,10,0.88) 45%, rgba(14,12,10,0.3) 100%)',
-                  }}
-                >
-                  <div
-                    className="text-[0.48rem] font-bold tracking-[0.18em] uppercase mb-1"
-                    style={{ color: '#B8892E' }}
-                  >
-                    Essential
-                  </div>
-                  <h3
-                    className="leading-snug mb-1.5"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '0.82rem',
-                      fontWeight: 500,
-                      color: '#F9F6F0',
-                    }}
-                  >
-                    {book.title}
-                  </h3>
-                  {book.shortRecommendation && (
-                    <p
-                      className="text-[0.6rem] leading-snug line-clamp-3"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.52)' }}
-                    >
-                      {book.shortRecommendation}
-                    </p>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* Client component: portrait grid with modal + Amazon */}
+          <LibraryEssentialGrid books={essentialBooks} />
 
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-8">
             <Link
-              href="/library/browse"
+              href="/library/browse?category=Classics"
               className="text-[0.68rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
               style={{ color: '#B8892E' }}
             >
@@ -291,39 +339,40 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      {/* ── Browse by Category ────────────────────────────────────────────── */}
+      {/* ── Browse by Category (featured) ─────────────────────────────────── */}
       <div style={{ background: '#F0EDE6' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
-
           <div
             className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
             style={{ color: '#9A9189' }}
           >
             Browse by Category
             <span className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
+            <a
+              href="#all-categories"
+              className="text-[0.63rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
+              style={{ color: '#B8892E' }}
+            >
+              View all {allCategories.length} →
+            </a>
           </div>
 
-          {/* Category image tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 mb-12">
-            {categories.map((cat) => (
+          {/* Category image tiles — each links to browse with filter applied */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+            {featuredCategories.map((cat) => (
               <Link
                 key={cat.name}
-                href="/library/browse"
+                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
                 className="group relative overflow-hidden block"
                 style={{ aspectRatio: '4/3' }}
               >
-                {cat.cover ? (
-                  <Image
-                    src={cat.cover}
-                    alt=""
-                    fill
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.08]"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0" style={{ background: '#1A1714' }} />
-                )}
-                {/* Dark overlay — darker on edges, lighter in center bottom */}
+                <Image
+                  src={cat.cover}
+                  alt=""
+                  fill
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.08]"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                />
                 <div
                   className="absolute inset-0 transition-opacity duration-300"
                   style={{ background: 'linear-gradient(to top, rgba(14,12,10,0.88) 0%, rgba(14,12,10,0.6) 50%, rgba(14,12,10,0.3) 100%)' }}
@@ -348,6 +397,133 @@ export default function LibraryPage() {
                   </h3>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── All Categories ────────────────────────────────────────────────── */}
+      <div id="all-categories" style={{ background: '#FAFAF7', borderTop: '1px solid #E2DACE' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12">
+          <div
+            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
+            style={{ color: '#9A9189' }}
+          >
+            All {allCategories.length} Categories
+            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {allCategories.map((cat) => (
+              <Link
+                key={cat.name}
+                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
+                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-[#B8892E] hover:bg-[#FEFCF7]"
+                style={{ borderColor: '#D8D0C4', background: '#F5F2EB' }}
+              >
+                <span
+                  className="text-[0.67rem] font-medium tracking-[0.08em] transition-colors group-hover:text-[#7A5C1E]"
+                  style={{ color: '#4A4038' }}
+                >
+                  {cat.name}
+                </span>
+                <span
+                  className="text-[0.56rem] font-medium tracking-[0.06em] transition-colors group-hover:text-[#B8892E]"
+                  style={{ color: '#B0A898' }}
+                >
+                  {cat.count}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Book Reviews ──────────────────────────────────────────────────── */}
+      <div style={{ background: '#F0EDE6', borderTop: '1px solid #D8D0C4' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
+
+          <div
+            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-2"
+            style={{ color: '#9A9189' }}
+          >
+            <span
+              className="font-medium"
+              style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1rem', color: '#C9984A', fontStyle: 'italic' }}
+            >
+              From the Desk
+            </span>
+            <span className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
+            Book Reviews
+          </div>
+          <p
+            className="text-[0.85rem] italic mb-10"
+            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+          >
+            Personal reflections on books that have shaped my thinking and ministry.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-8 lg:gap-10">
+            {BOOK_REVIEWS.map((review) => (
+              <div key={review.slug} className="flex gap-5">
+                {/* Book cover */}
+                <div
+                  className="shrink-0 relative overflow-hidden shadow-md"
+                  style={{ width: 88, aspectRatio: '2/3' }}
+                >
+                  <Image
+                    src={review.cover}
+                    alt={review.book}
+                    fill
+                    className="object-cover"
+                    sizes="88px"
+                  />
+                </div>
+
+                {/* Review text */}
+                <div className="flex-1 min-w-0">
+                  <div
+                    className="text-[0.55rem] font-semibold tracking-[0.14em] uppercase mb-1.5"
+                    style={{ color: '#B8892E' }}
+                  >
+                    {review.category}
+                  </div>
+                  <h3
+                    className="leading-snug tracking-tight mb-0.5"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
+                      fontWeight: 500,
+                      color: '#1A1714',
+                    }}
+                  >
+                    {review.book}
+                  </h3>
+                  <p
+                    className="text-[0.72rem] mb-3"
+                    style={{ color: '#9A9189' }}
+                  >
+                    {review.author}
+                  </p>
+                  <div className="h-px mb-3" style={{ background: '#D8D0C4' }} />
+                  <p
+                    className="text-[0.83rem] leading-[1.75] line-clamp-4"
+                    style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: '#5A544C' }}
+                  >
+                    &ldquo;{review.excerpt}&rdquo;
+                  </p>
+                  <Link
+                    href={`/library/browse?category=${encodeURIComponent(review.category)}`}
+                    className="inline-flex items-center gap-1 mt-3 text-[0.62rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
+                    style={{ color: '#B8892E' }}
+                  >
+                    More in {review.category}
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -1,18 +1,48 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export type TickerItem = { title: string; date: string; slug: string }
 
-export function FPTicker({ items }: { items: TickerItem[] }) {
+export function FPTicker({
+  items,
+  sticky = false,
+}: {
+  items: TickerItem[]
+  sticky?: boolean
+}) {
+  const [shown, setShown] = useState(!sticky)
+
+  useEffect(() => {
+    if (!sticky) return
+    const onScroll = () => setShown(window.scrollY > 280)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [sticky])
+
   const doubled = [...items, ...items]
+
   return (
     <div
       className="relative flex items-stretch overflow-hidden"
       style={{
         background: '#0E0C0A',
         height: 38,
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        borderBottom: sticky ? undefined : '1px solid rgba(255,255,255,0.06)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        ...(sticky
+          ? {
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              zIndex: 40,
+              transform: shown ? 'translateY(0)' : 'translateY(100%)',
+              transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+            }
+          : {}),
       }}
     >
       {/* Label */}
@@ -48,9 +78,7 @@ export function FPTicker({ items }: { items: TickerItem[] }) {
               </span>
               <span
                 className="text-[0.72rem] font-semibold transition-colors group-hover:text-[#F9F6F0]"
-                style={{
-                  color: 'rgba(249,246,240,0.55)',
-                }}
+                style={{ color: 'rgba(249,246,240,0.55)' }}
               >
                 {item.title}
               </span>

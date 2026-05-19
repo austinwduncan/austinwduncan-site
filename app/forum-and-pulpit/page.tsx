@@ -283,13 +283,16 @@ export default function ForumAndPulpitPage() {
         </div>
       )}
 
-      {/* ── Second ticker ──────────────────────────────────────────────────── */}
-      <FPTicker items={[...tickerItems].reverse()} />
+      {/* ── Sticky bottom ticker (fixed, appears on scroll) ───────────────── */}
+      <FPTicker items={tickerItems} sticky />
 
       {/* ── Topic Sections ─────────────────────────────────────────────────── */}
       <div style={{ background: '#FAFAF7' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14 pb-20">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14 pb-24">
+          <div className="flex gap-10 xl:gap-14 items-start">
 
+            {/* ── Main content ─────────────────────────────────────────── */}
+            <div className="flex-1 min-w-0">
           {SECTIONS.map((section, si) => {
             const articles = section.slugs
               .map((s) => bySlug[s])
@@ -471,6 +474,95 @@ export default function ForumAndPulpitPage() {
               </div>
             )
           })}
+            </div>{/* end main content */}
+
+            {/* ── Sidebar ──────────────────────────────────────────────── */}
+            <aside className="hidden lg:block shrink-0 w-[220px] xl:w-[240px]">
+              <div className="sticky top-8 space-y-8">
+
+                {/* About */}
+                <div>
+                  <div
+                    className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
+                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                  >
+                    About This Column
+                  </div>
+                  <p
+                    className="text-[0.78rem] leading-[1.7]"
+                    style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: '#7A6F65' }}
+                  >
+                    Forum &amp; Pulpit is a space for Christian reflection on the moments that demand a response — politics, tragedy, culture, and the life of the church in a disorienting world.
+                  </p>
+                </div>
+
+                {/* Topics */}
+                <div>
+                  <div
+                    className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
+                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                  >
+                    Topics
+                  </div>
+                  <div className="space-y-2.5">
+                    {SECTIONS.map((section) => {
+                      const count = section.slugs.filter(s => bySlug[s]).length
+                      return (
+                        <div key={section.id} className="flex items-baseline justify-between gap-3">
+                          <span
+                            className="text-[0.72rem] leading-snug"
+                            style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#1A1714' }}
+                          >
+                            {section.title}
+                          </span>
+                          <span
+                            className="shrink-0 text-[0.58rem] font-medium tracking-[0.06em]"
+                            style={{ color: '#B0A898' }}
+                          >
+                            {count} essay{count !== 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* All Essays */}
+                <div>
+                  <div
+                    className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
+                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                  >
+                    All Essays
+                  </div>
+                  <div className="space-y-3">
+                    {raw.map((article) => (
+                      <Link
+                        key={article.slug}
+                        href={`/forum-and-pulpit/${article.slug}`}
+                        className="group block"
+                      >
+                        <div
+                          className="text-[0.56rem] font-medium tracking-[0.08em] uppercase mb-0.5 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ color: '#B0A898' }}
+                        >
+                          {formatDate(article.frontmatter.date)}
+                        </div>
+                        <p
+                          className="text-[0.75rem] leading-snug line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#3A3530' }}
+                        >
+                          {article.frontmatter.title}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
+          </div>{/* end flex */}
         </div>
       </div>
     </>

@@ -42,7 +42,12 @@ const allUseCaseTags = [
   'Bible Study', 'Reference', 'Academic', 'Counseling', 'Evangelism',
 ].filter((tag) => books.some((b) => b.useCaseTags.includes(tag)))
 
-export default function LibraryBrowsePage() {
+export default function LibraryBrowsePage({
+  searchParams,
+}: {
+  searchParams?: { category?: string }
+}) {
+  const initialCategory = searchParams?.category
   return (
     <>
       {/* ── Header ─────────────────────────────────────────────────────────── */}
@@ -125,6 +130,7 @@ export default function LibraryBrowsePage() {
             recLevels={REC_LEVELS}
             audienceTags={allAudienceTags}
             useCaseTags={allUseCaseTags}
+            initialCategory={initialCategory}
           />
         </div>
       </section>
