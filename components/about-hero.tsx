@@ -73,8 +73,7 @@ export function AboutHero() {
               color: '#F9F6F0',
             }}
           >
-            Austin{' '}
-            <span style={{ fontStyle: 'italic', color: '#C9984A' }}>W. Duncan</span>
+            Austin W<span style={{ color: '#C9984A' }}>.</span> Duncan
           </h1>
 
           <div className="aw-rule h-px w-12 mb-4" style={{ background: '#7A5C1E' }} />
