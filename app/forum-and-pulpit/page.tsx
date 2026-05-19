@@ -105,22 +105,21 @@ export default function ForumAndPulpitPage() {
           >
             <div>
               <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
+                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
                 style={{ color: '#B8892E' }}
               >
                 <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
                 Writing
               </div>
-              <h1
-                className="leading-[1.1] tracking-tight"
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
-                  color: '#F9F6F0',
-                }}
-              >
-                Forum &amp; Pulpit
+              <h1 className="leading-none">
+                <Image
+                  src="/images/Logos/ForumAndPulpit Logo White.png"
+                  alt="Forum & Pulpit"
+                  width={1710}
+                  height={499}
+                  priority
+                  style={{ height: 52, width: 'auto' }}
+                />
               </h1>
             </div>
             <div className="text-right pb-0.5 shrink-0">

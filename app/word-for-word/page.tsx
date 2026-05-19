@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getAll, sortByDate, formatDate, type ArticleFrontmatter } from '@/lib/content'
 import { WFWBrowser } from '@/components/wfw-browser'
 
@@ -30,22 +31,21 @@ export default function WordForWordPage() {
           >
             <div>
               <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
+                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
                 style={{ color: '#B8892E' }}
               >
                 <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
                 Writing
               </div>
-              <h1
-                className="leading-[1.1] tracking-tight"
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
-                  color: '#F9F6F0',
-                }}
-              >
-                Word for Word
+              <h1 className="leading-none">
+                <Image
+                  src="/images/Logos/Word for Word Logo.webp"
+                  alt="Word for Word"
+                  width={1200}
+                  height={300}
+                  priority
+                  style={{ height: 48, width: 'auto' }}
+                />
               </h1>
             </div>
             <div className="text-right pb-0.5 shrink-0">

@@ -83,6 +83,7 @@ const BOOK_REVIEWS = [
     book: 'The Knowledge of the Holy',
     author: 'A. W. Tozer',
     cover: '/book-covers/the-knowledge-of-the-holy.webp',
+    pullQuote: 'Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery.',
     excerpt:
       'There are few books that have shaped my theology more than this brief, luminous meditation on the character of God. Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery. Every sentence carries weight. I return to it every few years and leave more humbled than when I started.',
   },
@@ -347,111 +348,125 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      {/* ── From the Desk — featured review hero ─────────────────────────── */}
+      {/* ── From the Desk — pull-quote spotlight ─────────────────────────── */}
       {(() => {
         const review = BOOK_REVIEWS[0]
         return (
-          <div style={{ background: '#141210' }}>
+          <div style={{ background: '#F5F0E6', borderTop: '1px solid #DDD5C4' }}>
             <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
 
-              {/* Label row */}
+              {/* Section label */}
               <div
-                className="flex items-center gap-3 mb-12"
-                style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}
+                className="flex items-center gap-3 mb-14"
+                style={{ borderBottom: '1px solid #DDD5C4', paddingBottom: '0.875rem' }}
               >
                 <span
                   style={{
                     fontFamily: 'var(--font-cormorant)',
-                    fontSize: '1.05rem',
-                    fontWeight: 400,
+                    fontSize: '1rem',
                     fontStyle: 'italic',
-                    color: '#C9984A',
+                    color: '#7A5C1E',
                   }}
                 >
                   From the Desk
                 </span>
-                <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+                <span className="flex-1 h-px" style={{ background: '#DDD5C4' }} />
                 <span
-                  className="text-[0.6rem] font-medium tracking-[0.14em] uppercase"
-                  style={{ color: 'rgba(249,246,240,0.22)' }}
+                  className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase"
+                  style={{ color: '#B0A080' }}
                 >
                   Book Reviews
                 </span>
               </div>
 
-              {/* Hero layout */}
-              <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+              {/* Pull-quote card */}
+              <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
 
-                {/* Left: cover */}
-                <div className="shrink-0 lg:w-[200px] xl:w-[220px]">
+                {/* Left: editorial text */}
+                <div className="flex-1 min-w-0 relative">
+                  {/* Decorative opening mark */}
                   <div
-                    className="relative overflow-hidden shadow-2xl"
-                    style={{ aspectRatio: '2/3', width: '100%', maxWidth: 220 }}
+                    aria-hidden
+                    className="absolute -top-4 -left-3 select-none pointer-events-none"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: '9rem',
+                      lineHeight: 1,
+                      color: '#C9984A',
+                      opacity: 0.12,
+                    }}
+                  >
+                    &#8220;
+                  </div>
+
+                  {/* Category pill */}
+                  <div
+                    className="inline-flex items-center gap-1.5 mb-6 px-3 py-1 text-[0.55rem] font-bold tracking-[0.18em] uppercase"
+                    style={{ background: '#EDE4D0', color: '#7A5C1E', border: '1px solid #D4C4A0' }}
+                  >
+                    {review.category}
+                  </div>
+
+                  {/* Pull quote */}
+                  <blockquote
+                    className="leading-[1.65] mb-8 relative z-10"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontStyle: 'italic',
+                      fontWeight: 400,
+                      fontSize: 'clamp(1.45rem, 2.2vw, 1.9rem)',
+                      color: '#1A1410',
+                    }}
+                  >
+                    {review.pullQuote}
+                  </blockquote>
+
+                  {/* Attribution */}
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-8 h-px" style={{ background: '#B8892E' }} />
+                    <p
+                      className="text-[0.72rem] tracking-[0.04em]"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: '#6A5E52', fontStyle: 'italic' }}
+                    >
+                      Austin Duncan, on{' '}
+                      <em style={{ fontStyle: 'normal', color: '#3A2E24' }}>{review.book}</em>
+                      {' '}by {review.author}
+                    </p>
+                  </div>
+
+                  {/* CTA */}
+                  <Link
+                    href={`/library/browse?category=${encodeURIComponent(review.category)}`}
+                    className="inline-flex items-center gap-2.5 px-6 py-3 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-all duration-200 hover:opacity-80"
+                    style={{ background: '#7A5C1E', color: '#F9F6F0' }}
+                  >
+                    More books like this
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Right: book cover */}
+                <div className="shrink-0 lg:w-[180px] xl:w-[200px] w-[140px]">
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      aspectRatio: '2/3',
+                      boxShadow: '6px 12px 32px rgba(26,20,10,0.22), 2px 4px 8px rgba(26,20,10,0.14)',
+                    }}
                   >
                     <Image
                       src={review.cover}
                       alt={review.book}
                       fill
                       className="object-cover"
-                      sizes="(min-width: 1024px) 220px, 160px"
+                      sizes="(min-width: 1024px) 200px, 140px"
                     />
                   </div>
                 </div>
 
-                {/* Right: review text */}
-                <div className="flex-1 min-w-0 pt-1">
-                  <div
-                    className="inline-block px-2.5 py-1 text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-5"
-                    style={{ background: 'rgba(122,92,30,0.25)', color: '#C9984A' }}
-                  >
-                    {review.category}
-                  </div>
-
-                  <h2
-                    className="leading-[1.06] tracking-tight mb-2"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(2rem, 3.5vw, 3rem)',
-                      fontWeight: 400,
-                      color: '#F9F6F0',
-                    }}
-                  >
-                    {review.book}
-                  </h2>
-                  <p
-                    className="text-[0.78rem] mb-8 font-medium tracking-[0.06em] uppercase"
-                    style={{ color: 'rgba(249,246,240,0.35)' }}
-                  >
-                    {review.author}
-                  </p>
-
-                  <div className="h-px mb-8" style={{ background: 'rgba(255,255,255,0.06)' }} />
-
-                  <p
-                    className="leading-[1.9] mb-8"
-                    style={{
-                      fontFamily: 'var(--font-source-serif)',
-                      fontStyle: 'italic',
-                      fontSize: 'clamp(0.9rem, 1.1vw, 1.05rem)',
-                      color: 'rgba(249,246,240,0.58)',
-                    }}
-                  >
-                    &ldquo;{review.excerpt}&rdquo;
-                  </p>
-
-                  <Link
-                    href={`/library/browse?category=${encodeURIComponent(review.category)}`}
-                    className="inline-flex items-center gap-2.5 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-colors hover:text-[#F9F6F0]"
-                    style={{ color: '#B8892E' }}
-                  >
-                    More in {review.category}
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
               </div>
-
             </div>
           </div>
         )
