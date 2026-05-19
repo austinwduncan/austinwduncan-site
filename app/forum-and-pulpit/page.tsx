@@ -117,17 +117,17 @@ export default function ForumAndPulpitPage() {
     <>
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-12 pb-10">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
           <div
-            className="flex items-end justify-between gap-8 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)', paddingBottom: '2rem' }}
+            className="flex items-center justify-between gap-8 border-b"
+            style={{ borderColor: 'rgba(255,255,255,0.07)', paddingBottom: '2rem', minHeight: 100 }}
           >
-            <div>
+            <div className="flex items-center" style={{ height: 84 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/Logos/ForumAndPulpit%20Logo%20White.png"
+                src="/images/Logos/forum-and-pulpit-logo-white.png"
                 alt="Forum & Pulpit"
-                style={{ height: 76, width: 'auto', display: 'block' }}
+                style={{ height: 84, width: 'auto', display: 'block' }}
               />
             </div>
             <div className="text-right pb-0.5 shrink-0">
@@ -167,196 +167,227 @@ export default function ForumAndPulpitPage() {
       {/* ── Breaking news ticker ───────────────────────────────────────────── */}
       <FPTicker items={tickerItems} />
 
-      {/* ── Topographic Feature Callout ────────────────────────────────────── */}
+      {/* ── Front Page ─────────────────────────────────────────────────────── */}
       {primary && (
-        <div style={{ position: 'relative', background: '#0D0B09', overflow: 'hidden' }}>
+        <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-16">
 
-          {/* Topographic contour pattern */}
-          <svg
-            aria-hidden
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <defs>
-              <pattern id="fp-topo" x="0" y="0" width="340" height="260" patternUnits="userSpaceOnUse">
-                <ellipse cx="170" cy="130" rx="155" ry="115" fill="none" stroke="#B8892E" strokeWidth="0.6" opacity="0.14"/>
-                <ellipse cx="170" cy="130" rx="122" ry="88" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.11"/>
-                <ellipse cx="170" cy="130" rx="90" ry="64" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.09"/>
-                <ellipse cx="170" cy="130" rx="60" ry="42" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-                <ellipse cx="170" cy="130" rx="32" ry="22" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.07"/>
-                <ellipse cx="0" cy="0" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
-                <ellipse cx="0" cy="0" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-                <ellipse cx="0" cy="0" rx="28" ry="18" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.06"/>
-                <ellipse cx="340" cy="260" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
-                <ellipse cx="340" cy="260" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-                <ellipse cx="340" cy="0" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-                <ellipse cx="0" cy="260" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#fp-topo)"/>
-          </svg>
-
-          {/* Vignette overlay */}
-          <div
-            aria-hidden
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(ellipse 110% 100% at 60% 50%, transparent 0%, rgba(13,11,9,0.55) 100%)',
-            }}
-          />
-
-          <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row" style={{ minHeight: 440 }}>
-
-              {/* Column 1: Column identity */}
-              <div
-                className="hidden lg:flex flex-col justify-between py-12 pr-10 shrink-0"
-                style={{ width: 260, borderRight: '1px solid rgba(255,255,255,0.06)' }}
+            {/* Newspaper dateline */}
+            <div
+              className="flex items-center gap-4 mb-10 pb-4 border-b"
+              style={{ borderColor: '#D8D0C4' }}
+            >
+              <span
+                className="text-[0.55rem] font-bold tracking-[0.22em] uppercase"
+                style={{ color: '#B8892E' }}
               >
-                <div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/Logos/ForumAndPulpit%20Logo%20White.png"
-                    alt="Forum & Pulpit"
-                    style={{ height: 38, width: 'auto', marginBottom: 20, opacity: 0.8 }}
-                  />
-                  <p
-                    className="text-[0.78rem] leading-[1.75] italic"
-                    style={{
-                      fontFamily: 'var(--font-source-serif)',
-                      color: 'rgba(249,246,240,0.38)',
-                      maxWidth: 210,
-                    }}
-                  >
-                    Christian reflection on the moments that demand a response — from the pulpit and in the public square.
-                  </p>
-                </div>
-                <div>
-                  <div
-                    className="text-[0.52rem] font-bold tracking-[0.2em] uppercase mb-4"
-                    style={{ color: '#7A5C1E' }}
-                  >
-                    Sections
-                  </div>
-                  <div className="space-y-3">
-                    {SECTIONS.map((s) => (
-                      <div key={s.id} className="flex items-start gap-3">
-                        <span
-                          style={{
-                            fontFamily: 'var(--font-cormorant)',
-                            fontSize: '0.78rem',
-                            fontStyle: 'italic',
-                            color: '#C9984A',
-                            lineHeight: 1.4,
-                            flexShrink: 0,
-                          }}
-                        >
-                          {s.number}.
-                        </span>
-                        <span
-                          className="text-[0.7rem] leading-[1.5]"
-                          style={{ color: 'rgba(249,246,240,0.4)' }}
-                        >
-                          {s.title}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div
-                    className="mt-6 text-[0.52rem] font-medium tracking-[0.1em] uppercase"
-                    style={{ color: 'rgba(255,255,255,0.15)' }}
-                  >
-                    {raw.length} essays
-                  </div>
-                </div>
-              </div>
+                Front Page
+              </span>
+              <div className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
+              <span
+                className="text-[0.55rem] font-medium tracking-[0.1em] uppercase"
+                style={{ color: '#B0A898' }}
+              >
+                {raw.length} essays published
+              </span>
+            </div>
 
-              {/* Column 2: Article image */}
-              {primary.frontmatter.image ? (
-                <div
-                  className="relative overflow-hidden shrink-0"
-                  style={{ width: 'clamp(180px, 32%, 380px)', minHeight: 300 }}
-                >
-                  <Image
-                    src={primary.frontmatter.image}
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 32vw, 100vw"
-                    priority
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background:
-                        'linear-gradient(to right, transparent 55%, rgba(13,11,9,0.6) 100%), linear-gradient(to top, rgba(13,11,9,0.5) 0%, transparent 35%)',
-                    }}
-                  />
-                </div>
-              ) : null}
+            {/* Primary + secondary grid */}
+            <div className="grid lg:grid-cols-[1fr_300px] gap-10 lg:gap-14">
 
-              {/* Column 3: Article content */}
-              <div className="flex-1 min-w-0 py-12 lg:pl-10 flex flex-col justify-center">
+              {/* Primary article */}
+              <Link href={`/forum-and-pulpit/${primary.slug}`} className="group">
+                {primary.frontmatter.image && (
+                  <div className="relative w-full overflow-hidden mb-6" style={{ aspectRatio: '16/9' }}>
+                    <Image
+                      src={primary.frontmatter.image}
+                      alt=""
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      sizes="(min-width: 1024px) 58vw, 100vw"
+                      priority
+                    />
+                  </div>
+                )}
                 <div
-                  className="text-[0.52rem] font-bold tracking-[0.22em] uppercase mb-5"
-                  style={{ color: '#7A5C1E' }}
+                  className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-3"
+                  style={{ color: '#B8892E' }}
                 >
-                  Latest Essay
+                  {formatDate(primary.frontmatter.date)}
                 </div>
-                <Link href={`/forum-and-pulpit/${primary.slug}`} className="group block">
-                  <h2
-                    className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#C9984A]"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
-                      fontWeight: 400,
-                      color: '#F9F6F0',
-                    }}
-                  >
-                    {primary.frontmatter.title}
-                  </h2>
-                </Link>
+                <h2
+                  className="leading-[1.12] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
+                  style={{
+                    fontFamily: 'var(--font-cormorant)',
+                    fontSize: 'clamp(1.9rem, 3.5vw, 2.8rem)',
+                    fontWeight: 500,
+                    color: '#1A1714',
+                  }}
+                >
+                  {primary.frontmatter.title}
+                </h2>
                 {(() => {
                   const lede = extractLede(primary.content, primary.frontmatter.excerpt ?? '')
                   return lede ? (
                     <p
-                      className="text-[0.9rem] leading-[1.85] mb-8"
-                      style={{
-                        fontFamily: 'var(--font-source-serif)',
-                        color: 'rgba(249,246,240,0.48)',
-                        maxWidth: 480,
-                      }}
+                      className="text-[0.92rem] leading-[1.8] mb-5"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C', maxWidth: 560 }}
                     >
-                      {lede}
+                      {lede.length > 260 ? lede.slice(0, 257) + '…' : lede}
                     </p>
                   ) : null
                 })()}
-                <div className="flex flex-wrap items-center gap-5">
-                  <Link
-                    href={`/forum-and-pulpit/${primary.slug}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-all hover:opacity-80"
-                    style={{ background: '#7A5C1E', color: '#F9F6F0' }}
-                  >
-                    Read Essay
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                  <span
-                    className="text-[0.6rem] font-medium tracking-[0.1em] uppercase"
-                    style={{ color: 'rgba(255,255,255,0.25)' }}
-                  >
-                    {formatDate(primary.frontmatter.date)} · {readingTime(primary.content)} min read
-                  </span>
-                </div>
+                <span
+                  className="inline-flex items-center gap-1.5 text-[0.72rem] tracking-[0.06em] pb-px border-b transition-colors group-hover:text-[#7A5C1E] group-hover:border-[#7A5C1E]"
+                  style={{ color: '#9A9189', borderColor: '#E2DACE' }}
+                >
+                  Read essay
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </Link>
+
+              {/* Secondary articles column */}
+              <div className="lg:pl-10 lg:border-l space-y-0" style={{ borderColor: '#E2DACE' }}>
+                {raw.slice(1, 4).map((article, i) => (
+                  <div key={article.slug}>
+                    {i > 0 && (
+                      <div className="border-t my-6" style={{ borderColor: '#E2DACE' }} />
+                    )}
+                    <Link href={`/forum-and-pulpit/${article.slug}`} className="group block">
+                      <div
+                        className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2"
+                        style={{ color: '#B8892E' }}
+                      >
+                        {formatDate(article.frontmatter.date)}
+                      </div>
+                      <h3
+                        className="leading-[1.25] tracking-tight mb-2 transition-colors group-hover:text-[#7A5C1E]"
+                        style={{
+                          fontFamily: 'var(--font-cormorant)',
+                          fontSize: 'clamp(1.1rem, 1.8vw, 1.35rem)',
+                          fontWeight: 500,
+                          color: '#1A1714',
+                        }}
+                      >
+                        {article.frontmatter.title}
+                      </h3>
+                      {(() => {
+                        const lede = extractLede(article.content, article.frontmatter.excerpt ?? '')
+                        return lede ? (
+                          <p
+                            className="text-[0.8rem] leading-[1.65] line-clamp-3"
+                            style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
+                          >
+                            {lede}
+                          </p>
+                        ) : null
+                      })()}
+                    </Link>
+                  </div>
+                ))}
               </div>
 
             </div>
           </div>
         </div>
       )}
+
+      {/* ── Topographic Statement ───────────────────────────────────────────── */}
+      <div style={{ position: 'relative', background: '#0D0B09', overflow: 'hidden' }}>
+
+        {/* Topographic contour pattern */}
+        <svg
+          aria-hidden
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <pattern id="fp-topo" x="0" y="0" width="340" height="260" patternUnits="userSpaceOnUse">
+              <ellipse cx="170" cy="130" rx="155" ry="115" fill="none" stroke="#B8892E" strokeWidth="0.6" opacity="0.14"/>
+              <ellipse cx="170" cy="130" rx="122" ry="88" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.11"/>
+              <ellipse cx="170" cy="130" rx="90" ry="64" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.09"/>
+              <ellipse cx="170" cy="130" rx="60" ry="42" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="170" cy="130" rx="32" ry="22" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.07"/>
+              <ellipse cx="0" cy="0" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
+              <ellipse cx="0" cy="0" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="0" cy="0" rx="28" ry="18" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.06"/>
+              <ellipse cx="340" cy="260" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
+              <ellipse cx="340" cy="260" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="340" cy="0" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="0" cy="260" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#fp-topo)"/>
+        </svg>
+
+        {/* Radial vignette */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(ellipse 90% 100% at 50% 50%, transparent 0%, rgba(13,11,9,0.65) 100%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-[720px] px-6 lg:px-8 py-16 lg:py-20 text-center">
+
+          {/* Section mark */}
+          <div
+            className="inline-flex items-center gap-3 mb-8"
+          >
+            <div className="h-px w-10" style={{ background: '#7A5C1E' }} />
+            <span
+              className="text-[0.52rem] font-bold tracking-[0.26em] uppercase"
+              style={{ color: '#7A5C1E' }}
+            >
+              Forum &amp; Pulpit
+            </span>
+            <div className="h-px w-10" style={{ background: '#7A5C1E' }} />
+          </div>
+
+          {/* Display quote */}
+          <p
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: 'clamp(1.7rem, 3.2vw, 2.5rem)',
+              fontWeight: 400,
+              color: 'rgba(249,246,240,0.88)',
+              lineHeight: 1.3,
+            }}
+          >
+            The church does not step back from the world — it speaks into it.
+          </p>
+
+          <p
+            className="text-[0.83rem] leading-[1.85] italic mt-6"
+            style={{
+              fontFamily: 'var(--font-source-serif)',
+              color: 'rgba(249,246,240,0.38)',
+              maxWidth: 460,
+              margin: '1.5rem auto 0',
+            }}
+          >
+            Essays on international affairs, civic life, and cultural witness — from a pastor who believes the pulpit and the public square belong together.
+          </p>
+
+          {/* Topics */}
+          <div className="flex flex-wrap justify-center gap-2.5 mt-9">
+            {SECTIONS.map((s) => (
+              <span
+                key={s.id}
+                className="text-[0.57rem] font-medium tracking-[0.14em] uppercase px-3 py-1.5"
+                style={{ border: '1px solid rgba(184,137,46,0.22)', color: 'rgba(249,246,240,0.4)' }}
+              >
+                {s.title}
+              </span>
+            ))}
+          </div>
+
+        </div>
+      </div>
 
       {/* ── Topic Sections (carousel) + Sidebar ────────────────────────────── */}
       <div style={{ background: '#FAFAF7' }}>

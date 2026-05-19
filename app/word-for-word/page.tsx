@@ -24,17 +24,17 @@ export default function WordForWordPage() {
     <>
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
           <div
-            className="flex items-end justify-between gap-8 pb-10 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+            className="flex items-center justify-between gap-8 border-b"
+            style={{ borderColor: 'rgba(255,255,255,0.07)', paddingBottom: '2rem', minHeight: 100 }}
           >
-            <div>
+            <div className="flex items-center" style={{ height: 84 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/Logos/Word%20for%20Word%20Logo.webp"
+                src="/images/Logos/word-for-word-logo.webp"
                 alt="Word for Word"
-                style={{ height: 64, width: 'auto', display: 'block' }}
+                style={{ height: 84, width: 'auto', display: 'block' }}
               />
             </div>
             <div className="text-right pb-0.5 shrink-0">
