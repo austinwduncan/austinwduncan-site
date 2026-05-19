@@ -4,16 +4,16 @@ import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const TAG_SHORT: Record<string, string> = {
-  'The Nature and Character of God': 'God & Theology',
-  'Basic Christian Thought & Spiritual Growth': 'Christian Life',
-  'Basic Apologetics': 'Apologetics',
-  'New Testament Issues': 'New Testament',
-  'Old Testament Issues': 'Old Testament',
-  'Historical Jesus and Christology': 'Christology',
-  'Spiritual Gifts': 'Spiritual Gifts',
-  'Holidays': 'Holidays',
-}
+const TOPICS = [
+  { key: 'The Nature and Character of God',        label: 'God & Theology',   short: 'Theology',    n: '01' },
+  { key: 'Basic Christian Thought & Spiritual Growth', label: 'Christian Life',   short: 'Life',        n: '02' },
+  { key: 'Basic Apologetics',                       label: 'Apologetics',      short: 'Apologetics', n: '03' },
+  { key: 'New Testament Issues',                    label: 'New Testament',    short: 'NT Issues',   n: '04' },
+  { key: 'Old Testament Issues',                    label: 'Old Testament',    short: 'OT Issues',   n: '05' },
+  { key: 'Historical Jesus and Christology',        label: 'Christology',      short: 'Christology', n: '06' },
+  { key: 'Spiritual Gifts',                         label: 'Spiritual Gifts',  short: 'Gifts',       n: '07' },
+  { key: 'Holidays',                                label: 'Holidays',         short: 'Holidays',    n: '08' },
+]
 
 export type WFWItem = {
   slug: string
@@ -24,104 +24,117 @@ export type WFWItem = {
   excerpt: string
 }
 
-function ArticleCard({ article }: { article: WFWItem }) {
-  return (
-    <Link href={`/word-for-word/${article.slug}`} className="group flex flex-col">
-      {/* Thumbnail */}
-      <div className="overflow-hidden mb-4" style={{ aspectRatio: '1 / 1' }}>
-        {article.image ? (
-          <div className="relative w-full h-full overflow-hidden">
-            <Image
-              src={article.image}
-              alt=""
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            />
-          </div>
-        ) : (
-          <div
-            className="w-full h-full flex items-center justify-center"
-            style={{ background: '#1C1916' }}
-          >
-            <span
-              className="text-[0.6rem] font-medium tracking-[0.18em] uppercase"
-              style={{ color: '#7A5C1E' }}
-            >
-              Word for Word
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* Meta */}
-      <div className="flex items-center gap-2 mb-2.5">
-        {article.tags[0] && (
-          <span
-            className="text-[0.6rem] font-medium tracking-[0.12em] uppercase"
-            style={{ color: '#B8892E' }}
-          >
-            {TAG_SHORT[article.tags[0]] ?? article.tags[0]}
-          </span>
-        )}
-        {article.tags[0] && (
-          <span
-            className="inline-block h-[3px] w-[3px] rounded-full shrink-0"
-            style={{ background: '#C8BFA8' }}
-          />
-        )}
-        <span className="text-[0.63rem]" style={{ color: '#9A9189' }}>
-          {article.formattedDate}
-        </span>
-      </div>
-
-      {/* Title — the question */}
-      <h3
-        className="leading-[1.3] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
-        style={{
-          fontFamily: 'var(--font-cormorant)',
-          fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)',
-          fontWeight: 500,
-          color: '#1A1714',
-        }}
-      >
-        {article.title}
-      </h3>
-    </Link>
-  )
+function tag(a: WFWItem) {
+  return TOPICS.find((t) => a.tags.includes(t.key)) ?? null
 }
 
 export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
   const [search, setSearch] = useState('')
-  const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [activeKey, setActiveKey] = useState<string | null>(null)
 
-  const allTags = useMemo(() => {
-    const counts = new Map<string, number>()
-    articles.forEach((a) => a.tags.forEach((t) => counts.set(t, (counts.get(t) ?? 0) + 1)))
-    return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t)
-  }, [articles])
+  const topics = useMemo(
+    () =>
+      TOPICS.map((t) => ({
+        ...t,
+        count: articles.filter((a) => a.tags.includes(t.key)).length,
+        previews: articles
+          .filter((a) => a.tags.includes(t.key))
+          .slice(0, 2)
+          .map((a) => a.title),
+      })),
+    [articles],
+  )
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     return articles.filter((a) => {
-      const matchTag = !activeTag || a.tags.includes(activeTag)
+      const matchTag = !activeKey || a.tags.includes(activeKey)
       const matchSearch = !q || a.title.toLowerCase().includes(q)
       return matchTag && matchSearch
     })
-  }, [articles, activeTag, search])
+  }, [articles, activeKey, search])
 
-  const isFiltering = !!search.trim() || !!activeTag
-  const featured = articles[0]
-  const gridItems = isFiltering ? filtered : filtered.slice(1)
+  const isFiltering = !!search.trim() || !!activeKey
+  const activeTopic = topics.find((t) => t.key === activeKey) ?? null
 
   return (
-    <div style={{ background: '#FAFAF7' }}>
-      {/* ── Filter bar ───────────────────────────────────────────────────── */}
-      <div className="border-b" style={{ background: '#F0EDE6', borderColor: '#E2DACE' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-6 pb-5">
-          {/* Search row */}
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4">
-            <div className="relative flex-1 max-w-[360px]">
+    <>
+      {/* ── Topic Explorer ───────────────────────────────────────────────── */}
+      <div style={{ background: '#0E0C0A' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-10 lg:py-12">
+          <div
+            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.14em] uppercase mb-8"
+            style={{ color: '#7A5C1E' }}
+          >
+            Browse by Topic
+            <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {topics.map((t) => {
+              const active = activeKey === t.key
+              return (
+                <button
+                  key={t.key}
+                  onClick={() => {
+                    setActiveKey(active ? null : t.key)
+                    setSearch('')
+                  }}
+                  className="text-left p-4 border transition-all duration-200"
+                  style={{
+                    background: active ? '#1C1916' : 'rgba(255,255,255,0.02)',
+                    borderColor: active ? '#7A5C1E' : 'rgba(255,255,255,0.07)',
+                  }}
+                >
+                  <div
+                    className="text-[0.58rem] font-medium tracking-[0.16em] uppercase mb-2"
+                    style={{ color: active ? '#B8892E' : '#4A4540' }}
+                  >
+                    {t.n}
+                  </div>
+                  <div
+                    className="leading-tight mb-2.5"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: '1.05rem',
+                      fontWeight: 500,
+                      color: active ? '#F9F6F0' : 'rgba(249,246,240,0.5)',
+                    }}
+                  >
+                    {t.label}
+                  </div>
+                  <div
+                    className="text-[0.58rem] font-medium tracking-[0.08em] mb-3"
+                    style={{ color: active ? '#B8892E' : '#6A5C40' }}
+                  >
+                    {t.count} questions
+                  </div>
+                  <ul className="space-y-1.5">
+                    {t.previews.map((q, i) => (
+                      <li
+                        key={i}
+                        className="text-[0.6rem] leading-snug line-clamp-2"
+                        style={{ color: 'rgba(255,255,255,0.22)' }}
+                      >
+                        {q}
+                      </li>
+                    ))}
+                  </ul>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Search strip ────────────────────────────────────────────────── */}
+      <div
+        className="border-b"
+        style={{ background: '#F0EDE6', borderColor: '#E2DACE' }}
+      >
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-4">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1 max-w-[380px]">
               <svg
                 className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
                 width="13"
@@ -138,7 +151,7 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
                 type="text"
                 placeholder="Search questions…"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => { setSearch(e.target.value); setActiveKey(null) }}
                 className="w-full pl-9 pr-4 py-2 text-[0.87rem] border outline-none transition-colors"
                 style={{
                   fontFamily: 'var(--font-source-serif)',
@@ -150,193 +163,208 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
                 onBlur={(e) => (e.currentTarget.style.borderColor = '#D8D0C4')}
               />
             </div>
-            <p
-              className="text-[0.63rem] font-medium tracking-[0.1em] uppercase shrink-0"
-              style={{ color: '#9A9189' }}
-            >
-              {filtered.length} of {articles.length} questions
-            </p>
-          </div>
 
-          {/* Tag chips */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setActiveTag(null)}
-              className="px-3 py-1 text-[0.6rem] font-medium tracking-[0.1em] uppercase border transition-all"
-              style={{
-                background: !activeTag ? '#7A5C1E' : 'transparent',
-                color: !activeTag ? '#F9F6F0' : '#5A544C',
-                borderColor: !activeTag ? '#7A5C1E' : '#C8BFA8',
-              }}
-            >
-              All Topics
-            </button>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                className="px-3 py-1 text-[0.6rem] font-medium tracking-[0.1em] uppercase border transition-all"
-                style={{
-                  background: activeTag === tag ? '#7A5C1E' : 'transparent',
-                  color: activeTag === tag ? '#F9F6F0' : '#5A544C',
-                  borderColor: activeTag === tag ? '#7A5C1E' : '#C8BFA8',
-                }}
+            {isFiltering ? (
+              <>
+                <p
+                  className="text-[0.63rem] font-medium tracking-[0.1em] uppercase shrink-0"
+                  style={{ color: '#9A9189' }}
+                >
+                  {filtered.length} question{filtered.length !== 1 ? 's' : ''}
+                </p>
+                <button
+                  onClick={() => { setSearch(''); setActiveKey(null) }}
+                  className="text-[0.63rem] tracking-[0.06em] transition-colors hover:text-[#B8892E] shrink-0"
+                  style={{ color: '#B0A898' }}
+                >
+                  Clear ×
+                </button>
+              </>
+            ) : (
+              <p
+                className="text-[0.63rem] font-medium tracking-[0.1em] uppercase shrink-0"
+                style={{ color: '#9A9189' }}
               >
-                {TAG_SHORT[tag] ?? tag}
-              </button>
-            ))}
+                {articles.length} questions
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-12 pb-20">
-        {/* ── Featured latest — hidden while filtering ─────────────────── */}
-        {!isFiltering && featured && (
-          <div className="mb-14">
-            <div
-              className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
-              style={{ color: '#9A9189' }}
-            >
-              Latest Question
-              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-            </div>
+      {/* ── Results ──────────────────────────────────────────────────────── */}
+      <div style={{ background: '#FAFAF7' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-12 pb-20">
 
-            <Link
-              href={`/word-for-word/${featured.slug}`}
-              className="group flex flex-col lg:flex-row gap-8 lg:gap-14 items-start"
-            >
-              <div className="w-full lg:w-[300px] shrink-0 overflow-hidden" style={{ aspectRatio: '1 / 1' }}>
-                {featured.image ? (
-                  <div className="relative w-full h-full overflow-hidden">
-                    <Image
-                      src={featured.image}
-                      alt=""
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      sizes="300px"
-                      priority
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className="w-full h-full flex items-center justify-center"
-                    style={{ background: '#1A1714' }}
-                  >
-                    <span
-                      className="text-[0.65rem] font-medium tracking-[0.18em] uppercase"
-                      style={{ color: '#B8892E' }}
-                    >
-                      Word for Word
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex-1 min-w-0 lg:pt-2">
-                {featured.tags[0] && (
-                  <div
-                    className="text-[0.65rem] font-medium tracking-[0.14em] uppercase mb-3"
-                    style={{ color: '#B8892E' }}
-                  >
-                    {TAG_SHORT[featured.tags[0]] ?? featured.tags[0]}
-                  </div>
-                )}
-                <h2
-                  className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)',
-                    fontWeight: 500,
-                    color: '#1A1714',
-                  }}
-                >
-                  {featured.title}
-                </h2>
-                {featured.excerpt && (
-                  <p
-                    className="text-[0.93rem] leading-[1.75] mb-5 line-clamp-3"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                  >
-                    {featured.excerpt}
-                  </p>
-                )}
-                <span
-                  className="inline-flex items-center gap-1.5 text-[0.73rem] tracking-[0.04em] pb-px border-b transition-colors group-hover:text-[#7A5C1E] group-hover:border-[#7A5C1E]"
-                  style={{ color: '#9A9189', borderColor: '#E2DACE' }}
-                >
-                  Read article
-                  <svg
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-          </div>
-        )}
-
-        {/* ── Active filter label ──────────────────────────────────────── */}
-        {isFiltering && (
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
-            style={{ color: '#9A9189' }}
-          >
-            {activeTag
-              ? (TAG_SHORT[activeTag] ?? activeTag)
-              : `Searching "${search.trim()}"`}
-            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-            <button
-              onClick={() => { setSearch(''); setActiveTag(null) }}
-              className="text-[0.6rem] tracking-[0.08em] transition-colors hover:text-[#B8892E]"
-              style={{ color: '#B0A898' }}
-            >
-              Clear ×
-            </button>
-          </div>
-        )}
-
-        {/* ── Grid ────────────────────────────────────────────────────── */}
-        {gridItems.length > 0 ? (
-          <>
-            {!isFiltering && (
+          {isFiltering ? (
+            /* ── Filtered grid ───────────────────────────────────────── */
+            <>
               <div
                 className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
                 style={{ color: '#9A9189' }}
               >
-                All Questions
+                {activeTopic ? activeTopic.label : `"${search.trim()}"`}
+                <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+                <span>{filtered.length} question{filtered.length !== 1 ? 's' : ''}</span>
+              </div>
+
+              {filtered.length > 0 ? (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                  {filtered.map((a) => {
+                    const t = tag(a)
+                    return (
+                      <Link key={a.slug} href={`/word-for-word/${a.slug}`} className="group flex flex-col">
+                        <div className="overflow-hidden mb-4" style={{ aspectRatio: '4/3' }}>
+                          {a.image ? (
+                            <div className="relative w-full h-full overflow-hidden">
+                              <Image
+                                src={a.image}
+                                alt=""
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              className="w-full h-full flex items-center justify-center"
+                              style={{ background: '#1C1916' }}
+                            >
+                              <span className="text-[0.6rem] font-medium tracking-[0.16em] uppercase" style={{ color: '#7A5C1E' }}>
+                                Word for Word
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {t && (
+                          <div className="text-[0.6rem] font-medium tracking-[0.12em] uppercase mb-2" style={{ color: '#B8892E' }}>
+                            {t.short}
+                          </div>
+                        )}
+                        <h3
+                          className="leading-[1.3] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)', fontWeight: 500, color: '#1A1714' }}
+                        >
+                          {a.title}
+                        </h3>
+                      </Link>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="py-24 text-center">
+                  <p className="text-[0.95rem] italic mb-3" style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}>
+                    No questions found{search.trim() ? ` matching "${search.trim()}"` : ''}.
+                  </p>
+                  <button
+                    onClick={() => { setSearch(''); setActiveKey(null) }}
+                    className="text-[0.72rem] tracking-[0.06em] transition-colors hover:text-[#B8892E]"
+                    style={{ color: '#B0A898' }}
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            /* ── Default: featured cards + full compact list ─────────── */
+            <>
+              {/* Latest 3 — visual cards */}
+              <div
+                className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
+                style={{ color: '#9A9189' }}
+              >
+                Latest Questions
                 <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
               </div>
-            )}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-              {gridItems.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="py-24 text-center">
-            <p
-              className="text-[0.95rem] italic mb-3"
-              style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
-            >
-              No questions found{search.trim() ? ` matching "${search.trim()}"` : ''}.
-            </p>
-            <button
-              onClick={() => { setSearch(''); setActiveTag(null) }}
-              className="text-[0.72rem] tracking-[0.06em] transition-colors hover:text-[#B8892E]"
-              style={{ color: '#B0A898' }}
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 mb-14">
+                {articles.slice(0, 3).map((a) => {
+                  const t = tag(a)
+                  return (
+                    <Link key={a.slug} href={`/word-for-word/${a.slug}`} className="group flex flex-col">
+                      <div className="overflow-hidden mb-4" style={{ aspectRatio: '4/3' }}>
+                        {a.image ? (
+                          <div className="relative w-full h-full overflow-hidden">
+                            <Image
+                              src={a.image}
+                              alt=""
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                              priority
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center" style={{ background: '#1C1916' }}>
+                            <span className="text-[0.6rem] font-medium tracking-[0.16em] uppercase" style={{ color: '#7A5C1E' }}>Word for Word</span>
+                          </div>
+                        )}
+                      </div>
+                      {t && (
+                        <div className="text-[0.6rem] font-medium tracking-[0.12em] uppercase mb-2.5" style={{ color: '#B8892E' }}>
+                          {t.label}
+                        </div>
+                      )}
+                      <h3
+                        className="leading-[1.3] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
+                        style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', fontWeight: 500, color: '#1A1714' }}
+                      >
+                        {a.title}
+                      </h3>
+                    </Link>
+                  )
+                })}
+              </div>
+
+              {/* All questions — compact scannable list */}
+              <div
+                className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-6"
+                style={{ color: '#9A9189' }}
+              >
+                All {articles.length} Questions
+                <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+              </div>
+
+              <div>
+                {articles.slice(3).map((a, i) => {
+                  const t = tag(a)
+                  return (
+                    <div key={a.slug}>
+                      <Link
+                        href={`/word-for-word/${a.slug}`}
+                        className="group flex items-start gap-4 py-3.5"
+                      >
+                        <span
+                          className="shrink-0 text-[0.58rem] font-medium tracking-[0.1em] uppercase pt-0.5"
+                          style={{ color: '#B8892E', width: 96 }}
+                        >
+                          {t?.short ?? ''}
+                        </span>
+                        <h3
+                          className="flex-1 text-[0.97rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#1A1714' }}
+                        >
+                          {a.title}
+                        </h3>
+                        <span
+                          className="shrink-0 text-[0.62rem] pt-0.5 hidden sm:block"
+                          style={{ color: '#9A9189' }}
+                        >
+                          {a.formattedDate}
+                        </span>
+                      </Link>
+                      {i < articles.length - 4 && (
+                        <div className="h-px" style={{ background: '#EDEAE1' }} />
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

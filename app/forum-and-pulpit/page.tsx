@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ForumAndPulpitPage() {
   const raw = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
-  const [hero, ...rest] = raw
+  const [primary, second, third, ...archive] = raw
 
   return (
     <>
@@ -75,200 +75,190 @@ export default function ForumAndPulpitPage() {
         }}
       />
 
-      {/* ── Hero essay ─────────────────────────────────────────────────────── */}
-      {hero && (
+      {/* ── Front Page ─────────────────────────────────────────────────────── */}
+      {primary && (
         <div style={{ background: '#141210' }}>
-          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14 lg:py-16">
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-14">
+
+            {/* Dateline */}
             <div
-              className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
-              style={{ color: '#7A5C1E' }}
+              className="flex items-center gap-4 pb-4 mb-8 border-b text-[0.6rem] font-medium tracking-[0.14em] uppercase"
+              style={{ borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.22)' }}
             >
-              Most Recent
-              <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+              <span style={{ color: '#7A5C1E' }}>Forum &amp; Pulpit</span>
+              <span>·</span>
+              <span>Christian Public Witness</span>
+              <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+              <span>{formatDate(primary.frontmatter.date)}</span>
             </div>
 
-            <Link
-              href={`/forum-and-pulpit/${hero.slug}`}
-              className="group flex flex-col lg:flex-row-reverse gap-10 lg:gap-14 items-start"
-            >
-              {/* Image */}
-              {hero.frontmatter.image && (
-                <div className="w-full lg:w-[50%] shrink-0 overflow-hidden">
+            {/* Two-column newspaper above-fold */}
+            <div className="flex flex-col lg:flex-row gap-0">
+
+              {/* ── Primary story (left 58%) ── */}
+              <div
+                className="flex-1 min-w-0 lg:pr-8 lg:border-r"
+                style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+              >
+                <Link href={`/forum-and-pulpit/${primary.slug}`} className="group block">
+                  {primary.frontmatter.image && (
+                    <div className="overflow-hidden mb-5" style={{ aspectRatio: '16/10' }}>
+                      <div className="relative w-full h-full overflow-hidden">
+                        <Image
+                          src={primary.frontmatter.image}
+                          alt=""
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          sizes="(min-width: 1024px) 58vw, 100vw"
+                          priority
+                        />
+                      </div>
+                    </div>
+                  )}
                   <div
-                    className="relative w-full overflow-hidden"
-                    style={{ aspectRatio: '16 / 10' }}
+                    className="text-[0.58rem] font-medium tracking-[0.14em] uppercase mb-3"
+                    style={{ color: '#7A5C1E' }}
                   >
-                    <Image
-                      src={hero.frontmatter.image}
-                      alt=""
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                      priority
-                    />
-                    {/* Vignette */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background:
-                          'linear-gradient(to bottom, transparent 60%, rgba(14,12,10,0.6) 100%)',
-                      }}
-                    />
+                    {formatDate(primary.frontmatter.date)} · {readingTime(primary.content)} min read
                   </div>
-                </div>
-              )}
-
-              {/* Content */}
-              <div className="flex-1 min-w-0 lg:pt-3">
-                <div
-                  className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-4"
-                  style={{ color: '#7A5C1E' }}
-                >
-                  {formatDate(hero.frontmatter.date)}
-                </div>
-
-                <h2
-                  className="leading-[1.1] tracking-tight mb-5 transition-colors group-hover:text-[#B8892E]"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.9rem, 3.5vw, 3rem)',
-                    fontWeight: 400,
-                    color: '#F9F6F0',
-                  }}
-                >
-                  {hero.frontmatter.title}
-                </h2>
-
-                {hero.frontmatter.excerpt && (
-                  <p
-                    className="text-[0.92rem] leading-[1.75] mb-6 line-clamp-4"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.5)' }}
+                  <h2
+                    className="leading-[1.1] tracking-tight mb-4 transition-colors group-hover:text-[#B8892E]"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
+                      fontWeight: 400,
+                      color: '#F9F6F0',
+                    }}
                   >
-                    {hero.frontmatter.excerpt}
-                  </p>
-                )}
-
-                <div className="flex items-center gap-4">
-                  <span
-                    className="inline-flex items-center gap-1.5 text-[0.73rem] tracking-[0.04em] pb-px border-b transition-colors group-hover:text-[#B8892E] group-hover:border-[#B8892E]"
-                    style={{ color: 'rgba(255,255,255,0.5)', borderColor: 'rgba(255,255,255,0.15)' }}
-                  >
-                    Read essay
-                    <svg
-                      width="11"
-                      height="11"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
+                    {primary.frontmatter.title}
+                  </h2>
+                  {primary.frontmatter.excerpt && (
+                    <p
+                      className="text-[0.92rem] leading-[1.75] line-clamp-3"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.48)' }}
                     >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                  <span
-                    className="text-[0.63rem] font-medium tracking-[0.08em] uppercase"
-                    style={{ color: 'rgba(255,255,255,0.2)' }}
-                  >
-                    {readingTime(hero.content)} min read
-                  </span>
-                </div>
+                      {primary.frontmatter.excerpt}
+                    </p>
+                  )}
+                </Link>
               </div>
-            </Link>
+
+              {/* ── Secondary stories (right 42%) ── */}
+              <div className="lg:w-[38%] shrink-0 lg:pl-8 mt-8 lg:mt-0 space-y-0">
+                {[second, third].filter(Boolean).map((story, i) => story && (
+                  <div key={story.slug}>
+                    <Link href={`/forum-and-pulpit/${story.slug}`} className="group flex flex-col sm:flex-row lg:flex-col gap-4 py-6">
+                      {story.frontmatter.image && (
+                        <div className="w-full sm:w-[160px] lg:w-full shrink-0 overflow-hidden" style={{ aspectRatio: '16/10' }}>
+                          <div className="relative w-full h-full overflow-hidden">
+                            <Image
+                              src={story.frontmatter.image}
+                              alt=""
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 160px, 100vw"
+                              priority
+                            />
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div
+                          className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2"
+                          style={{ color: '#7A5C1E' }}
+                        >
+                          {formatDate(story.frontmatter.date)}
+                        </div>
+                        <h3
+                          className="leading-[1.2] tracking-tight transition-colors group-hover:text-[#B8892E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
+                            fontWeight: 400,
+                            color: '#F9F6F0',
+                          }}
+                        >
+                          {story.frontmatter.title}
+                        </h3>
+                        {story.frontmatter.excerpt && (
+                          <p
+                            className="mt-1.5 text-[0.82rem] leading-relaxed line-clamp-2"
+                            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.35)' }}
+                          >
+                            {story.frontmatter.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                    {i === 0 && (
+                      <div className="h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* ── Archive ────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#FAFAF7' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14 pb-20">
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
-            style={{ color: '#9A9189' }}
-          >
-            Archive
-            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-          </div>
+      {/* ── Archive ─────────────────────────────────────────────────────────── */}
+      {archive.length > 0 && (
+        <div style={{ background: '#FAFAF7' }}>
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14 pb-20">
+            <div
+              className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
+              style={{ color: '#9A9189' }}
+            >
+              From the Archive
+              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+            </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rest.map(({ frontmatter: fm, content, slug }) => (
-              <Link
-                key={slug}
-                href={`/forum-and-pulpit/${slug}`}
-                className="group flex flex-col"
-              >
-                {/* Image */}
-                <div className="overflow-hidden mb-4" style={{ aspectRatio: '16 / 10' }}>
-                  {fm.image ? (
-                    <div className="relative w-full h-full overflow-hidden">
-                      <Image
-                        src={fm.image}
-                        alt=""
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="w-full h-full flex items-center justify-center border"
-                      style={{ background: '#F0EDE6', borderColor: '#E2DACE' }}
-                    >
-                      <span
-                        className="text-[0.6rem] font-medium tracking-[0.18em] uppercase"
-                        style={{ color: '#B8892E' }}
-                      >
-                        Forum &amp; Pulpit
-                      </span>
-                    </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {archive.map(({ frontmatter: fm, content, slug }) => (
+                <Link key={slug} href={`/forum-and-pulpit/${slug}`} className="group flex flex-col">
+                  <div className="overflow-hidden mb-4" style={{ aspectRatio: '16/10' }}>
+                    {fm.image ? (
+                      <div className="relative w-full h-full overflow-hidden">
+                        <Image
+                          src={fm.image}
+                          alt=""
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center border" style={{ background: '#F0EDE6', borderColor: '#E2DACE' }}>
+                        <span className="text-[0.6rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>Forum &amp; Pulpit</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <span className="text-[0.6rem] font-medium tracking-[0.12em] uppercase" style={{ color: '#B8892E' }}>
+                      {formatDate(fm.date)}
+                    </span>
+                    <span className="inline-block h-[3px] w-[3px] rounded-full shrink-0" style={{ background: '#C8BFA8' }} />
+                    <span className="text-[0.6rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#B0A898' }}>
+                      {readingTime(content)} min read
+                    </span>
+                  </div>
+                  <h3
+                    className="leading-[1.25] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
+                    style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', fontWeight: 500, color: '#1A1714' }}
+                  >
+                    {fm.title}
+                  </h3>
+                  {fm.excerpt && (
+                    <p className="mt-2 text-[0.85rem] leading-relaxed line-clamp-2" style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}>
+                      {fm.excerpt}
+                    </p>
                   )}
-                </div>
-
-                {/* Date */}
-                <div className="flex items-center gap-2 mb-2.5">
-                  <span
-                    className="text-[0.6rem] font-medium tracking-[0.12em] uppercase"
-                    style={{ color: '#B8892E' }}
-                  >
-                    {formatDate(fm.date)}
-                  </span>
-                  <span
-                    className="inline-block h-[3px] w-[3px] rounded-full shrink-0"
-                    style={{ background: '#C8BFA8' }}
-                  />
-                  <span
-                    className="text-[0.6rem] font-medium tracking-[0.08em] uppercase"
-                    style={{ color: '#B0A898' }}
-                  >
-                    {readingTime(content)} min read
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                  className="leading-[1.25] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)',
-                    fontWeight: 500,
-                    color: '#1A1714',
-                  }}
-                >
-                  {fm.title}
-                </h3>
-
-                {fm.excerpt && (
-                  <p
-                    className="mt-2 text-[0.85rem] leading-relaxed line-clamp-2"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
-                  >
-                    {fm.excerpt}
-                  </p>
-                )}
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
