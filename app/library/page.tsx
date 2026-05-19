@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { type LibraryBook } from '@/components/library-browser'
 import { LibraryEssentialGrid, type EssentialBook } from '@/components/library-essential-grid'
+import { LibraryCategoryExpander } from '@/components/library-category-expander'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
@@ -339,195 +340,122 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      {/* ── Browse by Category (featured) ─────────────────────────────────── */}
+      {/* ── Browse by Category (featured + expandable all) ─────────────────── */}
       <div style={{ background: '#F0EDE6' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
-            style={{ color: '#9A9189' }}
-          >
-            Browse by Category
-            <span className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
-            <a
-              href="#all-categories"
-              className="text-[0.63rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#B8892E' }}
-            >
-              View all {allCategories.length} →
-            </a>
-          </div>
-
-          {/* Category image tiles — each links to browse with filter applied */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
-            {featuredCategories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
-                className="group relative overflow-hidden block"
-                style={{ aspectRatio: '4/3' }}
-              >
-                <Image
-                  src={cat.cover}
-                  alt=""
-                  fill
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.08]"
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                />
-                <div
-                  className="absolute inset-0 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(to top, rgba(14,12,10,0.88) 0%, rgba(14,12,10,0.6) 50%, rgba(14,12,10,0.3) 100%)' }}
-                />
-                <div className="absolute inset-0 flex flex-col justify-end p-4">
-                  <span
-                    className="text-[0.55rem] font-semibold tracking-[0.14em] uppercase mb-1 transition-colors group-hover:text-[#C9984A]"
-                    style={{ color: '#B8892E' }}
-                  >
-                    {cat.count} books
-                  </span>
-                  <h3
-                    className="leading-tight tracking-tight transition-colors group-hover:text-[#F9F6F0]"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
-                      fontWeight: 500,
-                      color: 'rgba(249,246,240,0.9)',
-                    }}
-                  >
-                    {cat.name}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <LibraryCategoryExpander featured={featuredCategories} all={allCategories} />
         </div>
       </div>
 
-      {/* ── All Categories ────────────────────────────────────────────────── */}
-      <div id="all-categories" style={{ background: '#FAFAF7', borderTop: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12">
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-8"
-            style={{ color: '#9A9189' }}
-          >
-            All {allCategories.length} Categories
-            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-          </div>
+      {/* ── From the Desk — featured review hero ─────────────────────────── */}
+      {(() => {
+        const review = BOOK_REVIEWS[0]
+        return (
+          <div style={{ background: '#141210' }}>
+            <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
 
-          <div className="flex flex-wrap gap-2">
-            {allCategories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
-                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-[#B8892E] hover:bg-[#FEFCF7]"
-                style={{ borderColor: '#D8D0C4', background: '#F5F2EB' }}
+              {/* Label row */}
+              <div
+                className="flex items-center gap-3 mb-12"
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}
               >
                 <span
-                  className="text-[0.67rem] font-medium tracking-[0.08em] transition-colors group-hover:text-[#7A5C1E]"
-                  style={{ color: '#4A4038' }}
+                  style={{
+                    fontFamily: 'var(--font-cormorant)',
+                    fontSize: '1.05rem',
+                    fontWeight: 400,
+                    fontStyle: 'italic',
+                    color: '#C9984A',
+                  }}
                 >
-                  {cat.name}
+                  From the Desk
                 </span>
+                <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
                 <span
-                  className="text-[0.56rem] font-medium tracking-[0.06em] transition-colors group-hover:text-[#B8892E]"
-                  style={{ color: '#B0A898' }}
+                  className="text-[0.6rem] font-medium tracking-[0.14em] uppercase"
+                  style={{ color: 'rgba(249,246,240,0.22)' }}
                 >
-                  {cat.count}
+                  Book Reviews
                 </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+              </div>
 
-      {/* ── Book Reviews ──────────────────────────────────────────────────── */}
-      <div style={{ background: '#F0EDE6', borderTop: '1px solid #D8D0C4' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
+              {/* Hero layout */}
+              <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-2"
-            style={{ color: '#9A9189' }}
-          >
-            <span
-              className="font-medium"
-              style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1rem', color: '#C9984A', fontStyle: 'italic' }}
-            >
-              From the Desk
-            </span>
-            <span className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
-            Book Reviews
-          </div>
-          <p
-            className="text-[0.85rem] italic mb-10"
-            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
-          >
-            Personal reflections on books that have shaped my thinking and ministry.
-          </p>
-
-          <div className="grid sm:grid-cols-2 gap-8 lg:gap-10">
-            {BOOK_REVIEWS.map((review) => (
-              <div key={review.slug} className="flex gap-5">
-                {/* Book cover */}
-                <div
-                  className="shrink-0 relative overflow-hidden shadow-md"
-                  style={{ width: 88, aspectRatio: '2/3' }}
-                >
-                  <Image
-                    src={review.cover}
-                    alt={review.book}
-                    fill
-                    className="object-cover"
-                    sizes="88px"
-                  />
-                </div>
-
-                {/* Review text */}
-                <div className="flex-1 min-w-0">
+                {/* Left: cover */}
+                <div className="shrink-0 lg:w-[200px] xl:w-[220px]">
                   <div
-                    className="text-[0.55rem] font-semibold tracking-[0.14em] uppercase mb-1.5"
-                    style={{ color: '#B8892E' }}
+                    className="relative overflow-hidden shadow-2xl"
+                    style={{ aspectRatio: '2/3', width: '100%', maxWidth: 220 }}
+                  >
+                    <Image
+                      src={review.cover}
+                      alt={review.book}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 220px, 160px"
+                    />
+                  </div>
+                </div>
+
+                {/* Right: review text */}
+                <div className="flex-1 min-w-0 pt-1">
+                  <div
+                    className="inline-block px-2.5 py-1 text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-5"
+                    style={{ background: 'rgba(122,92,30,0.25)', color: '#C9984A' }}
                   >
                     {review.category}
                   </div>
-                  <h3
-                    className="leading-snug tracking-tight mb-0.5"
+
+                  <h2
+                    className="leading-[1.06] tracking-tight mb-2"
                     style={{
                       fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
-                      fontWeight: 500,
-                      color: '#1A1714',
+                      fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                      fontWeight: 400,
+                      color: '#F9F6F0',
                     }}
                   >
                     {review.book}
-                  </h3>
+                  </h2>
                   <p
-                    className="text-[0.72rem] mb-3"
-                    style={{ color: '#9A9189' }}
+                    className="text-[0.78rem] mb-8 font-medium tracking-[0.06em] uppercase"
+                    style={{ color: 'rgba(249,246,240,0.35)' }}
                   >
                     {review.author}
                   </p>
-                  <div className="h-px mb-3" style={{ background: '#D8D0C4' }} />
+
+                  <div className="h-px mb-8" style={{ background: 'rgba(255,255,255,0.06)' }} />
+
                   <p
-                    className="text-[0.83rem] leading-[1.75] line-clamp-4"
-                    style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: '#5A544C' }}
+                    className="leading-[1.9] mb-8"
+                    style={{
+                      fontFamily: 'var(--font-source-serif)',
+                      fontStyle: 'italic',
+                      fontSize: 'clamp(0.9rem, 1.1vw, 1.05rem)',
+                      color: 'rgba(249,246,240,0.58)',
+                    }}
                   >
                     &ldquo;{review.excerpt}&rdquo;
                   </p>
+
                   <Link
                     href={`/library/browse?category=${encodeURIComponent(review.category)}`}
-                    className="inline-flex items-center gap-1 mt-3 text-[0.62rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
+                    className="inline-flex items-center gap-2.5 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-colors hover:text-[#F9F6F0]"
                     style={{ color: '#B8892E' }}
                   >
                     More in {review.category}
-                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </Link>
                 </div>
               </div>
-            ))}
+
+            </div>
           </div>
-        </div>
-      </div>
+        )
+      })()}
 
       {/* ── Explore CTA ───────────────────────────────────────────────────── */}
       <div style={{ background: '#0E0C0A' }}>

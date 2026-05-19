@@ -42,12 +42,13 @@ const allUseCaseTags = [
   'Bible Study', 'Reference', 'Academic', 'Counseling', 'Evangelism',
 ].filter((tag) => books.some((b) => b.useCaseTags.includes(tag)))
 
-export default function LibraryBrowsePage({
+export default async function LibraryBrowsePage({
   searchParams,
 }: {
-  searchParams?: { category?: string }
+  searchParams?: Promise<{ category?: string }>
 }) {
-  const initialCategory = searchParams?.category
+  const resolvedParams = await searchParams
+  const initialCategory = resolvedParams?.category
   return (
     <>
       {/* ── Header ─────────────────────────────────────────────────────────── */}
