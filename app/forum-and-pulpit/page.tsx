@@ -70,11 +70,29 @@ export default function ForumAndPulpitPage() {
 
   const bySlug = Object.fromEntries(raw.map((a) => [a.slug, a]))
 
-  const tickerItems: TickerItem[] = raw.map((a) => ({
-    title: a.frontmatter.title,
-    date: formatDate(a.frontmatter.date),
-    slug: a.slug,
-  }))
+  const tickerItems: TickerItem[] = raw.flatMap((a) => {
+    const date = formatDate(a.frontmatter.date)
+    const items: TickerItem[] = [{ title: a.frontmatter.title, date, slug: a.slug }]
+
+    // Pull bold statements from content as extra headlines
+    const boldMatches = [...a.content.matchAll(/\*\*([^*]{25,130})\*\*/g)]
+    const boldHeadlines = boldMatches
+      .map((m) => m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim())
+      .filter((s) =>
+        s.length >= 25 &&
+        /^[A-Z"]/.test(s) &&
+        !/^(summary|abstract|note|read|see also|clear,|answers to|districts|if your)/i.test(s) &&
+        !s.startsWith(':') &&
+        !s.startsWith('-')
+      )
+      .slice(0, 2)
+
+    for (const h of boldHeadlines) {
+      items.push({ title: h, date, slug: a.slug })
+    }
+
+    return items
+  })
 
   return (
     <>
