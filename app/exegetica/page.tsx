@@ -16,17 +16,72 @@ function extractAbstract(content: string): string {
       .replace(/\*/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .trim()
-    return text.length > 380 ? text.slice(0, 377) + '…' : text
+    return text.length > 420 ? text.slice(0, 417) + '…' : text
   }
   const paras = content.split(/\n{2,}/).map((p) => p.trim()).filter((p) => p && !p.startsWith('#'))
   const first = (paras[0] ?? '').replace(/\*\*/g, '').replace(/\*/g, '').trim()
-  return first.length > 380 ? first.slice(0, 377) + '…' : first
+  return first.length > 420 ? first.slice(0, 417) + '…' : first
 }
+
+const COLLECTIONS = [
+  {
+    id: 'hermeneutics',
+    title: 'Hermeneutics & Method',
+    subtitle: 'Reading Scripture faithfully across the canon',
+    slugs: [
+      'allegory-versus-typology-the-use-and-misuse-of-scripture-in-patristic-exegesis',
+      'canonical-criticism',
+      'how-the-new-testament-interprets-the-old-testament',
+    ],
+  },
+  {
+    id: 'pauline',
+    title: 'Pauline Theology',
+    subtitle: 'Law, covenant, and the apostle to the Gentiles',
+    slugs: [
+      'intertextual-echoes-in-pauls-letters-methodology-and-theological-significance',
+      'justification-and-covenant-membership-reevaluating-the-new-perspective-on-paul',
+      'the-role-of-the-law-in-pauline-theology',
+    ],
+  },
+  {
+    id: 'biblical-theology',
+    title: 'Biblical & Covenant Theology',
+    subtitle: 'The grand arc of redemptive history',
+    slugs: [
+      'israel-the-church-and-eschatology-an-examination-of-covenant-continuity-and-discontinuity',
+      'the-kingdom-of-god-in-biblical-theology',
+      'the-temple-motif-from-genesis-to-revelation-sacred-space-divine-presence-and-eschatological-hope',
+      'eschatological-ethics-how-the-biblical-vision-of-the-future-shapes-present-christian-practice',
+    ],
+  },
+  {
+    id: 'christology',
+    title: 'Christology & Second Temple',
+    subtitle: 'Christ in the Hebrew Bible and early Jewish thought',
+    slugs: [
+      'angelomorphic-christology-early-jewish-backgrounds-and-new-testament-implications',
+      'the-divine-council-motif-in-the-hebrew-bible-and-its-influence-on-new-testament-christology',
+      'the-son-of-man-in-daniel-7',
+      'the-servant-songs-of-isaiah-typology-prophecy-and-christological-fulfillment',
+    ],
+  },
+  {
+    id: 'apocalyptic',
+    title: 'Apocalyptic Literature',
+    subtitle: 'Visions, symbols, and the unveiling of divine purpose',
+    slugs: [
+      'apocalyptic-imagery-in-ezekiel-and-revelation-shared-symbolism-and-divergent-meanings',
+    ],
+  },
+]
 
 export default function ExegeticaPage() {
   const raw = sortByDate(getAll<ArticleFrontmatter>('exegetica'))
   const total = raw.length
-  const [featured, ...rest] = raw
+  const [featured] = raw
+
+  const bySlug = Object.fromEntries(raw.map((a) => [a.slug, a]))
 
   return (
     <>
@@ -91,7 +146,7 @@ export default function ExegeticaPage() {
         }}
       />
 
-      {/* ── Featured — Lead Study ───────────────────────────────────────────── */}
+      {/* ── Latest Study ────────────────────────────────────────────────────── */}
       {featured && (() => {
         const abstract = extractAbstract(featured.content)
         const mins = readingTime(featured.content)
@@ -104,7 +159,7 @@ export default function ExegeticaPage() {
                 style={{ color: '#9A9189' }}
               >
                 <span
-                  className="inline-block font-medium"
+                  className="font-medium"
                   style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.1rem', color: '#C9984A', fontStyle: 'italic' }}
                 >
                   Study {String(total).padStart(2, '0')}
@@ -178,96 +233,160 @@ export default function ExegeticaPage() {
         )
       })()}
 
-      {/* ── Journal Archive ─────────────────────────────────────────────────── */}
+      {/* ── Collections ─────────────────────────────────────────────────────── */}
       <div style={{ background: '#F0EDE6' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14 pb-20">
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
-            style={{ color: '#9A9189' }}
-          >
-            Studies Archive
-            <span className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
-          </div>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14 pb-20">
 
-          {/* Two-column journal entries */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-10">
-            {rest.map(({ frontmatter: fm, content, slug }, i) => {
-              const abstract = extractAbstract(content)
-              const mins = readingTime(content)
-              const words = content.trim().split(/\s+/).length
-              const studyNum = String(total - 1 - i).padStart(2, '0')
+          {COLLECTIONS.map((col, ci) => {
+            const articles = col.slugs.map((s) => bySlug[s]).filter(Boolean)
+            if (!articles.length) return null
 
-              return (
-                <Link
-                  key={slug}
-                  href={`/exegetica/${slug}`}
-                  className="group flex flex-col"
-                  style={{ background: '#F0EDE6' }}
-                >
-                  {/* 16:9 image with study number badge */}
-                  <div className="relative overflow-hidden mb-4" style={{ aspectRatio: '16/10' }}>
-                    {fm.image ? (
-                      <Image
-                        src={fm.image}
-                        alt=""
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                        sizes="(min-width: 1024px) 50vw, 100vw"
-                      />
-                    ) : (
-                      <div
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ background: '#1A1714' }}
-                      >
-                        <span className="text-[0.6rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#7A5C1E' }}>
-                          Exegetica
-                        </span>
-                      </div>
-                    )}
-                    {/* Study number badge */}
+            return (
+              <div key={col.id} className={ci > 0 ? 'mt-16 pt-14 border-t' : ''} style={{ borderColor: '#D8D0C4' }}>
+
+                {/* Collection header */}
+                <div className="flex items-end gap-4 mb-10">
+                  <div>
                     <div
-                      className="absolute top-3 left-3 px-2 py-1"
-                      style={{ background: 'rgba(14,12,10,0.82)', backdropFilter: 'blur(4px)' }}
+                      className="text-[0.58rem] font-medium tracking-[0.16em] uppercase mb-1.5"
+                      style={{ color: '#B8892E' }}
                     >
-                      <span
-                        className="text-[0.7rem] font-medium tracking-[0.08em]"
-                        style={{ fontFamily: 'var(--font-cormorant)', color: '#C9984A', fontStyle: 'italic' }}
-                      >
-                        Study {studyNum}
-                      </span>
+                      Collection
                     </div>
-                  </div>
-
-                  {/* Meta + title + abstract */}
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <span className="text-[0.6rem] font-medium tracking-[0.12em] uppercase" style={{ color: '#B8892E' }}>
-                      {formatDate(fm.date)}
-                    </span>
-                    <span className="inline-block h-[3px] w-[3px] rounded-full shrink-0" style={{ background: '#C8BFA8' }} />
-                    <span className="text-[0.6rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#B0A898' }}>
-                      {mins} min · {words.toLocaleString()} words
-                    </span>
-                  </div>
-
-                  <h3
-                    className="leading-[1.25] tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
-                    style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.15rem, 1.6vw, 1.4rem)', fontWeight: 500, color: '#1A1714' }}
-                  >
-                    {fm.title}
-                  </h3>
-
-                  {abstract && (
-                    <p
-                      className="text-[0.84rem] leading-[1.7] line-clamp-3"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#6A6058' }}
+                    <h2
+                      className="leading-tight tracking-tight"
+                      style={{
+                        fontFamily: 'var(--font-cormorant)',
+                        fontSize: 'clamp(1.3rem, 2vw, 1.65rem)',
+                        fontWeight: 500,
+                        color: '#1A1714',
+                      }}
                     >
-                      {abstract}
-                    </p>
-                  )}
-                </Link>
-              )
-            })}
-          </div>
+                      {col.title}
+                    </h2>
+                  </div>
+                  <div className="flex-1 h-px mb-1" style={{ background: '#D8D0C4' }} />
+                  <p
+                    className="shrink-0 text-[0.63rem] font-medium tracking-[0.08em] italic mb-1 hidden sm:block"
+                    style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                  >
+                    {col.subtitle}
+                  </p>
+                </div>
+
+                {/* Article cards with hover abstract overlay */}
+                <div className={`grid gap-8 ${articles.length === 1 ? 'lg:grid-cols-1' : articles.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
+                  {articles.map(({ frontmatter: fm, content, slug }, i) => {
+                    const abstract = extractAbstract(content)
+                    const mins = readingTime(content)
+                    const studyNum = String(raw.findIndex((a) => a.slug === slug) + 1).padStart(2, '0')
+
+                    return (
+                      <Link
+                        key={slug}
+                        href={`/exegetica/${slug}`}
+                        className="group flex flex-col"
+                      >
+                        {/* 16:10 image with hover abstract overlay */}
+                        <div className="relative overflow-hidden mb-4" style={{ aspectRatio: '16/10' }}>
+                          {fm.image ? (
+                            <Image
+                              src={fm.image}
+                              alt=""
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                            />
+                          ) : (
+                            <div
+                              className="w-full h-full flex items-center justify-center"
+                              style={{ background: '#1A1714' }}
+                            >
+                              <span className="text-[0.6rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#7A5C1E' }}>
+                                Exegetica
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Study number badge */}
+                          <div
+                            className="absolute top-3 left-3 px-2 py-1"
+                            style={{ background: 'rgba(14,12,10,0.82)', backdropFilter: 'blur(4px)' }}
+                          >
+                            <span
+                              className="text-[0.7rem] font-medium tracking-[0.08em]"
+                              style={{ fontFamily: 'var(--font-cormorant)', color: '#C9984A', fontStyle: 'italic' }}
+                            >
+                              Study {studyNum}
+                            </span>
+                          </div>
+
+                          {/* Abstract hover overlay */}
+                          {abstract && (
+                            <div
+                              className="absolute inset-0 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                              style={{
+                                background: 'linear-gradient(to top, rgba(14,12,10,0.97) 0%, rgba(14,12,10,0.9) 55%, rgba(14,12,10,0.55) 100%)',
+                              }}
+                            >
+                              <div
+                                className="text-[0.55rem] font-medium tracking-[0.14em] uppercase mb-2"
+                                style={{ color: '#B8892E' }}
+                              >
+                                Abstract
+                              </div>
+                              <p
+                                className="text-[0.76rem] leading-[1.65] line-clamp-5"
+                                style={{
+                                  fontFamily: 'var(--font-source-serif)',
+                                  fontStyle: 'italic',
+                                  color: 'rgba(249,246,240,0.72)',
+                                }}
+                              >
+                                {abstract}
+                              </p>
+                              <span
+                                className="inline-flex items-center gap-1 mt-3 text-[0.58rem] font-medium tracking-[0.1em] uppercase"
+                                style={{ color: '#C9984A' }}
+                              >
+                                Read study
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                  <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Meta + title */}
+                        <div className="flex items-center gap-2 mb-2.5">
+                          <span className="text-[0.6rem] font-medium tracking-[0.12em] uppercase" style={{ color: '#B8892E' }}>
+                            {formatDate(fm.date)}
+                          </span>
+                          <span className="inline-block h-[3px] w-[3px] rounded-full shrink-0" style={{ background: '#C8BFA8' }} />
+                          <span className="text-[0.6rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#B0A898' }}>
+                            {mins} min read
+                          </span>
+                        </div>
+
+                        <h3
+                          className="leading-[1.25] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: 'clamp(1.05rem, 1.5vw, 1.3rem)',
+                            fontWeight: 500,
+                            color: '#1A1714',
+                          }}
+                        >
+                          {fm.title}
+                        </h3>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </>
