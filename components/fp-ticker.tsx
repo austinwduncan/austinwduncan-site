@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-export type TickerItem = { title: string; date: string; slug: string }
+export type TickerItem = { title: string; date: string; slug: string; href?: string }
 
 export function FPTicker({
   items,
@@ -66,7 +66,7 @@ export function FPTicker({
           {doubled.map((item, i) => (
             <Link
               key={i}
-              href={`/forum-and-pulpit/${item.slug}`}
+              href={item.href ?? `/forum-and-pulpit/${item.slug}`}
               className="inline-flex items-center gap-3 group"
               style={{ paddingRight: 36 }}
             >
