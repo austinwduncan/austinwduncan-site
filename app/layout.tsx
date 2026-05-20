@@ -49,6 +49,28 @@ export const metadata: Metadata = {
   },
 }
 
+const SITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://austinwduncan.com/#person',
+      name: 'Austin W. Duncan',
+      url: 'https://austinwduncan.com',
+      jobTitle: 'Pastor, Teacher, Theologian',
+      description: 'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://austinwduncan.com/#website',
+      url: 'https://austinwduncan.com',
+      name: 'Austin W. Duncan',
+      description: 'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+      author: { '@id': 'https://austinwduncan.com/#person' },
+    },
+  ],
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +81,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} ${sourceSerif.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-zinc-900">
         <Nav />
         <main className="flex-1">{children}</main>

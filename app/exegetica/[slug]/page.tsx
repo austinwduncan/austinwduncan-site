@@ -16,7 +16,24 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params
   try {
     const { frontmatter: fm } = getBySlug<ArticleFrontmatter>('exegetica', slug)
-    return { title: fm.title, description: fm.excerpt }
+    return {
+      title: fm.title,
+      description: fm.excerpt || undefined,
+      openGraph: {
+        title: fm.title,
+        description: fm.excerpt || undefined,
+        type: 'article',
+        publishedTime: fm.date,
+        authors: ['Austin W. Duncan'],
+        ...(fm.image ? { images: [{ url: fm.image, width: 1280, height: 720, alt: fm.title }] } : {}),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: fm.title,
+        description: fm.excerpt || undefined,
+        ...(fm.image ? { images: [fm.image] } : {}),
+      },
+    }
   } catch {
     return {}
   }
@@ -64,19 +81,34 @@ export default async function ExegeticaArticlePage({ params }: { params: Params 
   const abstract = extractAbstract(content)
   const toc = extractToc(content)
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ScholarlyArticle',
+    headline: fm.title,
+    description: abstract || fm.excerpt || undefined,
+    datePublished: fm.date,
+    author: { '@id': 'https://austinwduncan.com/#person' },
+    publisher: { '@id': 'https://austinwduncan.com/#person' },
+    ...(fm.image ? { image: `https://austinwduncan.com${fm.image}` } : {}),
+    url: `https://austinwduncan.com/exegetica/${slug}`,
+  }
+
   return (
-    <ExegeticaArticleLayout
-      studyNum={studyNum}
-      collectionTitle={collectionTitle}
-      title={fm.title}
-      date={fm.date}
-      readingMinutes={minutes}
-      wordCount={wordCount}
-      abstract={abstract}
-      image={fm.image}
-      toc={toc}
-    >
-      <MDXRemote source={content} components={mdxComponents} />
-    </ExegeticaArticleLayout>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <ExegeticaArticleLayout
+        studyNum={studyNum}
+        collectionTitle={collectionTitle}
+        title={fm.title}
+        date={fm.date}
+        readingMinutes={minutes}
+        wordCount={wordCount}
+        abstract={abstract}
+        image={fm.image}
+        toc={toc}
+      >
+        <MDXRemote source={content} components={mdxComponents} />
+      </ExegeticaArticleLayout>
+    </>
   )
 }

@@ -15,7 +15,21 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params
   try {
     const { frontmatter: fm } = getBySlug<TeachingFrontmatter>('teaching/expositional', slug)
-    return { title: fm.title, description: fm.excerpt }
+    return {
+      title: fm.title,
+      description: fm.excerpt || undefined,
+      openGraph: {
+        title: fm.title,
+        description: fm.excerpt || undefined,
+        type: 'article',
+        authors: ['Austin W. Duncan'],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: fm.title,
+        description: fm.excerpt || undefined,
+      },
+    }
   } catch {
     return {}
   }

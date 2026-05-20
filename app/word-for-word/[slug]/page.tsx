@@ -15,7 +15,24 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params
   try {
     const { frontmatter: fm } = getBySlug<ArticleFrontmatter>('word-for-word', slug)
-    return { title: fm.title, description: fm.excerpt }
+    return {
+      title: fm.title,
+      description: fm.excerpt || undefined,
+      openGraph: {
+        title: fm.title,
+        description: fm.excerpt || undefined,
+        type: 'article',
+        publishedTime: fm.date,
+        authors: ['Austin W. Duncan'],
+        ...(fm.image ? { images: [{ url: fm.image, width: 1280, height: 720, alt: fm.title }] } : {}),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: fm.title,
+        description: fm.excerpt || undefined,
+        ...(fm.image ? { images: [fm.image] } : {}),
+      },
+    }
   } catch {
     return {}
   }
@@ -34,17 +51,32 @@ export default async function WordForWordArticlePage({ params }: { params: Param
   const { frontmatter: fm, content } = file
   const minutes = readingTime(content)
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: fm.title,
+    description: fm.excerpt || undefined,
+    datePublished: fm.date,
+    author: { '@id': 'https://austinwduncan.com/#person' },
+    publisher: { '@id': 'https://austinwduncan.com/#person' },
+    ...(fm.image ? { image: `https://austinwduncan.com${fm.image}` } : {}),
+    url: `https://austinwduncan.com/word-for-word/${slug}`,
+  }
+
   return (
-    <ArticleLayout
-      section="Word for Word"
-      sectionHref="/word-for-word"
-      category={fm.category}
-      title={fm.title}
-      date={fm.date}
-      image={fm.image}
-      readingMinutes={minutes}
-    >
-      <MDXRemote source={content} components={mdxComponents} />
-    </ArticleLayout>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <ArticleLayout
+        section="Word for Word"
+        sectionHref="/word-for-word"
+        category={fm.category}
+        title={fm.title}
+        date={fm.date}
+        image={fm.image}
+        readingMinutes={minutes}
+      >
+        <MDXRemote source={content} components={mdxComponents} />
+      </ArticleLayout>
+    </>
   )
 }
