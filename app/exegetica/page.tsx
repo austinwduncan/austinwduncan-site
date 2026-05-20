@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
-import { ExegeticaBrowser, COLLECTION_DEFS, type ExegeticaItem, type ExegeticaCollection } from '@/components/exegetica-browser'
+import { ExegeticaBrowser, type ExegeticaItem, type ExegeticaCollection } from '@/components/exegetica-browser'
+import { COLLECTION_DEFS } from '@/lib/exegetica-collections'
 
 export const metadata: Metadata = {
   title: 'Exegetica — Austin W. Duncan',

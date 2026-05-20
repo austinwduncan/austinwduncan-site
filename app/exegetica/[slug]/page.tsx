@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getBySlug, getSlugs, getAll, sortByDate, readingTime, extractToc, type ArticleFrontmatter } from '@/lib/content'
 import ExegeticaArticleLayout from '@/components/exegetica-article-layout'
-import { COLLECTION_DEFS } from '@/components/exegetica-browser'
+import { COLLECTION_DEFS } from '@/lib/exegetica-collections'
 import { mdxComponents } from '@/lib/mdx-components'
 
 type Params = Promise<{ slug: string }>
