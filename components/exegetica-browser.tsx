@@ -3,7 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { formatReadingTime } from '@/lib/content'
+function formatReadingTime(minutes: number): string {
+  if (minutes < 60) return `${minutes} min read`
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return m > 0 ? `${h}h ${m}m read` : `${h}h read`
+}
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
