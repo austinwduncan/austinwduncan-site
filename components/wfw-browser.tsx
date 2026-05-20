@@ -141,7 +141,7 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
           <div style={{ opacity: fade ? 1 : 0, transform: fade ? 'translateY(0)' : 'translateY(8px)', transition: 'opacity 0.38s ease, transform 0.38s ease' }}>
             {tag && (
               <div className="mb-4 flex justify-center">
-                <CategoryBadge label={tag.label} />
+                <CategoryBadge label={tag.short} />
               </div>
             )}
             <h2
@@ -273,15 +273,17 @@ function BrowseStrip({ topics, onSelect }: { topics: TopicWithArticles[]; onSele
    Full-width light; auto-rotates article excerpts
    ══════════════════════════════════════════════════════════════ */
 function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
-  const pool = articles.filter((a) => a.excerpt && a.excerpt.length > 60)
+  const pool = articles.filter((a) => a.image).length >= 4
+    ? articles.filter((a) => a.image)
+    : articles
   const [idx, setIdx] = useState(0)
   const [fade, setFade] = useState(true)
-  const DURATION = 7000
-  const visibleDots = Math.min(pool.length, 10)
+  const DURATION = 6500
+  const visibleCount = Math.min(pool.length, 10)
 
   const go = useCallback((next: number) => {
     setFade(false)
-    setTimeout(() => { setIdx(next); setFade(true) }, 320)
+    setTimeout(() => { setIdx(next); setFade(true) }, 280)
   }, [])
 
   useEffect(() => {
@@ -293,104 +295,116 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
   if (pool.length === 0) return null
   const current = pool[idx]
   const tag = getTag(current)
-  const excerpt = current.excerpt.length > 320 ? current.excerpt.slice(0, 317) + '…' : current.excerpt
+  const teaser = current.excerpt
+    ? (current.excerpt.length > 160 ? current.excerpt.slice(0, 157) + '…' : current.excerpt)
+    : ''
 
   return (
     <div style={{ background: '#f7f7f7', borderTop: '3px solid #B8892E', borderBottom: '1px solid #e8e8e8' }}>
-      <div className="mx-auto max-w-[820px] px-6 lg:px-8" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
 
-        {/* "From Word for Word" label with flanking rules */}
-        <div className="flex items-center gap-4 mb-10">
-          <div className="flex-1 h-px" style={{ background: '#e0d9ce' }} />
-          <span
-            className="shrink-0 text-[0.58rem] font-black tracking-[0.22em] uppercase"
-            style={{ color: '#B8892E' }}
-          >
+      {/* Header bar */}
+      <div style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}>
+        <div className="mx-auto max-w-[1200px] px-5 flex items-center justify-between" style={{ height: 36 }}>
+          <span className="text-[0.55rem] font-black tracking-[0.22em] uppercase" style={{ color: '#B8892E' }}>
             From Word for Word
           </span>
-          <div className="flex-1 h-px" style={{ background: '#e0d9ce' }} />
+          <span className="text-[0.55rem] font-medium tracking-[0.12em] tabular-nums" style={{ color: '#aaaaaa' }}>
+            {idx + 1} / {visibleCount}
+          </span>
         </div>
+      </div>
 
-        {/* Fading quote block */}
+      {/* Clickable article card */}
+      <Link
+        href={`/word-for-word/${current.slug}`}
+        className="group block"
+        style={{ textDecoration: 'none' }}
+      >
         <div
-          className="text-center"
-          style={{
-            opacity: fade ? 1 : 0,
-            transform: fade ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'opacity 0.32s ease, transform 0.32s ease',
-          }}
+          className="mx-auto max-w-[1200px] flex"
+          style={{ minHeight: 220 }}
         >
-          {/* Opening quotation mark */}
+          {/* Image panel */}
           <div
-            aria-hidden
-            style={{
-              fontFamily: 'Georgia, "Times New Roman", serif',
-              fontSize: '4.5rem',
-              lineHeight: 0.75,
-              color: '#B8892E',
-              marginBottom: '0.75rem',
-              userSelect: 'none',
-            }}
+            className="hidden sm:block shrink-0"
+            style={{ position: 'relative', width: '40%', maxWidth: 460, overflow: 'hidden' }}
           >
-            &ldquo;
+            {current.image ? (
+              <Image
+                src={current.image}
+                alt=""
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                sizes="(min-width: 1200px) 460px, 40vw"
+              />
+            ) : (
+              <div style={{ position: 'absolute', inset: 0, background: '#e0dbd2' }} />
+            )}
           </div>
 
-          {/* Quote text */}
-          <blockquote
+          {/* Content panel */}
+          <div
+            className="flex-1 flex flex-col justify-center px-8 lg:px-12 py-8"
             style={{
-              fontFamily: 'var(--font-cormorant)',
-              fontSize: 'clamp(1.55rem, 2.6vw, 2.1rem)',
-              fontStyle: 'italic',
-              fontWeight: 500,
-              color: '#1a1a1a',
-              lineHeight: 1.55,
-              marginBottom: '2.25rem',
+              opacity: fade ? 1 : 0,
+              transform: fade ? 'translateY(0)' : 'translateY(6px)',
+              transition: 'opacity 0.28s ease, transform 0.28s ease',
             }}
           >
-            {excerpt}
-          </blockquote>
-
-          {/* Attribution */}
-          <div className="flex flex-col items-center gap-3">
-            {/* Short amber rule */}
-            <div style={{ width: 40, height: 2, background: '#B8892E' }} />
-            {tag && <CategoryBadge label={tag.label} />}
-            <Link
-              href={`/word-for-word/${current.slug}`}
-              className="group inline-flex items-center gap-2 mt-1"
+            {tag && (
+              <div className="mb-3">
+                <CategoryBadge label={tag.short} />
+              </div>
+            )}
+            <h3
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)',
+                fontWeight: 700,
+                color: '#1a1a1a',
+                lineHeight: 1.2,
+                marginBottom: '0.7rem',
+                transition: 'color 0.25s',
+              }}
+              className="group-hover:text-[#7A5C1E]"
+            >
+              {current.title}
+            </h3>
+            {teaser && (
+              <p style={{
+                fontFamily: 'var(--font-source-serif)',
+                fontSize: '0.82rem',
+                color: '#666666',
+                lineHeight: 1.65,
+                marginBottom: '1.25rem',
+              }}>
+                {teaser}
+              </p>
+            )}
+            <div
+              className="inline-flex items-center gap-2 transition-all duration-200 group-hover:gap-3.5"
+              style={{ width: 'fit-content' }}
             >
               <span
-                className="text-[0.63rem] font-black tracking-[0.16em] uppercase"
-                style={{ color: '#555555', transition: 'color 0.2s' }}
+                className="text-[0.6rem] font-black tracking-[0.18em] uppercase"
+                style={{ color: '#B8892E' }}
               >
-                {current.title}
+                Read the Article
               </span>
-              <svg
-                width="10" height="10" viewBox="0 0 24 24" fill="none"
-                stroke="#B8892E" strokeWidth="2.5"
-                style={{ transition: 'stroke 0.2s' }}
-                className="group-hover:[stroke:#7A5C1E]"
-              >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B8892E" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
+            </div>
           </div>
         </div>
+      </Link>
 
-        {/* Navigation */}
-        {pool.length > 1 && (
-          <div className="flex flex-col items-center gap-4 mt-12">
-
+      {/* Navigation footer */}
+      {pool.length > 1 && (
+        <div style={{ background: '#ffffff', borderTop: '1px solid #e8e8e8' }}>
+          <div className="mx-auto max-w-[1200px] px-5 flex items-center gap-4" style={{ height: 40 }}>
             {/* Progress bar */}
-            <div
-              style={{
-                width: 200,
-                height: 2,
-                background: '#e0d9ce',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
+            <div style={{ width: 120, height: 2, background: '#e8e8e8', position: 'relative', overflow: 'hidden', flexShrink: 0 }}>
               <div
                 key={idx}
                 style={{
@@ -398,41 +412,49 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
                   inset: 0,
                   background: '#B8892E',
                   animation: `wfw-progress ${DURATION}ms linear forwards`,
-                  transformOrigin: 'left',
                 }}
               />
             </div>
 
-            {/* Dot indicators */}
-            <div className="flex items-center gap-2.5">
-              {Array.from({ length: visibleDots }).map((_, i) => (
+            <div className="flex items-center gap-2 ml-auto">
+              <button
+                onClick={() => go((idx - 1 + pool.length) % pool.length)}
+                aria-label="Previous"
+                className="hover:text-[#B8892E] transition-colors"
+                style={{ color: '#cccccc', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 6px' }}
+              >
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+              {Array.from({ length: visibleCount }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => go(i)}
-                  aria-label={`Quote ${i + 1}`}
+                  aria-label={`Article ${i + 1}`}
                   style={{
-                    width: i === idx ? 22 : 6,
-                    height: 6,
-                    background: i === idx ? '#B8892E' : '#ccc9c0',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: 0,
-                    transition: 'width 0.35s ease, background 0.35s ease',
+                    width: i === idx ? 18 : 5,
+                    height: 5,
+                    background: i === idx ? '#B8892E' : '#d8d8d8',
+                    border: 'none', cursor: 'pointer', padding: 0,
+                    transition: 'all 0.35s ease',
                   }}
                 />
               ))}
+              <button
+                onClick={() => go((idx + 1) % pool.length)}
+                aria-label="Next"
+                className="hover:text-[#B8892E] transition-colors"
+                style={{ color: '#cccccc', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 6px' }}
+              >
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-
-            {/* Counter */}
-            <span
-              className="text-[0.58rem] tracking-[0.18em] uppercase tabular-nums"
-              style={{ color: '#B8892E' }}
-            >
-              {idx + 1}&thinsp;/&thinsp;{visibleDots}
-            </span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -491,7 +513,7 @@ function StatItem({ value, label, suffix = '' }: { value: number; label: string;
   )
 }
 
-function StatsBar({ articleCount, topicCount }: { articleCount: number; topicCount: number }) {
+function StatsBar({ articleCount, newestDate }: { articleCount: number; newestDate: string }) {
   const [active, setActive] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -504,8 +526,14 @@ function StatsBar({ articleCount, topicCount }: { articleCount: number; topicCou
   }, [])
 
   const qCount = useCountUp(articleCount, active)
-  const tCount = useCountUp(topicCount, active)
-  const yCount = useCountUp(new Date().getFullYear(), active, 1800)
+
+  // Format "May 6, 2026" → "May '26"
+  const latestLabel = (() => {
+    if (!newestDate) return ''
+    const parts = newestDate.split(' ')
+    if (parts.length >= 3) return `${parts[0]} '${parts[2].slice(2)}`
+    return newestDate
+  })()
 
   return (
     <div ref={ref} style={{ background: '#ffffff', borderTop: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
@@ -520,24 +548,24 @@ function StatsBar({ articleCount, topicCount }: { articleCount: number; topicCou
           </div>
 
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
-              {tCount}
-            </div>
-            <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Topics Covered</div>
-          </div>
-
-          <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
-              {yCount}
-            </div>
-            <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Publishing Since</div>
-          </div>
-
-          <div className="flex flex-col items-center text-center col-span-2 lg:col-span-1 lg:px-8">
             <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#B8892E', lineHeight: 1, marginBottom: '0.5rem' }}>
               Weekly
             </div>
             <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>New Answers</div>
+          </div>
+
+          <div className="flex flex-col items-center text-center lg:px-8">
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
+              {latestLabel}
+            </div>
+            <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Latest Issue</div>
+          </div>
+
+          <div className="flex flex-col items-center text-center col-span-2 lg:col-span-1 lg:px-8">
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
+              ~5 min
+            </div>
+            <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Avg. Read</div>
           </div>
 
         </div>
@@ -874,7 +902,7 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
       {!isFiltering && <BrowseStrip topics={topics} onSelect={handleTopicSelect} />}
 
       {/* ── SECTION C: Stats + All Questions list ───────────────────────── */}
-      {!isFiltering && <StatsBar articleCount={articles.length} topicCount={topics.length} />}
+      {!isFiltering && <StatsBar articleCount={articles.length} newestDate={articles[0]?.formattedDate ?? ''} />}
 
       <div style={{ background: '#ffffff' }}>
         <div className="mx-auto max-w-[1200px] px-5 pt-8 pb-16">
