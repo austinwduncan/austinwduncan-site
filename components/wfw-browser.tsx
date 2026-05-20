@@ -5,14 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const TOPICS = [
-  { key: 'The Nature and Character of God',           label: 'God & Theology',  short: 'Theology',    n: '01' },
-  { key: 'Basic Christian Thought & Spiritual Growth', label: 'Christian Life',  short: 'Life',        n: '02' },
-  { key: 'Basic Apologetics',                          label: 'Apologetics',     short: 'Apologetics', n: '03' },
-  { key: 'New Testament Issues',                       label: 'New Testament',   short: 'NT Issues',   n: '04' },
-  { key: 'Old Testament Issues',                       label: 'Old Testament',   short: 'OT Issues',   n: '05' },
-  { key: 'Historical Jesus and Christology',           label: 'Christology',     short: 'Christology', n: '06' },
-  { key: 'Spiritual Gifts',                            label: 'Spiritual Gifts', short: 'Gifts',       n: '07' },
-  { key: 'Holidays',                                   label: 'Holidays',        short: 'Holidays',    n: '08' },
+  { key: 'The Nature and Character of God',           label: 'God & Theology',  short: 'Theology',    n: '01', desc: 'Who is God, and what is He like? These articles explore His nature, attributes, and character as revealed in Scripture.' },
+  { key: 'Basic Christian Thought & Spiritual Growth', label: 'Christian Life',  short: 'Life',        n: '02', desc: 'What does it look like to live as a follower of Christ? Questions about faith, salvation, church, prayer, and growth.' },
+  { key: 'Basic Apologetics',                          label: 'Apologetics',     short: 'Apologetics', n: '03', desc: 'Can Christianity be defended rationally? These articles address the intellectual foundations of the Christian faith.' },
+  { key: 'New Testament Issues',                       label: 'New Testament',   short: 'NT Issues',   n: '04', desc: 'Difficult questions arising from the New Testament — its history, interpretation, and disputed or misunderstood passages.' },
+  { key: 'Old Testament Issues',                       label: 'Old Testament',   short: 'OT Issues',   n: '05', desc: 'Wrestling with the harder texts of the Hebrew Bible — violence, ethics, and what they reveal about the character of God.' },
+  { key: 'Historical Jesus and Christology',           label: 'Christology',     short: 'Christology', n: '06', desc: 'Who is Jesus — really? Articles examining His claims, His identity, and the historical and biblical evidence for who He is.' },
+  { key: 'Spiritual Gifts',                            label: 'Spiritual Gifts', short: 'Gifts',       n: '07', desc: 'The gifts of the Holy Spirit — what they are, how they function, and what the Bible actually teaches about them today.' },
+  { key: 'Holidays',                                   label: 'Holidays',        short: 'Holidays',    n: '08', desc: 'How should Christians engage with cultural and religious holidays? Biblical reflection on Christmas, Easter, Halloween, and more.' },
 ]
 
 export type WFWItem = {
@@ -326,20 +326,22 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
         >
           {/* Image panel */}
           <div
-            className="hidden sm:block shrink-0"
-            style={{ position: 'relative', width: '40%', maxWidth: 460, overflow: 'hidden' }}
+            className="hidden sm:block shrink-0 self-start"
+            style={{ width: '40%', maxWidth: 460 }}
           >
-            {current.image ? (
-              <Image
-                src={current.image}
-                alt=""
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                sizes="(min-width: 1200px) 460px, 40vw"
-              />
-            ) : (
-              <div style={{ position: 'absolute', inset: 0, background: '#e0dbd2' }} />
-            )}
+            <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
+              {current.image ? (
+                <Image
+                  src={current.image}
+                  alt=""
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  sizes="(min-width: 1200px) 460px, 40vw"
+                />
+              ) : (
+                <div style={{ position: 'absolute', inset: 0, background: '#e0dbd2' }} />
+              )}
+            </div>
           </div>
 
           {/* Content panel */}
@@ -744,6 +746,11 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                 </>
               ) : (
                 <>
+                  {/* Intro */}
+                  <p className="text-[0.88rem] leading-[1.7] mb-6 pb-6 border-b" style={{ fontFamily: 'var(--font-source-serif)', color: '#555555', borderColor: '#e8e8e8' }}>
+                    Every week, <em>Word for Word</em> takes one of the questions people are actually asking about the Christian faith and answers it directly from Scripture — with clarity, honesty, and care. Browse by topic below, or start with this week&rsquo;s answer.
+                  </p>
+
                   {/* Hero */}
                   {hero && (
                     <div className="mb-6 pb-6 border-b" style={{ borderColor: '#e8e8e8' }}>
@@ -797,7 +804,7 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                     {dontMissFeature && (
                       <div className="grid lg:grid-cols-2 gap-0">
                         <Link href={`/word-for-word/${dontMissFeature.slug}`} className="group pr-6">
-                          <div className="relative overflow-hidden mb-3.5" style={{ aspectRatio: '3/2' }}>
+                          <div className="relative overflow-hidden mb-3.5" style={{ aspectRatio: '16/9' }}>
                             {dontMissFeature.image ? (
                               <Image src={dontMissFeature.image} alt="" fill className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 1200px) 380px, 40vw" />
                             ) : (
@@ -824,7 +831,7 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                               {i > 0 && <div className="border-t my-3" style={{ borderColor: '#e8e8e8' }} />}
                               <Link href={`/word-for-word/${a.slug}`} className="group flex gap-3">
                                 {a.image && (
-                                  <div className="relative shrink-0 overflow-hidden" style={{ width: 72, height: 52 }}>
+                                  <div className="relative shrink-0 overflow-hidden" style={{ width: 72, height: 40 }}>
                                     <Image src={a.image} alt="" fill className="object-cover" sizes="72px" />
                                   </div>
                                 )}
@@ -869,6 +876,9 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                         </button>
                       }
                     />
+                    <p className="text-[0.8rem] leading-[1.65] mb-5 -mt-1" style={{ fontFamily: 'var(--font-source-serif)', color: '#777777', fontStyle: 'italic' }}>
+                      {t.desc}
+                    </p>
                     <div className={`grid gap-5 ${t.articles.length >= 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : t.articles.length === 2 ? 'sm:grid-cols-2' : ''}`}>
                       {t.articles.slice(0, 3).map((a) => <ArticleCard key={a.slug} article={a} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw" />)}
                     </div>
