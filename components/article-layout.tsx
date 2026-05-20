@@ -3,6 +3,7 @@ import { ArrowLeft, Clock, Play } from 'lucide-react'
 import ReadingProgress from '@/components/reading-progress'
 import PrintButton from '@/components/print-button'
 import { ExegeticaTOC } from '@/components/exegetica-toc'
+import { SocialShare } from '@/components/social-share'
 import { formatReadingTime, type TocItem } from '@/lib/content'
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
   esvText?: string | null
   readingMinutes: number
   toc?: TocItem[]
+  shareUrl?: string
   children: React.ReactNode
 }
 
@@ -45,6 +47,7 @@ export default function ArticleLayout({
   esvText,
   readingMinutes,
   toc,
+  shareUrl,
   children,
 }: Props) {
   const formattedDate = formatDate(date)
@@ -186,6 +189,12 @@ export default function ArticleLayout({
                 <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-zinc-700">
                   {esvText}
                 </pre>
+              </div>
+            )}
+
+            {shareUrl && (
+              <div className="pb-8 border-t pt-8" style={{ borderColor: '#E8E8E8' }}>
+                <SocialShare url={shareUrl} title={title} />
               </div>
             )}
 

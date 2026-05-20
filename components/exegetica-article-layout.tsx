@@ -3,6 +3,7 @@ import Image from 'next/image'
 import ReadingProgress from '@/components/reading-progress'
 import PrintButton from '@/components/print-button'
 import { ExegeticaTOC } from '@/components/exegetica-toc'
+import { SocialShare } from '@/components/social-share'
 import { formatReadingTime, type TocItem } from '@/lib/content'
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   abstract?: string
   image?: string
   toc?: TocItem[]
+  shareUrl?: string
   children: React.ReactNode
 }
 
@@ -36,6 +38,7 @@ export default function ExegeticaArticleLayout({
   abstract,
   image,
   toc,
+  shareUrl,
   children,
 }: Props) {
   const hasToc = toc && toc.length > 0
@@ -165,6 +168,13 @@ export default function ExegeticaArticleLayout({
 
             {/* MDX content */}
             <div className="article-prose pb-8 pt-2">{children}</div>
+
+            {/* Share */}
+            {shareUrl && (
+              <div className="mt-10 pt-8 border-t" style={{ borderColor: '#E2DACE' }}>
+                <SocialShare url={shareUrl} title={title} />
+              </div>
+            )}
 
             {/* Citation block */}
             <div className="mt-10 pt-8 border-t pb-20" style={{ borderColor: '#E2DACE' }}>

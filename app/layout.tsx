@@ -43,9 +43,19 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Austin W. Duncan',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Austin W. Duncan' }],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['/opengraph-image'],
+  },
+  alternates: {
+    types: {
+      'application/rss+xml': [
+        { url: '/word-for-word/feed', title: 'Word for Word RSS Feed' },
+        { url: '/sermons/feed', title: 'Sermons RSS Feed' },
+      ],
+    },
   },
 }
 

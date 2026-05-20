@@ -1,9 +1,24 @@
 import type { MetadataRoute } from 'next'
-import { getSlugs } from '@/lib/content'
+import { getAll } from '@/lib/content'
+
+interface HasDate { date: string }
 
 const BASE = 'https://austinwduncan.com'
 
+function toLastMod(dateStr?: string): Date {
+  if (!dateStr) return new Date()
+  const [y, m, d] = dateStr.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d))
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const wfw          = getAll<HasDate>('word-for-word')
+  const exegetica    = getAll<HasDate>('exegetica')
+  const sermons      = getAll<HasDate>('sermons')
+  const fap          = getAll<HasDate>('forum-and-pulpit')
+  const expositional = getAll<HasDate>('teaching/expositional')
+  const topical      = getAll<HasDate>('teaching/topical')
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE,                          priority: 1.0, changeFrequency: 'weekly'  },
     { url: `${BASE}/about`,               priority: 0.8, changeFrequency: 'monthly' },
@@ -21,33 +36,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   const dynamicRoutes: MetadataRoute.Sitemap = [
-    ...getSlugs('word-for-word').map((slug) => ({
+    ...wfw.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/word-for-word/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    ...getSlugs('exegetica').map((slug) => ({
+    ...exegetica.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/exegetica/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    ...getSlugs('sermons').map((slug) => ({
+    ...sermons.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/sermons/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    ...getSlugs('forum-and-pulpit').map((slug) => ({
+    ...fap.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/forum-and-pulpit/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    ...getSlugs('teaching/expositional').map((slug) => ({
+    ...expositional.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/teaching/expositional/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    ...getSlugs('teaching/topical').map((slug) => ({
+    ...topical.map(({ slug, frontmatter: fm }) => ({
       url: `${BASE}/teaching/topical/${slug}`,
+      lastModified: toLastMod(fm.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
