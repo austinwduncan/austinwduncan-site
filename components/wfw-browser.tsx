@@ -513,7 +513,7 @@ function StatItem({ value, label, suffix = '' }: { value: number; label: string;
   )
 }
 
-function StatsBar({ articleCount, newestDate }: { articleCount: number; newestDate: string }) {
+function StatsBar({ articleCount, avgReadMinutes }: { articleCount: number; avgReadMinutes: number }) {
   const [active, setActive] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -526,19 +526,12 @@ function StatsBar({ articleCount, newestDate }: { articleCount: number; newestDa
   }, [])
 
   const qCount = useCountUp(articleCount, active)
-
-  // Format "May 6, 2026" → "May '26"
-  const latestLabel = (() => {
-    if (!newestDate) return ''
-    const parts = newestDate.split(' ')
-    if (parts.length >= 3) return `${parts[0]} '${parts[2].slice(2)}`
-    return newestDate
-  })()
+  const rCount = useCountUp(avgReadMinutes, active, 900)
 
   return (
     <div ref={ref} style={{ background: '#ffffff', borderTop: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
       <div className="mx-auto max-w-[1200px] px-5 py-12">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x" style={{ '--tw-divide-color': '#e8e8e8' } as React.CSSProperties}>
+        <div className="grid grid-cols-3 gap-8 lg:gap-0 lg:divide-x" style={{ '--tw-divide-color': '#e8e8e8' } as React.CSSProperties}>
 
           <div className="flex flex-col items-center text-center lg:px-8">
             <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
@@ -555,15 +548,8 @@ function StatsBar({ articleCount, newestDate }: { articleCount: number; newestDa
           </div>
 
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
-              {latestLabel}
-            </div>
-            <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Latest Issue</div>
-          </div>
-
-          <div className="flex flex-col items-center text-center col-span-2 lg:col-span-1 lg:px-8">
             <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
-              ~5 min
+              ~{rCount} min
             </div>
             <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Avg. Read</div>
           </div>
@@ -577,7 +563,7 @@ function StatsBar({ articleCount, newestDate }: { articleCount: number; newestDa
 /* ══════════════════════════════════════════════════════════════
    MAIN COMPONENT
    ══════════════════════════════════════════════════════════════ */
-export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
+export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; avgReadMinutes: number }) {
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [dontMissTab, setDontMissTab] = useState<string | null>(null)
@@ -902,7 +888,7 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
       {!isFiltering && <BrowseStrip topics={topics} onSelect={handleTopicSelect} />}
 
       {/* ── SECTION C: Stats + All Questions list ───────────────────────── */}
-      {!isFiltering && <StatsBar articleCount={articles.length} newestDate={articles[0]?.formattedDate ?? ''} />}
+      {!isFiltering && <StatsBar articleCount={articles.length} avgReadMinutes={avgReadMinutes} />}
 
       <div style={{ background: '#ffffff' }}>
         <div className="mx-auto max-w-[1200px] px-5 pt-8 pb-16">

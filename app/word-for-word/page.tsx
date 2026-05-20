@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { getAll, sortByDate, formatDate, type ArticleFrontmatter } from '@/lib/content'
+import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
 import { WFWBrowser } from '@/components/wfw-browser'
 
 export const metadata: Metadata = {
@@ -19,6 +19,10 @@ export default function WordForWordPage() {
     tags: fm.tags ?? [],
     excerpt: fm.excerpt ?? '',
   }))
+
+  const avgReadMinutes = Math.round(
+    raw.reduce((sum, { content }) => sum + readingTime(content), 0) / Math.max(raw.length, 1)
+  )
 
   return (
     <>
@@ -72,7 +76,7 @@ export default function WordForWordPage() {
       />
 
       {/* ── Interactive browser (client) ───────────────────────────────────── */}
-      <WFWBrowser articles={articles} />
+      <WFWBrowser articles={articles} avgReadMinutes={avgReadMinutes} />
     </>
   )
 }
