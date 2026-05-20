@@ -71,11 +71,57 @@ export function formatDate(dateStr?: string): string {
 
 export type TeachingFrontmatter = {
   title: string
-  type: 'expositional' | 'topical'
+  date: string
   excerpt: string
-  parts?: number
-  status?: 'ongoing' | 'complete'
-  books?: string
+  tags?: string[]
+  image?: string
+}
+
+export function isPublished(dateStr?: string): boolean {
+  if (!dateStr) return true
+  return new Date(dateStr + 'T18:30:00') <= new Date()
+}
+
+export function getTeachingSlugs(type: 'expositional' | 'topical'): string[] {
+  const dir = path.join(CONTENT_DIR, 'teaching', type)
+  if (!fs.existsSync(dir)) return []
+  const slugs: string[] = []
+  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (item.isDirectory()) {
+      const sub = path.join(dir, item.name)
+      for (const f of fs.readdirSync(sub)) {
+        if (f.endsWith('.mdx')) slugs.push(f.replace(/\.mdx$/, ''))
+      }
+    } else if (item.isFile() && item.name.endsWith('.mdx')) {
+      slugs.push(item.name.replace(/\.mdx$/, ''))
+    }
+  }
+  return slugs
+}
+
+export function getTeachingBySlug<T = Record<string, unknown>>(
+  type: 'expositional' | 'topical',
+  slug: string
+): ContentFile<T> {
+  const dir = path.join(CONTENT_DIR, 'teaching', type)
+  let filePath = path.join(dir, `${slug}.mdx`)
+  if (!fs.existsSync(filePath)) {
+    for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (item.isDirectory()) {
+        const sub = path.join(dir, item.name, `${slug}.mdx`)
+        if (fs.existsSync(sub)) { filePath = sub; break }
+      }
+    }
+  }
+  const raw = fs.readFileSync(filePath, 'utf-8')
+  const { data, content } = matter(raw)
+  return { frontmatter: data as T, content, slug }
+}
+
+export function getAllTeaching<T = Record<string, unknown>>(
+  type: 'expositional' | 'topical'
+): ContentFile<T>[] {
+  return getTeachingSlugs(type).map((slug) => getTeachingBySlug<T>(type, slug))
 }
 
 export type ArticleFrontmatter = {

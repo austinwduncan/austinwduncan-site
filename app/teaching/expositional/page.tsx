@@ -1,14 +1,38 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getAll, type TeachingFrontmatter } from '@/lib/content'
+import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
+import { getAllTeaching, sortByDate, isPublished, type TeachingFrontmatter } from '@/lib/content'
+
+export const revalidate = 1800
 
 export const metadata: Metadata = {
   title: 'Expositional Teaching',
   description: 'Verse-by-verse book studies through the Bible.',
 }
 
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return ''
+  const [y, m, d] = dateStr.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  })
+}
+
 export default function ExpositionalPage() {
-  const series = getAll<TeachingFrontmatter>('teaching/expositional')
+  const all = sortByDate(
+    getAllTeaching<TeachingFrontmatter>('expositional').filter((a) => isPublished(a.frontmatter.date))
+  )
+
+  // Group by series (last tag)
+  const seriesMap = new Map<string, typeof all>()
+  for (const item of all) {
+    const series = item.frontmatter.tags?.[item.frontmatter.tags.length - 1] ?? 'Other'
+    if (!seriesMap.has(series)) seriesMap.set(series, [])
+    seriesMap.get(series)!.push(item)
+  }
+
+  const seriesList = [...seriesMap.entries()]
 
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
@@ -27,30 +51,42 @@ export default function ExpositionalPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {series.map(({ frontmatter: fm, slug }) => (
-          <Link
-            key={slug}
-            href={`/teaching/expositional/${slug}`}
-            className="group border border-zinc-100 p-7 hover:border-zinc-200 transition-colors"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span
-                className="text-[10px] font-semibold tracking-[0.14em] uppercase"
-                style={{ color: '#cdb079' }}
-              >
-                {fm.books ?? 'Book Study'}
-              </span>
-              <span className="text-[11px] text-zinc-400">
-                {fm.status === 'ongoing' ? 'Ongoing' : `${fm.parts} parts`}
-              </span>
+      <div className="space-y-14">
+        {seriesList.map(([seriesName, items]) => {
+          const cover = items.find((i) => i.frontmatter.image)?.frontmatter.image
+          return (
+            <div key={seriesName}>
+              <div className="flex items-center gap-3 mb-6 pb-3" style={{ borderBottom: '2px solid #cdb079' }}>
+                <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+                  {seriesName}
+                </span>
+                <span className="text-[11px] text-zinc-400">· {items.length} sessions</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+                {items.map(({ frontmatter: fm, slug }) => (
+                  <Link key={slug} href={`/teaching/expositional/${slug}`} className="group border-t border-zinc-200 pt-5">
+                    {fm.image && (
+                      <div className="mb-4 overflow-hidden bg-zinc-100 aspect-[16/9]">
+                        <Image
+                          src={fm.image}
+                          alt=""
+                          width={400}
+                          height={225}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <h3 className="text-[15px] font-semibold leading-snug text-zinc-900 group-hover:text-zinc-500 transition-colors mb-1.5">
+                      {fm.title}
+                    </h3>
+                    <p className="text-[12px] text-zinc-400">{formatDate(fm.date)}</p>
+                  </Link>
+                ))}
+              </div>
             </div>
-            <h2 className="text-base font-semibold leading-snug tracking-tight text-zinc-900 group-hover:text-zinc-500 transition-colors mb-2">
-              {fm.title}
-            </h2>
-            <p className="text-sm text-zinc-500 leading-relaxed line-clamp-3">{fm.excerpt}</p>
-          </Link>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

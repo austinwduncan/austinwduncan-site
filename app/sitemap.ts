@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getAll } from '@/lib/content'
+import { getAll, getAllTeaching } from '@/lib/content'
 
 interface HasDate { date: string }
 
@@ -16,8 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const exegetica    = getAll<HasDate>('exegetica')
   const sermons      = getAll<HasDate>('sermons')
   const fap          = getAll<HasDate>('forum-and-pulpit')
-  const expositional = getAll<HasDate>('teaching/expositional')
-  const topical      = getAll<HasDate>('teaching/topical')
+  const expositional = getAllTeaching<HasDate>('expositional')
+  const topical      = getAllTeaching<HasDate>('topical')
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE,                          priority: 1.0, changeFrequency: 'weekly'  },

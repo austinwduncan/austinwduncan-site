@@ -1,11 +1,39 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { getAll, type TeachingFrontmatter } from '@/lib/content'
+import { getAllTeaching, sortByDate, isPublished, type TeachingFrontmatter } from '@/lib/content'
+
+export const revalidate = 1800
 
 export const metadata: Metadata = {
   title: 'Teaching',
   description: 'Multi-part expositional and topical series.',
+}
+
+type SeriesEntry = {
+  name: string
+  count: number
+  image?: string
+  latestSlug: string
+}
+
+function buildSeries(
+  type: 'expositional' | 'topical'
+): SeriesEntry[] {
+  const all = sortByDate(
+    getAllTeaching<TeachingFrontmatter>(type).filter((a) => isPublished(a.frontmatter.date))
+  )
+  const map = new Map<string, { count: number; image?: string; latestSlug: string }>()
+  for (const { frontmatter: fm, slug } of all) {
+    const series = fm.tags?.[fm.tags.length - 1] ?? 'Other'
+    if (!map.has(series)) {
+      map.set(series, { count: 0, image: fm.image, latestSlug: slug })
+    }
+    map.get(series)!.count++
+    if (fm.image && !map.get(series)!.image) map.get(series)!.image = fm.image
+  }
+  return [...map.entries()].map(([name, v]) => ({ name, ...v }))
 }
 
 function SeriesList({
@@ -17,7 +45,8 @@ function SeriesList({
   label: string
   href: string
 }) {
-  const series = getAll<TeachingFrontmatter>(`teaching/${type}`)
+  const series = buildSeries(type)
+
   return (
     <div>
       <div
@@ -35,26 +64,36 @@ function SeriesList({
           All Series <ArrowRight size={10} />
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {series.map(({ frontmatter: fm, slug }) => (
-          <Link
-            key={slug}
-            href={`/teaching/${type}/${slug}`}
-            className="group border border-zinc-100 p-6 hover:border-zinc-200 transition-colors"
-          >
-            <span
-              className="text-[10px] font-semibold tracking-[0.14em] uppercase"
-              style={{ color: '#cdb079' }}
+
+      {series.length === 0 ? (
+        <p className="text-sm text-zinc-400">No published series yet.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {series.map(({ name, count, image, latestSlug }) => (
+            <Link
+              key={name}
+              href={href}
+              className="group border-t border-zinc-200 pt-5"
             >
-              {fm.status === 'ongoing' ? 'Ongoing' : `${fm.parts} parts`}
-            </span>
-            <h3 className="mt-2 text-base font-semibold leading-snug tracking-tight text-zinc-900 group-hover:text-zinc-500 transition-colors">
-              {fm.title}
-            </h3>
-            <p className="mt-2 text-sm text-zinc-500 leading-relaxed line-clamp-2">{fm.excerpt}</p>
-          </Link>
-        ))}
-      </div>
+              {image && (
+                <div className="mb-4 overflow-hidden bg-zinc-100 aspect-[16/9]">
+                  <Image
+                    src={image}
+                    alt=""
+                    width={400}
+                    height={225}
+                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                  />
+                </div>
+              )}
+              <h3 className="text-[15px] font-semibold leading-snug text-zinc-900 group-hover:text-zinc-500 transition-colors mb-1.5">
+                {name}
+              </h3>
+              <p className="text-[12px] text-zinc-400">{count} session{count !== 1 ? 's' : ''}</p>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
