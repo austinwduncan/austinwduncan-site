@@ -28,11 +28,52 @@ function getTag(a: WFWItem) {
   return TOPICS.find((t) => a.tags.includes(t.key)) ?? null
 }
 
-function ArticleCard({ article, sizes = '33vw', priority = false }: { article: WFWItem; sizes?: string; priority?: boolean }) {
+/* ── Section header: left amber border + uppercase label + rule ── */
+function SectionHeader({
+  title,
+  number,
+  action,
+}: {
+  title: string
+  number?: string
+  action?: React.ReactNode
+}) {
+  return (
+    <div className="flex items-center gap-4 mb-5">
+      <div style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem' }} className="flex items-center gap-2 shrink-0">
+        {number && (
+          <span className="text-[0.5rem] font-black tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>
+            {number}
+          </span>
+        )}
+        <h2 className="text-[0.74rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1a1a1a' }}>
+          {title}
+        </h2>
+      </div>
+      <div className="flex-1 h-px" style={{ background: '#e8e8e8' }} />
+      {action}
+    </div>
+  )
+}
+
+/* ── Category badge: amber bg, white text ── */
+function CategoryBadge({ label }: { label: string }) {
+  return (
+    <span
+      className="inline-block text-[0.52rem] font-black tracking-[0.1em] uppercase px-2 py-0.5"
+      style={{ background: '#B8892E', color: '#ffffff' }}
+    >
+      {label}
+    </span>
+  )
+}
+
+/* ── Standard article card (16:9 image, badge, headline, date) ── */
+function ArticleCard({ article, sizes = '25vw', priority = false }: { article: WFWItem; sizes?: string; priority?: boolean }) {
   const t = getTag(article)
   return (
     <Link href={`/word-for-word/${article.slug}`} className="group flex flex-col">
-      <div className="relative overflow-hidden mb-3.5" style={{ aspectRatio: '16/10' }}>
+      <div className="relative overflow-hidden mb-2.5" style={{ aspectRatio: '16/9' }}>
         {article.image ? (
           <Image
             src={article.image}
@@ -43,36 +84,47 @@ function ArticleCard({ article, sizes = '33vw', priority = false }: { article: W
             priority={priority}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center" style={{ background: '#1C1916' }}>
-            <span className="text-[0.58rem] font-medium tracking-[0.16em] uppercase" style={{ color: '#7A5C1E' }}>
+          <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
+            <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#B8892E' }}>
               Word for Word
             </span>
           </div>
         )}
+        {t && (
+          <div className="absolute top-0 left-0">
+            <CategoryBadge label={t.short} />
+          </div>
+        )}
       </div>
-      {t && (
-        <div className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-1.5" style={{ color: '#B8892E' }}>
-          {t.short}
-        </div>
-      )}
       <h3
-        className="leading-[1.28] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
-        style={{
-          fontFamily: 'var(--font-cormorant)',
-          fontSize: 'clamp(1rem, 1.4vw, 1.22rem)',
-          fontWeight: 500,
-          color: '#1A1714',
-        }}
+        className="leading-[1.28] mb-1.5 transition-colors group-hover:text-[#7A5C1E] line-clamp-2"
+        style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(0.95rem, 1.4vw, 1.15rem)', fontWeight: 700, color: '#1a1a1a' }}
       >
         {article.title}
       </h3>
+      <span className="text-[0.62rem]" style={{ color: '#888888' }}>{article.formattedDate}</span>
     </Link>
+  )
+}
+
+/* ── Sidebar widget header (same left-border style, smaller) ── */
+function WidgetHeader({ title }: { title: string }) {
+  return (
+    <div
+      className="flex items-center gap-3 mb-4 pb-2"
+      style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem', borderBottom: '1px solid #e8e8e8' }}
+    >
+      <h3 className="text-[0.68rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1a1a1a' }}>
+        {title}
+      </h3>
+    </div>
   )
 }
 
 export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [search, setSearch] = useState('')
+  const [dontMissTab, setDontMissTab] = useState<string | null>(null)
 
   const topics = useMemo(
     () =>
@@ -95,448 +147,378 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
   const isFiltering = !!search.trim() || !!activeKey
   const activeTopic = topics.find((t) => t.key === activeKey) ?? null
 
-  const featured = articles[0]
-  const secondary = articles.slice(1, 4)
+  const dontMissPool = useMemo(() => {
+    if (!dontMissTab) return articles.slice(4, 10)
+    return articles.filter((a) => a.tags.includes(dontMissTab)).slice(0, 6)
+  }, [articles, dontMissTab])
+
+  const hero = articles[0]
+  const recentGrid = articles.slice(1, 5)
+  const dontMissFeature = dontMissPool[0]
+  const dontMissList = dontMissPool.slice(1, 5)
 
   return (
     <>
-      {/* ── Trending Questions strip ─────────────────────────────────────── */}
-      <div style={{ background: '#0A0907', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
-          <div className="flex items-stretch gap-0" style={{ height: 44 }}>
+      {/* ── Trending ticker ─────────────────────────────────────────────── */}
+      <style>{`
+        @keyframes wfw-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .wfw-track {
+          display: flex;
+          width: max-content;
+          animation: wfw-scroll 80s linear infinite;
+        }
+        .wfw-track:hover { animation-play-state: paused; }
+      `}</style>
 
-            {/* Label */}
+      <div style={{ background: '#111111', borderBottom: '2px solid #B8892E' }}>
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="flex items-stretch" style={{ height: 40 }}>
             <div
-              className="shrink-0 flex items-center gap-2 pr-5 mr-5 border-r"
-              style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+              className="shrink-0 flex items-center gap-2 pr-4 mr-4 border-r"
+              style={{ borderColor: 'rgba(184,137,46,0.35)' }}
             >
-              <span className="inline-block w-2 h-2 rounded-full" style={{ background: '#B8892E' }} />
-              <span className="text-[0.52rem] font-bold tracking-[0.24em] uppercase" style={{ color: '#B8892E' }}>
-                Trending
+              <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#B8892E' }} />
+              <span className="text-[0.52rem] font-black tracking-[0.24em] uppercase whitespace-nowrap" style={{ color: '#B8892E' }}>
+                Trending Now
               </span>
             </div>
-
-            {/* Scrollable list */}
-            <div
-              className="flex items-center gap-5 overflow-x-auto flex-1"
-              style={{ scrollbarWidth: 'none' }}
-            >
-              {articles.slice(0, 14).map((a, i) => (
-                <Link
-                  key={a.slug}
-                  href={`/word-for-word/${a.slug}`}
-                  className="shrink-0 flex items-center gap-2 transition-opacity hover:opacity-100"
-                  style={{ opacity: 0.5 }}
-                >
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '0.8rem',
-                      fontStyle: 'italic',
-                      color: '#C9984A',
-                    }}
+            <div className="flex-1 overflow-hidden flex items-center">
+              <div className="wfw-track">
+                {[...articles.slice(0, 16), ...articles.slice(0, 16)].map((a, i) => (
+                  <Link
+                    key={`${a.slug}-${i}`}
+                    href={`/word-for-word/${a.slug}`}
+                    className="flex items-center gap-0 shrink-0 group"
                   >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span
-                    className="text-[0.62rem] font-medium whitespace-nowrap"
-                    style={{ color: 'rgba(249,246,240,0.68)' }}
-                  >
-                    {a.title}
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      {/* ── Hero Grid ───────────────────────────────────────────────────── */}
-      {!isFiltering && featured && (
-        <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
-          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-14">
-
-            {/* Dateline */}
-            <div className="flex items-center gap-4 mb-10">
-              <span className="text-[0.55rem] font-bold tracking-[0.22em] uppercase" style={{ color: '#B8892E' }}>
-                Latest Questions
-              </span>
-              <div className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
-              <span className="text-[0.55rem] font-medium tracking-[0.1em] uppercase" style={{ color: '#B0A898' }}>
-                {articles.length} answered
-              </span>
-            </div>
-
-            <div className="grid lg:grid-cols-[1fr_300px] gap-10 lg:gap-12">
-
-              {/* Featured article */}
-              <Link href={`/word-for-word/${featured.slug}`} className="group">
-                <div className="relative w-full overflow-hidden mb-6" style={{ aspectRatio: '16/9' }}>
-                  {featured.image ? (
-                    <Image
-                      src={featured.image}
-                      alt=""
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      sizes="(min-width: 1024px) 58vw, 100vw"
-                      priority
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ background: '#1C1916' }}>
-                      <span className="text-[0.72rem] font-medium tracking-[0.2em] uppercase" style={{ color: '#7A5C1E' }}>
-                        Word for Word
-                      </span>
-                    </div>
-                  )}
-                </div>
-                {getTag(featured) && (
-                  <div className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-3" style={{ color: '#B8892E' }}>
-                    {getTag(featured)!.label}
-                  </div>
-                )}
-                <h2
-                  className="leading-[1.1] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.9rem, 3.5vw, 2.8rem)',
-                    fontWeight: 500,
-                    color: '#1A1714',
-                  }}
-                >
-                  {featured.title}
-                </h2>
-                {featured.excerpt && (
-                  <p
-                    className="text-[0.9rem] leading-[1.8] mb-5"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C', maxWidth: 520 }}
-                  >
-                    {featured.excerpt.length > 220 ? featured.excerpt.slice(0, 217) + '…' : featured.excerpt}
-                  </p>
-                )}
-                <span
-                  className="inline-flex items-center gap-1.5 text-[0.72rem] tracking-[0.06em] pb-px border-b transition-colors group-hover:text-[#7A5C1E] group-hover:border-[#7A5C1E]"
-                  style={{ color: '#9A9189', borderColor: '#E2DACE' }}
-                >
-                  Read answer
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </Link>
-
-              {/* Secondary 3 */}
-              <div className="flex flex-col lg:pl-10 lg:border-l space-y-0" style={{ borderColor: '#E2DACE' }}>
-                {secondary.map((article, i) => (
-                  <div key={article.slug}>
-                    {i > 0 && <div className="border-t my-5" style={{ borderColor: '#E2DACE' }} />}
-                    <Link href={`/word-for-word/${article.slug}`} className="group flex gap-4">
-                      {article.image && (
-                        <div className="relative shrink-0 overflow-hidden" style={{ width: 76, height: 56 }}>
-                          <Image src={article.image} alt="" fill className="object-cover" sizes="76px" />
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        {getTag(article) && (
-                          <div className="text-[0.56rem] font-medium tracking-[0.12em] uppercase mb-1" style={{ color: '#B8892E' }}>
-                            {getTag(article)!.short}
-                          </div>
-                        )}
-                        <h3
-                          className="leading-[1.28] tracking-tight transition-colors group-hover:text-[#7A5C1E] line-clamp-3"
-                          style={{
-                            fontFamily: 'var(--font-cormorant)',
-                            fontSize: 'clamp(0.95rem, 1.4vw, 1.12rem)',
-                            fontWeight: 500,
-                            color: '#1A1714',
-                          }}
-                        >
-                          {article.title}
-                        </h3>
-                      </div>
-                    </Link>
-                  </div>
+                    <span
+                      className="text-[0.6rem] font-medium whitespace-nowrap transition-colors group-hover:text-[#B8892E] px-4"
+                      style={{ color: 'rgba(255,255,255,0.55)' }}
+                    >
+                      {a.title}
+                    </span>
+                    <span className="text-[0.55rem] shrink-0" style={{ color: 'rgba(184,137,46,0.4)' }}>/</span>
+                  </Link>
                 ))}
               </div>
-
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Topic Explorer ──────────────────────────────────────────────── */}
-      <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-10 lg:py-12">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-[0.55rem] font-bold tracking-[0.22em] uppercase" style={{ color: '#7A5C1E' }}>
-              Explore by Topic
-            </span>
-            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
-            {isFiltering && (
-              <button
-                onClick={() => { setSearch(''); setActiveKey(null) }}
-                className="text-[0.6rem] tracking-[0.06em] transition-colors hover:text-white"
-                style={{ color: 'rgba(255,255,255,0.35)' }}
-              >
-                Clear ×
-              </button>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-            {topics.map((t) => {
-              const active = activeKey === t.key
-              return (
-                <button
-                  key={t.key}
-                  onClick={() => { setActiveKey(active ? null : t.key); setSearch('') }}
-                  className="text-left p-4 border transition-all duration-200"
-                  style={{
-                    background: active ? 'rgba(122,92,30,0.18)' : 'rgba(255,255,255,0.025)',
-                    borderColor: active ? '#7A5C1E' : 'rgba(255,255,255,0.07)',
-                  }}
-                >
-                  <div
-                    className="text-[0.54rem] font-bold tracking-[0.18em] uppercase mb-2"
-                    style={{ color: active ? '#C9984A' : '#4A4540' }}
-                  >
-                    {t.n}
-                  </div>
-                  <div
-                    className="leading-tight mb-1.5"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '1.05rem',
-                      fontWeight: 500,
-                      color: active ? '#F9F6F0' : 'rgba(249,246,240,0.52)',
-                    }}
-                  >
-                    {t.label}
-                  </div>
-                  <div
-                    className="text-[0.56rem] font-medium"
-                    style={{ color: active ? '#B8892E' : 'rgba(255,255,255,0.2)' }}
-                  >
-                    {t.articles.length} question{t.articles.length !== 1 ? 's' : ''}
-                  </div>
-                </button>
-              )
-            })}
           </div>
         </div>
       </div>
 
-      {/* ── Search strip ────────────────────────────────────────────────── */}
-      <div style={{ background: '#F0EDE6', borderBottom: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-3.5">
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1 max-w-[380px]">
-              <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-                width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9A9189" strokeWidth="2"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="M21 21l-4.35-4.35" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search questions…"
-                value={search}
-                onChange={(e) => { setSearch(e.target.value); setActiveKey(null) }}
-                className="w-full pl-9 pr-4 py-2 text-[0.85rem] border outline-none transition-colors"
-                style={{
-                  fontFamily: 'var(--font-source-serif)',
-                  background: '#FAFAF7',
-                  borderColor: '#D8D0C4',
-                  color: '#1A1714',
-                }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = '#B8892E')}
-                onBlur={(e) => (e.currentTarget.style.borderColor = '#D8D0C4')}
-              />
-            </div>
-            <p className="text-[0.62rem] font-medium tracking-[0.1em] uppercase shrink-0" style={{ color: '#9A9189' }}>
-              {isFiltering
-                ? `${filtered.length} result${filtered.length !== 1 ? 's' : ''}`
-                : `${articles.length} questions`}
-            </p>
-            {isFiltering && (
-              <button
-                onClick={() => { setSearch(''); setActiveKey(null) }}
-                className="text-[0.62rem] tracking-[0.06em] transition-colors hover:text-[#B8892E] shrink-0"
-                style={{ color: '#B0A898' }}
-              >
-                Clear ×
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+      {/* ── Main layout: content + sidebar ─────────────────────────────── */}
+      <div style={{ background: '#ffffff' }}>
+        <div className="mx-auto max-w-[1200px] px-5 pt-7 pb-16">
+          <div className="flex gap-8 items-start">
 
-      {/* ── Main content ────────────────────────────────────────────────── */}
-      <div style={{ background: '#FAFAF7' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-12 pb-20">
+            {/* ── Main content column ─────────────────────────────────── */}
+            <div className="flex-1 min-w-0">
 
-          {isFiltering ? (
-
-            /* ── Filtered results ───────────────────────────────────── */
-            <>
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-[0.6rem] font-medium tracking-[0.12em] uppercase" style={{ color: '#9A9189' }}>
-                  {activeTopic ? activeTopic.label : `"${search.trim()}"`}
-                </span>
-                <div className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-                <span className="text-[0.6rem] font-medium" style={{ color: '#B0A898' }}>
-                  {filtered.length} question{filtered.length !== 1 ? 's' : ''}
-                </span>
-              </div>
-
-              {filtered.length > 0 ? (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-                  {filtered.map((a) => (
-                    <ArticleCard
-                      key={a.slug}
-                      article={a}
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="py-24 text-center">
-                  <p className="text-[0.95rem] italic mb-3" style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}>
-                    No questions found.
+              {isFiltering ? (
+                /* ── Filtered results view ──────────────────────────── */
+                <>
+                  <SectionHeader
+                    title={activeTopic ? activeTopic.label : `Results: "${search.trim()}"`}
+                    action={
+                      <button
+                        onClick={() => { setSearch(''); setActiveKey(null) }}
+                        className="shrink-0 text-[0.62rem] font-medium transition-colors hover:text-[#7A5C1E]"
+                        style={{ color: '#888888' }}
+                      >
+                        Clear ×
+                      </button>
+                    }
+                  />
+                  <p className="text-[0.65rem] mb-6 -mt-1" style={{ color: '#888888' }}>
+                    {filtered.length} question{filtered.length !== 1 ? 's' : ''}
                   </p>
-                  <button
-                    onClick={() => { setSearch(''); setActiveKey(null) }}
-                    className="text-[0.72rem] tracking-[0.06em] transition-colors hover:text-[#B8892E]"
-                    style={{ color: '#B0A898' }}
-                  >
-                    Clear filters
-                  </button>
-                </div>
-              )}
-            </>
+                  {filtered.length > 0 ? (
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {filtered.map((a) => (
+                        <ArticleCard
+                          key={a.slug}
+                          article={a}
+                          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="py-20 text-center">
+                      <p className="text-[0.9rem] italic mb-3" style={{ fontFamily: 'var(--font-source-serif)', color: '#888888' }}>
+                        No questions found.
+                      </p>
+                      <button
+                        onClick={() => { setSearch(''); setActiveKey(null) }}
+                        className="text-[0.72rem] transition-colors hover:text-[#7A5C1E]"
+                        style={{ color: '#888888' }}
+                      >
+                        Clear filters
+                      </button>
+                    </div>
+                  )}
+                </>
 
-          ) : (
+              ) : (
+                /* ── Default editorial view ─────────────────────────── */
+                <>
 
-            /* ── Default view: topic sections + full index ─────────── */
-            <>
+                  {/* ── Hero article ──────────────────────────────────── */}
+                  {hero && (
+                    <div className="mb-6 pb-6 border-b" style={{ borderColor: '#e8e8e8' }}>
+                      <Link href={`/word-for-word/${hero.slug}`} className="group block">
+                        <div className="relative w-full overflow-hidden mb-4" style={{ aspectRatio: '16/9' }}>
+                          {hero.image ? (
+                            <Image
+                              src={hero.image}
+                              alt=""
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                              sizes="(min-width: 1200px) 820px, 70vw"
+                              priority
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
+                              <span style={{ color: '#B8892E', fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700 }}>
+                                Word for Word
+                              </span>
+                            </div>
+                          )}
+                          {getTag(hero) && (
+                            <div className="absolute top-0 left-0">
+                              <CategoryBadge label={getTag(hero)!.short} />
+                            </div>
+                          )}
+                        </div>
+                        <h2
+                          className="leading-[1.1] mb-3 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: 'clamp(2rem, 3.2vw, 2.75rem)',
+                            fontWeight: 700,
+                            color: '#1a1a1a',
+                          }}
+                        >
+                          {hero.title}
+                        </h2>
+                        {hero.excerpt && (
+                          <p
+                            className="text-[0.9rem] leading-[1.65] mb-2"
+                            style={{ fontFamily: 'var(--font-source-serif)', color: '#555555', maxWidth: 580 }}
+                          >
+                            {hero.excerpt.length > 240 ? hero.excerpt.slice(0, 237) + '…' : hero.excerpt}
+                          </p>
+                        )}
+                        <span className="text-[0.65rem]" style={{ color: '#888888' }}>{hero.formattedDate}</span>
+                      </Link>
+                    </div>
+                  )}
 
-              {/* Per-topic article blocks */}
-              {topics.map((t, ti) => (
-                <div
-                  key={t.key}
-                  className={ti > 0 ? 'mt-14 pt-12 border-t' : ''}
-                  style={{ borderColor: '#E2DACE' }}
-                >
-                  {/* Section header */}
-                  <div className="flex items-center gap-4 mb-8">
-                    <span
-                      className="shrink-0 text-[0.52rem] font-bold tracking-[0.2em] uppercase px-2.5 py-1"
-                      style={{ background: '#141210', color: '#C9984A' }}
-                    >
-                      {t.n}
-                    </span>
-                    <h2
-                      className="leading-tight tracking-tight"
-                      style={{
-                        fontFamily: 'var(--font-cormorant)',
-                        fontSize: 'clamp(1.25rem, 2vw, 1.55rem)',
-                        fontWeight: 500,
-                        color: '#1A1714',
-                      }}
-                    >
-                      {t.label}
-                    </h2>
-                    <div className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-                    <button
-                      onClick={() => setActiveKey(t.key)}
-                      className="shrink-0 text-[0.58rem] font-medium tracking-[0.1em] transition-colors hover:text-[#7A5C1E]"
-                      style={{ color: '#B0A898' }}
-                    >
-                      All {t.articles.length} →
-                    </button>
-                  </div>
+                  {/* ── 4-up recent grid ──────────────────────────────── */}
+                  {recentGrid.length > 0 && (
+                    <div className="mb-7 pb-7 border-b" style={{ borderColor: '#e8e8e8' }}>
+                      <SectionHeader title="This Week" />
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {recentGrid.map((a) => (
+                          <ArticleCard
+                            key={a.slug}
+                            article={a}
+                            sizes="(min-width: 1200px) 185px, (min-width: 640px) 30vw, 100vw"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-                  <div
-                    className={`grid gap-8 ${
-                      t.articles.length === 1
-                        ? ''
-                        : t.articles.length === 2
-                        ? 'sm:grid-cols-2'
-                        : 'sm:grid-cols-2 lg:grid-cols-3'
-                    }`}
-                  >
-                    {t.articles.slice(0, 3).map((a) => (
-                      <ArticleCard
-                        key={a.slug}
-                        article={a}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
+                  {/* ── Don't Miss (tabbed) ───────────────────────────── */}
+                  <div className="mb-7 pb-7 border-b" style={{ borderColor: '#e8e8e8' }}>
+                    <SectionHeader title="Don't Miss" />
 
-              {/* All questions index + sidebar */}
-              <div className="mt-14 pt-12 border-t" style={{ borderColor: '#E2DACE' }}>
-                <div className="flex gap-10 xl:gap-14 items-start">
-
-                  {/* Numbered question list */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-4 mb-8">
-                      <span className="text-[0.55rem] font-bold tracking-[0.22em] uppercase" style={{ color: '#B8892E' }}>
-                        All Questions
-                      </span>
-                      <div className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-                      <span className="text-[0.55rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#B0A898' }}>
-                        {articles.length} total
-                      </span>
+                    {/* Category tab row */}
+                    <div className="flex items-end gap-0 mb-6 border-b" style={{ borderColor: '#e8e8e8' }}>
+                      {[{ key: null, label: 'All' }, ...topics.slice(0, 5).map((t) => ({ key: t.key, label: t.short }))].map(
+                        ({ key, label }) => (
+                          <button
+                            key={String(key)}
+                            onClick={() => setDontMissTab(key)}
+                            className="px-3.5 py-2 text-[0.64rem] font-black tracking-[0.08em] uppercase border-b-2 -mb-px transition-all whitespace-nowrap"
+                            style={{
+                              borderColor: dontMissTab === key ? '#B8892E' : 'transparent',
+                              color: dontMissTab === key ? '#B8892E' : '#888888',
+                            }}
+                          >
+                            {label}
+                          </button>
+                        ),
+                      )}
                     </div>
 
+                    {/* 1 large + 4 stacked */}
+                    {dontMissFeature && (
+                      <div className="grid lg:grid-cols-2 gap-0">
+                        {/* Large feature left */}
+                        <Link href={`/word-for-word/${dontMissFeature.slug}`} className="group pr-6">
+                          <div className="relative overflow-hidden mb-3.5" style={{ aspectRatio: '3/2' }}>
+                            {dontMissFeature.image ? (
+                              <Image
+                                src={dontMissFeature.image}
+                                alt=""
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                                sizes="(min-width: 1200px) 380px, 40vw"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
+                                <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#B8892E' }}>
+                                  Word for Word
+                                </span>
+                              </div>
+                            )}
+                            {getTag(dontMissFeature) && (
+                              <div className="absolute top-0 left-0">
+                                <CategoryBadge label={getTag(dontMissFeature)!.short} />
+                              </div>
+                            )}
+                          </div>
+                          <h3
+                            className="leading-[1.2] mb-2.5 transition-colors group-hover:text-[#7A5C1E]"
+                            style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.3rem, 2vw, 1.65rem)', fontWeight: 700, color: '#1a1a1a' }}
+                          >
+                            {dontMissFeature.title}
+                          </h3>
+                          {dontMissFeature.excerpt && (
+                            <p
+                              className="text-[0.84rem] leading-[1.65] line-clamp-3 mb-1.5"
+                              style={{ fontFamily: 'var(--font-source-serif)', color: '#555555' }}
+                            >
+                              {dontMissFeature.excerpt}
+                            </p>
+                          )}
+                          <span className="text-[0.62rem]" style={{ color: '#888888' }}>{dontMissFeature.formattedDate}</span>
+                        </Link>
+
+                        {/* 4 stacked small right */}
+                        <div className="pl-6 flex flex-col justify-between">
+                          {dontMissList.map((a, i) => (
+                            <div key={a.slug}>
+                              {i > 0 && <div className="border-t my-3" style={{ borderColor: '#e8e8e8' }} />}
+                              <Link href={`/word-for-word/${a.slug}`} className="group flex gap-3">
+                                {a.image && (
+                                  <div className="relative shrink-0 overflow-hidden" style={{ width: 72, height: 52 }}>
+                                    <Image src={a.image} alt="" fill className="object-cover" sizes="72px" />
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  {getTag(a) && (
+                                    <div className="mb-1">
+                                      <CategoryBadge label={getTag(a)!.short} />
+                                    </div>
+                                  )}
+                                  <h4
+                                    className="leading-[1.3] line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
+                                    style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.98rem', fontWeight: 700, color: '#1a1a1a' }}
+                                  >
+                                    {a.title}
+                                  </h4>
+                                  <span className="text-[0.6rem]" style={{ color: '#888888' }}>{a.formattedDate}</span>
+                                </div>
+                              </Link>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ── Per-topic sections ────────────────────────────── */}
+                  {topics.map((t) => (
+                    <div key={t.key} className="mb-7 pb-7 border-b" style={{ borderColor: '#e8e8e8' }}>
+                      <SectionHeader
+                        title={t.label}
+                        number={t.n}
+                        action={
+                          <button
+                            onClick={() => setActiveKey(t.key)}
+                            className="shrink-0 text-[0.6rem] font-bold tracking-[0.06em] transition-colors hover:text-[#7A5C1E]"
+                            style={{ color: '#888888' }}
+                          >
+                            All {t.articles.length} →
+                          </button>
+                        }
+                      />
+                      <div
+                        className={`grid gap-5 ${
+                          t.articles.length >= 3
+                            ? 'sm:grid-cols-2 lg:grid-cols-3'
+                            : t.articles.length === 2
+                            ? 'sm:grid-cols-2'
+                            : ''
+                        }`}
+                      >
+                        {t.articles.slice(0, 3).map((a) => (
+                          <ArticleCard
+                            key={a.slug}
+                            article={a}
+                            sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* ── All Questions numbered list ───────────────────── */}
+                  <div>
+                    <SectionHeader
+                      title="All Questions"
+                      action={
+                        <span className="shrink-0 text-[0.6rem] font-medium" style={{ color: '#888888' }}>
+                          {articles.length} answered
+                        </span>
+                      }
+                    />
                     <div>
                       {articles.map((a, i) => {
                         const t = getTag(a)
                         return (
                           <div key={a.slug}>
-                            <Link href={`/word-for-word/${a.slug}`} className="group flex items-start gap-5 py-4">
+                            <Link href={`/word-for-word/${a.slug}`} className="group flex items-start gap-4 py-3">
                               <span
-                                className="shrink-0 pt-px"
+                                className="shrink-0"
                                 style={{
                                   fontFamily: 'var(--font-cormorant)',
-                                  fontSize: '1rem',
+                                  fontSize: '0.92rem',
                                   fontStyle: 'italic',
                                   color: '#C9984A',
-                                  width: 28,
-                                  lineHeight: 1.5,
+                                  width: 26,
+                                  lineHeight: 1.6,
+                                  flexShrink: 0,
                                 }}
                               >
                                 {String(i + 1).padStart(2, '0')}
                               </span>
-                              <div className="flex-1 min-w-0">
+                              <div className="flex-1 min-w-0 flex flex-wrap items-start gap-x-2 gap-y-1">
                                 {t && (
                                   <span
-                                    className="text-[0.54rem] font-medium tracking-[0.12em] uppercase mr-2"
-                                    style={{ color: '#B8892E' }}
+                                    className="shrink-0 text-[0.5rem] font-black tracking-[0.1em] uppercase px-1.5 py-0.5"
+                                    style={{ background: '#f7f7f7', color: '#B8892E', border: '1px solid #e8e8e8', marginTop: 2 }}
                                   >
-                                    {t.short} ·{' '}
+                                    {t.short}
                                   </span>
                                 )}
                                 <span
-                                  className="text-[0.97rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                                  style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#1A1714' }}
+                                  className="text-[0.93rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                                  style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 700, color: '#1a1a1a' }}
                                 >
                                   {a.title}
                                 </span>
                               </div>
-                              <span
-                                className="shrink-0 text-[0.6rem] pt-1 hidden sm:block"
-                                style={{ color: '#B0A898' }}
-                              >
+                              <span className="shrink-0 text-[0.6rem] pt-1 hidden md:block" style={{ color: '#888888' }}>
                                 {a.formattedDate}
                               </span>
                             </Link>
                             {i < articles.length - 1 && (
-                              <div className="h-px" style={{ background: '#EDEAE1' }} />
+                              <div className="h-px" style={{ background: '#f3f3f3' }} />
                             )}
                           </div>
                         )
@@ -544,56 +526,146 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
                     </div>
                   </div>
 
-                  {/* Sidebar */}
-                  <aside className="hidden lg:block shrink-0 sticky top-8" style={{ width: 220 }}>
+                </>
+              )}
 
-                    <div
-                      className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-4 pb-2 border-b"
-                      style={{ color: '#B8892E', borderColor: '#E2DACE' }}
-                    >
-                      Browse by Topic
-                    </div>
-                    <div className="space-y-3 mb-8">
-                      {topics.map((t) => (
-                        <button
-                          key={t.key}
-                          onClick={() => setActiveKey(t.key)}
-                          className="w-full flex items-baseline justify-between gap-3 text-left group"
+            </div>
+
+            {/* ── Sidebar (280px, sticky) ──────────────────────────────── */}
+            <aside
+              className="hidden lg:flex flex-col gap-7 shrink-0 sticky top-7"
+              style={{ width: 280, maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }}
+            >
+
+              {/* Search */}
+              <div>
+                <WidgetHeader title="Search" />
+                <div className="relative">
+                  <svg
+                    className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2"
+                  >
+                    <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search questions…"
+                    value={search}
+                    onChange={(e) => { setSearch(e.target.value); setActiveKey(null) }}
+                    className="w-full pl-8 pr-3 py-2 text-[0.82rem] border outline-none transition-colors"
+                    style={{ background: '#f7f7f7', borderColor: '#e8e8e8', color: '#1a1a1a' }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = '#B8892E')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = '#e8e8e8')}
+                  />
+                </div>
+                {(search || activeKey) && (
+                  <button
+                    onClick={() => { setSearch(''); setActiveKey(null) }}
+                    className="mt-2 text-[0.6rem] transition-colors hover:text-[#7A5C1E]"
+                    style={{ color: '#888888' }}
+                  >
+                    Clear filters ×
+                  </button>
+                )}
+              </div>
+
+              {/* Popular Posts */}
+              <div>
+                <WidgetHeader title="Popular Posts" />
+                <div className="flex flex-col gap-0">
+                  {articles.slice(0, 5).map((a, i) => (
+                    <div key={a.slug}>
+                      {i > 0 && <div className="border-t my-3" style={{ borderColor: '#e8e8e8' }} />}
+                      <Link href={`/word-for-word/${a.slug}`} className="group flex gap-3 items-start">
+                        <span
+                          className="shrink-0"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: '0.95rem',
+                            fontStyle: 'italic',
+                            color: '#C9984A',
+                            width: 22,
+                            lineHeight: 1.4,
+                            fontWeight: 700,
+                          }}
                         >
-                          <span
-                            className="text-[0.75rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                            style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#3A3530' }}
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          {getTag(a) && (
+                            <div className="mb-1">
+                              <span
+                                className="text-[0.5rem] font-black tracking-[0.1em] uppercase"
+                                style={{ color: '#B8892E' }}
+                              >
+                                {getTag(a)!.short}
+                              </span>
+                            </div>
+                          )}
+                          <h4
+                            className="text-[0.82rem] leading-[1.35] line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
+                            style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 700, color: '#1a1a1a' }}
                           >
-                            {t.label}
-                          </span>
-                          <span className="shrink-0 text-[0.58rem] font-medium" style={{ color: '#B0A898' }}>
-                            {t.articles.length}
-                          </span>
-                        </button>
-                      ))}
+                            {a.title}
+                          </h4>
+                          <span className="text-[0.58rem]" style={{ color: '#888888' }}>{a.formattedDate}</span>
+                        </div>
+                      </Link>
                     </div>
-
-                    <div
-                      className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
-                      style={{ color: '#B8892E', borderColor: '#E2DACE' }}
-                    >
-                      About This Series
-                    </div>
-                    <p
-                      className="text-[0.77rem] leading-[1.72] italic"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}
-                    >
-                      Word for Word answers the hardest questions about the Christian faith — from the text of Scripture, with clarity and care.
-                    </p>
-
-                  </aside>
-
+                  ))}
                 </div>
               </div>
 
-            </>
-          )}
+              {/* Categories */}
+              <div>
+                <WidgetHeader title="Categories" />
+                <div className="flex flex-col gap-0">
+                  {topics.map((t, i) => (
+                    <div key={t.key}>
+                      {i > 0 && <div className="h-px" style={{ background: '#f3f3f3' }} />}
+                      <button
+                        onClick={() => { setActiveKey(activeKey === t.key ? null : t.key); setSearch('') }}
+                        className="w-full flex items-center justify-between gap-3 py-2.5 text-left group"
+                      >
+                        <span
+                          className="text-[0.8rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontWeight: activeKey === t.key ? 700 : 500,
+                            color: activeKey === t.key ? '#7A5C1E' : '#1a1a1a',
+                          }}
+                        >
+                          {t.label}
+                        </span>
+                        <span
+                          className="shrink-0 text-[0.6rem] font-black min-w-[26px] text-center py-0.5 px-1.5"
+                          style={{
+                            background: activeKey === t.key ? '#B8892E' : '#f7f7f7',
+                            color: activeKey === t.key ? '#ffffff' : '#888888',
+                          }}
+                        >
+                          {t.articles.length}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
+              {/* About */}
+              <div>
+                <WidgetHeader title="About" />
+                <p
+                  className="text-[0.8rem] leading-[1.7]"
+                  style={{ fontFamily: 'var(--font-source-serif)', color: '#555555' }}
+                >
+                  Word for Word answers the hardest questions about the Christian faith — directly from Scripture, with clarity and care. Published weekly.
+                </p>
+              </div>
+
+            </aside>
+
+          </div>
         </div>
       </div>
     </>
