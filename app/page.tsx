@@ -1,20 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, HelpCircle, GraduationCap, Globe, Library } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import {
   getAll,
   getAllTeaching,
   sortByDate,
   isPublished,
-  primaryBookFromScripture,
   type SermonFrontmatter,
   type ArticleFrontmatter,
   type TeachingFrontmatter,
 } from '@/lib/content'
 import { FPTicker, type TickerItem } from '@/components/fp-ticker'
-import Greeting from '@/components/greeting'
 import TeachingSeriesPicker, { type SeriesItem } from '@/components/teaching-series-picker'
 import BookCovers from '@/components/book-covers'
+import HeroPathCard from '@/components/hero-path-card'
 import rawBooks from '@/data/books.json'
 
 export const revalidate = 1800
@@ -44,46 +43,6 @@ function clean(text?: string): string {
     .replace(/\\([_*[\]])/g, '$1')
     .trim()
 }
-
-// ─── Static path options ──────────────────────────────────────────────────────
-
-const PATH_OPTIONS = [
-  {
-    Icon: BookOpen,
-    title: 'Understand the Bible',
-    description: 'Weekly sermons and verse-by-verse exposition through Scripture.',
-    href: '/sermons',
-    label: 'Sermons',
-  },
-  {
-    Icon: HelpCircle,
-    title: 'Find answers to hard questions',
-    description: 'Clear, grounded responses to common questions about the Christian faith.',
-    href: '/word-for-word',
-    label: 'Word for Word',
-  },
-  {
-    Icon: GraduationCap,
-    title: 'Study the text deeply',
-    description: 'Scholarly exegesis with attention to the Greek text, grammar, and argument.',
-    href: '/exegetica',
-    label: 'Exegetica',
-  },
-  {
-    Icon: Globe,
-    title: 'Think biblically about the world',
-    description: 'Christian witness and cultural commentary from a Reformed perspective.',
-    href: '/forum-and-pulpit',
-    label: 'Forum & Pulpit',
-  },
-  {
-    Icon: Library,
-    title: 'Find books worth reading',
-    description: 'Curated reading for Bible study, theology, ministry, and formation.',
-    href: '/library',
-    label: 'Library',
-  },
-] as const
 
 type BookPreview = { title: string; author: string; coverImageUrl?: string; recommendationLevel?: string; featured?: boolean }
 
@@ -139,30 +98,41 @@ export default function HomePage() {
     if (t[i]) tickerRaw.push(t[i])
   }
 
-  // ── Hero ───────────────────────────────────────────────────────────────────
+  // ── Latest sermon ──────────────────────────────────────────────────────────
   const heroSermon = allSermons[0] ?? null
-  const sidePicks = [
-    allWfw[0] && { section: 'Word for Word', href: `/word-for-word/${allWfw[0].slug}`, title: allWfw[0].frontmatter.title, date: fmt(allWfw[0].frontmatter.date) },
-    allForum[0] && { section: 'Forum & Pulpit', href: `/forum-and-pulpit/${allForum[0].slug}`, title: allForum[0].frontmatter.title, date: fmt(allForum[0].frontmatter.date) },
-    allExegetica[0] && { section: 'Exegetica', href: `/exegetica/${allExegetica[0].slug}`, title: allExegetica[0].frontmatter.title, date: fmt(allExegetica[0].frontmatter.date) },
-  ].filter(Boolean) as { section: string; href: string; title: string; date: string }[]
 
-  // ── Recently published: 6 most recent across all sections ──────────────────
-  type AnyCard = { category: string; title: string; href: string; date: string; sortDate: string; image?: string }
-  const allMixed: AnyCard[] = [
-    ...allSermons.map(a => ({ category: primaryBookFromScripture(a.frontmatter.scripture) ?? 'Sermon', title: a.frontmatter.title, href: `/sermons/${a.slug}`, date: fmt(a.frontmatter.date), sortDate: a.frontmatter.date, image: a.frontmatter.image || undefined, _section: 'Sermons' as string })),
-    ...allWfw.map(a => ({ category: a.frontmatter.tags?.[0] ?? 'Word for Word', title: a.frontmatter.title, href: `/word-for-word/${a.slug}`, date: fmt(a.frontmatter.date), sortDate: a.frontmatter.date, image: a.frontmatter.image || undefined, _section: 'Word for Word' as string })),
-    ...allExegetica.map(a => ({ category: a.frontmatter.tags?.[0] ?? 'Exegetica', title: a.frontmatter.title, href: `/exegetica/${a.slug}`, date: fmt(a.frontmatter.date), sortDate: a.frontmatter.date, image: a.frontmatter.image || undefined, _section: 'Exegetica' as string })),
-    ...allForum.map(a => ({ category: a.frontmatter.tags?.[0] ?? 'Forum & Pulpit', title: a.frontmatter.title, href: `/forum-and-pulpit/${a.slug}`, date: fmt(a.frontmatter.date), sortDate: a.frontmatter.date, image: a.frontmatter.image || undefined, _section: 'Forum & Pulpit' as string })),
-    ...allTeachingRaw.map(a => ({ category: a.frontmatter.tags?.[a.frontmatter.tags?.length - 1] ?? 'Teaching', title: a.frontmatter.title, href: `/teaching/${a.teachingType}/${a.slug}`, date: fmt(a.frontmatter.date), sortDate: a.frontmatter.date, image: a.frontmatter.image || undefined, _section: 'Teaching' as string })),
-  ]
-    .sort((a, b) => b.sortDate.localeCompare(a.sortDate))
-    .slice(0, 6) as (AnyCard & { _section: string })[]
+  // ── Recently published: 1 each from Teaching, WFW, Exegetica, Forum ───────
+  const recentItems = [
+    allTeachingRaw[0] && {
+      section: 'Teaching',
+      title: allTeachingRaw[0].frontmatter.title,
+      href: `/teaching/${allTeachingRaw[0].teachingType}/${allTeachingRaw[0].slug}`,
+      date: fmt(allTeachingRaw[0].frontmatter.date),
+    },
+    allWfw[0] && {
+      section: 'Word for Word',
+      title: allWfw[0].frontmatter.title,
+      href: `/word-for-word/${allWfw[0].slug}`,
+      date: fmt(allWfw[0].frontmatter.date),
+    },
+    allExegetica[0] && {
+      section: 'Exegetica',
+      title: allExegetica[0].frontmatter.title,
+      href: `/exegetica/${allExegetica[0].slug}`,
+      date: fmt(allExegetica[0].frontmatter.date),
+    },
+    allForum[0] && {
+      section: 'Forum & Pulpit',
+      title: allForum[0].frontmatter.title,
+      href: `/forum-and-pulpit/${allForum[0].slug}`,
+      date: fmt(allForum[0].frontmatter.date),
+    },
+  ].filter(Boolean) as { section: string; title: string; href: string; date: string }[]
 
-  // ── Essential books ────────────────────────────────────────────────────────
+  // ── Essential books (3 covers) ─────────────────────────────────────────────
   const essentialBooks = (rawBooks as BookPreview[])
     .filter(b => b.recommendationLevel === 'Essential' && b.coverImageUrl && b.featured)
-    .slice(0, 5)
+    .slice(0, 3)
     .map(b => ({ title: b.title, author: b.author, coverImageUrl: b.coverImageUrl! }))
 
   return (
@@ -173,124 +143,136 @@ export default function HomePage() {
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
       <section className="border-b border-zinc-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[58fr_42fr]">
+          <div className="grid lg:grid-cols-[55fr_45fr] gap-0">
 
-            {/* Left: positioning */}
-            <div className="py-14 lg:py-16 lg:pr-14 flex flex-col justify-center gap-5">
-              <Greeting />
+            {/* Left: identity + promise */}
+            <div className="py-10 lg:py-12 lg:pr-14 flex flex-col justify-center gap-5">
+              <span
+                className="text-[10px] font-bold tracking-[0.22em] uppercase"
+                style={{ color: '#cdb079' }}
+              >
+                Austin W. Duncan
+              </span>
               <div>
                 <h1
-                  className="text-4xl sm:text-5xl lg:text-[3rem] font-bold leading-[1.05] tracking-tight text-zinc-900"
+                  className="text-4xl sm:text-5xl lg:text-[2.75rem] font-bold leading-[1.08] tracking-tight text-zinc-900"
                   style={{ fontFamily: 'var(--font-cormorant)' }}
                 >
-                  Helping normal Christians read the Bible more carefully.
+                  Bible teaching for people who want to read Scripture carefully.
                 </h1>
-                <p className="mt-4 text-[15px] text-zinc-500 leading-relaxed max-w-lg">
-                  Sermons, teaching series, scholarly studies, and honest answers to hard questions —
-                  built for Christians who want depth without being talked down to.
+                <p className="mt-4 text-[15px] text-zinc-500 leading-relaxed max-w-md">
+                  Sermons, articles, studies, and reading guides — for Christians who want depth
+                  without being talked down to.
                 </p>
               </div>
-              {heroSermon && (
-                <div className="pt-1">
+              <div className="flex flex-wrap items-center gap-3">
+                {heroSermon && (
                   <Link
                     href={`/sermons/${heroSermon.slug}`}
                     className="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase border border-[#cdb079] text-[#cdb079] hover:bg-[#cdb079] hover:text-white transition-colors"
                   >
                     Latest Sermon <ArrowRight size={12} />
                   </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Right: featured sermon + secondary picks */}
-            <div className="hidden lg:flex flex-col border-l border-zinc-200">
-              {heroSermon && (
+                )}
                 <Link
-                  href={`/sermons/${heroSermon.slug}`}
-                  className="group block border-b border-zinc-200 overflow-hidden"
+                  href="/library"
+                  className="text-[12px] font-semibold tracking-[0.1em] uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
                 >
-                  {heroSermon.frontmatter.image ? (
-                    <div className="relative aspect-[16/9] overflow-hidden bg-zinc-100">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={heroSermon.frontmatter.image}
-                        alt=""
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <p className="text-[10px] font-bold tracking-[0.18em] uppercase mb-1.5" style={{ color: '#cdb079' }}>
-                          Currently Featured
-                        </p>
-                        <h2 className="text-[16px] font-semibold text-white leading-snug group-hover:text-zinc-200 transition-colors">
-                          {heroSermon.frontmatter.title}
-                        </h2>
-                        <p className="mt-1.5 text-[12px] text-zinc-400">{fmt(heroSermon.frontmatter.date)}</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="p-6 bg-zinc-50">
-                      <p className="text-[10px] font-bold tracking-[0.18em] uppercase mb-3" style={{ color: '#cdb079' }}>Currently Featured</p>
-                      <h2 className="text-[16px] font-semibold text-zinc-900 leading-snug">{heroSermon.frontmatter.title}</h2>
-                      <p className="mt-2 text-[12px] text-zinc-400">{fmt(heroSermon.frontmatter.date)}</p>
-                    </div>
-                  )}
+                  Browse the Library
                 </Link>
-              )}
-              <div className="flex-1 flex flex-col divide-y divide-zinc-100 px-7 py-2">
-                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-zinc-400 py-4">Also —</p>
-                {sidePicks.map(pick => (
-                  <Link key={pick.href} href={pick.href} className="group py-4">
-                    <span className="text-[11px] font-semibold tracking-[0.14em] uppercase" style={{ color: '#cdb079' }}>
-                      {pick.section}
-                    </span>
-                    <h3 className="mt-1.5 text-[14px] font-semibold leading-snug text-zinc-800 group-hover:text-zinc-500 transition-colors line-clamp-2">
-                      {pick.title}
-                    </h3>
-                    <p className="mt-1 text-[12px] text-zinc-400">{pick.date}</p>
+              </div>
+              {/* Mobile quick links */}
+              <div className="flex lg:hidden gap-4 flex-wrap">
+                {[
+                  { label: 'Sermons', href: '/sermons' },
+                  { label: 'Word for Word', href: '/word-for-word' },
+                  { label: 'Library', href: '/library' },
+                ].map(({ label, href }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="text-[11px] font-semibold tracking-[0.1em] uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
+                  >
+                    {label}
                   </Link>
                 ))}
               </div>
             </div>
+
+            {/* Right: path card (desktop only) */}
+            <div className="hidden lg:flex items-center justify-center border-l border-zinc-100 pl-10 py-10 lg:py-12">
+              <div className="w-full max-w-[340px]">
+                <HeroPathCard />
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── Choose your path ───────────────────────────────────────────────── */}
-      <section id="paths" className="border-b border-zinc-100 py-14 lg:py-16 bg-zinc-50">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div
-            className="flex items-center gap-3 mb-10 pb-3"
-            style={{ borderBottom: '2px solid #cdb079' }}
-          >
-            <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
-              Where Would You Like to Start?
-            </span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
-            {PATH_OPTIONS.map(({ Icon, title, description, href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="group flex flex-col gap-3 p-5 bg-white border border-zinc-200 hover:border-[#cdb079] transition-colors duration-200"
-              >
-                <Icon size={22} style={{ color: '#cdb079' }} className="flex-shrink-0" />
-                <div>
-                  <p className="text-[13px] font-semibold text-zinc-900 leading-snug mb-1">{title}</p>
-                  <p className="text-[12px] text-zinc-500 leading-relaxed">{description}</p>
+      {/* ── Latest Sermon ──────────────────────────────────────────────────── */}
+      {heroSermon && (
+        <section className="border-b border-zinc-100 py-10 lg:py-12 bg-zinc-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div
+              className="flex items-center gap-3 mb-7 pb-3"
+              style={{ borderBottom: '2px solid #cdb079' }}
+            >
+              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+                Latest Sermon
+              </span>
+            </div>
+            <div className="grid sm:grid-cols-[auto_1fr] gap-6 lg:gap-10 items-start">
+              {heroSermon.frontmatter.image && (
+                <Link href={`/sermons/${heroSermon.slug}`} className="block group">
+                  <div className="overflow-hidden bg-zinc-100 aspect-[16/9]" style={{ width: 200 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={heroSermon.frontmatter.image}
+                      alt=""
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                  </div>
+                </Link>
+              )}
+              <div>
+                {heroSermon.frontmatter.scripture && (
+                  <p className="text-[11px] font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: '#cdb079' }}>
+                    {heroSermon.frontmatter.scripture}
+                  </p>
+                )}
+                <Link href={`/sermons/${heroSermon.slug}`} className="group">
+                  <h2
+                    className="text-2xl lg:text-3xl font-bold leading-tight tracking-tight text-zinc-900 group-hover:text-zinc-600 transition-colors mb-2"
+                    style={{ fontFamily: 'var(--font-cormorant)' }}
+                  >
+                    {heroSermon.frontmatter.title}
+                  </h2>
+                </Link>
+                {heroSermon.frontmatter.excerpt && (
+                  <p className="text-[14px] text-zinc-500 leading-relaxed mb-4 max-w-xl line-clamp-2">
+                    {clean(heroSermon.frontmatter.excerpt)}
+                  </p>
+                )}
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={`/sermons/${heroSermon.slug}`}
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.14em] uppercase transition-opacity hover:opacity-70"
+                    style={{ color: '#cdb079' }}
+                  >
+                    Listen Now <ArrowRight size={10} />
+                  </Link>
+                  <span className="text-[12px] text-zinc-400">{fmt(heroSermon.frontmatter.date)}</span>
                 </div>
-                <div className="mt-auto pt-2 flex items-center gap-1 text-[11px] font-semibold tracking-[0.1em] uppercase transition-colors" style={{ color: '#cdb079' }}>
-                  {label} <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform" />
-                </div>
-              </Link>
-            ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Teaching series (interactive picker) ───────────────────────────── */}
       {seriesList.length > 0 && (
-        <section className="border-b border-zinc-100 py-14 lg:py-16">
+        <section className="border-b border-zinc-100 py-12 lg:py-14">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div
               className="flex items-center gap-3 mb-10 pb-3"
@@ -311,48 +293,40 @@ export default function HomePage() {
       )}
 
       {/* ── Recently published ─────────────────────────────────────────────── */}
-      <section className="border-b border-zinc-100 bg-zinc-50 py-14 lg:py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div
-            className="flex items-center gap-3 mb-10 pb-3"
-            style={{ borderBottom: '2px solid #cdb079' }}
-          >
-            <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">Recently Published</span>
-            <span className="text-[11px] text-zinc-400">— the latest from across all sections</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
-            {(allMixed as (AnyCard & { _section: string })[]).map((item) => (
-              <Link key={item.href} href={item.href} className="group border-t border-zinc-200 pt-5">
-                {item.image && (
-                  <div className="mb-4 overflow-hidden bg-zinc-100 aspect-[16/9]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    />
+      {recentItems.length > 0 && (
+        <section className="border-b border-zinc-100 bg-zinc-50 py-12 lg:py-14">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div
+              className="flex items-center gap-3 mb-8 pb-3"
+              style={{ borderBottom: '2px solid #cdb079' }}
+            >
+              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">Recently Published</span>
+              <span className="text-[11px] text-zinc-400">— one from each section</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {recentItems.map((item) => (
+                <Link key={item.href} href={item.href} className="group border-t border-zinc-200 pt-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className="text-[9px] font-bold tracking-[0.16em] uppercase px-1.5 py-0.5 text-white whitespace-nowrap"
+                      style={{ backgroundColor: '#cdb079' }}
+                    >
+                      {item.section}
+                    </span>
+                    <span className="text-[11px] text-zinc-400">{item.date}</span>
                   </div>
-                )}
-                <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className="text-[10px] font-bold tracking-[0.16em] uppercase px-1.5 py-0.5 text-white"
-                    style={{ backgroundColor: '#cdb079' }}
-                  >
-                    {item._section}
-                  </span>
-                  <span className="text-[12px] text-zinc-400">{item.date}</span>
-                </div>
-                <h3 className="text-[15px] font-semibold leading-snug text-zinc-900 group-hover:text-zinc-500 transition-colors line-clamp-2">
-                  {item.title}
-                </h3>
-              </Link>
-            ))}
+                  <h3 className="text-[14px] font-semibold leading-snug text-zinc-900 group-hover:text-zinc-500 transition-colors line-clamp-3">
+                    {item.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Library ─────────────────────────────────────────────────────────── */}
-      <section className="bg-zinc-950 border-b border-zinc-800 py-14 lg:py-16">
+      <section className="bg-zinc-950 border-b border-zinc-800 py-12 lg:py-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
             <div>
@@ -388,14 +362,13 @@ export default function HomePage() {
                 Explore the Library <ArrowRight size={12} />
               </Link>
             </div>
-            <BookCovers books={essentialBooks} />
+            {essentialBooks.length > 0 && <BookCovers books={essentialBooks} />}
           </div>
         </div>
       </section>
 
       {/* ── About ───────────────────────────────────────────────────────────── */}
       <section className="relative py-16 lg:py-20 overflow-hidden">
-        {/* Subtle background photo */}
         <div
           className="absolute inset-0 bg-center bg-cover"
           style={{
