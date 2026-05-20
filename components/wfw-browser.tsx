@@ -276,6 +276,8 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
   const pool = articles.filter((a) => a.excerpt && a.excerpt.length > 60)
   const [idx, setIdx] = useState(0)
   const [fade, setFade] = useState(true)
+  const DURATION = 7000
+  const visibleDots = Math.min(pool.length, 10)
 
   const go = useCallback((next: number) => {
     setFade(false)
@@ -284,115 +286,152 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
 
   useEffect(() => {
     if (pool.length < 2) return
-    const t = setInterval(() => go((idx + 1) % pool.length), 7000)
-    return () => clearInterval(t)
+    const t = setTimeout(() => go((idx + 1) % pool.length), DURATION)
+    return () => clearTimeout(t)
   }, [idx, pool.length, go])
 
   if (pool.length === 0) return null
   const current = pool[idx]
   const tag = getTag(current)
-  const excerpt = current.excerpt.length > 280 ? current.excerpt.slice(0, 277) + '…' : current.excerpt
+  const excerpt = current.excerpt.length > 320 ? current.excerpt.slice(0, 317) + '…' : current.excerpt
 
   return (
-    <div style={{ background: '#f7f7f7', borderTop: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
-      <div className="mx-auto max-w-[1200px] px-5 py-12 lg:py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+    <div style={{ background: '#f7f7f7', borderTop: '3px solid #B8892E', borderBottom: '1px solid #e8e8e8' }}>
+      <div className="mx-auto max-w-[820px] px-6 lg:px-8" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
 
-          {/* Giant quotation mark */}
+        {/* "From Word for Word" label with flanking rules */}
+        <div className="flex items-center gap-4 mb-10">
+          <div className="flex-1 h-px" style={{ background: '#e0d9ce' }} />
+          <span
+            className="shrink-0 text-[0.58rem] font-black tracking-[0.22em] uppercase"
+            style={{ color: '#B8892E' }}
+          >
+            From Word for Word
+          </span>
+          <div className="flex-1 h-px" style={{ background: '#e0d9ce' }} />
+        </div>
+
+        {/* Fading quote block */}
+        <div
+          className="text-center"
+          style={{
+            opacity: fade ? 1 : 0,
+            transform: fade ? 'translateY(0)' : 'translateY(10px)',
+            transition: 'opacity 0.32s ease, transform 0.32s ease',
+          }}
+        >
+          {/* Opening quotation mark */}
           <div
-            className="hidden lg:block shrink-0 select-none"
-            style={{
-              fontFamily: 'Georgia, serif',
-              fontSize: '10rem',
-              lineHeight: 0.8,
-              color: '#B8892E',
-              opacity: 0.18,
-              marginTop: '-1rem',
-            }}
             aria-hidden
+            style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontSize: '4.5rem',
+              lineHeight: 0.75,
+              color: '#B8892E',
+              marginBottom: '0.75rem',
+              userSelect: 'none',
+            }}
           >
             &ldquo;
           </div>
 
-          {/* Quote content */}
-          <div className="flex-1 min-w-0">
+          {/* Quote text */}
+          <blockquote
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: 'clamp(1.55rem, 2.6vw, 2.1rem)',
+              fontStyle: 'italic',
+              fontWeight: 500,
+              color: '#1a1a1a',
+              lineHeight: 1.55,
+              marginBottom: '2.25rem',
+            }}
+          >
+            {excerpt}
+          </blockquote>
+
+          {/* Attribution */}
+          <div className="flex flex-col items-center gap-3">
+            {/* Short amber rule */}
+            <div style={{ width: 40, height: 2, background: '#B8892E' }} />
+            {tag && <CategoryBadge label={tag.label} />}
+            <Link
+              href={`/word-for-word/${current.slug}`}
+              className="group inline-flex items-center gap-2 mt-1"
+            >
+              <span
+                className="text-[0.63rem] font-black tracking-[0.16em] uppercase"
+                style={{ color: '#555555', transition: 'color 0.2s' }}
+              >
+                {current.title}
+              </span>
+              <svg
+                width="10" height="10" viewBox="0 0 24 24" fill="none"
+                stroke="#B8892E" strokeWidth="2.5"
+                style={{ transition: 'stroke 0.2s' }}
+                className="group-hover:[stroke:#7A5C1E]"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        {pool.length > 1 && (
+          <div className="flex flex-col items-center gap-4 mt-12">
+
+            {/* Progress bar */}
             <div
               style={{
-                opacity: fade ? 1 : 0,
-                transform: fade ? 'translateY(0)' : 'translateY(6px)',
-                transition: 'opacity 0.32s ease, transform 0.32s ease',
+                width: 200,
+                height: 2,
+                background: '#e0d9ce',
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
-              {tag && (
-                <div className="mb-4">
-                  <CategoryBadge label={tag.label} />
-                </div>
-              )}
-              <blockquote
+              <div
+                key={idx}
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
-                  fontSize: 'clamp(1rem, 1.6vw, 1.2rem)',
-                  fontStyle: 'italic',
-                  color: '#333333',
-                  lineHeight: 1.75,
-                  marginBottom: '1.5rem',
+                  position: 'absolute',
+                  inset: 0,
+                  background: '#B8892E',
+                  animation: `wfw-progress ${DURATION}ms linear forwards`,
+                  transformOrigin: 'left',
                 }}
-              >
-                {excerpt}
-              </blockquote>
-              <Link
-                href={`/word-for-word/${current.slug}`}
-                className="inline-flex items-center gap-2 group"
-              >
-                <span
-                  className="text-[0.62rem] font-black tracking-[0.14em] uppercase transition-colors group-hover:text-[#7A5C1E]"
-                  style={{ color: '#1a1a1a' }}
-                >
-                  {current.title}
-                </span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-colors group-hover:text-[#7A5C1E]" style={{ color: '#B8892E' }}>
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </Link>
+              />
             </div>
-          </div>
 
-          {/* Prev / Next + dots */}
-          {pool.length > 1 && (
-            <div className="flex lg:flex-col items-center gap-4 shrink-0">
-              <button
-                onClick={() => go((idx - 1 + pool.length) % pool.length)}
-                className="flex items-center justify-center border transition-colors hover:border-[#B8892E] hover:text-[#B8892E]"
-                style={{ width: 36, height: 36, borderColor: '#e8e8e8', color: '#888888' }}
-                aria-label="Previous"
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <div className="flex lg:flex-col gap-2">
-                {pool.slice(0, 8).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => go(i)}
-                    style={{ width: 6, height: 6, background: i === idx ? '#B8892E' : '#d0d0d0', border: 'none', cursor: 'pointer', padding: 0, transition: 'background 0.3s' }}
-                    aria-label={`Quote ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={() => go((idx + 1) % pool.length)}
-                className="flex items-center justify-center border transition-colors hover:border-[#B8892E] hover:text-[#B8892E]"
-                style={{ width: 36, height: 36, borderColor: '#e8e8e8', color: '#888888' }}
-                aria-label="Next"
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
+            {/* Dot indicators */}
+            <div className="flex items-center gap-2.5">
+              {Array.from({ length: visibleDots }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => go(i)}
+                  aria-label={`Quote ${i + 1}`}
+                  style={{
+                    width: i === idx ? 22 : 6,
+                    height: 6,
+                    background: i === idx ? '#B8892E' : '#ccc9c0',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    transition: 'width 0.35s ease, background 0.35s ease',
+                  }}
+                />
+              ))}
             </div>
-          )}
-        </div>
+
+            {/* Counter */}
+            <span
+              className="text-[0.58rem] tracking-[0.18em] uppercase tabular-nums"
+              style={{ color: '#B8892E' }}
+            >
+              {idx + 1}&thinsp;/&thinsp;{visibleDots}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -635,6 +674,7 @@ export function WFWBrowser({ articles }: { articles: WFWItem[] }) {
         .wfw-track { display: flex; width: max-content; animation: wfw-scroll 90s linear infinite; }
         .wfw-track:hover { animation-play-state: paused; }
         .lg\\:divide-x > * + * { border-left: 1px solid #e8e8e8; }
+        @keyframes wfw-progress { from { width: 0%; } to { width: 100%; } }
       `}</style>
 
       <div style={{ background: '#111111', borderBottom: '2px solid #B8892E' }}>
