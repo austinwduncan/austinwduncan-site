@@ -3,13 +3,18 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import {
   getAll,
+  getAllTeaching,
   sortByDate,
+  isPublished,
   primaryBookFromScripture,
   type SermonFrontmatter,
   type ArticleFrontmatter,
+  type TeachingFrontmatter,
 } from '@/lib/content'
-import TeachingCarousel from '@/components/teaching-carousel'
-import HeroSection from '@/components/hero-section'
+import AnimatedHero, { type HeroSlide } from '@/components/animated-hero'
+import ScrollReveal from '@/components/scroll-reveal'
+
+export const revalidate = 1800
 
 export const metadata: Metadata = {
   title: 'Austin W. Duncan',
@@ -20,10 +25,9 @@ export const metadata: Metadata = {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
+  const [y, m, d] = dateStr.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
   })
 }
 
@@ -48,7 +52,7 @@ type CardItem = {
   image?: string
 }
 
-// ─── UI helpers ──────────────────────────────────────────────────────────────
+// ─── UI components ───────────────────────────────────────────────────────────
 
 function CategoryLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -113,144 +117,199 @@ function ArticleCard({ item }: { item: CardItem }) {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  // ── Fetch all content ──────────────────────────────────────────────────────
-  const allSermons    = sortByDate(getAll<SermonFrontmatter>('sermons'))
-  const allWfw        = sortByDate(getAll<ArticleFrontmatter>('word-for-word'))
-  const allExegetica  = sortByDate(getAll<ArticleFrontmatter>('exegetica'))
-  const allForum      = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
+  const allSermons   = sortByDate(getAll<SermonFrontmatter>('sermons').filter(a => isPublished(a.frontmatter.date)))
+  const allWfw       = sortByDate(getAll<ArticleFrontmatter>('word-for-word').filter(a => isPublished(a.frontmatter.date)))
+  const allExegetica = sortByDate(getAll<ArticleFrontmatter>('exegetica').filter(a => isPublished(a.frontmatter.date)))
+  const allForum     = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit').filter(a => isPublished(a.frontmatter.date)))
 
-  // ── Hero: most recent sermon ───────────────────────────────────────────────
-  const featuredSermon = allSermons[0]
-  const heroFeatured = featuredSermon
-    ? {
-        category: primaryBookFromScripture(featuredSermon.frontmatter.scripture) ?? 'Sermon',
-        title:    featuredSermon.frontmatter.title,
-        excerpt:  cleanExcerpt(featuredSermon.frontmatter.excerpt),
-        href:     `/sermons/${featuredSermon.slug}`,
-        date:     formatDate(featuredSermon.frontmatter.date),
-        image:    featuredSermon.frontmatter.image || undefined,
-      }
-    : null
+  // Teaching: combine both types with routing info
+  const allTeachingRaw = sortByDate([
+    ...getAllTeaching<TeachingFrontmatter>('expositional')
+      .filter(a => isPublished(a.frontmatter.date))
+      .map(a => ({ ...a, teachingType: 'expositional' as const })),
+    ...getAllTeaching<TeachingFrontmatter>('topical')
+      .filter(a => isPublished(a.frontmatter.date))
+      .map(a => ({ ...a, teachingType: 'topical' as const })),
+  ])
 
-  // ── Hero sidebar: most recent from wfw, forum, exegetica ──────────────────
-  const heroPicks = [
-    allWfw[0] && {
-      category: allWfw[0].frontmatter.tags?.[0] ?? 'Word for Word',
-      title:    allWfw[0].frontmatter.title,
-      href:     `/word-for-word/${allWfw[0].slug}`,
-      date:     formatDate(allWfw[0].frontmatter.date),
-    },
-    allForum[0] && {
-      category: allForum[0].frontmatter.tags?.[0] ?? 'Forum & Pulpit',
-      title:    allForum[0].frontmatter.title,
-      href:     `/forum-and-pulpit/${allForum[0].slug}`,
-      date:     formatDate(allForum[0].frontmatter.date),
-    },
-    allExegetica[0] && {
-      category: allExegetica[0].frontmatter.tags?.[0] ?? 'Exegetica',
-      title:    allExegetica[0].frontmatter.title,
-      href:     `/exegetica/${allExegetica[0].slug}`,
-      date:     formatDate(allExegetica[0].frontmatter.date),
-    },
-  ].filter(Boolean).slice(0, 3) as { category: string; title: string; href: string; date: string }[]
+  // Build series for teaching section (grouped by last tag)
+  const seriesMap = new Map<string, { image?: string; count: number; slug: string; type: 'expositional' | 'topical' }>()
+  for (const { frontmatter: fm, slug, teachingType } of allTeachingRaw) {
+    const series = fm.tags?.[fm.tags.length - 1] ?? 'Teaching'
+    if (!seriesMap.has(series)) {
+      seriesMap.set(series, { image: fm.image, count: 0, slug, type: teachingType })
+    }
+    seriesMap.get(series)!.count++
+    if (fm.image && !seriesMap.get(series)!.image) seriesMap.get(series)!.image = fm.image
+  }
 
-  // ── Section grids: 3 most recent each ─────────────────────────────────────
+  const teachingCards: CardItem[] = [...seriesMap.entries()].slice(0, 3).map(([series, v]) => ({
+    category: v.type === 'expositional' ? 'Expositional' : 'Topical',
+    title: series,
+    excerpt: '',
+    href: `/teaching/${v.type}/${v.slug}`,
+    date: `${v.count} session${v.count !== 1 ? 's' : ''}`,
+    image: v.image,
+  }))
+
+  // ── Hero slides ─────────────────────────────────────────────────────────────
+  const heroSlides: HeroSlide[] = [
+    allSermons[0] ? {
+      section: 'Sermons',
+      title: allSermons[0].frontmatter.title,
+      excerpt: cleanExcerpt(allSermons[0].frontmatter.excerpt),
+      href: `/sermons/${allSermons[0].slug}`,
+      date: formatDate(allSermons[0].frontmatter.date),
+      cta: 'Listen Now',
+      image: allSermons[0].frontmatter.image || undefined,
+    } : null,
+    allWfw[0] ? {
+      section: 'Word for Word',
+      title: allWfw[0].frontmatter.title,
+      excerpt: cleanExcerpt(allWfw[0].frontmatter.excerpt),
+      href: `/word-for-word/${allWfw[0].slug}`,
+      date: formatDate(allWfw[0].frontmatter.date),
+      cta: 'Read Article',
+      image: allWfw[0].frontmatter.image || undefined,
+    } : null,
+    allTeachingRaw[0] ? {
+      section: 'Teaching',
+      title: allTeachingRaw[0].frontmatter.title,
+      excerpt: cleanExcerpt(allTeachingRaw[0].frontmatter.excerpt ?? ''),
+      href: `/teaching/${allTeachingRaw[0].teachingType}/${allTeachingRaw[0].slug}`,
+      date: formatDate(allTeachingRaw[0].frontmatter.date),
+      cta: 'Begin Session',
+      image: allTeachingRaw[0].frontmatter.image || undefined,
+    } : null,
+    allExegetica[0] ? {
+      section: 'Exegetica',
+      title: allExegetica[0].frontmatter.title,
+      excerpt: cleanExcerpt(allExegetica[0].frontmatter.excerpt),
+      href: `/exegetica/${allExegetica[0].slug}`,
+      date: formatDate(allExegetica[0].frontmatter.date),
+      cta: 'Read Article',
+      image: allExegetica[0].frontmatter.image || undefined,
+    } : null,
+    allForum[0] ? {
+      section: 'Forum & Pulpit',
+      title: allForum[0].frontmatter.title,
+      excerpt: cleanExcerpt(allForum[0].frontmatter.excerpt),
+      href: `/forum-and-pulpit/${allForum[0].slug}`,
+      date: formatDate(allForum[0].frontmatter.date),
+      cta: 'Read Article',
+      image: allForum[0].frontmatter.image || undefined,
+    } : null,
+  ].filter(Boolean) as HeroSlide[]
+
+  // ── Section cards ────────────────────────────────────────────────────────────
   const sermonCards: CardItem[] = allSermons.slice(0, 3).map(({ frontmatter: fm, slug }) => ({
     category: primaryBookFromScripture(fm.scripture) ?? 'Sermon',
-    title:    fm.title,
-    excerpt:  cleanExcerpt(fm.excerpt),
-    href:     `/sermons/${slug}`,
-    date:     formatDate(fm.date),
-    image:    fm.image || undefined,
+    title: fm.title,
+    excerpt: cleanExcerpt(fm.excerpt),
+    href: `/sermons/${slug}`,
+    date: formatDate(fm.date),
+    image: fm.image || undefined,
   }))
 
   const wfwCards: CardItem[] = allWfw.slice(0, 3).map(({ frontmatter: fm, slug }) => ({
     category: fm.tags?.[0] ?? 'Word for Word',
-    title:    fm.title,
-    excerpt:  cleanExcerpt(fm.excerpt),
-    href:     `/word-for-word/${slug}`,
-    date:     formatDate(fm.date),
-    image:    fm.image || undefined,
+    title: fm.title,
+    excerpt: cleanExcerpt(fm.excerpt),
+    href: `/word-for-word/${slug}`,
+    date: formatDate(fm.date),
+    image: fm.image || undefined,
   }))
 
   const exegeticaCards: CardItem[] = allExegetica.slice(0, 3).map(({ frontmatter: fm, slug }) => ({
     category: fm.tags?.[0] ?? 'Exegetica',
-    title:    fm.title,
-    excerpt:  cleanExcerpt(fm.excerpt),
-    href:     `/exegetica/${slug}`,
-    date:     formatDate(fm.date),
-    image:    fm.image || undefined,
+    title: fm.title,
+    excerpt: cleanExcerpt(fm.excerpt),
+    href: `/exegetica/${slug}`,
+    date: formatDate(fm.date),
+    image: fm.image || undefined,
   }))
 
   const forumCards: CardItem[] = allForum.slice(0, 3).map(({ frontmatter: fm, slug }) => ({
     category: fm.tags?.[0] ?? 'Forum & Pulpit',
-    title:    fm.title,
-    excerpt:  cleanExcerpt(fm.excerpt),
-    href:     `/forum-and-pulpit/${slug}`,
-    date:     formatDate(fm.date),
-    image:    fm.image || undefined,
+    title: fm.title,
+    excerpt: cleanExcerpt(fm.excerpt),
+    href: `/forum-and-pulpit/${slug}`,
+    date: formatDate(fm.date),
+    image: fm.image || undefined,
   }))
 
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      {heroFeatured && (
-        <HeroSection featured={heroFeatured} picks={heroPicks} />
-      )}
+      {/* ── Animated hero ───────────────────────────────────────────────────── */}
+      {heroSlides.length > 0 && <AnimatedHero slides={heroSlides} />}
 
       {/* ── Sermons ─────────────────────────────────────────────────────────── */}
       <section className="py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader title="Sermons" href="/sermons" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            {sermonCards.map((item) => (
-              <ArticleCard key={item.href} item={item} />
-            ))}
-          </div>
+          <ScrollReveal>
+            <SectionHeader title="Sermons" href="/sermons" />
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+              {sermonCards.map((item) => <ArticleCard key={item.href} item={item} />)}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── Teaching ────────────────────────────────────────────────────────── */}
       <section className="section-pattern border-t border-zinc-100 bg-zinc-50 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader title="Teaching" href="/teaching" />
-          <TeachingCarousel />
+          <ScrollReveal>
+            <SectionHeader title="Teaching" href="/teaching" />
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+              {teachingCards.map((item) => <ArticleCard key={item.href} item={item} />)}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── Word for Word ───────────────────────────────────────────────────── */}
       <section className="border-t border-zinc-100 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader title="Word for Word" href="/word-for-word" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            {wfwCards.map((item) => (
-              <ArticleCard key={item.href} item={item} />
-            ))}
-          </div>
+          <ScrollReveal>
+            <SectionHeader title="Word for Word" href="/word-for-word" />
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+              {wfwCards.map((item) => <ArticleCard key={item.href} item={item} />)}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── Exegetica ───────────────────────────────────────────────────────── */}
       <section className="border-t border-zinc-100 bg-zinc-50 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader title="Exegetica" href="/exegetica" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            {exegeticaCards.map((item) => (
-              <ArticleCard key={item.href} item={item} />
-            ))}
-          </div>
+          <ScrollReveal>
+            <SectionHeader title="Exegetica" href="/exegetica" />
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+              {exegeticaCards.map((item) => <ArticleCard key={item.href} item={item} />)}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── Forum & Pulpit ──────────────────────────────────────────────────── */}
       <section className="border-t border-zinc-100 py-14 lg:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader title="Forum & Pulpit" href="/forum-and-pulpit" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            {forumCards.map((item) => (
-              <ArticleCard key={item.href} item={item} />
-            ))}
-          </div>
+          <ScrollReveal>
+            <SectionHeader title="Forum & Pulpit" href="/forum-and-pulpit" />
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+              {forumCards.map((item) => <ArticleCard key={item.href} item={item} />)}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
