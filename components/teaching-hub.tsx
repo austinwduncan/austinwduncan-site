@@ -93,7 +93,7 @@ function ProgressBar({ released, total }: { released: number; total: number }) {
   )
 }
 
-// ─── Recommendation card ──────────────────────────────────────────────────────
+// ─── Recommendation card (dark) ───────────────────────────────────────────────
 
 function RecommendationCard({ item }: { item: SeriesWithSessions }) {
   const [sessionsOpen, setSessionsOpen] = useState(false)
@@ -102,10 +102,10 @@ function RecommendationCard({ item }: { item: SeriesWithSessions }) {
   const previewSessions = sessionsOpen ? orderedSessions : orderedSessions.slice(0, 5)
 
   return (
-    <article className="border border-zinc-800 overflow-hidden" style={{ background: '#0c0c0e' }}>
+    <article className="border border-zinc-800 overflow-hidden text-white" style={{ background: '#0c0c0e' }}>
       <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
 
-        {/* Left: identity */}
+        {/* Left */}
         <div
           className="p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-zinc-800"
           style={{ background: 'radial-gradient(circle at top left, #3f3f46, #18181b 55%, #09090b)' }}
@@ -119,9 +119,7 @@ function RecommendationCard({ item }: { item: SeriesWithSessions }) {
           >
             {meta.title}
           </h2>
-          <p className="text-[14px] leading-relaxed text-zinc-300 mb-6">
-            {meta.whyStudy}
-          </p>
+          <p className="text-[14px] leading-relaxed text-zinc-300 mb-6">{meta.whyStudy}</p>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <Pill gold>{meta.primaryLane}</Pill>
@@ -153,7 +151,7 @@ function RecommendationCard({ item }: { item: SeriesWithSessions }) {
           </div>
         </div>
 
-        {/* Right: why + outcomes + sessions */}
+        {/* Right */}
         <div className="p-6 sm:p-8">
           <div className="border border-zinc-800 p-4 mb-5" style={{ background: 'rgba(0,0,0,0.3)' }}>
             <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-500 mb-2">Best for</p>
@@ -172,7 +170,6 @@ function RecommendationCard({ item }: { item: SeriesWithSessions }) {
             ))}
           </div>
 
-          {/* Session list - always visible on right */}
           <div
             className="border border-zinc-800 overflow-hidden transition-all duration-300"
             style={{ maxHeight: sessionsOpen ? `${orderedSessions.length * 56}px` : '256px', background: 'rgba(0,0,0,0.25)' }}
@@ -212,19 +209,19 @@ function RecommendationCard({ item }: { item: SeriesWithSessions }) {
   )
 }
 
-// ─── Journey section ──────────────────────────────────────────────────────────
+// ─── Journey section (light) ──────────────────────────────────────────────────
 
 function JourneySection({ item }: { item: SeriesWithSessions }) {
   return (
-    <section className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
       <div className="flex items-start gap-4 mb-6">
-        <div className="flex-shrink-0 p-2.5 border border-zinc-800" style={{ background: '#18181b' }}>
+        <div className="flex-shrink-0 p-2.5 bg-zinc-100 border border-zinc-200">
           <Map size={18} style={{ color: '#cdb079' }} />
         </div>
         <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">The path</p>
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">The path</p>
           <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-white"
+            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
             style={{ fontFamily: 'var(--font-cormorant)' }}
           >
             Don&apos;t just browse. Move somewhere.
@@ -233,23 +230,23 @@ function JourneySection({ item }: { item: SeriesWithSessions }) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="border border-zinc-800 p-4" style={{ background: 'rgba(0,0,0,0.3)' }}>
-          <p className="text-[12px] font-bold text-white mb-2">1. Start here</p>
-          <p className="text-[13px] leading-relaxed text-zinc-400">
-            Begin with <span className="text-zinc-200">{item.meta.title}</span> — it matches what you said you want to understand.
+        <div className="bg-zinc-50 border border-zinc-200 p-4">
+          <p className="text-[12px] font-bold text-zinc-900 mb-2">1. Start here</p>
+          <p className="text-[13px] leading-relaxed text-zinc-600">
+            Begin with <span className="font-semibold text-zinc-900">{item.meta.title}</span> — it matches what you said you want to understand.
           </p>
         </div>
-        <div className="border border-zinc-800 p-4" style={{ background: 'rgba(0,0,0,0.3)' }}>
-          <p className="text-[12px] font-bold text-white mb-2">2. Follow the sessions</p>
-          <p className="text-[13px] leading-relaxed text-zinc-400">
+        <div className="bg-zinc-50 border border-zinc-200 p-4">
+          <p className="text-[12px] font-bold text-zinc-900 mb-2">2. Follow the sessions</p>
+          <p className="text-[13px] leading-relaxed text-zinc-600">
             Each session builds on the last. The order matters — work through it in sequence.
           </p>
         </div>
-        <div className="border border-zinc-800 p-4" style={{ background: 'rgba(0,0,0,0.3)' }}>
-          <p className="text-[12px] font-bold text-white mb-2">3. Go next</p>
-          <p className="text-[13px] leading-relaxed text-zinc-400">
+        <div className="bg-zinc-50 border border-zinc-200 p-4">
+          <p className="text-[12px] font-bold text-zinc-900 mb-2">3. Go next</p>
+          <p className="text-[13px] leading-relaxed text-zinc-600">
             After this, continue into{' '}
-            <span className="text-zinc-200">{item.meta.nextAfter}</span> or browse the full shelf below.
+            <span className="font-semibold text-zinc-900">{item.meta.nextAfter}</span> or browse the full shelf below.
           </p>
         </div>
       </div>
@@ -257,24 +254,24 @@ function JourneySection({ item }: { item: SeriesWithSessions }) {
   )
 }
 
-// ─── Shelf card (compact) ─────────────────────────────────────────────────────
+// ─── Shelf card (dark, pops on light background) ──────────────────────────────
 
 function ShelfCard({ meta }: { meta: SeriesMetadata }) {
   return (
     <Link
       href={`/teaching/${meta.type}/${meta.startHere}`}
-      className="group flex flex-col border border-zinc-800 p-4 hover:border-zinc-600 transition-colors min-w-[82%] sm:min-w-0"
-      style={{ background: '#0c0c0e' }}
+      className="group flex flex-col border border-zinc-800 p-4 hover:border-[#cdb079] transition-colors"
+      style={{ background: '#18181b' }}
     >
       {meta.image && (
-        <div className="overflow-hidden bg-zinc-900 aspect-[16/9] mb-3 flex-shrink-0">
+        <div className="overflow-hidden bg-zinc-800 aspect-[16/9] mb-3 flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={meta.image} alt="" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+          <img src={meta.image} alt="" className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity" />
         </div>
       )}
       <div className="flex items-center justify-between gap-2 mb-2">
         <span className="text-[9px] font-bold tracking-[0.14em] uppercase text-zinc-500">{meta.primaryLane}</span>
-        <ArrowRight size={12} className="text-zinc-700 group-hover:text-zinc-400 transition-colors flex-shrink-0" />
+        <ArrowRight size={12} className="text-zinc-600 group-hover:text-[#cdb079] transition-colors flex-shrink-0" />
       </div>
       <h3
         className="text-[16px] font-bold leading-tight tracking-tight text-white mb-2 flex-1"
@@ -285,10 +282,7 @@ function ShelfCard({ meta }: { meta: SeriesMetadata }) {
       <p className="text-[12px] leading-relaxed text-zinc-500 line-clamp-2 mb-3">{meta.excerpt}</p>
       <div className="flex items-center justify-between text-[11px] text-zinc-600 mt-auto">
         <span>{meta.totalSessions} sessions</span>
-        <span
-          className="font-semibold"
-          style={{ color: meta.status === 'Ongoing' ? '#cdb079' : '#71717a' }}
-        >
+        <span className="font-semibold" style={{ color: meta.status === 'Ongoing' ? '#cdb079' : '#52525b' }}>
           {meta.status}
         </span>
       </div>
@@ -296,7 +290,7 @@ function ShelfCard({ meta }: { meta: SeriesMetadata }) {
   )
 }
 
-// ─── Keep exploring (shelf + search) ─────────────────────────────────────────
+// ─── Keep exploring (light section, dark cards) ───────────────────────────────
 
 function KeepExploring({ allSeries }: { allSeries: SeriesWithSessions[] }) {
   const [query, setQuery] = useState('')
@@ -310,24 +304,24 @@ function KeepExploring({ allSeries }: { allSeries: SeriesWithSessions[] }) {
   }, [query, allSeries])
 
   return (
-    <section className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-6">
         <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Keep exploring</p>
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Keep exploring</p>
           <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-white"
+            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
             style={{ fontFamily: 'var(--font-cormorant)' }}
           >
             If that isn&apos;t the one, try these.
           </h2>
         </div>
-        <div className="flex items-center gap-3 border border-zinc-800 px-4 py-2.5 lg:w-72" style={{ background: 'rgba(0,0,0,0.35)' }}>
-          <Search size={14} className="text-zinc-600 flex-shrink-0" />
+        <div className="flex items-center gap-3 border border-zinc-300 bg-zinc-50 px-4 py-2.5 lg:w-72">
+          <Search size={14} className="text-zinc-400 flex-shrink-0" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search series…"
-            className="w-full bg-transparent text-[13px] text-white outline-none placeholder:text-zinc-600"
+            className="w-full bg-transparent text-[13px] text-zinc-900 outline-none placeholder:text-zinc-400"
           />
         </div>
       </div>
@@ -348,7 +342,7 @@ function KeepExploring({ allSeries }: { allSeries: SeriesWithSessions[] }) {
   )
 }
 
-// ─── Lane section ─────────────────────────────────────────────────────────────
+// ─── Lane section (light section, dark cards) ─────────────────────────────────
 
 function LaneSection({ lane, allSeries }: { lane: TeachingLane; allSeries: SeriesWithSessions[] }) {
   const laneSeries = allSeries.filter(({ meta }) => meta.primaryLane === lane)
@@ -361,18 +355,18 @@ function LaneSection({ lane, allSeries }: { lane: TeachingLane; allSeries: Serie
   }
 
   return (
-    <section className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
       <div className="flex items-center justify-between gap-4 mb-2">
         <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Shelf</p>
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Shelf</p>
           <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-white"
+            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
             style={{ fontFamily: 'var(--font-cormorant)' }}
           >
             {lane}
           </h2>
         </div>
-        <span className="text-[11px] text-zinc-600 border border-zinc-800 px-2.5 py-1 flex-shrink-0">
+        <span className="text-[11px] text-zinc-400 border border-zinc-200 px-2.5 py-1 flex-shrink-0">
           {laneSeries.length} series
         </span>
       </div>
@@ -399,13 +393,12 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
   const activeIntent = INTENTS.find((i) => i.id === selectedIntent) ?? INTENTS[0]
 
   return (
-    <div className="bg-zinc-950 text-white pb-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-5 pt-6">
+    <div className="pb-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-4 pt-6">
 
-        {/* ── Hero + intent chooser ─────────────────────────────────────────── */}
-        <section className="border border-zinc-800 overflow-hidden" style={{ background: '#09090b' }}>
+        {/* ── Hero + intent chooser (dark) ──────────────────────────────────── */}
+        <section className="border border-zinc-800 overflow-hidden text-white" style={{ background: '#09090b' }}>
           <div className="relative p-6 sm:p-8 lg:p-10">
-            {/* Decorative glows */}
             <div
               className="absolute right-0 top-0 w-64 h-64 pointer-events-none"
               style={{ background: 'radial-gradient(circle, rgba(205,176,121,0.07) 0%, transparent 70%)' }}
@@ -430,7 +423,6 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                 </p>
               </div>
 
-              {/* Active intent preview card */}
               <div className="border border-zinc-800 p-5" style={{ background: 'rgba(0,0,0,0.45)' }}>
                 <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">
                   Your path begins with
@@ -454,7 +446,6 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
             </div>
           </div>
 
-          {/* Intent grid */}
           <div className="border-t border-zinc-800 p-4" style={{ background: 'rgba(0,0,0,0.35)' }}>
             <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {INTENTS.map(({ id, label, Icon }) => {
@@ -484,20 +475,20 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
           </div>
         </section>
 
-        {/* ── Recommendation card (key resets session state on intent change) ── */}
+        {/* ── Recommendation card (dark — key resets state on intent change) ── */}
         {recommended && (
           <div key={recommended.meta.seriesTag}>
             <RecommendationCard item={recommended} />
           </div>
         )}
 
-        {/* ── Journey ──────────────────────────────────────────────────────── */}
+        {/* ── Journey (light) ───────────────────────────────────────────────── */}
         {recommended && <JourneySection item={recommended} />}
 
-        {/* ── Keep exploring ───────────────────────────────────────────────── */}
+        {/* ── Keep exploring (light) ────────────────────────────────────────── */}
         <KeepExploring allSeries={allSeries} />
 
-        {/* ── Lane shelves ─────────────────────────────────────────────────── */}
+        {/* ── Lane shelves (light) ──────────────────────────────────────────── */}
         {TEACHING_LANES.map((lane) => (
           <LaneSection key={lane} lane={lane} allSeries={allSeries} />
         ))}

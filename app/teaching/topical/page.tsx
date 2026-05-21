@@ -38,10 +38,10 @@ export default function TopicalPage() {
   const topicalMeta = TEACHING_SERIES.filter((s) => s.type === 'topical')
 
   return (
-    <div className="bg-zinc-950 text-white pb-16">
+    <div className="pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-6 space-y-5">
 
-        {/* Header */}
+        {/* Header — stays dark */}
         <section
           className="border border-zinc-800 p-6 sm:p-8"
           style={{ background: 'radial-gradient(circle at top left, #3f3f46, #09090b 55%)' }}
@@ -65,11 +65,11 @@ export default function TopicalPage() {
           </p>
         </section>
 
-        {/* Choose by what you need */}
-        <section className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">Start here</p>
+        {/* Choose by what you need — light */}
+        <section className="border border-zinc-200 bg-white p-6 sm:p-8">
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">Start here</p>
           <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-white mb-5"
+            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 mb-5"
             style={{ fontFamily: 'var(--font-cormorant)' }}
           >
             Choose by what you need.
@@ -79,10 +79,9 @@ export default function TopicalPage() {
               <Link
                 key={meta.seriesTag}
                 href={`/teaching/topical/${meta.startHere}`}
-                className="group border border-zinc-800 p-4 hover:border-zinc-600 transition-colors"
-                style={{ background: 'rgba(0,0,0,0.3)' }}
+                className="group border border-zinc-200 bg-zinc-50 p-4 hover:border-zinc-300 transition-colors"
               >
-                <p className="text-[14px] font-bold text-white mb-2 group-hover:text-[#cdb079] transition-colors" style={{ fontFamily: 'var(--font-cormorant)' }}>
+                <p className="text-[14px] font-bold text-zinc-900 mb-2 group-hover:text-[#7A5C1E] transition-colors" style={{ fontFamily: 'var(--font-cormorant)' }}>
                   {meta.title}
                 </p>
                 <p className="text-[12px] leading-relaxed text-zinc-500">{meta.startHereNote}</p>
@@ -91,23 +90,23 @@ export default function TopicalPage() {
           </div>
         </section>
 
-        {/* Groups */}
+        {/* Groups — light */}
         {TOPICAL_GROUPS.map(({ lane, description }) => {
           const laneSeries = topicalMeta.filter((s) => s.primaryLane === lane).sort((a, b) => a.priority - b.priority)
           if (laneSeries.length === 0) return null
           return (
-            <section key={lane} className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+            <section key={lane} className="border border-zinc-200 bg-white p-6 sm:p-8">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Shelf</p>
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Shelf</p>
                   <h2
-                    className="text-2xl font-bold leading-tight tracking-tight text-white"
+                    className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
                     style={{ fontFamily: 'var(--font-cormorant)' }}
                   >
                     {lane}
                   </h2>
                 </div>
-                <span className="text-[11px] text-zinc-600 border border-zinc-800 px-2.5 py-1 flex-shrink-0">
+                <span className="text-[11px] text-zinc-400 border border-zinc-200 px-2.5 py-1 flex-shrink-0">
                   {laneSeries.length} series
                 </span>
               </div>
