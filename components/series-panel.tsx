@@ -84,14 +84,7 @@ export default function SeriesPanel({
         {/* Best for */}
         <div className="mb-4">
           <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400 mb-2">Best For</p>
-          <ul className="space-y-1">
-            {meta.bestFor.map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-[5px] flex-shrink-0 w-1 h-1 rounded-full bg-zinc-400" />
-                <span className="text-[13px] text-zinc-600 leading-snug">{item}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="text-[13px] text-zinc-600 leading-relaxed">{meta.bestFor}</p>
         </div>
 
         {/* Themes */}

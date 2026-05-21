@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowRight, BookOpen, CheckCircle2, ChevronDown } from 'lucide-react'
 import { getAllTeaching, sortByDate, isPublished, formatDate, type TeachingFrontmatter } from '@/lib/content'
 import { TEACHING_SERIES } from '@/data/teaching-series'
-import SeriesPanel, { type SessionPreview } from '@/components/series-panel'
+import SeriesExpander from '@/components/series-expander'
 
 export const revalidate = 1800
 
@@ -19,11 +20,11 @@ export default function ExpositionalPage() {
     getAllTeaching<TeachingFrontmatter>('expositional').filter((a) => isPublished(a.frontmatter.date))
   )
 
-  const sessionMap = new Map<string, SessionPreview[]>()
+  const sessionMap = new Map<string, { slug: string; title: string; date: string }[]>()
   for (const { frontmatter: fm, slug } of all) {
-    const seriesTag = fm.tags?.[fm.tags.length - 1] ?? ''
-    if (!sessionMap.has(seriesTag)) sessionMap.set(seriesTag, [])
-    sessionMap.get(seriesTag)!.push({ slug, title: fm.title, date: formatDate(fm.date), type: 'expositional' })
+    const tag = fm.tags?.[fm.tags.length - 1] ?? ''
+    if (!sessionMap.has(tag)) sessionMap.set(tag, [])
+    sessionMap.get(tag)!.push({ slug, title: fm.title, date: formatDate(fm.date) })
   }
 
   const expositionalMeta = TEACHING_SERIES.filter((s) => s.type === 'expositional').sort(
@@ -32,113 +33,98 @@ export default function ExpositionalPage() {
   const otSeries = expositionalMeta.filter((s) => OT_SERIES.includes(s.title))
   const ntSeries = expositionalMeta.filter((s) => NT_SERIES.includes(s.title))
 
+  const groups = [
+    { label: 'Old Testament', series: otSeries },
+    { label: 'New Testament', series: ntSeries },
+  ].filter((g) => g.series.length > 0)
+
   return (
-    <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
-      <Link
-        href="/teaching"
-        className="text-[11px] tracking-wide uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
-      >
-        ← Teaching
-      </Link>
+    <div className="bg-zinc-950 text-white pb-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-6 space-y-5">
 
-      <div className="mt-5 mb-12 max-w-xl">
-        <span
-          className="text-[10px] font-bold tracking-[0.22em] uppercase"
-          style={{ color: '#cdb079' }}
+        {/* Header */}
+        <section
+          className="border border-zinc-800 p-6 sm:p-8"
+          style={{ background: 'radial-gradient(circle at top left, #3f3f46, #09090b 55%)' }}
         >
-          Expositional
-        </span>
-        <h1
-          className="mt-2 text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-zinc-900"
-          style={{ fontFamily: 'var(--font-cormorant)' }}
-        >
-          Bible Book Studies
-        </h1>
-        <p className="mt-4 text-[15px] text-zinc-500 leading-relaxed">
-          Verse-by-verse studies working through individual books and collections of the Bible — with
-          attention to original context, argument flow, and what it means for us.
-        </p>
-      </div>
+          <Link href="/teaching" className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase text-zinc-500 hover:text-zinc-300 transition-colors mb-6">
+            ← Teaching
+          </Link>
+          <div className="inline-flex items-center gap-2 border border-zinc-800 px-3 py-1.5 mb-5" style={{ background: 'rgba(0,0,0,0.4)' }}>
+            <BookOpen size={12} style={{ color: '#cdb079' }} />
+            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400">Expositional</span>
+          </div>
+          <h1
+            className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-white mb-4 max-w-xl"
+            style={{ fontFamily: 'var(--font-cormorant)' }}
+          >
+            Bible Book Studies
+          </h1>
+          <p className="text-[15px] leading-relaxed text-zinc-400 max-w-xl">
+            Verse-by-verse studies working through individual books and collections of the Bible —
+            with attention to original context, argument flow, and what it means for us.
+          </p>
+        </section>
 
-      {/* Recommended starting points */}
-      <div className="mb-14">
-        <div
-          className="flex items-center gap-3 mb-6 pb-3"
-          style={{ borderBottom: '2px solid #cdb079' }}
-        >
-          <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
-            Recommended Starting Points
-          </span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {expositionalMeta.map((meta) => (
-            <div key={meta.seriesTag} className="border-l-2 pl-4" style={{ borderColor: '#cdb079' }}>
-              <h3
-                className="text-[18px] font-bold leading-tight tracking-tight text-zinc-900 mb-1"
-                style={{ fontFamily: 'var(--font-cormorant)' }}
-              >
-                {meta.title}
-              </h3>
-              <p className="text-[13px] text-zinc-500 leading-relaxed mb-3">{meta.startHereNote}</p>
+        {/* Choose by what you need */}
+        <section className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">Start here</p>
+          <h2
+            className="text-2xl font-bold leading-tight tracking-tight text-white mb-5"
+            style={{ fontFamily: 'var(--font-cormorant)' }}
+          >
+            Choose by what you need.
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {expositionalMeta.map((meta) => (
               <Link
+                key={meta.seriesTag}
                 href={`/teaching/expositional/${meta.startHere}`}
-                className="text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity hover:opacity-70"
-                style={{ color: '#cdb079' }}
+                className="group border border-zinc-800 p-4 hover:border-zinc-600 transition-colors"
+                style={{ background: 'rgba(0,0,0,0.3)' }}
               >
-                Begin →
+                <p className="text-[14px] font-bold text-white mb-2 group-hover:text-[#cdb079] transition-colors" style={{ fontFamily: 'var(--font-cormorant)' }}>
+                  {meta.title}
+                </p>
+                <p className="text-[12px] leading-relaxed text-zinc-500">{meta.startHereNote}</p>
               </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Browse by Testament */}
-      <div className="space-y-14">
-        {otSeries.length > 0 && (
-          <div>
-            <div
-              className="flex items-center gap-3 mb-3 pb-3"
-              style={{ borderBottom: '2px solid #cdb079' }}
-            >
-              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
-                Old Testament
-              </span>
-              <span className="text-[11px] text-zinc-400">— {otSeries.length} series</span>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {otSeries.map((meta) => (
-                <SeriesPanel
-                  key={meta.seriesTag}
-                  meta={meta}
-                  sessions={sessionMap.get(meta.seriesTag) ?? []}
-                />
-              ))}
-            </div>
+            ))}
           </div>
-        )}
+        </section>
 
-        {ntSeries.length > 0 && (
-          <div>
-            <div
-              className="flex items-center gap-3 mb-3 pb-3"
-              style={{ borderBottom: '2px solid #cdb079' }}
-            >
-              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
-                New Testament
+        {/* Series groups */}
+        {groups.map(({ label, series }) => (
+          <section key={label} className="border border-zinc-800 p-6 sm:p-8" style={{ background: '#0c0c0e' }}>
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <div>
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-1">Shelf</p>
+                <h2
+                  className="text-2xl font-bold leading-tight tracking-tight text-white"
+                  style={{ fontFamily: 'var(--font-cormorant)' }}
+                >
+                  {label}
+                </h2>
+              </div>
+              <span className="text-[11px] text-zinc-600 border border-zinc-800 px-2.5 py-1 flex-shrink-0">
+                {series.length} series
               </span>
-              <span className="text-[11px] text-zinc-400">— {ntSeries.length} series</span>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {ntSeries.map((meta) => (
-                <SeriesPanel
-                  key={meta.seriesTag}
-                  meta={meta}
-                  sessions={sessionMap.get(meta.seriesTag) ?? []}
-                />
-              ))}
+            <div className="space-y-5">
+              {series.map((meta) => {
+                const sessions = sessionMap.get(meta.seriesTag) ?? []
+                const orderedSessions = [...sessions].reverse()
+                return (
+                  <SeriesExpander
+                    key={meta.seriesTag}
+                    meta={meta}
+                    sessions={orderedSessions}
+                    type="expositional"
+                  />
+                )
+              })}
             </div>
-          </div>
-        )}
+          </section>
+        ))}
       </div>
     </div>
   )
