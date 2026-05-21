@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import type { SeriesMetadata } from '@/data/teaching-series'
 
 type SessionItem = { slug: string; title: string; date: string }
@@ -10,13 +10,16 @@ type SessionItem = { slug: string; title: string; date: string }
 function ProgressBar({ released, total }: { released: number; total: number }) {
   const pct = Math.min(100, Math.round((released / total) * 100))
   return (
-    <div>
-      <div className="flex items-center justify-between text-[11px] text-zinc-500 mb-1.5">
+    <div className="mt-4">
+      <div
+        className="flex items-center justify-between text-[0.72rem] mb-1.5"
+        style={{ color: '#9A9189' }}
+      >
         <span>{released} of {total} sessions released</span>
         <span>{pct}%</span>
       </div>
-      <div className="h-1 bg-zinc-200">
-        <div className="h-full" style={{ width: `${pct}%`, backgroundColor: '#cdb079' }} />
+      <div className="h-1" style={{ background: '#E2DACE' }}>
+        <div className="h-full" style={{ width: `${pct}%`, background: '#B8892E' }} />
       </div>
     </div>
   )
@@ -35,102 +38,148 @@ export default function SeriesExpander({
   const visible = open ? sessions : sessions.slice(0, 4)
 
   return (
-    <article className="border border-zinc-200 bg-white overflow-hidden">
-      <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-
-        {/* Left */}
-        <div className="p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-zinc-200">
-          <div className="flex flex-wrap gap-2 mb-4">
-            <span
-              className="text-[9px] font-bold tracking-[0.14em] uppercase px-2 py-1 border"
-              style={{ borderColor: meta.status === 'Ongoing' ? '#cdb079' : '#d4d4d8', color: meta.status === 'Ongoing' ? '#cdb079' : '#a1a1aa' }}
-            >
-              {meta.status === 'Ongoing' ? `${meta.publishedSessions ?? sessions.length} of ${meta.totalSessions} released` : `${meta.totalSessions} sessions · Complete`}
-            </span>
-            <span className="text-[9px] font-bold tracking-[0.14em] uppercase px-2 py-1 border border-zinc-200 text-zinc-400">
-              {meta.difficulty}
-            </span>
-          </div>
-
-          <h3
-            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 mb-3"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
+    <article
+      className="flex flex-col lg:flex-row"
+      style={{ background: '#fff', border: '1px solid #E2DACE' }}
+    >
+      {/* Left */}
+      <div
+        className="flex-1 p-6 sm:p-7 border-b lg:border-b-0 lg:border-r"
+        style={{ borderColor: '#E2DACE' }}
+      >
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span
+            className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
+            style={{
+              background: meta.status === 'Ongoing' ? '#F9F3E8' : '#F2EFE7',
+              color: meta.status === 'Ongoing' ? '#B8892E' : '#9A9189',
+              border: `1px solid ${meta.status === 'Ongoing' ? '#C8A96A' : '#E2DACE'}`,
+            }}
           >
-            {meta.title}
-          </h3>
-          <p className="text-[13px] leading-relaxed text-zinc-500 mb-4">{meta.whyStudy}</p>
-
-          <div className="border border-zinc-200 bg-zinc-50 p-3 mb-4 text-[13px] leading-relaxed text-zinc-600">
-            {meta.bestFor}
-          </div>
-
-          {meta.status === 'Ongoing' && (
-            <div className="mb-4">
-              <ProgressBar released={meta.publishedSessions ?? sessions.length} total={meta.totalSessions} />
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href={`/teaching/${type}/${meta.startHere}`}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[11px] font-bold tracking-[0.14em] uppercase bg-[#cdb079] text-zinc-950 hover:bg-[#b89a5e] transition-colors"
-            >
-              Start Series <ArrowRight size={10} />
-            </Link>
-            <button
-              onClick={() => setOpen(!open)}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[11px] font-bold tracking-[0.14em] uppercase border border-zinc-300 text-zinc-500 hover:bg-zinc-50 hover:border-zinc-400 transition-colors"
-            >
-              {open ? 'Hide' : 'View'} Sessions
-              <ChevronDown size={11} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
+            {meta.status === 'Ongoing'
+              ? `${meta.publishedSessions ?? sessions.length} of ${meta.totalSessions} released`
+              : `${meta.totalSessions} sessions · Complete`}
+          </span>
+          <span
+            className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
+            style={{ background: '#F2EFE7', color: '#9A9189', border: '1px solid #E2DACE' }}
+          >
+            {meta.difficulty}
+          </span>
         </div>
 
-        {/* Right */}
-        <div className="p-5 sm:p-6">
-          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400 mb-3">
-            By the end, you&apos;ll be able to
-          </p>
-          <div className="space-y-2 mb-5">
-            {meta.outcomes.map((outcome) => (
-              <div key={outcome} className="flex gap-2.5 border border-zinc-200 bg-zinc-50 p-3 text-[12px] text-zinc-600">
-                <CheckCircle2 size={12} className="flex-shrink-0 mt-0.5" style={{ color: '#cdb079' }} />
-                <span>{outcome}</span>
-              </div>
-            ))}
-          </div>
+        <h3
+          className="mb-3 leading-tight tracking-tight"
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
+            fontWeight: 500,
+            color: '#1A1714',
+          }}
+        >
+          {meta.title}
+        </h3>
 
-          <div className="border border-zinc-200">
-            <p className="px-4 pt-3 pb-2 text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400">
-              Session path
-            </p>
-            {visible.map((session, i) => (
-              <Link
-                key={session.slug}
-                href={`/teaching/${type}/${session.slug}`}
-                className="group flex items-start gap-3 px-4 py-2.5 border-t border-zinc-100 hover:bg-zinc-50 transition-colors"
+        <p
+          className="text-[0.92rem] leading-[1.7] mb-4"
+          style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+        >
+          {meta.whyStudy}
+        </p>
+
+        <p
+          className="text-[0.85rem] leading-[1.65] mb-5 pl-3 border-l-2 italic"
+          style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', borderColor: '#C8A96A' }}
+        >
+          {meta.bestFor}
+        </p>
+
+        {meta.status === 'Ongoing' && (
+          <ProgressBar released={meta.publishedSessions ?? sessions.length} total={meta.totalSessions} />
+        )}
+
+        <div className="flex flex-wrap items-center gap-4 mt-5">
+          <Link
+            href={`/teaching/${type}/${meta.startHere}`}
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-[0.76rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
+            style={{ background: '#7A5C1E' }}
+          >
+            Start Series <ArrowRight size={12} />
+          </Link>
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-[0.76rem] font-medium pb-px border-b transition-colors hover:text-[#7A5C1E] hover:border-[#7A5C1E]"
+            style={{ color: '#9A9189', borderColor: '#E2DACE' }}
+          >
+            {open ? 'Hide sessions' : 'View sessions'}
+          </button>
+        </div>
+      </div>
+
+      {/* Right */}
+      <div className="lg:w-[272px] shrink-0 p-6 sm:p-7">
+        <p
+          className="text-[0.65rem] font-medium tracking-[0.1em] uppercase mb-3"
+          style={{ color: '#9A9189' }}
+        >
+          By the end, you&apos;ll be able to
+        </p>
+        <div className="space-y-2 mb-5">
+          {meta.outcomes.slice(0, 3).map((outcome) => (
+            <div
+              key={outcome}
+              className="flex gap-2.5 p-3 text-[0.8rem] leading-snug"
+              style={{ background: '#F9F6F0', border: '1px solid #E2DACE', color: '#5A544C' }}
+            >
+              <svg
+                width="11" height="11" viewBox="0 0 24 24" fill="none"
+                stroke="#B8892E" strokeWidth="2.5"
+                className="shrink-0 mt-0.5"
               >
-                <span
-                  className="flex-shrink-0 flex items-center justify-center w-5 h-5 text-[9px] font-bold border border-zinc-300 text-zinc-400 mt-0.5"
-                  style={{ borderRadius: '50%' }}
-                >
-                  {i + 1}
-                </span>
-                <span className="text-[12px] leading-snug text-zinc-600 group-hover:text-zinc-900 transition-colors flex-1 line-clamp-2">
-                  {session.title}
-                </span>
-              </Link>
-            ))}
-            {!open && sessions.length > 4 && (
-              <button
-                onClick={() => setOpen(true)}
-                className="w-full px-4 py-2.5 text-[11px] font-semibold text-zinc-400 hover:text-zinc-700 transition-colors border-t border-zinc-100 text-left"
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontFamily: 'var(--font-source-serif)' }}>{outcome}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ border: '1px solid #E2DACE' }}>
+          <p
+            className="px-4 pt-3 pb-2 text-[0.65rem] font-medium tracking-[0.1em] uppercase"
+            style={{ color: '#9A9189' }}
+          >
+            Session path
+          </p>
+          {visible.map((session, i) => (
+            <Link
+              key={session.slug}
+              href={`/teaching/${type}/${session.slug}`}
+              className="group flex items-center gap-3 px-4 py-2 border-t transition-colors hover:bg-[#F9F6F0]"
+              style={{ borderColor: '#E2DACE' }}
+            >
+              <span
+                className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
+                style={{ color: '#B8892E' }}
               >
-                + {sessions.length - 4} more sessions
-              </button>
-            )}
-          </div>
+                {i + 1}
+              </span>
+              <span
+                className="text-[0.8rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
+                style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+              >
+                {session.title}
+              </span>
+            </Link>
+          ))}
+          {!open && sessions.length > 4 && (
+            <button
+              onClick={() => setOpen(true)}
+              className="w-full px-4 py-2 text-[0.75rem] text-left border-t transition-colors hover:bg-[#F9F6F0]"
+              style={{ color: '#9A9189', borderColor: '#E2DACE' }}
+            >
+              + {sessions.length - 4} more sessions
+            </button>
+          )}
         </div>
       </div>
     </article>

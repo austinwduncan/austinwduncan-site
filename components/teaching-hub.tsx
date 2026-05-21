@@ -1,12 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import {
-  ArrowRight, BookOpen, CheckCircle2, ChevronDown,
-  Compass, Flame, ListChecks, Map, Search, Sparkles, Tags,
-} from 'lucide-react'
-import { TEACHING_LANES, type SeriesMetadata, type TeachingLane } from '@/data/teaching-series'
+import { ArrowRight, Sparkles, Flame, Map, Tags, ListChecks, BookOpen } from 'lucide-react'
+import type { SeriesMetadata } from '@/data/teaching-series'
 
 export type SessionPreview = {
   slug: string
@@ -20,479 +17,479 @@ export type SeriesWithSessions = {
   sessions: SessionPreview[]
 }
 
-// ─── Intent options ───────────────────────────────────────────────────────────
+const AMBER_STRIP = `
+  repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
+  repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
+`
 
 const INTENTS = [
-  {
-    id: 'see-jesus',
-    label: 'I want to see Jesus more clearly',
-    lead: 'Begin with a study that shows how all of Scripture centers on Christ.',
-    Icon: Sparkles,
-  },
-  {
-    id: 'faith-pressure',
-    label: 'I need help staying faithful under pressure',
-    lead: 'Begin where exile, courage, compromise, and kingdoms collide.',
-    Icon: Flame,
-  },
-  {
-    id: 'whole-bible',
-    label: "I want the Bible's storyline to make sense",
-    lead: 'Begin with a theme that ties the Bible together instead of leaving it in pieces.',
-    Icon: Map,
-  },
-  {
-    id: 'words',
-    label: 'I like word studies and translation details',
-    lead: 'Begin with a lighter series that gives you fast Bible study payoff.',
-    Icon: Tags,
-  },
-  {
-    id: 'christian-life',
-    label: 'I want help with Christian life and ethics',
-    lead: 'Begin with a study that connects command, worship, desire, and love of neighbor.',
-    Icon: ListChecks,
-  },
-  {
-    id: 'old-testament',
-    label: 'I want the Old Testament to feel less confusing',
-    lead: 'Begin with the books and themes people often skip or flatten.',
-    Icon: BookOpen,
-  },
+  { id: 'see-jesus',       label: 'I want to see Jesus more clearly',                  Icon: Sparkles   },
+  { id: 'faith-pressure',  label: 'I need help staying faithful under pressure',        Icon: Flame      },
+  { id: 'whole-bible',     label: "I want the Bible's storyline to make sense",         Icon: Map        },
+  { id: 'words',           label: 'I like word studies and translation details',        Icon: Tags       },
+  { id: 'christian-life',  label: "I'm asking hard questions about Christian living",   Icon: ListChecks },
+  { id: 'old-testament',   label: 'I want to understand the Old Testament',             Icon: BookOpen   },
 ]
 
-// ─── Small shared pieces ─────────────────────────────────────────────────────
+export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessions[] }) {
+  const [activeIntent, setActiveIntent] = useState<string | null>(null)
 
-function Pill({ children, gold = false }: { children: React.ReactNode; gold?: boolean }) {
+  const totalSessions = allSeries.reduce((sum, { sessions }) => sum + sessions.length, 0)
+
+  const recommended = activeIntent
+    ? allSeries.find(({ meta }) => meta.intents.includes(activeIntent))
+    : null
+
+  const expositional = allSeries.filter(({ meta }) => meta.type === 'expositional')
+  const topical = allSeries.filter(({ meta }) => meta.type === 'topical')
+
   return (
-    <span
-      className="text-[10px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 border"
-      style={
-        gold
-          ? { borderColor: '#cdb079', color: '#cdb079' }
-          : { borderColor: '#3f3f46', color: '#a1a1aa' }
-      }
-    >
-      {children}
-    </span>
+    <>
+      {/* ── Header ────────────────────────────────────────────────────────── */}
+      <div style={{ background: '#141210' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
+          <div
+            className="flex items-end justify-between gap-8 pb-10 border-b"
+            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+          >
+            <div>
+              <div
+                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
+                style={{ color: '#B8892E' }}
+              >
+                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                Library
+              </div>
+              <h1
+                className="leading-[1.1] tracking-tight"
+                style={{
+                  fontFamily: 'var(--font-cormorant)',
+                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
+                  fontWeight: 400,
+                  color: '#F9F6F0',
+                }}
+              >
+                Teaching
+              </h1>
+            </div>
+            <div className="hidden sm:flex gap-8 pb-0.5 shrink-0">
+              <Stat num={allSeries.length} label="Series" />
+              <Stat num={totalSessions} label="Sessions" />
+            </div>
+          </div>
+
+          <div className="py-7">
+            <p
+              className="text-[0.97rem] leading-[1.7] max-w-[580px]"
+              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
+            >
+              <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.72)' }}>
+                Verse-by-verse Bible studies and theological series
+              </span>
+              {' '}— designed for people who want to read Scripture carefully and understand what they find.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Amber strip ───────────────────────────────────────────────────── */}
+      <div
+        className="h-[14px] w-full"
+        style={{ backgroundColor: '#7A5C1E', backgroundImage: AMBER_STRIP }}
+      />
+
+      {/* ── Start Here ────────────────────────────────────────────────────── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid #E2DACE' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12">
+          <div
+            className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-6"
+            style={{ color: '#7A5C1E' }}
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            Not sure where to start
+            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+          </div>
+
+          <h2
+            className="mb-6"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+              fontWeight: 500,
+              color: '#1A1714',
+            }}
+          >
+            What brings you here today?
+          </h2>
+
+          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {INTENTS.map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveIntent(activeIntent === id ? null : id)}
+                className="group text-left flex items-start gap-3 p-4 transition-all"
+                style={{
+                  background: activeIntent === id ? '#F9F3E8' : '#F9F6F0',
+                  border: `1px solid ${activeIntent === id ? '#B8892E' : '#E2DACE'}`,
+                }}
+              >
+                <Icon
+                  size={13}
+                  className="mt-0.5 shrink-0"
+                  style={{ color: activeIntent === id ? '#B8892E' : '#9A9189' }}
+                />
+                <span
+                  className="text-[0.83rem] leading-snug"
+                  style={{
+                    fontFamily: 'var(--font-source-serif)',
+                    color: activeIntent === id ? '#7A5C1E' : '#5A544C',
+                  }}
+                >
+                  {label}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {recommended && (
+            <div
+              className="mt-6 p-5 sm:p-7"
+              style={{ background: '#F9F3E8', border: '1px solid #C8A96A' }}
+            >
+              <div
+                className="text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-4"
+                style={{ color: '#B8892E' }}
+              >
+                Recommended for you
+              </div>
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 sm:items-start">
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className="mb-2 leading-tight"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: 'clamp(1.4rem, 2vw, 1.8rem)',
+                      fontWeight: 500,
+                      color: '#1A1714',
+                    }}
+                  >
+                    {recommended.meta.title}
+                  </h3>
+                  <p
+                    className="text-[0.9rem] leading-[1.7] mb-5"
+                    style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                  >
+                    {recommended.meta.whyStudy}
+                  </p>
+                  <Link
+                    href={`/teaching/${recommended.meta.type}/${recommended.meta.startHere}`}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 text-[0.76rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
+                    style={{ background: '#7A5C1E' }}
+                  >
+                    Start with Session 1 <ArrowRight size={12} />
+                  </Link>
+                </div>
+                {recommended.sessions.length > 0 && (
+                  <div
+                    className="sm:w-56 shrink-0"
+                    style={{ border: '1px solid #C8A96A', background: '#fff' }}
+                  >
+                    <p
+                      className="px-4 pt-3 pb-2 text-[0.65rem] font-medium tracking-[0.1em] uppercase"
+                      style={{ color: '#9A9189' }}
+                    >
+                      First sessions
+                    </p>
+                    {recommended.sessions.slice(0, 4).map((s, i) => (
+                      <Link
+                        key={s.slug}
+                        href={`/teaching/${s.type}/${s.slug}`}
+                        className="group flex items-center gap-3 px-4 py-2 border-t transition-colors hover:bg-[#F9F3E8]"
+                        style={{ borderColor: '#E2DACE' }}
+                      >
+                        <span
+                          className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
+                          style={{ color: '#B8892E' }}
+                        >
+                          {i + 1}
+                        </span>
+                        <span
+                          className="text-[0.78rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                        >
+                          {s.title}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Series ────────────────────────────────────────────────────────── */}
+      <div style={{ background: '#FAFAF7' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 pb-20 space-y-14">
+          {expositional.length > 0 && (
+            <LaneSection
+              label="Bible Book Studies"
+              description="Verse-by-verse studies working through individual books and collections of the Bible — with attention to original context, argument flow, and what it means for us."
+              seriesList={expositional}
+              linkPath="/teaching/expositional"
+            />
+          )}
+          {topical.length > 0 && (
+            <LaneSection
+              label="Theological Studies"
+              description="Multi-part series tracing themes, covenants, and key words across the whole of Scripture — for people who want to think carefully."
+              seriesList={topical}
+              linkPath="/teaching/topical"
+            />
+          )}
+        </div>
+      </div>
+    </>
   )
 }
 
-function ProgressBar({ released, total }: { released: number; total: number }) {
-  const pct = Math.min(100, Math.round((released / total) * 100))
+function Stat({ num, label }: { num: number; label: string }) {
+  return (
+    <div className="text-center">
+      <span
+        className="block leading-none mb-1"
+        style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.9rem', fontWeight: 300, color: '#B8892E' }}
+      >
+        {num}
+      </span>
+      <span
+        className="text-[0.65rem] font-medium tracking-[0.1em] uppercase block"
+        style={{ color: 'rgba(255,255,255,0.22)' }}
+      >
+        {label}
+      </span>
+    </div>
+  )
+}
+
+function LaneSection({
+  label,
+  description,
+  seriesList,
+  linkPath,
+}: {
+  label: string
+  description: string
+  seriesList: SeriesWithSessions[]
+  linkPath: string
+}) {
   return (
     <div>
-      <div className="flex items-center justify-between text-[11px] text-zinc-500 mb-2">
-        <span>{released} of {total} sessions released</span>
-        <span>{pct}%</span>
+      <div
+        className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-2"
+        style={{ color: '#9A9189' }}
+      >
+        {label}
+        <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+        <Link
+          href={linkPath}
+          className="shrink-0 transition-colors hover:text-[#7A5C1E]"
+          style={{ color: '#9A9189' }}
+        >
+          Browse all →
+        </Link>
       </div>
-      <div className="h-1.5 bg-zinc-800">
-        <div className="h-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: '#cdb079' }} />
+      <p
+        className="text-[0.88rem] leading-relaxed mb-8"
+        style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', fontStyle: 'italic' }}
+      >
+        {description}
+      </p>
+      <div className="space-y-5">
+        {seriesList.map(({ meta, sessions }) => (
+          <SeriesCard key={meta.seriesTag} meta={meta} sessions={sessions} />
+        ))}
       </div>
     </div>
   )
 }
 
-// ─── Recommendation card (dark) ───────────────────────────────────────────────
-
-function RecommendationCard({ item }: { item: SeriesWithSessions }) {
-  const [sessionsOpen, setSessionsOpen] = useState(false)
-  const { meta, sessions } = item
-  const orderedSessions = [...sessions].reverse()
-  const previewSessions = sessionsOpen ? orderedSessions : orderedSessions.slice(0, 5)
+function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: SessionPreview[] }) {
+  const [open, setOpen] = useState(false)
+  const visible = open ? sessions : sessions.slice(0, 4)
 
   return (
-    <article className="border border-zinc-800 overflow-hidden text-white" style={{ background: '#0c0c0e' }}>
-      <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-
-        {/* Left */}
-        <div
-          className="p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-zinc-800"
-          style={{ background: 'radial-gradient(circle at top left, #3f3f46, #18181b 55%, #09090b)' }}
-        >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-4">
-            Recommended next study
-          </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white mb-3"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
+    <article
+      className="flex flex-col lg:flex-row"
+      style={{ background: '#fff', border: '1px solid #E2DACE' }}
+    >
+      {/* Left */}
+      <div
+        className="flex-1 p-6 sm:p-7 border-b lg:border-b-0 lg:border-r"
+        style={{ borderColor: '#E2DACE' }}
+      >
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span
+            className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
+            style={{
+              background: meta.status === 'Ongoing' ? '#F9F3E8' : '#F2EFE7',
+              color: meta.status === 'Ongoing' ? '#B8892E' : '#9A9189',
+              border: `1px solid ${meta.status === 'Ongoing' ? '#C8A96A' : '#E2DACE'}`,
+            }}
           >
-            {meta.title}
-          </h2>
-          <p className="text-[14px] leading-relaxed text-zinc-300 mb-6">{meta.whyStudy}</p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            <Pill gold>{meta.primaryLane}</Pill>
-            <Pill>{meta.status === 'Ongoing' ? 'Releasing Now' : 'Complete'}</Pill>
-            <Pill>{meta.difficulty}</Pill>
-            <Pill>{meta.totalSessions} sessions</Pill>
-          </div>
-
-          {meta.status === 'Ongoing' && (
-            <div className="mb-6">
-              <ProgressBar released={meta.publishedSessions ?? sessions.length} total={meta.totalSessions} />
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
-            <Link
-              href={`/teaching/${meta.type}/${meta.startHere}`}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 text-[12px] font-bold tracking-[0.14em] uppercase bg-[#cdb079] text-zinc-950 hover:bg-[#b89a5e] transition-colors"
-            >
-              Start with Session 1 <ArrowRight size={12} />
-            </Link>
-            <button
-              onClick={() => setSessionsOpen(!sessionsOpen)}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 text-[12px] font-bold tracking-[0.14em] uppercase border border-zinc-700 text-zinc-300 hover:bg-zinc-900 transition-colors"
-            >
-              {sessionsOpen ? 'Hide' : 'Preview'} Sessions
-              <ChevronDown size={12} className={`transition-transform duration-200 ${sessionsOpen ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
+            {meta.status === 'Ongoing'
+              ? `${meta.publishedSessions ?? sessions.length} of ${meta.totalSessions} released`
+              : `${meta.totalSessions} sessions · Complete`}
+          </span>
+          <span
+            className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
+            style={{ background: '#F2EFE7', color: '#9A9189', border: '1px solid #E2DACE' }}
+          >
+            {meta.difficulty}
+          </span>
         </div>
 
-        {/* Right */}
-        <div className="p-6 sm:p-8">
-          <div className="border border-zinc-800 p-4 mb-5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-            <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-500 mb-2">Best for</p>
-            <p className="text-[14px] leading-relaxed text-zinc-300">{meta.bestFor}</p>
-          </div>
+        <h3
+          className="mb-3 leading-tight tracking-tight"
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
+            fontWeight: 500,
+            color: '#1A1714',
+          }}
+        >
+          {meta.title}
+        </h3>
 
-          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-500 mb-3">
-            By the end, you&apos;ll be able to
-          </p>
-          <div className="space-y-2 mb-5">
-            {meta.outcomes.map((outcome) => (
-              <div key={outcome} className="flex gap-3 border border-zinc-800 p-3 text-[13px] text-zinc-300" style={{ background: 'rgba(9,9,11,0.4)' }}>
-                <CheckCircle2 size={14} className="flex-shrink-0 mt-0.5" style={{ color: '#cdb079' }} />
-                <span>{outcome}</span>
-              </div>
-            ))}
-          </div>
+        <p
+          className="text-[0.92rem] leading-[1.7] mb-4"
+          style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+        >
+          {meta.whyStudy}
+        </p>
 
-          <div
-            className="border border-zinc-800 overflow-hidden transition-all duration-300"
-            style={{ maxHeight: sessionsOpen ? `${orderedSessions.length * 56}px` : '256px', background: 'rgba(0,0,0,0.25)' }}
+        <p
+          className="text-[0.85rem] leading-[1.65] mb-5 pl-3 border-l-2 italic"
+          style={{
+            fontFamily: 'var(--font-source-serif)',
+            color: '#9A9189',
+            borderColor: '#C8A96A',
+          }}
+        >
+          {meta.bestFor}
+        </p>
+
+        {meta.status === 'Ongoing' && (
+          <ProgressBar
+            released={meta.publishedSessions ?? sessions.length}
+            total={meta.totalSessions}
+          />
+        )}
+
+        <div className="flex flex-wrap items-center gap-4 mt-5">
+          <Link
+            href={`/teaching/${meta.type}/${meta.startHere}`}
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-[0.76rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
+            style={{ background: '#7A5C1E' }}
           >
-            <p className="px-4 pt-3 pb-2 text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-500">
-              Session path
-            </p>
-            {previewSessions.map((session, i) => (
-              <Link
-                key={session.slug}
-                href={`/teaching/${session.type}/${session.slug}`}
-                className="group flex items-start gap-3 px-4 py-2.5 hover:bg-zinc-800/60 transition-colors"
+            Start Series <ArrowRight size={12} />
+          </Link>
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-[0.76rem] font-medium pb-px border-b transition-colors hover:text-[#7A5C1E] hover:border-[#7A5C1E]"
+            style={{ color: '#9A9189', borderColor: '#E2DACE' }}
+          >
+            {open ? 'Hide sessions' : 'View sessions'}
+          </button>
+        </div>
+      </div>
+
+      {/* Right */}
+      <div className="lg:w-[272px] shrink-0 p-6 sm:p-7">
+        <p
+          className="text-[0.65rem] font-medium tracking-[0.1em] uppercase mb-3"
+          style={{ color: '#9A9189' }}
+        >
+          By the end, you&apos;ll be able to
+        </p>
+        <div className="space-y-2 mb-5">
+          {meta.outcomes.slice(0, 3).map((outcome) => (
+            <div
+              key={outcome}
+              className="flex gap-2.5 p-3 text-[0.8rem] leading-snug"
+              style={{ background: '#F9F6F0', border: '1px solid #E2DACE', color: '#5A544C' }}
+            >
+              <svg
+                width="11" height="11" viewBox="0 0 24 24" fill="none"
+                stroke="#B8892E" strokeWidth="2.5"
+                className="shrink-0 mt-0.5"
               >
-                <span
-                  className="flex-shrink-0 flex items-center justify-center w-5 h-5 text-[10px] font-bold border border-zinc-700 text-zinc-400 mt-0.5"
-                  style={{ borderRadius: '50%' }}
-                >
-                  {i + 1}
-                </span>
-                <span className="text-[12px] leading-snug text-zinc-300 group-hover:text-white transition-colors line-clamp-2">
-                  {session.title}
-                </span>
-              </Link>
-            ))}
-            {!sessionsOpen && orderedSessions.length > 5 && (
-              <button
-                onClick={() => setSessionsOpen(true)}
-                className="w-full px-4 py-3 text-[11px] font-semibold text-zinc-500 hover:text-zinc-300 transition-colors border-t border-zinc-800 text-left"
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontFamily: 'var(--font-source-serif)' }}>{outcome}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ border: '1px solid #E2DACE' }}>
+          <p
+            className="px-4 pt-3 pb-2 text-[0.65rem] font-medium tracking-[0.1em] uppercase"
+            style={{ color: '#9A9189' }}
+          >
+            Session path
+          </p>
+          {visible.map((session, i) => (
+            <Link
+              key={session.slug}
+              href={`/teaching/${session.type}/${session.slug}`}
+              className="group flex items-center gap-3 px-4 py-2 border-t transition-colors hover:bg-[#F9F6F0]"
+              style={{ borderColor: '#E2DACE' }}
+            >
+              <span
+                className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
+                style={{ color: '#B8892E' }}
               >
-                + {orderedSessions.length - 5} more sessions
-              </button>
-            )}
-          </div>
+                {i + 1}
+              </span>
+              <span
+                className="text-[0.8rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
+                style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+              >
+                {session.title}
+              </span>
+            </Link>
+          ))}
+          {!open && sessions.length > 4 && (
+            <button
+              onClick={() => setOpen(true)}
+              className="w-full px-4 py-2 text-[0.75rem] text-left border-t transition-colors hover:bg-[#F9F6F0]"
+              style={{ color: '#9A9189', borderColor: '#E2DACE' }}
+            >
+              + {sessions.length - 4} more sessions
+            </button>
+          )}
         </div>
       </div>
     </article>
   )
 }
 
-// ─── Journey section (light) ──────────────────────────────────────────────────
-
-function JourneySection({ item }: { item: SeriesWithSessions }) {
+function ProgressBar({ released, total }: { released: number; total: number }) {
+  const pct = Math.min(100, Math.round((released / total) * 100))
   return (
-    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
-      <div className="flex items-start gap-4 mb-6">
-        <div className="flex-shrink-0 p-2.5 bg-zinc-100 border border-zinc-200">
-          <Map size={18} style={{ color: '#cdb079' }} />
-        </div>
-        <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">The path</p>
-          <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
-          >
-            Don&apos;t just browse. Move somewhere.
-          </h2>
-        </div>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="bg-zinc-50 border border-zinc-200 p-4">
-          <p className="text-[12px] font-bold text-zinc-900 mb-2">1. Start here</p>
-          <p className="text-[13px] leading-relaxed text-zinc-600">
-            Begin with <span className="font-semibold text-zinc-900">{item.meta.title}</span> — it matches what you said you want to understand.
-          </p>
-        </div>
-        <div className="bg-zinc-50 border border-zinc-200 p-4">
-          <p className="text-[12px] font-bold text-zinc-900 mb-2">2. Follow the sessions</p>
-          <p className="text-[13px] leading-relaxed text-zinc-600">
-            Each session builds on the last. The order matters — work through it in sequence.
-          </p>
-        </div>
-        <div className="bg-zinc-50 border border-zinc-200 p-4">
-          <p className="text-[12px] font-bold text-zinc-900 mb-2">3. Go next</p>
-          <p className="text-[13px] leading-relaxed text-zinc-600">
-            After this, continue into{' '}
-            <span className="font-semibold text-zinc-900">{item.meta.nextAfter}</span> or browse the full shelf below.
-          </p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Shelf card (dark, pops on light background) ──────────────────────────────
-
-function ShelfCard({ meta }: { meta: SeriesMetadata }) {
-  return (
-    <Link
-      href={`/teaching/${meta.type}/${meta.startHere}`}
-      className="group flex flex-col border border-zinc-800 p-4 hover:border-[#cdb079] transition-colors"
-      style={{ background: '#18181b' }}
-    >
-      {meta.image && (
-        <div className="overflow-hidden bg-zinc-800 aspect-[16/9] mb-3 flex-shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={meta.image} alt="" className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity" />
-        </div>
-      )}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="text-[9px] font-bold tracking-[0.14em] uppercase text-zinc-500">{meta.primaryLane}</span>
-        <ArrowRight size={12} className="text-zinc-600 group-hover:text-[#cdb079] transition-colors flex-shrink-0" />
-      </div>
-      <h3
-        className="text-[16px] font-bold leading-tight tracking-tight text-white mb-2 flex-1"
-        style={{ fontFamily: 'var(--font-cormorant)' }}
+    <div className="mt-4">
+      <div
+        className="flex items-center justify-between text-[0.72rem] mb-1.5"
+        style={{ color: '#9A9189' }}
       >
-        {meta.title}
-      </h3>
-      <p className="text-[12px] leading-relaxed text-zinc-500 line-clamp-2 mb-3">{meta.excerpt}</p>
-      <div className="flex items-center justify-between text-[11px] text-zinc-600 mt-auto">
-        <span>{meta.totalSessions} sessions</span>
-        <span className="font-semibold" style={{ color: meta.status === 'Ongoing' ? '#cdb079' : '#52525b' }}>
-          {meta.status}
-        </span>
+        <span>{released} of {total} sessions released</span>
+        <span>{pct}%</span>
       </div>
-    </Link>
-  )
-}
-
-// ─── Keep exploring (light section, dark cards) ───────────────────────────────
-
-function KeepExploring({ allSeries }: { allSeries: SeriesWithSessions[] }) {
-  const [query, setQuery] = useState('')
-
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return allSeries
-    return allSeries.filter(({ meta }) =>
-      [meta.title, meta.primaryLane, meta.excerpt, meta.bestFor, ...meta.themes].join(' ').toLowerCase().includes(q)
-    )
-  }, [query, allSeries])
-
-  return (
-    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-6">
-        <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Keep exploring</p>
-          <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
-          >
-            If that isn&apos;t the one, try these.
-          </h2>
-        </div>
-        <div className="flex items-center gap-3 border border-zinc-300 bg-zinc-50 px-4 py-2.5 lg:w-72">
-          <Search size={14} className="text-zinc-400 flex-shrink-0" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search series…"
-            className="w-full bg-transparent text-[13px] text-zinc-900 outline-none placeholder:text-zinc-400"
-          />
-        </div>
-      </div>
-
-      {visible.length === 0 ? (
-        <p className="text-[13px] text-zinc-500">No series match &ldquo;{query}&rdquo;.</p>
-      ) : (
-        <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))' }}
-        >
-          {visible.map(({ meta }) => (
-            <ShelfCard key={meta.seriesTag} meta={meta} />
-          ))}
-        </div>
-      )}
-    </section>
-  )
-}
-
-// ─── Lane section (light section, dark cards) ─────────────────────────────────
-
-function LaneSection({ lane, allSeries }: { lane: TeachingLane; allSeries: SeriesWithSessions[] }) {
-  const laneSeries = allSeries.filter(({ meta }) => meta.primaryLane === lane)
-  if (laneSeries.length === 0) return null
-
-  const laneDesc: Record<TeachingLane, string> = {
-    'Bible Book Studies': 'Verse-by-verse studies working through books of the Bible — Old Testament and New.',
-    'Biblical Theology': 'Studies that trace a theme, covenant, or practice across the whole story of Scripture.',
-    'Word Studies': 'Focused studies on the meaning of key biblical terms in the original languages.',
-  }
-
-  return (
-    <section className="border border-zinc-200 bg-white p-6 sm:p-8">
-      <div className="flex items-center justify-between gap-4 mb-2">
-        <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Shelf</p>
-          <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
-          >
-            {lane}
-          </h2>
-        </div>
-        <span className="text-[11px] text-zinc-400 border border-zinc-200 px-2.5 py-1 flex-shrink-0">
-          {laneSeries.length} series
-        </span>
-      </div>
-      <p className="text-[13px] text-zinc-500 mb-6">{laneDesc[lane]}</p>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {laneSeries.map(({ meta }) => (
-          <ShelfCard key={meta.seriesTag} meta={meta} />
-        ))}
-      </div>
-    </section>
-  )
-}
-
-// ─── Main hub ─────────────────────────────────────────────────────────────────
-
-export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessions[] }) {
-  const [selectedIntent, setSelectedIntent] = useState('see-jesus')
-
-  const recommended = useMemo(
-    () => allSeries.find(({ meta }) => meta.intents.includes(selectedIntent)) ?? allSeries[0],
-    [selectedIntent, allSeries]
-  )
-
-  const activeIntent = INTENTS.find((i) => i.id === selectedIntent) ?? INTENTS[0]
-
-  return (
-    <div className="pb-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-4 pt-6">
-
-        {/* ── Hero + intent chooser (dark) ──────────────────────────────────── */}
-        <section className="border border-zinc-800 overflow-hidden text-white" style={{ background: '#09090b' }}>
-          <div className="relative p-6 sm:p-8 lg:p-10">
-            <div
-              className="absolute right-0 top-0 w-64 h-64 pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(205,176,121,0.07) 0%, transparent 70%)' }}
-            />
-            <div className="relative grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
-              <div>
-                <div className="inline-flex items-center gap-2 border border-zinc-800 px-3 py-1.5 mb-5" style={{ background: 'rgba(0,0,0,0.4)' }}>
-                  <Compass size={12} style={{ color: '#cdb079' }} />
-                  <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400">
-                    Guided teaching library
-                  </span>
-                </div>
-                <h1
-                  className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight text-white max-w-xl"
-                  style={{ fontFamily: 'var(--font-cormorant)' }}
-                >
-                  Find the study you should start next.
-                </h1>
-                <p className="mt-4 text-[15px] leading-relaxed text-zinc-400 max-w-lg">
-                  Choose what you&apos;re trying to understand, then move from a recommended series into
-                  the rest of the teaching library.
-                </p>
-              </div>
-
-              <div className="border border-zinc-800 p-5" style={{ background: 'rgba(0,0,0,0.45)' }}>
-                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">
-                  Your path begins with
-                </p>
-                <h3
-                  className="text-xl font-bold text-white mb-2 leading-tight"
-                  style={{ fontFamily: 'var(--font-cormorant)' }}
-                >
-                  {recommended?.meta.title}
-                </h3>
-                <p className="text-[13px] leading-relaxed text-zinc-400 mb-4">{activeIntent.lead}</p>
-                <div className="flex items-center gap-2 text-[11px] text-zinc-600">
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#cdb079' }} />
-                  <span>Pick a need</span>
-                  <span className="flex-1 border-t border-zinc-800" />
-                  <span>Get a series</span>
-                  <span className="flex-1 border-t border-zinc-800" />
-                  <span>Keep going</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-zinc-800 p-4" style={{ background: 'rgba(0,0,0,0.35)' }}>
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {INTENTS.map(({ id, label, Icon }) => {
-                const isActive = selectedIntent === id
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setSelectedIntent(id)}
-                    className="group flex items-center gap-3 border p-3 text-left text-[13px] transition-colors"
-                    style={{
-                      background: isActive ? 'rgba(205,176,121,0.12)' : 'rgba(9,9,11,0.8)',
-                      borderColor: isActive ? '#cdb079' : '#27272a',
-                      color: isActive ? '#fff' : '#a1a1aa',
-                    }}
-                  >
-                    <span
-                      className="flex-shrink-0 p-2 transition-colors"
-                      style={{ background: isActive ? 'rgba(205,176,121,0.2)' : '#18181b' }}
-                    >
-                      <Icon size={14} style={{ color: isActive ? '#cdb079' : '#71717a' }} />
-                    </span>
-                    <span className="font-semibold leading-snug">{label}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Recommendation card (dark — key resets state on intent change) ── */}
-        {recommended && (
-          <div key={recommended.meta.seriesTag}>
-            <RecommendationCard item={recommended} />
-          </div>
-        )}
-
-        {/* ── Journey (light) ───────────────────────────────────────────────── */}
-        {recommended && <JourneySection item={recommended} />}
-
-        {/* ── Keep exploring (light) ────────────────────────────────────────── */}
-        <KeepExploring allSeries={allSeries} />
-
-        {/* ── Lane shelves (light) ──────────────────────────────────────────── */}
-        {TEACHING_LANES.map((lane) => (
-          <LaneSection key={lane} lane={lane} allSeries={allSeries} />
-        ))}
-
+      <div className="h-1" style={{ background: '#E2DACE' }}>
+        <div className="h-full" style={{ width: `${pct}%`, background: '#B8892E' }} />
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { LibraryBig } from 'lucide-react'
 import { getAllTeaching, sortByDate, isPublished, formatDate, type TeachingFrontmatter } from '@/lib/content'
 import { TEACHING_SERIES, type TeachingLane } from '@/data/teaching-series'
 import SeriesExpander from '@/components/series-expander'
@@ -11,6 +10,11 @@ export const metadata: Metadata = {
   title: 'Theological Studies',
   description: 'Biblical theology, word studies, and topical series.',
 }
+
+const AMBER_STRIP = `
+  repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
+  repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
+`
 
 const TOPICAL_GROUPS: { lane: TeachingLane; description: string }[] = [
   {
@@ -36,99 +40,147 @@ export default function TopicalPage() {
   }
 
   const topicalMeta = TEACHING_SERIES.filter((s) => s.type === 'topical')
+  const totalSessions = all.length
 
   return (
-    <div className="pb-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-6 space-y-5">
-
-        {/* Header — stays dark */}
-        <section
-          className="border border-zinc-800 p-6 sm:p-8"
-          style={{ background: 'radial-gradient(circle at top left, #3f3f46, #09090b 55%)' }}
-        >
-          <Link href="/teaching" className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase text-zinc-500 hover:text-zinc-300 transition-colors mb-6">
-            ← Teaching
-          </Link>
-          <div className="inline-flex items-center gap-2 border border-zinc-800 px-3 py-1.5 mb-5" style={{ background: 'rgba(0,0,0,0.4)' }}>
-            <LibraryBig size={12} style={{ color: '#cdb079' }} />
-            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400">Topical</span>
+    <>
+      {/* ── Header ────────────────────────────────────────────────────────── */}
+      <div style={{ background: '#141210' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
+          <div
+            className="flex items-end justify-between gap-8 pb-10 border-b"
+            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+          >
+            <div>
+              <Link
+                href="/teaching"
+                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3 transition-colors hover:opacity-80"
+                style={{ color: '#B8892E' }}
+              >
+                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                Teaching
+              </Link>
+              <h1
+                className="leading-[1.1] tracking-tight"
+                style={{
+                  fontFamily: 'var(--font-cormorant)',
+                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
+                  fontWeight: 400,
+                  color: '#F9F6F0',
+                }}
+              >
+                Theological Studies
+              </h1>
+            </div>
+            <div
+              className="text-[0.75rem] tracking-[0.04em] pb-0.5 shrink-0"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
+            >
+              {totalSessions} sessions
+            </div>
           </div>
-          <h1
-            className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-white mb-4 max-w-xl"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
-          >
-            Theological Studies
-          </h1>
-          <p className="text-[15px] leading-relaxed text-zinc-400 max-w-xl">
-            Multi-part series on key biblical and theological topics — biblical theology, word studies,
-            and thematic studies designed for people who want to think carefully about Scripture.
-          </p>
-        </section>
 
-        {/* Choose by what you need — light */}
-        <section className="border border-zinc-200 bg-white p-6 sm:p-8">
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">Start here</p>
-          <h2
-            className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 mb-5"
-            style={{ fontFamily: 'var(--font-cormorant)' }}
+          <div className="py-7">
+            <p
+              className="text-[0.97rem] leading-[1.7] max-w-[580px]"
+              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
+            >
+              <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.72)' }}>
+                Multi-part series on key biblical and theological topics
+              </span>
+              {' '}— biblical theology, word studies, and thematic series for people who want to think carefully about Scripture.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Amber strip ───────────────────────────────────────────────────── */}
+      <div
+        className="h-[14px] w-full"
+        style={{ backgroundColor: '#7A5C1E', backgroundImage: AMBER_STRIP }}
+      />
+
+      {/* ── Start Here ────────────────────────────────────────────────────── */}
+      <div style={{ background: '#fff', borderBottom: '1px solid #E2DACE' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-10">
+          <div
+            className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-5"
+            style={{ color: '#7A5C1E' }}
           >
-            Choose by what you need.
-          </h2>
-          <div className="grid gap-3 sm:grid-cols-3">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            Jump to a series
+            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+          </div>
+          <div className="grid gap-2.5 sm:grid-cols-3">
             {topicalMeta.map((meta) => (
               <Link
                 key={meta.seriesTag}
                 href={`/teaching/topical/${meta.startHere}`}
-                className="group border border-zinc-200 bg-zinc-50 p-4 hover:border-zinc-300 transition-colors"
+                className="group p-4 transition-colors"
+                style={{ background: '#F9F6F0', border: '1px solid #E2DACE' }}
               >
-                <p className="text-[14px] font-bold text-zinc-900 mb-2 group-hover:text-[#7A5C1E] transition-colors" style={{ fontFamily: 'var(--font-cormorant)' }}>
+                <p
+                  className="text-[0.92rem] font-medium mb-1.5 leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                  style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714', fontSize: '1.05rem' }}
+                >
                   {meta.title}
                 </p>
-                <p className="text-[12px] leading-relaxed text-zinc-500">{meta.startHereNote}</p>
+                <p
+                  className="text-[0.78rem] leading-snug"
+                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                >
+                  {meta.startHereNote}
+                </p>
               </Link>
             ))}
           </div>
-        </section>
-
-        {/* Groups — light */}
-        {TOPICAL_GROUPS.map(({ lane, description }) => {
-          const laneSeries = topicalMeta.filter((s) => s.primaryLane === lane).sort((a, b) => a.priority - b.priority)
-          if (laneSeries.length === 0) return null
-          return (
-            <section key={lane} className="border border-zinc-200 bg-white p-6 sm:p-8">
-              <div className="flex items-center justify-between gap-4 mb-3">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-1">Shelf</p>
-                  <h2
-                    className="text-2xl font-bold leading-tight tracking-tight text-zinc-900"
-                    style={{ fontFamily: 'var(--font-cormorant)' }}
-                  >
-                    {lane}
-                  </h2>
-                </div>
-                <span className="text-[11px] text-zinc-400 border border-zinc-200 px-2.5 py-1 flex-shrink-0">
-                  {laneSeries.length} series
-                </span>
-              </div>
-              <p className="text-[13px] text-zinc-500 mb-6">{description}</p>
-              <div className="space-y-5">
-                {laneSeries.map((meta) => {
-                  const sessions = sessionMap.get(meta.seriesTag) ?? []
-                  const orderedSessions = [...sessions].reverse()
-                  return (
-                    <SeriesExpander
-                      key={meta.seriesTag}
-                      meta={meta}
-                      sessions={orderedSessions}
-                      type="topical"
-                    />
-                  )
-                })}
-              </div>
-            </section>
-          )
-        })}
+        </div>
       </div>
-    </div>
+
+      {/* ── Series ────────────────────────────────────────────────────────── */}
+      <div style={{ background: '#FAFAF7' }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 pb-20 space-y-14">
+          {TOPICAL_GROUPS.map(({ lane, description }) => {
+            const laneSeries = topicalMeta
+              .filter((s) => s.primaryLane === lane)
+              .sort((a, b) => a.priority - b.priority)
+            if (laneSeries.length === 0) return null
+            return (
+              <div key={lane}>
+                <div
+                  className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-3"
+                  style={{ color: '#9A9189' }}
+                >
+                  {lane}
+                  <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+                  <span style={{ color: '#9A9189' }}>{laneSeries.length} series</span>
+                </div>
+                <p
+                  className="text-[0.88rem] leading-relaxed mb-8"
+                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', fontStyle: 'italic' }}
+                >
+                  {description}
+                </p>
+                <div className="space-y-5">
+                  {laneSeries.map((meta) => {
+                    const sessions = sessionMap.get(meta.seriesTag) ?? []
+                    return (
+                      <SeriesExpander
+                        key={meta.seriesTag}
+                        meta={meta}
+                        sessions={[...sessions].reverse()}
+                        type="topical"
+                      />
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
   )
 }
