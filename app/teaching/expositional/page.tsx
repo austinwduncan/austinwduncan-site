@@ -1,92 +1,144 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
-import { getAllTeaching, sortByDate, isPublished, type TeachingFrontmatter } from '@/lib/content'
+import { getAllTeaching, sortByDate, isPublished, formatDate, type TeachingFrontmatter } from '@/lib/content'
+import { TEACHING_SERIES } from '@/data/teaching-series'
+import SeriesPanel, { type SessionPreview } from '@/components/series-panel'
 
 export const revalidate = 1800
 
 export const metadata: Metadata = {
-  title: 'Expositional Teaching',
-  description: 'Verse-by-verse book studies through the Bible.',
+  title: 'Bible Book Studies',
+  description: 'Verse-by-verse studies working through books of the Bible.',
 }
 
-function formatDate(dateStr?: string): string {
-  if (!dateStr) return ''
-  const [y, m, d] = dateStr.split('-').map(Number)
-  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
-  })
-}
+const OT_SERIES = ['The Book of Daniel', 'The Minor Prophets']
+const NT_SERIES = ['The Book of Hebrews']
 
 export default function ExpositionalPage() {
   const all = sortByDate(
     getAllTeaching<TeachingFrontmatter>('expositional').filter((a) => isPublished(a.frontmatter.date))
   )
 
-  // Group by series (last tag)
-  const seriesMap = new Map<string, typeof all>()
-  for (const item of all) {
-    const series = item.frontmatter.tags?.[item.frontmatter.tags.length - 1] ?? 'Other'
-    if (!seriesMap.has(series)) seriesMap.set(series, [])
-    seriesMap.get(series)!.push(item)
+  const sessionMap = new Map<string, SessionPreview[]>()
+  for (const { frontmatter: fm, slug } of all) {
+    const seriesTag = fm.tags?.[fm.tags.length - 1] ?? ''
+    if (!sessionMap.has(seriesTag)) sessionMap.set(seriesTag, [])
+    sessionMap.get(seriesTag)!.push({ slug, title: fm.title, date: formatDate(fm.date), type: 'expositional' })
   }
 
-  const seriesList = [...seriesMap.entries()]
+  const expositionalMeta = TEACHING_SERIES.filter((s) => s.type === 'expositional').sort(
+    (a, b) => a.priority - b.priority
+  )
+  const otSeries = expositionalMeta.filter((s) => OT_SERIES.includes(s.title))
+  const ntSeries = expositionalMeta.filter((s) => NT_SERIES.includes(s.title))
 
   return (
-    <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
-      <div className="mb-12">
-        <Link
-          href="/teaching"
-          className="text-[11px] tracking-wide uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
+    <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
+      <Link
+        href="/teaching"
+        className="text-[11px] tracking-wide uppercase text-zinc-400 hover:text-zinc-700 transition-colors"
+      >
+        ← Teaching
+      </Link>
+
+      <div className="mt-5 mb-12 max-w-xl">
+        <span
+          className="text-[10px] font-bold tracking-[0.22em] uppercase"
+          style={{ color: '#cdb079' }}
         >
-          ← Teaching
-        </Link>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900">
-          Expositional Series
+          Expositional
+        </span>
+        <h1
+          className="mt-2 text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-zinc-900"
+          style={{ fontFamily: 'var(--font-cormorant)' }}
+        >
+          Bible Book Studies
         </h1>
-        <p className="mt-3 text-base text-zinc-500 max-w-xl">
-          Verse-by-verse studies working through individual books of the Bible.
+        <p className="mt-4 text-[15px] text-zinc-500 leading-relaxed">
+          Verse-by-verse studies working through individual books and collections of the Bible — with
+          attention to original context, argument flow, and what it means for us.
         </p>
       </div>
 
-      <div className="space-y-14">
-        {seriesList.map(([seriesName, items]) => {
-          const cover = items.find((i) => i.frontmatter.image)?.frontmatter.image
-          return (
-            <div key={seriesName}>
-              <div className="flex items-center gap-3 mb-6 pb-3" style={{ borderBottom: '2px solid #cdb079' }}>
-                <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-zinc-900">
-                  {seriesName}
-                </span>
-                <span className="text-[11px] text-zinc-400">· {items.length} sessions</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
-                {items.map(({ frontmatter: fm, slug }) => (
-                  <Link key={slug} href={`/teaching/expositional/${slug}`} className="group border-t border-zinc-200 pt-5">
-                    {fm.image && (
-                      <div className="mb-4 overflow-hidden bg-zinc-100 aspect-[16/9]">
-                        <Image
-                          src={fm.image}
-                          alt=""
-                          width={400}
-                          height={225}
-                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <h3 className="text-[15px] font-semibold leading-snug text-zinc-900 group-hover:text-zinc-500 transition-colors mb-1.5">
-                      {fm.title}
-                    </h3>
-                    <p className="text-[12px] text-zinc-400">{formatDate(fm.date)}</p>
-                  </Link>
-                ))}
-              </div>
+      {/* Recommended starting points */}
+      <div className="mb-14">
+        <div
+          className="flex items-center gap-3 mb-6 pb-3"
+          style={{ borderBottom: '2px solid #cdb079' }}
+        >
+          <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+            Recommended Starting Points
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {expositionalMeta.map((meta) => (
+            <div key={meta.seriesTag} className="border-l-2 pl-4" style={{ borderColor: '#cdb079' }}>
+              <h3
+                className="text-[18px] font-bold leading-tight tracking-tight text-zinc-900 mb-1"
+                style={{ fontFamily: 'var(--font-cormorant)' }}
+              >
+                {meta.title}
+              </h3>
+              <p className="text-[13px] text-zinc-500 leading-relaxed mb-3">{meta.startHereNote}</p>
+              <Link
+                href={`/teaching/expositional/${meta.startHere}`}
+                className="text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity hover:opacity-70"
+                style={{ color: '#cdb079' }}
+              >
+                Begin →
+              </Link>
             </div>
-          )
-        })}
+          ))}
+        </div>
+      </div>
+
+      {/* Browse by Testament */}
+      <div className="space-y-14">
+        {otSeries.length > 0 && (
+          <div>
+            <div
+              className="flex items-center gap-3 mb-3 pb-3"
+              style={{ borderBottom: '2px solid #cdb079' }}
+            >
+              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+                Old Testament
+              </span>
+              <span className="text-[11px] text-zinc-400">— {otSeries.length} series</span>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {otSeries.map((meta) => (
+                <SeriesPanel
+                  key={meta.seriesTag}
+                  meta={meta}
+                  sessions={sessionMap.get(meta.seriesTag) ?? []}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {ntSeries.length > 0 && (
+          <div>
+            <div
+              className="flex items-center gap-3 mb-3 pb-3"
+              style={{ borderBottom: '2px solid #cdb079' }}
+            >
+              <span className="text-[12px] font-bold tracking-[0.22em] uppercase text-zinc-900">
+                New Testament
+              </span>
+              <span className="text-[11px] text-zinc-400">— {ntSeries.length} series</span>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {ntSeries.map((meta) => (
+                <SeriesPanel
+                  key={meta.seriesTag}
+                  meta={meta}
+                  sessions={sessionMap.get(meta.seriesTag) ?? []}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
