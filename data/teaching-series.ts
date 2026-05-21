@@ -4,6 +4,7 @@ export type TeachingLane = (typeof TEACHING_LANES)[number]
 export type SeriesStatus = 'Complete' | 'Ongoing'
 
 export type SeriesMetadata = {
+  slug: string             // URL slug for /teaching/series/[slug] landing page
   seriesTag: string        // matches the last tag in session frontmatter
   type: 'expositional' | 'topical'
   title: string
@@ -29,6 +30,7 @@ export type SeriesMetadata = {
 
 export const TEACHING_SERIES: SeriesMetadata[] = [
   {
+    slug: 'hebrews',
     seriesTag: 'The Book of Hebrews',
     type: 'expositional',
     title: 'The Book of Hebrews',
@@ -56,6 +58,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Expositional/The Book of Hebrews/1-4.jpg',
   },
   {
+    slug: 'daniel',
     seriesTag: 'The Book of Daniel',
     type: 'expositional',
     title: 'The Book of Daniel',
@@ -83,6 +86,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Expositional/The Book of Daniel/The Book of Daniel - Chapter 1.jpg',
   },
   {
+    slug: 'minor-prophets',
     seriesTag: 'The Minor Prophets',
     type: 'expositional',
     title: 'The Minor Prophets',
@@ -110,6 +114,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Expositional/The Minor Prophets/2 - Hosea.jpg',
   },
   {
+    slug: 'the-covenant',
     seriesTag: 'The Covenant',
     type: 'topical',
     title: 'The Covenant',
@@ -137,6 +142,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Topical/Covenant/The Covenant - Week 1.jpg',
   },
   {
+    slug: 'old-laws-new-life',
     seriesTag: 'Old Laws for a New Life',
     type: 'topical',
     title: 'Old Laws for a New Life',
@@ -164,6 +170,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Topical/Old Laws for a New Life/Commandment 1.jpg',
   },
   {
+    slug: 'words-that-change-everything',
     seriesTag: 'Words That Change Everything',
     type: 'topical',
     title: 'Words That Change Everything',
@@ -192,6 +199,10 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     image: '/images/Teaching Series/Topical/Words That Change Everything/wtce-w1.jpg',
   },
 ]
+
+export function getSeriesBySlug(slug: string): SeriesMetadata | undefined {
+  return TEACHING_SERIES.find((s) => s.slug === slug)
+}
 
 export function getSeriesByTag(tag: string): SeriesMetadata | undefined {
   return TEACHING_SERIES.find((s) => s.seriesTag === tag)

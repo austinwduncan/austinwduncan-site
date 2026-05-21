@@ -38,10 +38,17 @@ export default function SeriesExpander({
   const visible = open ? sessions : sessions.slice(0, 4)
 
   return (
-    <article
-      className="flex flex-col lg:flex-row"
-      style={{ background: '#fff', border: '1px solid #E2DACE' }}
-    >
+    <article style={{ background: '#fff', border: '1px solid #E2DACE' }}>
+      {/* Banner image — full width above columns */}
+      {meta.image && (
+        <div className="overflow-hidden" style={{ borderBottom: '1px solid #E2DACE' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={meta.image} alt="" className="w-full object-cover" style={{ aspectRatio: '3/1', display: 'block' }} />
+        </div>
+      )}
+
+      {/* Two-column body */}
+      <div className="flex flex-col lg:flex-row">
       {/* Left */}
       <div
         className="flex-1 p-6 sm:p-7 border-b lg:border-b-0 lg:border-r"
@@ -100,18 +107,18 @@ export default function SeriesExpander({
 
         <div className="flex flex-wrap items-center gap-4 mt-5">
           <Link
-            href={`/teaching/${type}/${meta.startHere}`}
+            href={`/teaching/series/${meta.slug}`}
             className="inline-flex items-center gap-2 px-5 py-2.5 text-[0.76rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
             style={{ background: '#7A5C1E' }}
           >
-            Start Series <ArrowRight size={12} />
+            Open Series <ArrowRight size={12} />
           </Link>
           <button
             onClick={() => setOpen(!open)}
             className="text-[0.76rem] font-medium pb-px border-b transition-colors hover:text-[#7A5C1E] hover:border-[#7A5C1E]"
             style={{ color: '#9A9189', borderColor: '#E2DACE' }}
           >
-            {open ? 'Hide sessions' : 'View sessions'}
+            {open ? 'Hide sessions' : 'Preview sessions'}
           </button>
         </div>
       </div>
@@ -181,6 +188,7 @@ export default function SeriesExpander({
             </button>
           )}
         </div>
+      </div>
       </div>
     </article>
   )
