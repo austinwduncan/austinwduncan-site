@@ -382,7 +382,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
             className="text-[0.85rem] leading-[1.65] mb-5 pl-3 border-l-2 italic"
             style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', borderColor: '#C8A96A' }}
           >
-            {meta.bestFor}
+            {meta.bestFor[0]}
           </p>
 
           {meta.status === 'Ongoing' && (
