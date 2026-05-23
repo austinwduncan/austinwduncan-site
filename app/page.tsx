@@ -11,12 +11,7 @@ import {
   type TeachingFrontmatter,
 } from '@/lib/content'
 import { FPTicker, type TickerItem } from '@/components/fp-ticker'
-import TeachingSeriesPicker, { type SeriesItem } from '@/components/teaching-series-picker'
-import BookCovers from '@/components/book-covers'
-import HomeHero from '@/components/home-hero'
-import HomeExplore, { type ExploreSection } from '@/components/home-explore'
-import ScrollReveal from '@/components/scroll-reveal'
-import rawBooks from '@/data/books.json'
+import { TEACHING_SERIES } from '@/data/teaching-series'
 
 export const revalidate = 1800
 
@@ -26,10 +21,7 @@ export const metadata: Metadata = {
     'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
 }
 
-const AMBER_STRIP = `
-  repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
-  repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
-`
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function fmt(dateStr: string): string {
   const [y, m, d] = dateStr.split('-').map(Number)
@@ -49,7 +41,100 @@ function clean(text?: string): string {
     .trim()
 }
 
-type BookPreview = { title: string; author: string; coverImageUrl?: string; recommendationLevel?: string; featured?: boolean }
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function SectionLabel({
+  label,
+  href,
+  count,
+}: {
+  label: string
+  href?: string
+  count?: number
+}) {
+  return (
+    <div
+      className="flex items-center gap-3 mb-5 pb-2.5"
+      style={{ borderBottom: '2px solid #B8892E' }}
+    >
+      <span
+        className="text-[0.72rem] font-black tracking-[0.22em] uppercase"
+        style={{ color: '#1A1714' }}
+      >
+        {label}
+      </span>
+      <div className="flex-1" />
+      {count !== undefined && (
+        <span className="text-[0.65rem]" style={{ color: '#9A9189' }}>
+          {count}
+        </span>
+      )}
+      {href && (
+        <Link
+          href={href}
+          className="flex items-center gap-1 text-[0.65rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#B8892E]"
+          style={{ color: '#9A9189' }}
+        >
+          All <ArrowRight size={9} />
+        </Link>
+      )}
+    </div>
+  )
+}
+
+function ArticleCard({
+  title,
+  href,
+  date,
+  image,
+  section,
+}: {
+  title: string
+  href: string
+  date: string
+  image?: string
+  section: string
+}) {
+  return (
+    <Link href={href} className="group flex flex-col">
+      <div
+        className="overflow-hidden mb-2.5"
+        style={{ aspectRatio: '16/9', background: '#F0EDE6' }}
+      >
+        {image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt=""
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        )}
+      </div>
+      <span
+        className="text-[0.55rem] font-bold tracking-[0.14em] uppercase inline-block mb-1.5 px-1.5 py-0.5 text-white self-start"
+        style={{ background: '#B8892E' }}
+      >
+        {section}
+      </span>
+      <h3
+        className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
+        style={{
+          fontFamily: 'var(--font-cormorant)',
+          fontSize: '1.05rem',
+          fontWeight: 700,
+          color: '#1A1714',
+        }}
+      >
+        {title}
+      </h3>
+      <p className="text-[0.68rem] mt-1" style={{ color: '#9A9189' }}>
+        {date}
+      </p>
+    </Link>
+  )
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
   const allSermons   = sortByDate(getAll<SermonFrontmatter>('sermons').filter(a => isPublished(a.frontmatter.date)))
@@ -66,314 +151,414 @@ export default function HomePage() {
       .map(a => ({ ...a, teachingType: 'topical' as const })),
   ])
 
-  // ── Teaching series ──────────────────────────────────────────────────────────
-  const seriesMap = new Map<string, SeriesItem>()
-  for (const { frontmatter: fm, slug, teachingType } of allTeachingRaw) {
-    const name = fm.tags?.[fm.tags.length - 1] ?? 'Teaching'
-    if (!seriesMap.has(name)) {
-      seriesMap.set(name, { name, image: fm.image, count: 0, slug, type: teachingType, excerpt: fm.excerpt ? clean(fm.excerpt) : undefined })
-    }
-    seriesMap.get(name)!.count++
-    if (fm.image && !seriesMap.get(name)!.image) seriesMap.get(name)!.image = fm.image
-  }
-  const seriesList: SeriesItem[] = [...seriesMap.values()]
-
   // ── Ticker ───────────────────────────────────────────────────────────────────
   const makeTickerItems = (
     items: { frontmatter: { title: string; date: string }; slug: string }[],
     base: string
   ): TickerItem[] =>
-    items.slice(0, 4).map(a => ({ title: a.frontmatter.title, date: fmt(a.frontmatter.date), slug: a.slug, href: `${base}/${a.slug}` }))
+    items.slice(0, 4).map(a => ({
+      title: a.frontmatter.title,
+      date: fmt(a.frontmatter.date),
+      slug: a.slug,
+      href: `${base}/${a.slug}`,
+    }))
 
   const tickerRaw: TickerItem[] = []
-  const s = makeTickerItems(allSermons, '/sermons')
-  const w = makeTickerItems(allWfw, '/word-for-word')
-  const f = makeTickerItems(allForum, '/forum-and-pulpit')
-  const e = makeTickerItems(allExegetica, '/exegetica')
-  const t = allTeachingRaw.slice(0, 4).map(a => ({ title: a.frontmatter.title, date: fmt(a.frontmatter.date), slug: a.slug, href: `/teaching/${a.teachingType}/${a.slug}` }))
-  const maxLen = Math.max(s.length, w.length, f.length, e.length, t.length)
+  const tS = makeTickerItems(allSermons, '/sermons')
+  const tW = makeTickerItems(allWfw, '/word-for-word')
+  const tF = makeTickerItems(allForum, '/forum-and-pulpit')
+  const tE = makeTickerItems(allExegetica, '/exegetica')
+  const tT = allTeachingRaw.slice(0, 4).map(a => ({
+    title: a.frontmatter.title,
+    date: fmt(a.frontmatter.date),
+    slug: a.slug,
+    href: `/teaching/${a.teachingType}/${a.slug}`,
+  }))
+  const maxLen = Math.max(tS.length, tW.length, tF.length, tE.length, tT.length)
   for (let i = 0; i < maxLen; i++) {
-    if (s[i]) tickerRaw.push(s[i])
-    if (w[i]) tickerRaw.push(w[i])
-    if (f[i]) tickerRaw.push(f[i])
-    if (e[i]) tickerRaw.push(e[i])
-    if (t[i]) tickerRaw.push(t[i])
+    if (tS[i]) tickerRaw.push(tS[i])
+    if (tW[i]) tickerRaw.push(tW[i])
+    if (tF[i]) tickerRaw.push(tF[i])
+    if (tE[i]) tickerRaw.push(tE[i])
+    if (tT[i]) tickerRaw.push(tT[i])
   }
 
-  // ── Hero data ────────────────────────────────────────────────────────────────
+  // ── Featured pieces ──────────────────────────────────────────────────────────
   const heroSermon = allSermons[0] ?? null
-  const totalArticles = allWfw.length + allExegetica.length + allForum.length
 
-  const heroStats = [
-    { label: 'Sermons', value: allSermons.length },
-    { label: 'Articles', value: totalArticles },
-    { label: 'Teaching Sessions', value: allTeachingRaw.length },
-    { label: 'Books Curated', value: 793 },
-  ]
-
-  // ── Explore sections ─────────────────────────────────────────────────────────
-  const exploreSections: ExploreSection[] = [
-    {
-      slug: 'sermons',
-      label: 'Sermons',
-      description: 'Weekly expository preaching through the Bible — available anytime, with scripture index.',
-      count: allSermons.length,
-      countLabel: 'messages',
-      href: '/sermons',
-    },
-    {
-      slug: 'word-for-word',
-      label: 'Word for Word',
-      description: 'Hard questions about Scripture answered clearly, without hedging or condescension.',
-      count: allWfw.length,
-      countLabel: 'articles',
-      href: '/word-for-word',
-    },
-    {
-      slug: 'teaching',
-      label: 'Bible Teaching',
-      description: 'Multi-part series working verse-by-verse through books and tracing themes across Scripture.',
-      count: allTeachingRaw.length,
-      countLabel: 'sessions',
-      href: '/teaching',
-    },
-    {
-      slug: 'exegetica',
-      label: 'Exegetica',
-      description: 'Detailed text studies with attention to Greek and Hebrew, argument flow, and historical context.',
-      count: allExegetica.length,
-      countLabel: 'studies',
-      href: '/exegetica',
-    },
-    {
-      slug: 'library',
-      label: 'Library',
-      description: 'Books curated for pastors, teachers, and serious readers — organized by topic and level.',
-      count: 793,
-      countLabel: 'books',
-      href: '/library',
-    },
-    {
-      slug: 'forum',
-      label: 'Forum & Pulpit',
-      description: 'Cultural commentary, pastoral reflection, and occasional provocation on faith and public life.',
-      count: allForum.length,
-      countLabel: 'pieces',
-      href: '/forum-and-pulpit',
-    },
-  ]
-
-  // ── Recently published ───────────────────────────────────────────────────────
-  const recentItems = [
-    allSermons[0] && {
-      section: 'Sermon',
-      title: allSermons[0].frontmatter.title,
-      href: `/sermons/${allSermons[0].slug}`,
-      date: fmt(allSermons[0].frontmatter.date),
-      excerpt: clean(allSermons[0].frontmatter.excerpt),
-      scripture: allSermons[0].frontmatter.scripture,
+  const dontMiss = [
+    allTeachingRaw[0] && {
+      section: 'Teaching',
+      title: allTeachingRaw[0].frontmatter.title,
+      href: `/teaching/${allTeachingRaw[0].teachingType}/${allTeachingRaw[0].slug}`,
+      date: fmt(allTeachingRaw[0].frontmatter.date),
+      image: allTeachingRaw[0].frontmatter.image,
     },
     allWfw[0] && {
       section: 'Word for Word',
       title: allWfw[0].frontmatter.title,
       href: `/word-for-word/${allWfw[0].slug}`,
       date: fmt(allWfw[0].frontmatter.date),
-      excerpt: clean(allWfw[0].frontmatter.excerpt),
+      image: allWfw[0].frontmatter.image,
     },
     allExegetica[0] && {
       section: 'Exegetica',
       title: allExegetica[0].frontmatter.title,
       href: `/exegetica/${allExegetica[0].slug}`,
       date: fmt(allExegetica[0].frontmatter.date),
-      excerpt: clean(allExegetica[0].frontmatter.excerpt),
+      image: allExegetica[0].frontmatter.image,
     },
     allForum[0] && {
       section: 'Forum & Pulpit',
       title: allForum[0].frontmatter.title,
       href: `/forum-and-pulpit/${allForum[0].slug}`,
       date: fmt(allForum[0].frontmatter.date),
-      excerpt: clean(allForum[0].frontmatter.excerpt),
+      image: allForum[0].frontmatter.image,
     },
-  ].filter(Boolean) as {
-    section: string; title: string; href: string; date: string; excerpt?: string; scripture?: string
-  }[]
+  ].filter(Boolean) as { section: string; title: string; href: string; date: string; image?: string }[]
 
-  // ── Books ────────────────────────────────────────────────────────────────────
-  const essentialBooks = (rawBooks as BookPreview[])
-    .filter(b => b.recommendationLevel === 'Essential' && b.coverImageUrl && b.featured)
+  const featuredSeries = TEACHING_SERIES
+    .filter(s => s.featured)
+    .sort((a, b) => a.priority - b.priority)
     .slice(0, 3)
-    .map(b => ({ title: b.title, author: b.author, coverImageUrl: b.coverImageUrl! }))
+
+  const sidebarSeries = TEACHING_SERIES
+    .sort((a, b) => a.priority - b.priority)
+    .slice(0, 5)
 
   return (
     <>
+      {/* ── Masthead ───────────────────────────────────────────────────────── */}
+      <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="flex items-baseline justify-between py-5">
+            <Link
+              href="/"
+              className="tracking-tight"
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                fontWeight: 600,
+                color: '#1A1714',
+              }}
+            >
+              Austin W. Duncan
+            </Link>
+            <p
+              className="hidden sm:block text-[0.68rem] font-medium tracking-[0.12em] uppercase"
+              style={{ color: '#9A9189' }}
+            >
+              Pastor · Teacher · Theologian
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* ── Ticker ─────────────────────────────────────────────────────────── */}
       {tickerRaw.length > 0 && <FPTicker items={tickerRaw} />}
 
-      {/* ── Hero ───────────────────────────────────────────────────────────── */}
-      <HomeHero
-        stats={heroStats}
-        primaryCtaHref={heroSermon ? `/sermons/${heroSermon.slug}` : '/sermons'}
-        primaryCtaLabel="Latest Sermon"
-        secondaryCtaHref="/teaching"
-        secondaryCtaLabel="Explore Bible Teaching"
-      />
+      {/* ── Editorial body ─────────────────────────────────────────────────── */}
+      <div style={{ background: '#FAFAF7' }}>
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-14 py-8 lg:py-10">
 
-      {/* ── Amber strip ────────────────────────────────────────────────────── */}
-      <div
-        className="h-[14px] w-full"
-        style={{ backgroundColor: '#7A5C1E', backgroundImage: AMBER_STRIP }}
-      />
+            {/* ── Main column ─────────────────────────────────────────────── */}
+            <main className="flex-1 min-w-0">
 
-      {/* ── Explore ────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-12 pb-10">
-          <div
-            className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-8"
-            style={{ color: '#7A5C1E' }}
-          >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            Explore the site
-            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-          </div>
-        </div>
-        <HomeExplore sections={exploreSections} />
-      </div>
-
-      {/* ── Recently published ─────────────────────────────────────────────── */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-14">
-          <ScrollReveal>
-            <div
-              className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-8"
-              style={{ color: '#9A9189' }}
-            >
-              Recently published
-              <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-              <span style={{ color: '#C8BFA8' }}>one from each section</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: '#E2DACE' }}>
-              {recentItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="group flex flex-col p-5 transition-colors hover:bg-[#F9F6F0]"
-                  style={{ background: '#fff' }}
-                >
-                  <div className="flex items-center gap-2 mb-3">
-                    <span
-                      className="text-[0.58rem] font-medium tracking-[0.12em] uppercase px-2 py-0.5"
-                      style={{ background: '#F2EFE7', color: '#7A5C1E', border: '1px solid #E2DACE' }}
+              {/* Featured sermon ──────────────────────────────────────────── */}
+              {heroSermon && (
+                <section className="mb-10">
+                  <SectionLabel label="Latest Sermon" href="/sermons" count={allSermons.length} />
+                  <Link href={`/sermons/${heroSermon.slug}`} className="group block">
+                    {heroSermon.frontmatter.image && (
+                      <div
+                        className="relative overflow-hidden mb-4"
+                        style={{ aspectRatio: '16/9', background: '#F0EDE6' }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={heroSermon.frontmatter.image}
+                          alt=""
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                        <span
+                          className="absolute top-3 left-3 text-[0.6rem] font-bold tracking-[0.14em] uppercase px-2 py-0.5 text-white"
+                          style={{ background: '#B8892E' }}
+                        >
+                          Sermon
+                        </span>
+                      </div>
+                    )}
+                    {heroSermon.frontmatter.scripture && (
+                      <p
+                        className="text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-2"
+                        style={{ color: '#B8892E' }}
+                      >
+                        {heroSermon.frontmatter.scripture}
+                      </p>
+                    )}
+                    <h2
+                      className="leading-[1.1] tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
+                      style={{
+                        fontFamily: 'var(--font-cormorant)',
+                        fontSize: 'clamp(1.9rem, 3.5vw, 2.7rem)',
+                        fontWeight: 700,
+                        color: '#1A1714',
+                      }}
                     >
-                      {item.section}
-                    </span>
-                    <span className="text-[0.68rem]" style={{ color: '#C8BFA8' }}>{item.date}</span>
+                      {heroSermon.frontmatter.title}
+                    </h2>
+                    {heroSermon.frontmatter.excerpt && (
+                      <p
+                        className="text-[0.9rem] leading-relaxed line-clamp-3 mb-4"
+                        style={{ fontFamily: 'var(--font-source-serif)', color: '#555' }}
+                      >
+                        {clean(heroSermon.frontmatter.excerpt)}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-4">
+                      <span
+                        className="flex items-center gap-1.5 text-[0.7rem] font-bold tracking-[0.14em] uppercase transition-opacity group-hover:opacity-70"
+                        style={{ color: '#B8892E' }}
+                      >
+                        Listen Now <ArrowRight size={11} />
+                      </span>
+                      <span className="text-[0.75rem]" style={{ color: '#9A9189' }}>
+                        {fmt(heroSermon.frontmatter.date)}
+                      </span>
+                    </div>
+                  </Link>
+                </section>
+              )}
+
+              {/* Don't Miss ───────────────────────────────────────────────── */}
+              {dontMiss.length > 0 && (
+                <section className="mb-10">
+                  <SectionLabel label="Don't Miss" />
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+                    {dontMiss.map((item) => (
+                      <ArticleCard key={item.href} {...item} />
+                    ))}
                   </div>
-                  {item.scripture && (
-                    <p className="text-[0.65rem] font-medium tracking-[0.08em] uppercase mb-1.5" style={{ color: '#B8892E' }}>
-                      {item.scripture}
-                    </p>
-                  )}
-                  <h3
-                    className="leading-snug mb-2 flex-1 transition-colors duration-150 group-hover:text-[#7A5C1E]"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: '1.1rem',
-                      fontWeight: 500,
-                      color: '#1A1714',
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  {item.excerpt && (
-                    <p
-                      className="text-[0.78rem] leading-[1.55] line-clamp-2"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                </section>
+              )}
+
+              {/* Teaching series ──────────────────────────────────────────── */}
+              {featuredSeries.length > 0 && (
+                <section className="mb-10">
+                  <SectionLabel label="Teaching Series" href="/teaching" />
+                  <div className="grid sm:grid-cols-3 gap-5">
+                    {featuredSeries.map((series) => (
+                      <Link
+                        key={series.slug}
+                        href={`/teaching/series/${series.slug}`}
+                        className="group"
+                      >
+                        {series.image && (
+                          <div
+                            className="overflow-hidden mb-2.5"
+                            style={{ aspectRatio: '3/1', background: '#F0EDE6' }}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={series.image}
+                              alt=""
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            />
+                          </div>
+                        )}
+                        <p
+                          className="text-[0.6rem] font-bold tracking-[0.12em] uppercase mb-0.5"
+                          style={{ color: '#B8892E' }}
+                        >
+                          {series.primaryLane}
+                        </p>
+                        <p
+                          className="font-bold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: '1.05rem',
+                            color: '#1A1714',
+                          }}
+                        >
+                          {series.title}
+                        </p>
+                        <p className="text-[0.65rem] mt-0.5" style={{ color: '#9A9189' }}>
+                          {series.totalSessions} sessions
+                          {series.status === 'Ongoing' ? ' · Ongoing' : ' · Complete'}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-5 pt-4" style={{ borderTop: '1px solid #E2DACE' }}>
+                    <Link
+                      href="/teaching"
+                      className="flex items-center gap-1.5 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#B8892E]"
+                      style={{ color: '#9A9189' }}
                     >
-                      {item.excerpt}
-                    </p>
-                  )}
+                      Browse all teaching series <ArrowRight size={10} />
+                    </Link>
+                  </div>
+                </section>
+              )}
+
+              {/* Word for Word ────────────────────────────────────────────── */}
+              {allWfw.length > 0 && (
+                <section className="mb-10">
+                  <SectionLabel label="Word for Word" href="/word-for-word" count={allWfw.length} />
                   <div
-                    className="mt-3 flex items-center gap-1 text-[0.7rem] font-medium tracking-[0.05em] uppercase transition-colors group-hover:text-[#7A5C1E]"
-                    style={{ color: '#C8BFA8' }}
+                    className="divide-y"
+                    style={{ borderColor: '#E2DACE' }}
                   >
-                    Read <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform" />
+                    {allWfw.slice(0, 7).map((article) => (
+                      <Link
+                        key={article.slug}
+                        href={`/word-for-word/${article.slug}`}
+                        className="group flex items-baseline gap-4 py-2.5"
+                      >
+                        <span
+                          className="shrink-0 text-[0.65rem] hidden sm:block"
+                          style={{ color: '#C8BFA8', minWidth: 80 }}
+                        >
+                          {fmt(article.frontmatter.date)}
+                        </span>
+                        <h3
+                          className="text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
+                        >
+                          {article.frontmatter.title}
+                        </h3>
+                        <ArrowRight
+                          size={11}
+                          className="shrink-0 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ color: '#B8892E' }}
+                        />
+                      </Link>
+                    ))}
                   </div>
-                </Link>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </div>
+                </section>
+              )}
 
-      {/* ── Teaching series ────────────────────────────────────────────────── */}
-      {seriesList.length > 0 && (
-        <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-14">
-            <ScrollReveal>
-              <div
-                className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-8"
-                style={{ color: '#9A9189' }}
-              >
-                Teaching series
-                <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-                <Link
-                  href="/teaching"
-                  className="flex items-center gap-1 transition-colors hover:text-[#7A5C1E]"
-                  style={{ color: '#C8BFA8' }}
-                >
-                  All series <ArrowRight size={10} />
-                </Link>
-              </div>
-              <TeachingSeriesPicker series={seriesList} />
-            </ScrollReveal>
-          </div>
-        </div>
-      )}
+              {/* Exegetica ───────────────────────────────────────────────── */}
+              {allExegetica.length > 0 && (
+                <section>
+                  <SectionLabel label="Exegetica" href="/exegetica" count={allExegetica.length} />
+                  <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
+                    {allExegetica.slice(0, 5).map((article) => (
+                      <Link
+                        key={article.slug}
+                        href={`/exegetica/${article.slug}`}
+                        className="group flex items-baseline gap-4 py-2.5"
+                      >
+                        <span
+                          className="shrink-0 text-[0.65rem] hidden sm:block"
+                          style={{ color: '#C8BFA8', minWidth: 80 }}
+                        >
+                          {fmt(article.frontmatter.date)}
+                        </span>
+                        <h3
+                          className="text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
+                        >
+                          {article.frontmatter.title}
+                        </h3>
+                        <ArrowRight
+                          size={11}
+                          className="shrink-0 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ color: '#B8892E' }}
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </main>
 
-      {/* ── Library ────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#141210', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
-          <ScrollReveal>
-            <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
+            {/* ── Sidebar ─────────────────────────────────────────────────── */}
+            <aside
+              className="lg:w-[260px] shrink-0 space-y-9 lg:sticky lg:top-6 lg:self-start"
+            >
+              {/* About ──────────────────────────────────────────────────── */}
               <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="inline-block h-px w-8" style={{ background: '#B8892E' }} />
-                  <span
-                    className="text-[0.65rem] font-medium tracking-[0.22em] uppercase"
-                    style={{ color: '#B8892E' }}
-                  >
-                    Library
-                  </span>
-                </div>
-                <h2
-                  className="leading-tight tracking-tight mb-4"
+                <SectionLabel label="About" href="/about" />
+                <p
+                  className="text-[0.85rem] leading-[1.75] mb-3"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(2rem, 3.5vw, 2.8rem)',
-                    fontWeight: 400,
-                    color: '#F9F6F0',
+                    fontFamily: 'var(--font-source-serif)',
+                    color: '#5A544C',
+                    fontStyle: 'italic',
                   }}
                 >
-                  Books Worth Your Time
-                </h2>
-                <p
-                  className="leading-relaxed mb-7 max-w-lg text-[0.92rem]"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.4)' }}
-                >
-                  793 books organized for Bible study, theology, pastoral ministry, and Christian formation.
-                  Curated for pastors, teachers, and serious readers.
+                  I&apos;m a pastor and Bible teacher at Crosswalk Church in Brentwood, TN. This site
+                  collects everything I&apos;m writing, preaching, and studying — for Christians who
+                  want to go deeper without it being made harder than it needs to be.
                 </p>
-                <div className="flex flex-wrap gap-2 mb-7">
-                  {['Bible Study', 'Theology', 'Pastoral', 'Church History', 'Apologetics', 'Christian Living'].map(cat => (
+                <Link
+                  href="/about"
+                  className="flex items-center gap-1 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
+                  style={{ color: '#B8892E' }}
+                >
+                  More about Austin <ArrowRight size={9} />
+                </Link>
+              </div>
+
+              {/* Series ─────────────────────────────────────────────────── */}
+              <div>
+                <SectionLabel label="Series" href="/teaching" />
+                <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
+                  {sidebarSeries.map((series) => (
+                    <Link
+                      key={series.slug}
+                      href={`/teaching/series/${series.slug}`}
+                      className="group flex items-start gap-3 py-2.5"
+                    >
+                      {series.image && (
+                        <div
+                          className="shrink-0 overflow-hidden"
+                          style={{ width: 48, aspectRatio: '3/1', background: '#F0EDE6' }}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={series.image}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p
+                          className="text-[0.85rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
+                        >
+                          {series.title}
+                        </p>
+                        <p className="text-[0.65rem] mt-0.5" style={{ color: '#9A9189' }}>
+                          {series.totalSessions} sessions
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Library ────────────────────────────────────────────────── */}
+              <div>
+                <SectionLabel label="Library" href="/library" />
+                <p
+                  className="text-[0.82rem] leading-[1.65] mb-3"
+                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                >
+                  793 books curated for pastors, teachers, and serious readers.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {['Bible Study', 'Theology', 'Pastoral', 'Church History'].map((cat) => (
                     <Link
                       key={cat}
                       href={`/library?category=${encodeURIComponent(cat)}`}
-                      className="text-[0.7rem] font-medium tracking-[0.08em] uppercase px-3 py-1.5 transition-colors hover:text-[#B8892E]"
+                      className="text-[0.6rem] font-medium tracking-[0.08em] uppercase px-2 py-0.5 transition-colors hover:text-[#B8892E] hover:border-[#B8892E]"
                       style={{
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        color: 'rgba(255,255,255,0.3)',
+                        border: '1px solid #E2DACE',
+                        color: '#9A9189',
                       }}
                     >
                       {cat}
@@ -382,105 +567,40 @@ export default function HomePage() {
                 </div>
                 <Link
                   href="/library"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-[0.8rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
-                  style={{ background: '#7A5C1E' }}
-                >
-                  Explore the Library <ArrowRight size={13} />
-                </Link>
-              </div>
-              {essentialBooks.length > 0 && <BookCovers books={essentialBooks} />}
-            </div>
-          </ScrollReveal>
-        </div>
-      </div>
-
-      {/* ── About ──────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#F9F6F0', borderTop: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
-          <ScrollReveal>
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
-              <div className="flex-1 max-w-xl">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="inline-block h-px w-8" style={{ background: '#B8892E' }} />
-                  <span
-                    className="text-[0.65rem] font-medium tracking-[0.18em] uppercase"
-                    style={{ color: '#B8892E' }}
-                  >
-                    About
-                  </span>
-                </div>
-                <h2
-                  className="leading-tight tracking-tight mb-4"
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(2rem, 3vw, 2.6rem)',
-                    fontWeight: 400,
-                    color: '#1A1714',
-                  }}
-                >
-                  I&apos;m Austin.
-                </h2>
-                <p
-                  className="leading-[1.75] mb-6 text-[0.95rem]"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                >
-                  I&apos;m a pastor and Bible teacher. This site is where I collect everything I&apos;m writing,
-                  preaching, and studying — sermons, multi-part teaching series, detailed text studies,
-                  cultural commentary, and a reading list I&apos;ve been building for years. The goal is
-                  simple: help Christians go deeper into the Bible without making it harder than it needs
-                  to be.
-                </p>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-1.5 text-[0.75rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
+                  className="flex items-center gap-1 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
                   style={{ color: '#B8892E' }}
                 >
-                  More about Austin <ArrowRight size={11} />
+                  Browse the library <ArrowRight size={9} />
                 </Link>
               </div>
 
-              {/* Where to start card */}
-              <div
-                className="lg:w-72 shrink-0 w-full"
-                style={{ border: '1px solid #E2DACE', background: '#fff' }}
-              >
-                <div className="px-5 py-3.5" style={{ borderBottom: '1px solid #E2DACE' }}>
-                  <p
-                    className="text-[0.62rem] font-medium tracking-[0.2em] uppercase"
-                    style={{ color: '#9A9189' }}
-                  >
-                    Not sure where to start?
-                  </p>
+              {/* Forum & Pulpit ─────────────────────────────────────────── */}
+              {allForum.length > 0 && (
+                <div>
+                  <SectionLabel label="Forum & Pulpit" href="/forum-and-pulpit" />
+                  <div className="space-y-3">
+                    {allForum.slice(0, 4).map((article) => (
+                      <Link
+                        key={article.slug}
+                        href={`/forum-and-pulpit/${article.slug}`}
+                        className="group block"
+                      >
+                        <p
+                          className="text-[0.85rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E] mb-0.5"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
+                        >
+                          {article.frontmatter.title}
+                        </p>
+                        <p className="text-[0.65rem]" style={{ color: '#C8BFA8' }}>
+                          {fmt(article.frontmatter.date)}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-                {[
-                  { label: 'I have a Bible question', section: 'Word for Word', href: '/word-for-word' },
-                  { label: 'I want to study more deeply', section: 'Exegetica', href: '/exegetica' },
-                  { label: 'I need a book recommendation', section: 'Library', href: '/library' },
-                  { label: 'I want to hear a sermon', section: 'Sermons', href: '/sermons' },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="group flex items-center justify-between px-5 py-3.5 transition-colors hover:bg-[#F9F6F0]"
-                    style={{ borderTop: '1px solid #F0EDE6' }}
-                  >
-                    <span
-                      className="text-[0.82rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                    >
-                      {item.label}
-                    </span>
-                    <span
-                      className="text-[0.62rem] font-medium tracking-[0.08em] uppercase shrink-0 ml-3 flex items-center gap-1 transition-colors group-hover:text-[#7A5C1E]"
-                      style={{ color: '#C8BFA8' }}
-                    >
-                      {item.section} <ArrowRight size={9} className="group-hover:translate-x-0.5 transition-transform" />
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+              )}
+            </aside>
+          </div>
         </div>
       </div>
     </>
