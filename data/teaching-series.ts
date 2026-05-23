@@ -55,7 +55,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     startHereNote: 'Start here for a Christ-centered New Testament study.',
     featured: true,
     priority: 1,
-    image: '/images/Teaching Series/Expositional/The Book of Hebrews/1-4.jpg',
+    image: '/images/Teaching Series/Expositional/The Book of Hebrews/the-book-of-hebrews-title-slide.jpg',
   },
   {
     slug: 'daniel',
@@ -83,7 +83,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     startHereNote: 'Start here for faithfulness, exile, kingdoms, and courage.',
     featured: true,
     priority: 2,
-    image: '/images/Teaching Series/Expositional/The Book of Daniel/The Book of Daniel - Chapter 1.jpg',
+    image: '/images/Teaching Series/Expositional/The Book of Daniel/The Book of Daniel - Title.jpg',
   },
   {
     slug: 'minor-prophets',
@@ -111,7 +111,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     startHereNote: 'Start here if you want to understand the prophets as more than scattered judgment speeches.',
     featured: true,
     priority: 3,
-    image: '/images/Teaching Series/Expositional/The Minor Prophets/2 - Hosea.jpg',
+    image: '/images/Teaching Series/Expositional/The Minor Prophets/1 - Introduction.jpg',
   },
   {
     slug: 'the-covenant',
@@ -139,7 +139,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     startHereNote: 'Start here if you want the Bible\'s storyline to make more sense.',
     featured: true,
     priority: 1,
-    image: '/images/Teaching Series/Topical/Covenant/The Covenant - Week 1.jpg',
+    image: '/images/Teaching Series/Topical/Covenant/The Covenant - Title.jpg',
   },
   {
     slug: 'old-laws-new-life',
@@ -167,7 +167,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     startHereNote: 'Start here if you want to understand what the Ten Commandments still mean for Christians.',
     featured: false,
     priority: 2,
-    image: '/images/Teaching Series/Topical/Old Laws for a New Life/Commandment 1.jpg',
+    image: '/images/Teaching Series/Topical/Old Laws for a New Life/Old Laws for a New Life Title.jpg',
   },
   {
     slug: 'words-that-change-everything',
