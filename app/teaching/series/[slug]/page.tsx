@@ -15,6 +15,7 @@ import {
   type TeachingFrontmatter,
 } from '@/lib/content'
 import SeriesRoadmap from '@/components/series-roadmap'
+import ScrollReveal from '@/components/scroll-reveal'
 
 export const revalidate = 1800
 
@@ -110,15 +111,19 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
             <Link href={laneHref} className="hover:text-[#B8892E] transition-colors">{meta.primaryLane}</Link>
           </div>
 
-          {/* Cover image */}
+          {/* Cover image — gradient bleeds into dark background below */}
           {meta.image && (
-            <div className="overflow-hidden mb-8 -mx-6 lg:-mx-8">
+            <div className="relative overflow-hidden mb-8 -mx-6 lg:-mx-8">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={meta.image}
                 alt=""
                 className="w-full object-cover"
-                style={{ aspectRatio: '3/1', display: 'block', maxHeight: '300px' }}
+                style={{ aspectRatio: '3/1', display: 'block', maxHeight: '360px' }}
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 pointer-events-none"
+                style={{ height: '55%', background: 'linear-gradient(to bottom, transparent, #141210)' }}
               />
             </div>
           )}
@@ -240,12 +245,13 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
       {/* ── Body ──────────────────────────────────────────────────────────── */}
       <div style={{ background: '#FAFAF7' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-12 lg:py-16 pb-24 lg:pb-20">
-          <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-14">
 
             {/* ── Main ──────────────────────────────────────────────────── */}
             <div className="flex-1 min-w-0 space-y-12">
 
               {/* Why this series */}
+              <ScrollReveal>
               <section>
                 <div
                   className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-6"
@@ -332,11 +338,13 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                   </div>
                 </div>
               </section>
+              </ScrollReveal>
 
               {/* Roadmap */}
+              <ScrollReveal delay={80}>
               <section id="roadmap">
                 <div
-                  className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-5"
+                  className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-4"
                   style={{ color: '#9A9189' }}
                 >
                   Series roadmap
@@ -349,15 +357,34 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                     {' '}published
                   </span>
                 </div>
+
+                {/* Progress bar for ongoing series */}
+                {meta.status === 'Ongoing' && (
+                  <div className="mb-6">
+                    <div className="h-1" style={{ background: '#E2DACE' }}>
+                      <div
+                        className="h-full"
+                        style={{
+                          width: `${Math.round((publishedSessions.length / meta.totalSessions) * 100)}%`,
+                          background: '#B8892E',
+                          transition: 'width 0.8s ease',
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <SeriesRoadmap
                   roadmap={meta.roadmap}
                   sessions={allSeriesSessions}
                   type={meta.type}
                 />
               </section>
+              </ScrollReveal>
 
               {/* How to use */}
               {meta.howToUse.length > 0 && (
+              <ScrollReveal delay={120}>
                 <section>
                   <div
                     className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-5"
@@ -386,11 +413,12 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                     </ul>
                   </div>
                 </section>
+              </ScrollReveal>
               )}
             </div>
 
             {/* ── Sidebar ───────────────────────────────────────────────── */}
-            <div className="lg:w-[272px] shrink-0 space-y-6">
+            <div className="lg:w-[272px] shrink-0 space-y-6 lg:sticky lg:top-6">
 
               {/* Start CTA card */}
               <div style={{ background: '#fff', border: '1px solid #E2DACE' }} className="p-5">
