@@ -409,12 +409,12 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     relatedSeries: ['the-covenant', 'hebrews'],
     recommendedBooks: [],
-    startHere: 'wtce-1-lost-in-translation',
+    startHere: '1-lost-in-translation',
     nextAfter: 'The Book of Hebrews',
     startHereNote: 'Start here if you like language, translation, and discovering what a word actually means.',
     featured: true,
     priority: 1,
-    image: '/images/Teaching Series/Topical/Words That Change Everything/wtce-title.jpg',
+    image: '/images/Teaching Series/Topical/Words That Change Everything/title.jpg',
   },
 ]
 
