@@ -54,8 +54,8 @@ function SectionLabel({
 }) {
   return (
     <div
-      className="flex items-center gap-3 mb-5 pb-2.5"
-      style={{ borderBottom: '2px solid #B8892E' }}
+      className="flex items-center gap-3 mb-5 pl-3.5"
+      style={{ borderLeft: '4px solid #B8892E' }}
     >
       <span
         className="text-[0.72rem] font-black tracking-[0.22em] uppercase"
@@ -98,7 +98,7 @@ function ArticleCard({
   return (
     <Link href={href} className="group flex flex-col">
       <div
-        className="overflow-hidden mb-2.5"
+        className="relative overflow-hidden mb-2.5"
         style={{ aspectRatio: '16/9', background: '#F0EDE6' }}
       >
         {image && (
@@ -109,13 +109,13 @@ function ArticleCard({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         )}
+        <span
+          className="absolute top-2 left-2 text-[0.5rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white"
+          style={{ background: '#B8892E' }}
+        >
+          {section}
+        </span>
       </div>
-      <span
-        className="text-[0.55rem] font-bold tracking-[0.14em] uppercase inline-block mb-1.5 px-1.5 py-0.5 text-white self-start"
-        style={{ background: '#B8892E' }}
-      >
-        {section}
-      </span>
       <h3
         className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
         style={{
@@ -228,34 +228,119 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ── Masthead ───────────────────────────────────────────────────────── */}
-      <div style={{ background: '#FAFAF7', borderBottom: '1px solid #E2DACE' }}>
-        <div className="mx-auto max-w-[1200px] px-5">
-          <div className="flex items-baseline justify-between py-5">
-            <Link
-              href="/"
-              className="tracking-tight"
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                fontWeight: 600,
-                color: '#1A1714',
-              }}
-            >
-              Austin W. Duncan
-            </Link>
-            <p
-              className="hidden sm:block text-[0.68rem] font-medium tracking-[0.12em] uppercase"
-              style={{ color: '#9A9189' }}
-            >
-              Pastor · Teacher · Theologian
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* ── Ticker ─────────────────────────────────────────────────────────── */}
       {tickerRaw.length > 0 && <FPTicker items={tickerRaw} />}
+
+      {/* ── Dark hero ──────────────────────────────────────────────────────── */}
+      {heroSermon && (
+        <section style={{ background: '#141210' }}>
+          <div className="mx-auto max-w-[1200px] px-5 py-10 lg:py-14">
+            <div className="flex flex-col-reverse lg:flex-row lg:items-center gap-8 lg:gap-14">
+
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <span className="inline-block h-px w-8 shrink-0" style={{ background: '#B8892E' }} />
+                  <span
+                    className="text-[0.6rem] font-bold tracking-[0.22em] uppercase"
+                    style={{ color: '#B8892E' }}
+                  >
+                    Latest Sermon
+                  </span>
+                </div>
+
+                {heroSermon.frontmatter.scripture && (
+                  <p
+                    className="text-[0.72rem] tracking-[0.12em] uppercase mb-4"
+                    style={{
+                      fontFamily: 'var(--font-source-serif)',
+                      color: 'rgba(255,255,255,0.28)',
+                    }}
+                  >
+                    {heroSermon.frontmatter.scripture}
+                  </p>
+                )}
+
+                <Link href={`/sermons/${heroSermon.slug}`} className="group block mb-5">
+                  <h2
+                    className="leading-[1.05] tracking-tight transition-colors duration-300 group-hover:text-[#C8A96A]"
+                    style={{
+                      fontFamily: 'var(--font-cormorant)',
+                      fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
+                      fontWeight: 700,
+                      color: '#F9F6F0',
+                    }}
+                  >
+                    {heroSermon.frontmatter.title}
+                  </h2>
+                </Link>
+
+                {heroSermon.frontmatter.excerpt && (
+                  <p
+                    className="leading-[1.75] mb-8 line-clamp-2"
+                    style={{
+                      fontFamily: 'var(--font-source-serif)',
+                      fontSize: '0.9rem',
+                      color: 'rgba(255,255,255,0.38)',
+                    }}
+                  >
+                    {clean(heroSermon.frontmatter.excerpt)}
+                  </p>
+                )}
+
+                <div className="flex items-center gap-6">
+                  <Link
+                    href={`/sermons/${heroSermon.slug}`}
+                    className="flex items-center gap-2 text-[0.7rem] font-bold tracking-[0.16em] uppercase transition-opacity hover:opacity-70"
+                    style={{ color: '#B8892E' }}
+                  >
+                    Listen Now <ArrowRight size={11} />
+                  </Link>
+                  <span
+                    className="text-[0.68rem]"
+                    style={{ color: 'rgba(255,255,255,0.18)' }}
+                  >
+                    {fmt(heroSermon.frontmatter.date)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Image */}
+              {heroSermon.frontmatter.image && (
+                <Link
+                  href={`/sermons/${heroSermon.slug}`}
+                  className="group relative lg:w-[48%] shrink-0 overflow-hidden block"
+                  style={{ background: '#1E1B18' }}
+                >
+                  <div style={{ aspectRatio: '16/10' }} className="overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={heroSermon.frontmatter.image}
+                      alt=""
+                      className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  {/* left-edge vignette blends image into dark background */}
+                  <div
+                    className="absolute inset-0 pointer-events-none hidden lg:block"
+                    style={{
+                      background: 'linear-gradient(to right, #141210 0%, transparent 28%)',
+                    }}
+                  />
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Amber bottom rule */}
+          <div
+            style={{
+              height: 2,
+              background: 'linear-gradient(to right, #B8892E 35%, transparent)',
+            }}
+          />
+        </section>
+      )}
 
       {/* ── Editorial body ─────────────────────────────────────────────────── */}
       <div style={{ background: '#FAFAF7' }}>
@@ -265,80 +350,101 @@ export default function HomePage() {
             {/* ── Main column ─────────────────────────────────────────────── */}
             <main className="flex-1 min-w-0">
 
-              {/* Featured sermon ──────────────────────────────────────────── */}
-              {heroSermon && (
-                <section className="mb-10">
-                  <SectionLabel label="Latest Sermon" href="/sermons" count={allSermons.length} />
-                  <Link href={`/sermons/${heroSermon.slug}`} className="group block">
-                    {heroSermon.frontmatter.image && (
-                      <div
-                        className="relative overflow-hidden mb-4"
-                        style={{ aspectRatio: '16/9', background: '#F0EDE6' }}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={heroSermon.frontmatter.image}
-                          alt=""
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                        <span
-                          className="absolute top-3 left-3 text-[0.6rem] font-bold tracking-[0.14em] uppercase px-2 py-0.5 text-white"
-                          style={{ background: '#B8892E' }}
-                        >
-                          Sermon
-                        </span>
-                      </div>
-                    )}
-                    {heroSermon.frontmatter.scripture && (
-                      <p
-                        className="text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-2"
-                        style={{ color: '#B8892E' }}
-                      >
-                        {heroSermon.frontmatter.scripture}
-                      </p>
-                    )}
-                    <h2
-                      className="leading-[1.1] tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
-                      style={{
-                        fontFamily: 'var(--font-cormorant)',
-                        fontSize: 'clamp(1.9rem, 3.5vw, 2.7rem)',
-                        fontWeight: 700,
-                        color: '#1A1714',
-                      }}
-                    >
-                      {heroSermon.frontmatter.title}
-                    </h2>
-                    {heroSermon.frontmatter.excerpt && (
-                      <p
-                        className="text-[0.9rem] leading-relaxed line-clamp-3 mb-4"
-                        style={{ fontFamily: 'var(--font-source-serif)', color: '#555' }}
-                      >
-                        {clean(heroSermon.frontmatter.excerpt)}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-4">
-                      <span
-                        className="flex items-center gap-1.5 text-[0.7rem] font-bold tracking-[0.14em] uppercase transition-opacity group-hover:opacity-70"
-                        style={{ color: '#B8892E' }}
-                      >
-                        Listen Now <ArrowRight size={11} />
-                      </span>
-                      <span className="text-[0.75rem]" style={{ color: '#9A9189' }}>
-                        {fmt(heroSermon.frontmatter.date)}
-                      </span>
-                    </div>
-                  </Link>
-                </section>
-              )}
-
-              {/* Don't Miss ───────────────────────────────────────────────── */}
+              {/* Don't Miss — 1 large + 3 stacked small ─────────────────── */}
               {dontMiss.length > 0 && (
                 <section className="mb-10">
                   <SectionLabel label="Don't Miss" />
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-                    {dontMiss.map((item) => (
-                      <ArticleCard key={item.href} {...item} />
-                    ))}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+
+                    {/* Large card */}
+                    {dontMiss[0] && (
+                      <Link
+                        href={dontMiss[0].href}
+                        className="group lg:w-[55%] shrink-0 flex flex-col"
+                      >
+                        <div
+                          className="relative overflow-hidden mb-3"
+                          style={{ aspectRatio: '4/3', background: '#F0EDE6' }}
+                        >
+                          {dontMiss[0].image && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={dontMiss[0].image}
+                              alt=""
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            />
+                          )}
+                          <span
+                            className="absolute top-2 left-2 text-[0.55rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white"
+                            style={{ background: '#B8892E' }}
+                          >
+                            {dontMiss[0].section}
+                          </span>
+                        </div>
+                        <h3
+                          className="leading-[1.1] tracking-tight mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{
+                            fontFamily: 'var(--font-cormorant)',
+                            fontSize: 'clamp(1.35rem, 2.5vw, 1.8rem)',
+                            fontWeight: 700,
+                            color: '#1A1714',
+                          }}
+                        >
+                          {dontMiss[0].title}
+                        </h3>
+                        <p className="text-[0.68rem]" style={{ color: '#9A9189' }}>
+                          {dontMiss[0].date}
+                        </p>
+                      </Link>
+                    )}
+
+                    {/* Vertical divider */}
+                    <div
+                      className="hidden lg:block w-px shrink-0 self-stretch"
+                      style={{ background: '#E2DACE' }}
+                    />
+
+                    {/* Stacked small cards */}
+                    <div className="flex-1 divide-y" style={{ borderColor: '#E2DACE' }}>
+                      {dontMiss.slice(1).map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="group flex items-start gap-3 py-3.5 first:pt-0"
+                        >
+                          {item.image && (
+                            <div
+                              className="shrink-0 overflow-hidden"
+                              style={{ width: 80, aspectRatio: '16/9', background: '#F0EDE6' }}
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={item.image}
+                                alt=""
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              />
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <span
+                              className="text-[0.5rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white inline-block mb-1.5"
+                              style={{ background: '#B8892E' }}
+                            >
+                              {item.section}
+                            </span>
+                            <p
+                              className="text-[0.9rem] font-bold leading-snug transition-colors group-hover:text-[#7A5C1E] line-clamp-2 mb-0.5"
+                              style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
+                            >
+                              {item.title}
+                            </p>
+                            <p className="text-[0.63rem]" style={{ color: '#C8BFA8' }}>
+                              {item.date}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </section>
               )}
@@ -347,7 +453,7 @@ export default function HomePage() {
               {featuredSeries.length > 0 && (
                 <section className="mb-10">
                   <SectionLabel label="Teaching Series" href="/teaching" />
-                  <div className="grid sm:grid-cols-3 gap-5">
+                  <div className="grid sm:grid-cols-3 gap-5 lg:gap-6">
                     {featuredSeries.map((series) => (
                       <Link
                         key={series.slug}
@@ -356,7 +462,7 @@ export default function HomePage() {
                       >
                         {series.image && (
                           <div
-                            className="overflow-hidden mb-2.5"
+                            className="relative overflow-hidden mb-2.5"
                             style={{ aspectRatio: '3/1', background: '#F0EDE6' }}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -364,6 +470,11 @@ export default function HomePage() {
                               src={series.image}
                               alt=""
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            />
+                            {/* Dark overlay on hover */}
+                            <div
+                              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                              style={{ background: 'rgba(122,92,30,0.15)' }}
                             />
                           </div>
                         )}
@@ -374,16 +485,24 @@ export default function HomePage() {
                           {series.primaryLane}
                         </p>
                         <p
-                          className="font-bold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          className="font-bold leading-snug mb-1 transition-colors group-hover:text-[#7A5C1E]"
                           style={{
                             fontFamily: 'var(--font-cormorant)',
-                            fontSize: '1.05rem',
+                            fontSize: '1.08rem',
                             color: '#1A1714',
                           }}
                         >
                           {series.title}
                         </p>
-                        <p className="text-[0.65rem] mt-0.5" style={{ color: '#9A9189' }}>
+                        {'subtitle' in series && (series as { subtitle?: string }).subtitle && (
+                          <p
+                            className="text-[0.75rem] leading-[1.5] mb-1 line-clamp-2"
+                            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                          >
+                            {(series as { subtitle?: string }).subtitle}
+                          </p>
+                        )}
+                        <p className="text-[0.65rem]" style={{ color: '#C8BFA8' }}>
                           {series.totalSessions} sessions
                           {series.status === 'Ongoing' ? ' · Ongoing' : ' · Complete'}
                         </p>
@@ -402,20 +521,23 @@ export default function HomePage() {
                 </section>
               )}
 
-              {/* Word for Word ────────────────────────────────────────────── */}
+              {/* Word for Word — numbered list ───────────────────────────── */}
               {allWfw.length > 0 && (
                 <section className="mb-10">
                   <SectionLabel label="Word for Word" href="/word-for-word" count={allWfw.length} />
-                  <div
-                    className="divide-y"
-                    style={{ borderColor: '#E2DACE' }}
-                  >
-                    {allWfw.slice(0, 7).map((article) => (
+                  <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
+                    {allWfw.slice(0, 7).map((article, i) => (
                       <Link
                         key={article.slug}
                         href={`/word-for-word/${article.slug}`}
                         className="group flex items-baseline gap-4 py-2.5"
                       >
+                        <span
+                          className="shrink-0 w-5 text-right text-[0.7rem] font-bold leading-none tabular-nums"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#D4C4A0' }}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
                         <span
                           className="shrink-0 text-[0.65rem] hidden sm:block"
                           style={{ color: '#C8BFA8', minWidth: 80 }}
@@ -423,7 +545,7 @@ export default function HomePage() {
                           {fmt(article.frontmatter.date)}
                         </span>
                         <h3
-                          className="text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          className="flex-1 text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
                           style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
                         >
                           {article.frontmatter.title}
@@ -439,17 +561,23 @@ export default function HomePage() {
                 </section>
               )}
 
-              {/* Exegetica ───────────────────────────────────────────────── */}
+              {/* Exegetica — numbered list ───────────────────────────────── */}
               {allExegetica.length > 0 && (
                 <section>
                   <SectionLabel label="Exegetica" href="/exegetica" count={allExegetica.length} />
                   <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
-                    {allExegetica.slice(0, 5).map((article) => (
+                    {allExegetica.slice(0, 5).map((article, i) => (
                       <Link
                         key={article.slug}
                         href={`/exegetica/${article.slug}`}
                         className="group flex items-baseline gap-4 py-2.5"
                       >
+                        <span
+                          className="shrink-0 w-5 text-right text-[0.7rem] font-bold leading-none tabular-nums"
+                          style={{ fontFamily: 'var(--font-cormorant)', color: '#D4C4A0' }}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
                         <span
                           className="shrink-0 text-[0.65rem] hidden sm:block"
                           style={{ color: '#C8BFA8', minWidth: 80 }}
@@ -457,7 +585,7 @@ export default function HomePage() {
                           {fmt(article.frontmatter.date)}
                         </span>
                         <h3
-                          className="text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                          className="flex-1 text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
                           style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
                         >
                           {article.frontmatter.title}
@@ -475,12 +603,18 @@ export default function HomePage() {
             </main>
 
             {/* ── Sidebar ─────────────────────────────────────────────────── */}
-            <aside
-              className="lg:w-[260px] shrink-0 space-y-9 lg:sticky lg:top-6 lg:self-start"
-            >
+            <aside className="lg:w-[260px] shrink-0 space-y-9 lg:sticky lg:top-6 lg:self-start">
+
               {/* About ──────────────────────────────────────────────────── */}
               <div>
                 <SectionLabel label="About" href="/about" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/Headshots/Austin Duncan Headshot.jpg"
+                  alt="Austin W. Duncan"
+                  className="w-full mb-3 object-cover object-top"
+                  style={{ aspectRatio: '4/3' }}
+                />
                 <p
                   className="text-[0.85rem] leading-[1.75] mb-3"
                   style={{
@@ -556,10 +690,7 @@ export default function HomePage() {
                       key={cat}
                       href={`/library?category=${encodeURIComponent(cat)}`}
                       className="text-[0.6rem] font-medium tracking-[0.08em] uppercase px-2 py-0.5 transition-colors hover:text-[#B8892E] hover:border-[#B8892E]"
-                      style={{
-                        border: '1px solid #E2DACE',
-                        color: '#9A9189',
-                      }}
+                      style={{ border: '1px solid #E2DACE', color: '#9A9189' }}
                     >
                       {cat}
                     </Link>
