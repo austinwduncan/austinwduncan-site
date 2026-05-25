@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Downloads and processes MorphGNT + Mounce lexicon into the TSV files
-# the Rust crate embeds at compile time.
+# Downloads MorphGNT + STEPBible TBESG (Abbott-Smith/Tyndale) lexicon data.
+# Data created by STEPBible.org, CC BY 4.0 — credit: Tyndale House Cambridge.
 # Run once from the repo root: bash greek-morph/fetch-data.sh
 
 set -e
@@ -10,7 +10,6 @@ echo "→ Fetching MorphGNT (morphgnt/sblgnt)..."
 
 MORPHGNT_BASE="https://raw.githubusercontent.com/morphgnt/sblgnt/master"
 
-# File names in morphgnt/sblgnt repo (note different abbreviations from old repo)
 books=(
   "61-Mt" "62-Mk" "63-Lk" "64-Jn" "65-Ac"
   "66-Ro" "67-1Co" "68-2Co" "69-Ga" "70-Eph"
@@ -25,8 +24,6 @@ books=(
 for book in "${books[@]}"; do
   url="${MORPHGNT_BASE}/${book}-morphgnt.txt"
   echo "  Fetching ${book}..."
-  # Format: bcv POS parsing word word_clean normalized lemma  (7 space-separated cols)
-  # We want: normalized \t lemma \t pos \t parsing
   curl -s "$url" | awk '
     NF==7 {
       normalized=$6; lemma=$7; pos=$2; parsing=$3
@@ -37,71 +34,138 @@ done
 
 echo "→ MorphGNT: $(wc -l < morphgnt.tsv) word instances"
 
-echo "→ Fetching Mounce lexicon (eliranwong/SBLGNT-add-ons)..."
+echo "→ Fetching STEPBible TBESG (Abbott-Smith, CC BY)..."
 
-# Tab-separated: lemma \t xml_definition \t brief_gloss \t empty \t transliteration
-# We extract col 0 (lemma) and col 2 (brief gloss), fallback to <gl>...</gl> in col 1
-curl -s "https://raw.githubusercontent.com/eliranwong/SBLGNT-add-ons/master/re-shape_Mounce_dictionary/formatted_by_Oleg_for_MyBible.csv" \
-  | python3 -c "
-import sys, re
+TBESG_URL="https://raw.githubusercontent.com/STEPBible/STEPBible-Data/master/Lexicons/TBESG%20-%20Translators%20Brief%20lexicon%20of%20Extended%20Strongs%20for%20Greek%20-%20STEPBible.org%20CC%20BY.txt"
+
+curl -s "$TBESG_URL" | python3 -c "
+import sys, re, unicodedata
+
+def normalize(w):
+    # Match Rust: NFD grave->acute, then NFC lowercase
+    nfd = unicodedata.normalize('NFD', w)
+    nfd = nfd.replace('̀', '́')
+    return unicodedata.normalize('NFC', nfd).lower()
+
+def extract_short_def(html):
+    # Remove the entry header (everything up to first <BR />)
+    html = re.sub(r'^.*?<BR\s*/?>', '', html, count=1, flags=re.DOTALL)
+    # Remove LXX/OT references in square brackets
+    html = re.sub(r'\[.*?\]', '', html, flags=re.DOTALL)
+    # Strip HTML tags
+    text = re.sub(r'<[^>]+>', ' ', html)
+    # Remove subsection markers but keep their text
+    text = re.sub(r'__[IVX]+\.?\s*', '', text)
+    text = re.sub(r'__\d+\.?\s*', '', text)
+    text = re.sub(r'__\([a-z]\)\s*', '', text)
+    # Clean whitespace
+    text = ' '.join(text.split()).strip()
+    # Fix space before punctuation artifacts
+    text = re.sub(r'\s+([.,;])', r'\1', text)
+    text = text.lstrip('.,;: ')
+    # Truncate at first sentence boundary
+    m = re.search(r'(?<=[a-z])\.\s+[A-Z]|(?<=[a-z])\.\s*$', text)
+    if m and m.start() > 10:
+        text = text[:m.start()+1]
+    if len(text) > 200:
+        text = text[:200].rsplit(' ', 1)[0]
+    return text.strip()
+
+seen = set()
 for line in sys.stdin:
     parts = line.rstrip('\n').split('\t')
-    if len(parts) < 2:
+    if len(parts) < 7:
         continue
-    lemma = parts[0].strip()
-    if not lemma:
+    estrong = parts[0].strip()
+    # Only process actual lexicon entries (G-number lines)
+    if not re.match(r'^G\d+$', estrong):
         continue
-    # prefer brief gloss in col 2
-    gloss = parts[2].strip() if len(parts) > 2 else ''
-    # fallback: extract from <gl>...</gl> in col 1
-    if not gloss and len(parts) > 1:
-        m = re.search(r'<gl>(.*?)</gl>', parts[1])
-        if m:
-            gloss = m.group(1).strip()
-    if gloss:
-        print(lemma + '\t' + gloss)
+
+    greek_col = parts[3].strip() if len(parts) > 3 else ''
+    if not greek_col:
+        continue
+
+    # Primary lemma: first token before comma or space
+    primary = re.split(r'[\s,]', greek_col)[0].strip()
+    if not primary:
+        continue
+
+    key = normalize(primary)
+    if key in seen:
+        continue
+    seen.add(key)
+
+    gloss = parts[6].strip() if len(parts) > 6 else ''
+    if not gloss:
+        continue
+
+    full_def = parts[7].strip() if len(parts) > 7 else ''
+    short_def = extract_short_def(full_def) if full_def else ''
+
+    print(primary + '\t' + gloss + '\t' + short_def)
 " > dodson.tsv
 
-# Supplement: high-frequency NT words missing from Mounce CSV
-cat >> dodson.tsv << 'SUPPLEMENT'
-δέ	but, and, now
-ἐν	in, on, among
-εἰμί	to be, exist
-ὅς	who, which, that
-οὗτος	this, these
-τίς	who? what? which?
-ἤ	or, than
-τέ	and, both
-οὕτως	thus, in this way, so
-μέν	on the one hand, indeed
-ἄλλος	other, another
-πρῶτος	first
-πορεύομαι	to go, travel, live
-ὅλος	whole, all, entire
-πῶς	how? in what way?
-καλός	good, beautiful, noble
-ἕτερος	other, different
-δίκαιος	righteous, just
-ἔσχατος	last, final
-κακός	bad, evil
-ἄρα	then, therefore, so
-ἔρημος	wilderness, desert; desolate
-ὅμοιος	like, similar
-μέρος	part, share, region
-ἄξιος	worthy, deserving
-ὀλίγος	little, few, small
-ἔξεστιν	it is lawful, permitted
-προσκαλέομαι	to call to oneself, summon
-ποτέ	once, formerly, ever
-πλούσιος	rich, wealthy
-αἱρέομαι	to choose, prefer
-βουλεύομαι	to deliberate, plan
-γνήσιος	genuine, true, sincere
-ὅμοιος	similar, like
-ἕτερος	other, another
-ἄξιος	worthy, fitting
-ποτέ	at some time, once, ever
-SUPPLEMENT
+echo "→ TBESG lexicon: $(wc -l < dodson.tsv) lemmas"
 
-echo "→ Mounce lexicon: $(wc -l < dodson.tsv) lemmas"
+# Supplement: high-frequency NT words not in TBESG
+python3 -c "
+import unicodedata
+
+def normalize(w):
+    nfd = unicodedata.normalize('NFD', w)
+    nfd = nfd.replace('̀', '́')
+    return unicodedata.normalize('NFC', nfd).lower()
+
+covered = set()
+with open('dodson.tsv') as f:
+    for line in f:
+        parts = line.strip().split('\t')
+        if parts:
+            covered.add(normalize(parts[0]))
+
+supplement = [
+    ('δέ',   'but, and',   'conjunction connecting clauses; marks contrast, continuation, or transition'),
+    ('ἐν',   'in',         'preposition of location, sphere, or means; used with dative'),
+    ('εἰμί', 'to be',      'copulative verb linking subject to predicate; also verb of existence'),
+    ('ὅς',   'who, which', 'relative pronoun introducing subordinate clauses'),
+    ('οὗτος','this',       'demonstrative pronoun pointing to what is near or just mentioned'),
+    ('τίς',  'who? what?', 'interrogative pronoun asking for identity or nature'),
+    ('ἤ',    'or, than',   'disjunctive particle offering alternatives or making comparisons'),
+    ('τέ',   'and',        'enclitic particle closely joining two elements'),
+    ('οὕτως','thus, so',   'adverb of manner; in this way, as follows'),
+    ('μέν',  'indeed',     'particle often paired with δέ to contrast two clauses'),
+    ('ἄλλος','other',      'other of the same kind, another; contrast with ἕτερος (different kind)'),
+    ('πρῶτος','first',     'first in time, order, or rank'),
+    ('πορεύομαι','to go',  'to travel, journey; in ethical contexts, to conduct oneself'),
+    ('ὅλος', 'whole',      'whole, entire, all; used of undivided totality'),
+    ('πῶς',  'how',        'interrogative or indirect adverb of manner'),
+    ('καλός','good',       'good in the sense of admirable, noble, beautiful; outward excellence'),
+    ('ἕτερος','another',   'other of a different kind; contrast with ἄλλος'),
+    ('δίκαιος','righteous','conforming to the divine standard; just, upright'),
+    ('ἔσχατος','last',     'last in position, time, or rank; the final state'),
+    ('κακός','evil',       'bad, evil, harmful; moral or practical badness'),
+    ('ἄρα',  'therefore',  'inferential particle: so then, consequently'),
+    ('ἔρημος','wilderness','desert, uninhabited region; also desolate, abandoned'),
+    ('ὅμοιος','like',      'like, similar, resembling; used in comparisons'),
+    ('μέρος','part',       'a part, share, or portion; also region or side'),
+    ('ἄξιος','worthy',     'worthy, deserving, of equal weight; used of persons and things'),
+    ('ὀλίγος','few',       'little, small, few; often contrasted with πολύς'),
+    ('ἔξεστιν','it is lawful','it is permitted, allowed; impersonal verb'),
+    ('προσκαλέομαι','to call','to call to oneself, summon; used of Jesus calling disciples'),
+    ('ποτέ', 'once',       'at some time, once, formerly; also ever'),
+    ('πλούσιος','rich',    'wealthy, rich; used literally and of spiritual abundance'),
+    ('αἱρέομαι','to choose','to take, choose, prefer; middle voice of αἱρέω'),
+    ('βουλεύομαι','to plan','to deliberate, plan, resolve'),
+    ('γνήσιος','genuine',  'genuine, true, born in wedlock; used of sincere faith or affection'),
+]
+
+for lemma, gloss, short_def in supplement:
+    key = normalize(lemma)
+    if key not in covered:
+        print(lemma + '\t' + gloss + '\t' + short_def)
+        covered.add(key)
+" >> dodson.tsv
+
+echo "→ Final lexicon: $(wc -l < dodson.tsv) lemmas"
 echo "✓ Data ready. Run: cd greek-morph && ~/.cargo/bin/wasm-pack build --target web --out-dir ../public/greek-morph"
+echo "  Attribution: Lexicon data © STEPBible.org / Tyndale House Cambridge, CC BY 4.0"

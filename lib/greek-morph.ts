@@ -9,7 +9,8 @@ export type ParseEntry = {
   pos: string
   parsing: string
   parsing_human: string
-  gloss: string
+  gloss: string          // brief gloss (one word or phrase)
+  short_def: string | null  // Abbott-Smith short definition
   inflected_gloss: string
   tense_note: string | null
   voice_note: string | null

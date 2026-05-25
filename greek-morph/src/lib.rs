@@ -16,7 +16,8 @@ pub struct ParseEntry {
     pub pos: String,
     pub parsing: String,
     pub parsing_human: String,
-    pub gloss: String,
+    pub gloss: String,        // brief gloss (TBESG col 6)
+    pub short_def: Option<String>, // short Abbott-Smith definition (TBESG col 7)
     pub inflected_gloss: String,
     pub tense_note: Option<String>,
     pub voice_note: Option<String>,
@@ -26,7 +27,7 @@ pub struct ParseEntry {
 
 // Global lookup table, initialized once
 static LOOKUP: std::sync::OnceLock<HashMap<String, Vec<ParseEntry>>> = std::sync::OnceLock::new();
-static LEMMA_GLOSSES: std::sync::OnceLock<HashMap<String, String>> = std::sync::OnceLock::new();
+static LEMMA_GLOSSES: std::sync::OnceLock<HashMap<String, (String, Option<String>)>> = std::sync::OnceLock::new();
 
 fn normalize(word: &str) -> String {
     // Decompose to NFD, convert grave accent (U+0300) → acute (U+0301) so that
@@ -41,10 +42,16 @@ fn normalize(word: &str) -> String {
 fn init() {
     LEMMA_GLOSSES.get_or_init(|| {
         let mut map = HashMap::new();
-        for line in DODSON_DATA.lines().skip(1) {
-            let parts: Vec<&str> = line.splitn(2, '\t').collect();
-            if parts.len() == 2 {
-                map.insert(normalize(parts[0]), parts[1].trim().to_string());
+        for line in DODSON_DATA.lines() {
+            let parts: Vec<&str> = line.splitn(3, '\t').collect();
+            if parts.len() >= 2 {
+                let gloss = parts[1].trim().to_string();
+                let short_def = if parts.len() >= 3 && !parts[2].trim().is_empty() {
+                    Some(parts[2].trim().to_string())
+                } else {
+                    None
+                };
+                map.insert(normalize(parts[0]), (gloss, short_def));
             }
         }
         map
@@ -65,10 +72,9 @@ fn init() {
             let pos = parts[2].trim();
             let parsing = parts[3].trim();
 
-            let lemma_gloss = glosses
-                .get(&normalize(lemma))
-                .map(|s| s.as_str())
-                .unwrap_or("(see lexicon)");
+            let lex_entry = glosses.get(&normalize(lemma));
+            let lemma_gloss = lex_entry.map(|(g, _)| g.as_str()).unwrap_or("(see lexicon)");
+            let short_def = lex_entry.and_then(|(_, d)| d.clone());
 
             let parsing_chars: Vec<char> = parsing.chars().collect();
             let tense = if parsing_chars.len() > 1 { parsing_chars[1] } else { '-' };
@@ -82,6 +88,7 @@ fn init() {
                 parsing: parsing.to_string(),
                 parsing_human: grammar::human_parsing(pos, parsing),
                 gloss: lemma_gloss.to_string(),
+                short_def,
                 inflected_gloss: gloss::inflected_gloss(lemma_gloss, pos, parsing),
                 tense_note: grammar::tense_note(tense).map(str::to_string),
                 voice_note: grammar::voice_note(voice).map(str::to_string),
