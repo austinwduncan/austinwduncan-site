@@ -1,37 +1,82 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
+import { lookupWord, initGreekMorph, type ParseEntry } from '@/lib/greek-morph'
+import GreekPopover from '@/components/greek-popover'
 
-interface Props {
-  word: string
-  translit: string
-  definition: string
-  children: React.ReactNode
-}
-
-export default function GreekWord({ word, translit, definition, children }: Props) {
+// Used in MDX as <GreekWord>πιστεύει</GreekWord>
+// Also registered as <G> shorthand — see lib/mdx-components.tsx
+export default function GreekWord({ children }: { children: string }) {
+  const [entries, setEntries] = useState<ParseEntry[] | null>(null)
+  const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
+  const [pinned, setPinned] = useState(false)
+  const spanRef = useRef<HTMLSpanElement>(null)
+
+  // Pre-warm the WASM loader on mount so first hover is instant
+  useEffect(() => { initGreekMorph() }, [])
+
+  const resolve = useCallback(async () => {
+    if (entries !== null) return
+    setLoading(true)
+    const result = await lookupWord(children)
+    setEntries(result)
+    setLoading(false)
+  }, [children, entries])
+
+  const handleMouseEnter = useCallback(() => {
+    resolve()
+    setOpen(true)
+  }, [resolve])
+
+  const handleMouseLeave = useCallback(() => {
+    // Hover closes only if not pinned by a click
+    if (!pinned) setOpen(false)
+  }, [pinned])
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (open && pinned) {
+      setOpen(false)
+      setPinned(false)
+    } else if (open && !pinned) {
+      // Hover-open → click pins it open
+      setPinned(true)
+    } else {
+      resolve()
+      setOpen(true)
+      setPinned(true)
+    }
+  }, [open, pinned, resolve])
+
+  const handleClose = useCallback(() => {
+    setOpen(false)
+    setPinned(false)
+  }, [])
 
   return (
-    <span
-      className="relative cursor-help inline"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
+    <span className="relative inline" ref={spanRef}>
       <span
-        className="border-b border-dotted"
-        style={{ borderColor: '#cdb079', color: '#a07840' }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        className="cursor-pointer border-b border-dotted transition-colors duration-150 not-italic"
+        style={{
+          borderColor: open ? '#B8892E' : 'rgba(184,137,46,0.5)',
+          color: open ? '#B8892E' : 'inherit',
+        }}
       >
         {children}
       </span>
+
       {open && (
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 z-20 w-64 bg-zinc-950 text-white text-xs p-3.5 shadow-xl pointer-events-none not-italic">
-          <span className="block font-semibold mb-0.5" style={{ color: '#cdb079' }}>
-            {word}
-          </span>
-          <span className="block text-zinc-400 italic text-[11px] mb-1.5">{translit}</span>
-          <span className="block text-zinc-300 leading-relaxed">{definition}</span>
-        </span>
+        <GreekPopover
+          word={children}
+          entries={entries}
+          loading={loading}
+          onClose={handleClose}
+          anchorEl={spanRef.current}
+        />
       )}
     </span>
   )

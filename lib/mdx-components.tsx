@@ -22,6 +22,7 @@ function extractText(children: React.ReactNode): string {
 
 export const mdxComponents = {
   GreekWord,
+  G: GreekWord, // shorthand: <G>πιστεύει</G>
   h2: ({ children, ...props }: React.ComponentPropsWithoutRef<'h2'>) => {
     const id = headingToId(extractText(children))
     return <h2 id={id} {...props}>{children}</h2>

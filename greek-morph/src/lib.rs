@@ -1,0 +1,115 @@
+mod grammar;
+mod gloss;
+
+use wasm_bindgen::prelude::*;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use unicode_normalization::UnicodeNormalization;
+
+// MorphGNT data is embedded at compile time
+static MORPHGNT_DATA: &str = include_str!("../data/morphgnt.tsv");
+static DODSON_DATA: &str = include_str!("../data/dodson.tsv");
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ParseEntry {
+    pub lemma: String,
+    pub pos: String,
+    pub parsing: String,
+    pub parsing_human: String,
+    pub gloss: String,
+    pub inflected_gloss: String,
+    pub tense_note: Option<String>,
+    pub voice_note: Option<String>,
+    pub mood_note: Option<String>,
+    pub case_note: Option<String>,
+}
+
+// Global lookup table, initialized once
+static LOOKUP: std::sync::OnceLock<HashMap<String, Vec<ParseEntry>>> = std::sync::OnceLock::new();
+static LEMMA_GLOSSES: std::sync::OnceLock<HashMap<String, String>> = std::sync::OnceLock::new();
+
+fn normalize(word: &str) -> String {
+    // NFC normalization handles polytonic Greek combining character variants
+    word.nfc().collect::<String>().to_lowercase()
+}
+
+fn init() {
+    LEMMA_GLOSSES.get_or_init(|| {
+        let mut map = HashMap::new();
+        for line in DODSON_DATA.lines().skip(1) {
+            let parts: Vec<&str> = line.splitn(2, '\t').collect();
+            if parts.len() == 2 {
+                map.insert(normalize(parts[0]), parts[1].trim().to_string());
+            }
+        }
+        map
+    });
+
+    LOOKUP.get_or_init(|| {
+        let glosses = LEMMA_GLOSSES.get().unwrap();
+        let mut map: HashMap<String, Vec<ParseEntry>> = HashMap::new();
+
+        for line in MORPHGNT_DATA.lines() {
+            let parts: Vec<&str> = line.split('\t').collect();
+            // Format: word \t normalized \t lemma \t pos \t parsing
+            if parts.len() < 5 {
+                continue;
+            }
+            let word_norm = normalize(parts[1]);
+            let lemma = parts[2].trim();
+            let pos = parts[3].trim();
+            let parsing = parts[4].trim();
+
+            let lemma_gloss = glosses
+                .get(&normalize(lemma))
+                .map(|s| s.as_str())
+                .unwrap_or("(see lexicon)");
+
+            let parsing_chars: Vec<char> = parsing.chars().collect();
+            let tense = if parsing_chars.len() > 1 { parsing_chars[1] } else { '-' };
+            let voice = if parsing_chars.len() > 2 { parsing_chars[2] } else { '-' };
+            let mood  = if parsing_chars.len() > 3 { parsing_chars[3] } else { '-' };
+            let case  = if parsing_chars.len() > 4 { parsing_chars[4] } else { '-' };
+
+            let entry = ParseEntry {
+                lemma: lemma.to_string(),
+                pos: pos.to_string(),
+                parsing: parsing.to_string(),
+                parsing_human: grammar::human_parsing(pos, parsing),
+                gloss: lemma_gloss.to_string(),
+                inflected_gloss: gloss::inflected_gloss(lemma_gloss, pos, parsing),
+                tense_note: grammar::tense_note(tense).map(str::to_string),
+                voice_note: grammar::voice_note(voice).map(str::to_string),
+                mood_note:  grammar::mood_note(mood).map(str::to_string),
+                case_note:  grammar::case_note(case).map(str::to_string),
+            };
+
+            map.entry(word_norm).or_default().push(entry);
+        }
+
+        map
+    });
+}
+
+#[wasm_bindgen]
+pub fn lookup(word: &str) -> JsValue {
+    init();
+    let key = normalize(word);
+    let results = LOOKUP
+        .get()
+        .and_then(|m| m.get(&key))
+        .cloned()
+        .unwrap_or_default();
+
+    serde_wasm_bindgen::to_value(&results).unwrap_or(JsValue::NULL)
+}
+
+#[wasm_bindgen]
+pub fn is_greek(word: &str) -> bool {
+    word.chars().any(|c| {
+        matches!(c,
+            '\u{0370}'..='\u{03FF}' | // Greek and Coptic
+            '\u{1F00}'..='\u{1FFF}'   // Greek Extended (polytonic diacritics)
+        )
+    })
+}

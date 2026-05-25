@@ -1,0 +1,10 @@
+/Users/austinwduncan/austinwduncan-site/greek-morph/target/wasm32-unknown-unknown/release/deps/js_sys-5241fa415b6559bf.d: /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/lib.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/mod.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/queue.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/task/singlethread.rs
+
+/Users/austinwduncan/austinwduncan-site/greek-morph/target/wasm32-unknown-unknown/release/deps/libjs_sys-5241fa415b6559bf.rlib: /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/lib.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/mod.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/queue.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/task/singlethread.rs
+
+/Users/austinwduncan/austinwduncan-site/greek-morph/target/wasm32-unknown-unknown/release/deps/libjs_sys-5241fa415b6559bf.rmeta: /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/lib.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/mod.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/queue.rs /Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/task/singlethread.rs
+
+/Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/lib.rs:
+/Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/mod.rs:
+/Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/queue.rs:
+/Users/austinwduncan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.99/src/futures/task/singlethread.rs:
