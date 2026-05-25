@@ -223,7 +223,7 @@ function EntryPanel({ entry, compact = false }: { entry: ParseEntry; compact?: b
 
   return (
     <div className={compact ? 'px-4 py-2.5' : 'px-4 py-3.5'}>
-      {/* Parsing */}
+      {/* Parsing label */}
       <p
         style={{
           fontSize: '0.58rem',
@@ -245,7 +245,7 @@ function EntryPanel({ entry, compact = false }: { entry: ParseEntry; compact?: b
             color: '#F9F6F0',
             fontStyle: 'italic',
             lineHeight: 1.4,
-            marginBottom: entry.short_def || significanceNote ? 10 : 0,
+            marginBottom: significanceNote ? 6 : entry.short_def ? 10 : 0,
           }}
         >
           &ldquo;{entry.inflected_gloss}&rdquo;
@@ -265,34 +265,34 @@ function EntryPanel({ entry, compact = false }: { entry: ParseEntry; compact?: b
         </p>
       )}
 
-      {/* Abbott-Smith short definition */}
-      {!compact && entry.short_def && (
-        <p
-          style={{
-            fontFamily: 'var(--font-source-serif)',
-            fontSize: '0.8rem',
-            color: 'rgba(249,246,240,0.45)',
-            lineHeight: 1.65,
-            marginBottom: significanceNote ? 8 : 0,
-          }}
-        >
-          {entry.short_def}
-        </p>
-      )}
-
-      {/* Grammatical significance note */}
+      {/* Why this form means that — directly after inflected gloss, no separator */}
       {!compact && significanceNote && (
         <p
           style={{
             fontFamily: 'var(--font-source-serif)',
             fontSize: '0.75rem',
-            color: 'rgba(184,137,46,0.45)',
+            color: 'rgba(184,137,46,0.55)',
             lineHeight: 1.6,
+            marginBottom: entry.short_def ? 10 : 0,
+          }}
+        >
+          {significanceNote}
+        </p>
+      )}
+
+      {/* Abbott-Smith short definition — broader lexical context, separated below */}
+      {!compact && entry.short_def && (
+        <p
+          style={{
+            fontFamily: 'var(--font-source-serif)',
+            fontSize: '0.78rem',
+            color: 'rgba(249,246,240,0.35)',
+            lineHeight: 1.65,
             borderTop: '1px solid rgba(255,255,255,0.05)',
             paddingTop: 8,
           }}
         >
-          {significanceNote}
+          {entry.short_def}
         </p>
       )}
     </div>

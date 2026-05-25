@@ -9,9 +9,11 @@ pub fn inflected_gloss(lemma_gloss: &str, pos: &str, parsing: &str) -> String {
 
     // Extract the first gloss word (before comma or semicolon)
     let base = base_gloss(lemma_gloss);
+    // TBESG glosses verbs as "to love", "to be" — strip the infinitive marker
+    let verb_base = base.strip_prefix("to ").unwrap_or(base);
 
     match pos {
-        "V" => inflect_verb(base, &chars),
+        "V" => inflect_verb(verb_base, &chars),
         "N" => inflect_noun(lemma_gloss, &chars),
         "A" => inflect_adj(lemma_gloss, &chars),
         _ => lemma_gloss.to_string(),
@@ -27,9 +29,53 @@ fn base_gloss(gloss: &str) -> &str {
         .trim()
 }
 
+fn inflect_verb_be(chars: &[char]) -> String {
+    let person = chars[0];
+    let tense  = chars[1];
+    let mood   = chars[3];
+    let number = chars[5];
+    match (mood, tense, person, number) {
+        ('I', 'P', '1', 'S') => "I am".into(),
+        ('I', 'P', '2', 'S') => "you are".into(),
+        ('I', 'P', '3', 'S') => "he/she/it is".into(),
+        ('I', 'P', '1', 'P') => "we are".into(),
+        ('I', 'P', '2', 'P') => "you all are".into(),
+        ('I', 'P', '3', 'P') => "they are".into(),
+        ('I', 'I', '1', 'S') => "I was".into(),
+        ('I', 'I', '2', 'S') => "you were".into(),
+        ('I', 'I', '3', 'S') => "he/she/it was".into(),
+        ('I', 'I', '1', 'P') => "we were".into(),
+        ('I', 'I', '2', 'P') => "you all were".into(),
+        ('I', 'I', '3', 'P') => "they were".into(),
+        ('I', 'F', '1', 'S') => "I will be".into(),
+        ('I', 'F', '2', 'S') => "you will be".into(),
+        ('I', 'F', '3', 'S') => "he/she/it will be".into(),
+        ('I', 'F', '1', 'P') => "we will be".into(),
+        ('I', 'F', '2', 'P') => "you all will be".into(),
+        ('I', 'F', '3', 'P') => "they will be".into(),
+        ('I', 'X', '1', 'S') => "I have been".into(),
+        ('I', 'X', '3', 'S') => "he/she/it has been".into(),
+        ('I', 'X', '3', 'P') => "they have been".into(),
+        ('D', _, '2', 'S')   => "be!".into(),
+        ('D', _, '2', 'P')   => "be! (all of you)".into(),
+        ('S', _, '1', 'S')   => "I might be".into(),
+        ('S', _, '2', 'S')   => "you might be".into(),
+        ('S', _, '3', 'S')   => "he/she/it might be".into(),
+        ('S', _, '1', 'P')   => "we might be".into(),
+        ('S', _, '3', 'P')   => "they might be".into(),
+        ('N', _, _, _)       => "to be".into(),
+        ('P', 'P', _, _)     => "being".into(),
+        ('P', 'A', _, _)     => "having been".into(),
+        _                    => "being".into(),
+    }
+}
+
 fn inflect_verb(base: &str, chars: &[char]) -> String {
     if chars.len() < 8 {
         return base.to_string();
+    }
+    if base == "be" {
+        return inflect_verb_be(chars);
     }
     let person = chars[0];
     let tense  = chars[1];
