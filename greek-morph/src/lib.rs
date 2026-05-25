@@ -51,14 +51,14 @@ fn init() {
 
         for line in MORPHGNT_DATA.lines() {
             let parts: Vec<&str> = line.split('\t').collect();
-            // Format: word \t normalized \t lemma \t pos \t parsing
-            if parts.len() < 5 {
+            // Format: normalized \t lemma \t pos \t parsing
+            if parts.len() < 4 {
                 continue;
             }
-            let word_norm = normalize(parts[1]);
-            let lemma = parts[2].trim();
-            let pos = parts[3].trim();
-            let parsing = parts[4].trim();
+            let word_norm = normalize(parts[0]);
+            let lemma = parts[1].trim();
+            let pos = parts[2].trim();
+            let parsing = parts[3].trim();
 
             let lemma_gloss = glosses
                 .get(&normalize(lemma))
