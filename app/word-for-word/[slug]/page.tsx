@@ -5,6 +5,7 @@ import { getBySlug, getSlugs, getAll, sortByDate, readingTime, type ArticleFront
 import ArticleLayout from '@/components/article-layout'
 import { RelatedArticles } from '@/components/related-articles'
 import { mdxComponents } from '@/lib/mdx-components'
+import ReadMarker from '@/components/read-marker'
 
 const BASE = 'https://austinwduncan.com'
 
@@ -100,6 +101,7 @@ export default async function WordForWordArticlePage({ params }: { params: Param
 
   return (
     <>
+      <ReadMarker slug={slug} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <ArticleLayout
         section="Word for Word"

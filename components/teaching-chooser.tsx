@@ -122,12 +122,14 @@ export default function TeachingChooser({ allSeries }: { allSeries: SeriesWithSe
               )}
               <div className="p-4 flex flex-col flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className="text-[9px] font-bold tracking-[0.16em] uppercase px-1.5 py-0.5 text-white"
-                    style={{ backgroundColor: meta.status === 'Ongoing' ? '#cdb079' : '#a1a1aa' }}
-                  >
-                    {meta.status}
-                  </span>
+                  {meta.status === 'Ongoing' && (
+                    <span
+                      className="text-[9px] font-bold tracking-[0.16em] uppercase px-1.5 py-0.5 text-white"
+                      style={{ backgroundColor: '#cdb079' }}
+                    >
+                      Ongoing
+                    </span>
+                  )}
                   <span className="text-[11px] text-zinc-400">{meta.totalSessions} sessions</span>
                 </div>
                 <h3

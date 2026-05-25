@@ -65,7 +65,7 @@ export default function SeriesExpander({
           >
             {meta.status === 'Ongoing'
               ? `${meta.publishedSessions ?? sessions.length} of ${meta.totalSessions} released`
-              : `${meta.totalSessions} sessions · Complete`}
+              : `${meta.totalSessions} sessions`}
           </span>
           <span
             className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"

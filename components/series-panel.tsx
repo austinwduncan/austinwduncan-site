@@ -61,7 +61,7 @@ export default function SeriesPanel({
           >
             {meta.status === 'Ongoing'
               ? `${meta.publishedSessions ?? '?'} of ${meta.totalSessions} released`
-              : `${meta.totalSessions} sessions · Complete`}
+              : `${meta.totalSessions} sessions`}
           </span>
         </div>
 

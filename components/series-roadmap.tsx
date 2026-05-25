@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ChevronDown, Clock } from 'lucide-react'
 import type { RoadmapPart } from '@/data/teaching-series'
+import { useReadArticles } from '@/hooks/use-read-articles'
 
 export type RoadmapSession = {
   slug: string
@@ -24,6 +25,7 @@ export default function SeriesRoadmap({
   type: 'expositional' | 'topical'
 }) {
   const [openParts, setOpenParts] = useState<Set<number>>(new Set([0]))
+  const read = useReadArticles()
 
   const toggle = (i: number) => {
     setOpenParts((prev) => {
@@ -43,9 +45,10 @@ export default function SeriesRoadmap({
           session: sessions[sessionNum - 1] ?? null,
         }))
         const publishedCount = partSessions.filter(({ session }) => session?.isPublished).length
+        const readCount = partSessions.filter(({ session }) => session?.isPublished && read.has(session.slug)).length
         const total = part.sessions.length
-        const allPublished = publishedCount === total
         const nonePublished = publishedCount === 0
+        const allRead = publishedCount > 0 && readCount === publishedCount
 
         return (
           <div key={partIdx} style={{ border: '1px solid #E2DACE', background: '#fff' }}>
@@ -59,7 +62,7 @@ export default function SeriesRoadmap({
               <span
                 className="shrink-0 text-[0.62rem] font-medium tracking-[0.1em] uppercase"
                 style={{
-                  color: allPublished ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#B8892E',
+                  color: allRead ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#B8892E',
                   marginTop: 3,
                 }}
               >
@@ -79,7 +82,7 @@ export default function SeriesRoadmap({
                   >
                     {part.title}
                   </p>
-                  {allPublished && (
+                  {allRead && (
                     <svg
                       width="12" height="12" viewBox="0 0 24 24" fill="none"
                       stroke="#7A5C1E" strokeWidth="2.5"
@@ -96,21 +99,21 @@ export default function SeriesRoadmap({
                   {part.description}
                 </p>
 
-                {/* Mini progress bar for partially-published parts */}
-                {!allPublished && publishedCount > 0 && (
+                {/* Personal reading progress bar */}
+                {readCount > 0 && !allRead && (
                   <div className="mt-2.5 flex items-center gap-2.5">
                     <div className="flex-1 h-[3px]" style={{ background: '#E2DACE' }}>
                       <div
                         className="h-full"
                         style={{
-                          width: `${(publishedCount / total) * 100}%`,
+                          width: `${(readCount / publishedCount) * 100}%`,
                           background: '#B8892E',
                           transition: 'width 0.6s ease',
                         }}
                       />
                     </div>
                     <span className="text-[0.62rem] shrink-0" style={{ color: '#9A9189' }}>
-                      {publishedCount}/{total}
+                      {readCount}/{publishedCount} read
                     </span>
                   </div>
                 )}
@@ -119,9 +122,9 @@ export default function SeriesRoadmap({
               <div className="shrink-0 flex items-center gap-2.5" style={{ marginTop: 3 }}>
                 <span
                   className="text-[0.67rem]"
-                  style={{ color: allPublished ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#9A9189' }}
+                  style={{ color: allRead ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#9A9189' }}
                 >
-                  {allPublished ? 'Complete' : `${publishedCount}/${total}`}
+                  {nonePublished ? '' : allRead ? `${readCount} read` : readCount > 0 ? `${readCount}/${publishedCount}` : `${publishedCount} available`}
                 </span>
                 <ChevronDown
                   size={14}
@@ -179,6 +182,8 @@ export default function SeriesRoadmap({
                       )
                     }
 
+                    const isRead = read.has(session.slug)
+
                     return (
                       <Link
                         key={sessionNum}
@@ -192,22 +197,28 @@ export default function SeriesRoadmap({
                           style={{ background: '#B8892E' }}
                         />
 
-                        {/* Session number circle */}
+                        {/* Session number circle — filled amber if read */}
                         <div
                           className="shrink-0 flex items-center justify-center"
                           style={{
                             width: 24,
                             height: 24,
-                            border: '2px solid #C8A96A',
+                            border: isRead ? 'none' : '2px solid #C8A96A',
                             borderRadius: '50%',
                             fontSize: '0.6rem',
                             fontWeight: 600,
-                            color: '#B8892E',
-                            background: '#fff',
+                            color: isRead ? '#fff' : '#B8892E',
+                            background: isRead ? '#B8892E' : '#fff',
                             marginTop: 2,
                           }}
                         >
-                          {sessionNum}
+                          {isRead ? (
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          ) : (
+                            sessionNum
+                          )}
                         </div>
 
                         {/* Content */}
@@ -218,7 +229,7 @@ export default function SeriesRoadmap({
                               fontFamily: 'var(--font-cormorant)',
                               fontSize: '1rem',
                               fontWeight: 500,
-                              color: '#1A1714',
+                              color: isRead ? '#9A9189' : '#1A1714',
                             }}
                           >
                             {session.title}

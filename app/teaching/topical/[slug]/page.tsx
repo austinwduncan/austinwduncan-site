@@ -7,6 +7,7 @@ import {
 } from '@/lib/content'
 import ArticleLayout from '@/components/article-layout'
 import { mdxComponents } from '@/lib/mdx-components'
+import ReadMarker from '@/components/read-marker'
 
 export const revalidate = 1800
 
@@ -61,16 +62,19 @@ export default async function TopicalArticlePage({ params }: { params: Params })
   const minutes = readingTime(content)
 
   return (
-    <ArticleLayout
-      section="Teaching"
-      sectionHref="/teaching"
-      category={series}
-      title={fm.title}
-      date={fm.date}
-      image={fm.image}
-      readingMinutes={minutes}
-    >
-      <MDXRemote source={content} components={mdxComponents} />
-    </ArticleLayout>
+    <>
+      <ReadMarker slug={slug} />
+      <ArticleLayout
+        section="Teaching"
+        sectionHref="/teaching"
+        category={series}
+        title={fm.title}
+        date={fm.date}
+        image={fm.image}
+        readingMinutes={minutes}
+      >
+        <MDXRemote source={content} components={mdxComponents} />
+      </ArticleLayout>
+    </>
   )
 }

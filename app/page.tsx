@@ -504,7 +504,7 @@ export default function HomePage() {
                         )}
                         <p className="text-[0.65rem]" style={{ color: '#C8BFA8' }}>
                           {series.totalSessions} sessions
-                          {series.status === 'Ongoing' ? ' · Ongoing' : ' · Complete'}
+                          {series.status === 'Ongoing' ? ' · Ongoing' : ''}
                         </p>
                       </Link>
                     ))}

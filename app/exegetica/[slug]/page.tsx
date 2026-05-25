@@ -6,6 +6,7 @@ import ExegeticaArticleLayout from '@/components/exegetica-article-layout'
 import { RelatedArticles } from '@/components/related-articles'
 import { COLLECTION_DEFS } from '@/lib/exegetica-collections'
 import { mdxComponents } from '@/lib/mdx-components'
+import ReadMarker from '@/components/read-marker'
 
 const BASE = 'https://austinwduncan.com'
 
@@ -129,6 +130,7 @@ export default async function ExegeticaArticlePage({ params }: { params: Params 
 
   return (
     <>
+      <ReadMarker slug={slug} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <ExegeticaArticleLayout
         studyNum={studyNum}
