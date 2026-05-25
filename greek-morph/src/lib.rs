@@ -29,8 +29,13 @@ static LOOKUP: std::sync::OnceLock<HashMap<String, Vec<ParseEntry>>> = std::sync
 static LEMMA_GLOSSES: std::sync::OnceLock<HashMap<String, String>> = std::sync::OnceLock::new();
 
 fn normalize(word: &str) -> String {
-    // NFC normalization handles polytonic Greek combining character variants
-    word.nfc().collect::<String>().to_lowercase()
+    // Decompose to NFD, convert grave accent (U+0300) → acute (U+0301) so that
+    // running-text forms like καὶ/πρὸς/θεὸς match the MorphGNT normalized column
+    // which always restores acute. Then recompose to NFC and lowercase.
+    let acute: String = word.nfd()
+        .map(|c| if c == '\u{0300}' { '\u{0301}' } else { c })
+        .collect();
+    acute.nfc().collect::<String>().to_lowercase()
 }
 
 fn init() {
