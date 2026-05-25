@@ -1,0 +1,15 @@
+{
+  "name": "greek-morph",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "greek_morph_bg.wasm",
+    "greek_morph.js",
+    "greek_morph.d.ts"
+  ],
+  "main": "greek_morph.js",
+  "types": "greek_morph.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
