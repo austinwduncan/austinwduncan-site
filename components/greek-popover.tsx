@@ -87,37 +87,24 @@ export default function GreekPopover({ word, entries, loading, onClose, anchorEl
         zIndex: 9999,
       }}
     >
-      {/* Header: word + brief gloss + close */}
+      {/* Header: word + lemma + close */}
       <div
         className="flex items-start justify-between px-4 pt-4 pb-3"
         style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
       >
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: '1.7rem',
-                fontWeight: 400,
-                color: '#F9F6F0',
-                lineHeight: 1,
-              }}
-            >
-              {word}
-            </span>
-            {primaryEntry && (
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  color: '#B8892E',
-                  fontStyle: 'italic',
-                  lineHeight: 1,
-                }}
-              >
-                {primaryEntry.gloss}
-              </span>
-            )}
-          </div>
+          <span
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: '1.7rem',
+              fontWeight: 400,
+              color: '#F9F6F0',
+              lineHeight: 1,
+              display: 'block',
+            }}
+          >
+            {word}
+          </span>
           {primaryEntry && (
             <span
               style={{
@@ -221,75 +208,64 @@ function EntryPanel({ entry, compact = false }: { entry: ParseEntry; compact?: b
   const significanceNote =
     entry.tense_note ?? entry.mood_note ?? entry.case_note ?? entry.voice_note ?? null
 
-  return (
-    <div className={compact ? 'px-4 py-2.5' : 'px-4 py-3.5'}>
-      {/* Parsing label */}
-      <p
-        style={{
-          fontSize: '0.58rem',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          color: 'rgba(184,137,46,0.7)',
-          marginBottom: compact ? 3 : 6,
-        }}
-      >
-        {entry.parsing_human}
-      </p>
-
-      {/* Inflected gloss — what this form means right here */}
-      {!compact && (
-        <p
-          style={{
-            fontFamily: 'var(--font-source-serif)',
-            fontSize: '1.08rem',
-            color: '#F9F6F0',
-            fontStyle: 'italic',
-            lineHeight: 1.4,
-            marginBottom: significanceNote ? 6 : entry.short_def ? 10 : 0,
-          }}
-        >
-          &ldquo;{entry.inflected_gloss}&rdquo;
+  if (compact) {
+    return (
+      <div className="px-4 py-2.5">
+        <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(184,137,46,0.6)', marginBottom: 3 }}>
+          {entry.parsing_human}
         </p>
-      )}
-
-      {compact && (
-        <p
-          style={{
-            fontFamily: 'var(--font-source-serif)',
-            fontSize: '0.82rem',
-            color: 'rgba(249,246,240,0.55)',
-            fontStyle: 'italic',
-          }}
-        >
+        <p style={{ fontFamily: 'var(--font-source-serif)', fontSize: '0.82rem', color: 'rgba(249,246,240,0.55)', fontStyle: 'italic' }}>
           {entry.inflected_gloss}
         </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="px-4 py-3.5" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+      {/* Gloss */}
+      <div>
+        <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(184,137,46,0.6)', marginRight: 6 }}>
+          Gloss:
+        </span>
+        <span style={{ fontFamily: 'var(--font-source-serif)', fontSize: '0.82rem', color: 'rgba(249,246,240,0.6)' }}>
+          {entry.gloss}
+        </span>
+      </div>
+
+      {/* What it means */}
+      <div>
+        <p style={{ fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 5 }}>
+          Here&rsquo;s what it means:
+        </p>
+        <p style={{ fontFamily: 'var(--font-source-serif)', fontSize: '1.05rem', color: '#F9F6F0', fontStyle: 'italic', lineHeight: 1.4 }}>
+          &ldquo;{entry.inflected_gloss}&rdquo;
+        </p>
+      </div>
+
+      {/* Why the grammar makes it mean that */}
+      {significanceNote && (
+        <div>
+          <p style={{ fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 5 }}>
+            Here&rsquo;s why the grammar makes it mean that:
+          </p>
+          <p style={{ fontFamily: 'var(--font-source-serif)', fontSize: '0.8rem', color: 'rgba(249,246,240,0.55)', lineHeight: 1.65 }}>
+            {significanceNote}
+          </p>
+        </div>
       )}
 
-      {/* Why this form means that — directly after inflected gloss, no separator */}
-      {!compact && significanceNote && (
+      {/* Abbott-Smith short definition */}
+      {entry.short_def && (
         <p
           style={{
             fontFamily: 'var(--font-source-serif)',
             fontSize: '0.75rem',
-            color: 'rgba(184,137,46,0.55)',
-            lineHeight: 1.6,
-            marginBottom: entry.short_def ? 10 : 0,
-          }}
-        >
-          {significanceNote}
-        </p>
-      )}
-
-      {/* Abbott-Smith short definition — broader lexical context, separated below */}
-      {!compact && entry.short_def && (
-        <p
-          style={{
-            fontFamily: 'var(--font-source-serif)',
-            fontSize: '0.78rem',
-            color: 'rgba(249,246,240,0.35)',
+            color: 'rgba(249,246,240,0.28)',
             lineHeight: 1.65,
             borderTop: '1px solid rgba(255,255,255,0.05)',
-            paddingTop: 8,
+            paddingTop: 10,
           }}
         >
           {entry.short_def}
