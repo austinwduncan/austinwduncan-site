@@ -1,4 +1,4 @@
-import { client } from './client'
+import { getClient } from './client'
 
 export type SanityArticle = {
   _id: string
@@ -26,7 +26,8 @@ const articleFields = `
 `
 
 export async function getArticlesBySection(section: string): Promise<SanityArticle[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []
+  const client = getClient()
+  if (!client) return []
   return client.fetch(
     `*[_type == "article" && section == $section && defined(slug.current)] | order(date desc) { ${articleFields} }`,
     { section },
@@ -35,7 +36,8 @@ export async function getArticlesBySection(section: string): Promise<SanityArtic
 }
 
 export async function getArticleBySlug(section: string, slug: string): Promise<SanityArticle | null> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return null
+  const client = getClient()
+  if (!client) return null
   const result = await client.fetch(
     `*[_type == "article" && section == $section && slug.current == $slug][0] { ${articleFields} body }`,
     { section, slug },
@@ -45,7 +47,8 @@ export async function getArticleBySlug(section: string, slug: string): Promise<S
 }
 
 export async function getAllSanityArticleSlugs(section: string): Promise<string[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []
+  const client = getClient()
+  if (!client) return []
   const results = await client.fetch(
     `*[_type == "article" && section == $section && defined(slug.current)]{ "slug": slug.current }`,
     { section },
