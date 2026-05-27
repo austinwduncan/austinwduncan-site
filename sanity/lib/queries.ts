@@ -10,7 +10,7 @@ export type SanityArticle = {
   image: string | null
   category: string | null
   section: string
-  body: unknown[]
+  body: string | null
 }
 
 const articleFields = `

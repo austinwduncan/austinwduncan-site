@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { PortableText } from '@portabletext/react'
 import { getBySlug, getSlugs, getAll, sortByDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
 import { getArticleBySlug, getAllSanityArticleSlugs } from '@/sanity/lib/queries'
 import ArticleLayout from '@/components/article-layout'
@@ -138,10 +137,10 @@ export default async function WordForWordArticlePage({ params }: { params: Param
         title={sanity.title}
         date={sanity.date}
         image={sanity.image ?? undefined}
-        readingMinutes={0}
+        readingMinutes={sanity.body ? Math.max(1, Math.round(sanity.body.split(/\s+/).length / 200)) : 0}
         shareUrl={shareUrl}
       >
-        <PortableText value={sanity.body as Parameters<typeof PortableText>[0]['value']} />
+        {sanity.body && <MDXRemote source={sanity.body} components={mdxComponents} />}
       </ArticleLayout>
     </>
   )

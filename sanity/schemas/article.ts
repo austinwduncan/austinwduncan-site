@@ -29,7 +29,7 @@ export const article = defineType({
       options: { list: SECTIONS },
       validation: (r) => r.required(),
     }),
-    defineField({ name: 'date', title: 'Published Date', type: 'date', validation: (r) => r.required() }),
+    defineField({ name: 'date', title: 'Publish Date', type: 'date', validation: (r) => r.required() }),
     defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3 }),
     defineField({
       name: 'tags',
@@ -43,18 +43,7 @@ export const article = defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'array',
-      of: [
-        { type: 'block' },
-        {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [
-            { name: 'alt', title: 'Alt text', type: 'string' },
-            { name: 'caption', title: 'Caption', type: 'string' },
-          ],
-        },
-      ],
+      type: 'markdown',
     }),
   ],
   preview: {
