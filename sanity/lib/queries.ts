@@ -29,7 +29,7 @@ export async function getArticlesBySection(section: string): Promise<SanityArtic
   const client = getClient()
   if (!client) return []
   return client.fetch(
-    `*[_type == "article" && section == $section && defined(slug.current)] | order(date desc) { ${articleFields} }`,
+    `*[_type == "article" && section == $section && defined(slug.current) && date <= now()] | order(date desc) { ${articleFields} }`,
     { section },
     { next: { revalidate: 60 } }
   )
@@ -39,7 +39,7 @@ export async function getArticleBySlug(section: string, slug: string): Promise<S
   const client = getClient()
   if (!client) return null
   const result = await client.fetch(
-    `*[_type == "article" && section == $section && slug.current == $slug][0] { ${articleFields} body }`,
+    `*[_type == "article" && section == $section && slug.current == $slug && date <= now()][0] { ${articleFields} body }`,
     { section, slug },
     { next: { revalidate: 60 } }
   )
