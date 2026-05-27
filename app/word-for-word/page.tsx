@@ -1,24 +1,48 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { WFWBrowser } from '@/components/wfw-browser'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Word for Word — Austin W. Duncan',
   description: 'Accessible articles answering common questions about the Christian faith.',
 }
 
-export default function WordForWordPage() {
+export default async function WordForWordPage() {
   const raw = sortByDate(getAll<ArticleFrontmatter>('word-for-word'))
+  const sanityArticles = await getArticlesBySection('word-for-word')
 
-  const articles = raw.map(({ frontmatter: fm, slug }) => ({
+  // MDX articles with a known slug set, so Sanity can't override them
+  const mdxSlugs = new Set(raw.map((a) => a.slug))
+
+  const mdxMapped = raw.map(({ frontmatter: fm, slug }) => ({
     slug,
     title: fm.title,
     formattedDate: formatDate(fm.date),
     image: fm.image ?? '',
     tags: fm.tags ?? [],
     excerpt: fm.excerpt ?? '',
+    date: fm.date,
   }))
+
+  const sanityMapped = sanityArticles
+    .filter((a) => !mdxSlugs.has(a.slug))
+    .map((a) => ({
+      slug: a.slug,
+      title: a.title,
+      formattedDate: formatDate(a.date),
+      image: a.image ?? '',
+      tags: a.tags ?? [],
+      excerpt: a.excerpt ?? '',
+      date: a.date,
+    }))
+
+  const articles = [...mdxMapped, ...sanityMapped].sort((a, b) =>
+    b.date.localeCompare(a.date)
+  )
 
   const avgReadMinutes = Math.round(
     raw.reduce((sum, { content }) => sum + readingTime(content), 0) / Math.max(raw.length, 1)

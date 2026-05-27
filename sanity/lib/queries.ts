@@ -1,0 +1,55 @@
+import { client } from './client'
+
+export type SanityArticle = {
+  _id: string
+  slug: string
+  title: string
+  date: string
+  excerpt: string
+  tags: string[]
+  image: string | null
+  category: string | null
+  section: string
+  body: unknown[]
+}
+
+const articleFields = `
+  _id,
+  "slug": slug.current,
+  title,
+  date,
+  excerpt,
+  tags,
+  "image": image.asset->url,
+  category,
+  section,
+`
+
+export async function getArticlesBySection(section: string): Promise<SanityArticle[]> {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []
+  return client.fetch(
+    `*[_type == "article" && section == $section && defined(slug.current)] | order(date desc) { ${articleFields} }`,
+    { section },
+    { next: { revalidate: 60 } }
+  )
+}
+
+export async function getArticleBySlug(section: string, slug: string): Promise<SanityArticle | null> {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return null
+  const result = await client.fetch(
+    `*[_type == "article" && section == $section && slug.current == $slug][0] { ${articleFields} body }`,
+    { section, slug },
+    { next: { revalidate: 60 } }
+  )
+  return result ?? null
+}
+
+export async function getAllSanityArticleSlugs(section: string): Promise<string[]> {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []
+  const results = await client.fetch(
+    `*[_type == "article" && section == $section && defined(slug.current)]{ "slug": slug.current }`,
+    { section },
+    { next: { revalidate: 60 } }
+  )
+  return results.map((r: { slug: string }) => r.slug)
+}
