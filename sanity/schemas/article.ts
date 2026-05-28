@@ -13,33 +13,17 @@ export const article = defineType({
   name: 'article',
   title: 'Article',
   type: 'document',
+
+  fieldsets: [
+    {
+      name: 'meta',
+      title: 'Article Details',
+      options: { collapsible: true, collapsed: true },
+    },
+  ],
+
   fields: [
-    defineField({ name: 'title', title: 'Title', type: 'string', validation: (r) => r.required() }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'title', maxLength: 96 },
-      validation: (r) => r.required(),
-    }),
-    defineField({
-      name: 'section',
-      title: 'Section',
-      type: 'string',
-      options: { list: SECTIONS },
-      validation: (r) => r.required(),
-    }),
-    defineField({ name: 'date', title: 'Publish Date', type: 'date', validation: (r) => r.required() }),
-    defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3 }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: { layout: 'tags' },
-    }),
-    defineField({ name: 'category', title: 'Category', type: 'string' }),
-    defineField({ name: 'image', title: 'Cover Image', type: 'image', options: { hotspot: true } }),
+    // ── Body first — the main writing area ────────────────────────────────
     defineField({
       name: 'body',
       title: 'Body',
@@ -71,12 +55,7 @@ export const article = defineType({
                 title: 'Link',
                 fields: [
                   { name: 'href', type: 'url', title: 'URL' },
-                  {
-                    name: 'blank',
-                    type: 'boolean',
-                    title: 'Open in new tab',
-                    initialValue: true,
-                  },
+                  { name: 'blank', type: 'boolean', title: 'Open in new tab', initialValue: true },
                 ],
               },
             ],
@@ -92,7 +71,51 @@ export const article = defineType({
         },
       ],
     }),
+
+    // ── Article Details — collapsed by default ────────────────────────────
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      fieldset: 'meta',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      fieldset: 'meta',
+      options: { source: 'title', maxLength: 96 },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'section',
+      title: 'Section',
+      type: 'string',
+      fieldset: 'meta',
+      options: { list: SECTIONS },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'date',
+      title: 'Publish Date',
+      type: 'date',
+      fieldset: 'meta',
+      validation: (r) => r.required(),
+    }),
+    defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3, fieldset: 'meta' }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      fieldset: 'meta',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+    }),
+    defineField({ name: 'category', title: 'Category', type: 'string', fieldset: 'meta' }),
+    defineField({ name: 'image', title: 'Cover Image', type: 'image', fieldset: 'meta', options: { hotspot: true } }),
   ],
+
   preview: {
     select: { title: 'title', subtitle: 'section', media: 'image' },
   },
