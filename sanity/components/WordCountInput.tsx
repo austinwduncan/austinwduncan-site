@@ -1,4 +1,3 @@
-import { Stack, Text } from '@sanity/ui'
 import { ArrayOfObjectsInputProps } from 'sanity'
 
 function countWords(blocks: unknown[]): number {
@@ -17,13 +16,13 @@ export function WordCountInput(props: ArrayOfObjectsInputProps) {
   const words = countWords((props.value ?? []) as unknown[])
   const minutes = Math.max(1, Math.round(words / 200))
   return (
-    <Stack space={3}>
+    <div>
       {props.renderDefault(props)}
       {words > 0 && (
-        <Text size={1} muted>
+        <p style={{ fontSize: '12px', color: '#888888', marginTop: '8px', marginBottom: 0 }}>
           {words.toLocaleString()} words · ~{minutes} min read
-        </Text>
+        </p>
       )}
-    </Stack>
+    </div>
   )
 }
