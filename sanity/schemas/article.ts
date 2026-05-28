@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { WordCountInput } from '../components/WordCountInput'
 
 const SECTIONS = [
   { title: 'Word for Word', value: 'word-for-word' },
@@ -28,6 +29,7 @@ export const article = defineType({
       name: 'body',
       title: 'Body',
       type: 'array',
+      components: { input: WordCountInput },
       of: [
         {
           type: 'block',
@@ -35,7 +37,6 @@ export const article = defineType({
             { title: 'Normal', value: 'normal' },
             { title: 'Heading 2', value: 'h2' },
             { title: 'Heading 3', value: 'h3' },
-            { title: 'Heading 4', value: 'h4' },
             { title: 'Quote', value: 'blockquote' },
           ],
           lists: [
@@ -101,6 +102,7 @@ export const article = defineType({
       title: 'Publish Date',
       type: 'date',
       fieldset: 'meta',
+      initialValue: () => new Date().toISOString().slice(0, 10),
       validation: (r) => r.required(),
     }),
     defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3, fieldset: 'meta' }),
