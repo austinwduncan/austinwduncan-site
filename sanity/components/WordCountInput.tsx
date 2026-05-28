@@ -2,7 +2,7 @@ import { ArrayOfObjectsInputProps } from 'sanity'
 
 function countWords(blocks: unknown[]): number {
   if (!Array.isArray(blocks)) return 0
-  return blocks.reduce((total, block: any) => {
+  return blocks.reduce((total: number, block: any) => {
     if (block?._type === 'block' && Array.isArray(block.children)) {
       return total + block.children.reduce((c: number, span: any) => {
         return c + (span?.text?.trim().split(/\s+/).filter(Boolean).length ?? 0)
