@@ -9,6 +9,7 @@ export type SanityArticle = {
   tags: string[]
   image: string | null
   category: string | null
+  series: string | null
   section: string
   body: unknown[] | null
 }
@@ -22,6 +23,7 @@ const articleFields = `
   tags,
   "image": image.asset->url,
   category,
+  series,
   section,
 `
 

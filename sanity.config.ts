@@ -13,6 +13,8 @@ const SECTION_LABELS: Record<string, string> = {
   'forum-and-pulpit': 'Forum & Pulpit',
 }
 
+const SECTIONS_WITH_SERIES = new Set(['expositional', 'topical'])
+
 export default defineConfig({
   basePath: '/studio',
   projectId,
@@ -20,13 +22,13 @@ export default defineConfig({
   apiVersion,
   plugins: [
     structureTool({
-      structure: (S) =>
-        S.list()
-          .title('Content')
-          .items([
-            // One list per section, so articles are grouped cleanly
-            ...Object.entries(SECTION_LABELS).map(([value, title]) =>
-              S.listItem()
+      structure: async (S, context) => {
+        const client = context.getClient({ apiVersion: '2024-01-01' })
+
+        const items = await Promise.all(
+          Object.entries(SECTION_LABELS).map(async ([value, title]) => {
+            if (!SECTIONS_WITH_SERIES.has(value)) {
+              return S.listItem()
                 .title(title)
                 .child(
                   S.documentList()
@@ -35,8 +37,48 @@ export default defineConfig({
                     .params({ section: value })
                     .defaultOrdering([{ field: 'date', direction: 'desc' }])
                 )
-            ),
-          ]),
+            }
+
+            // Fetch distinct series names for this teaching section
+            const seriesList: string[] = await client.fetch(
+              `array::unique(*[_type == "article" && section == $section && defined(series) && series != ""].series) | order(@)`,
+              { section: value }
+            )
+
+            return S.listItem()
+              .title(title)
+              .child(
+                S.list()
+                  .title(title)
+                  .items([
+                    S.listItem()
+                      .title('All Articles')
+                      .child(
+                        S.documentList()
+                          .title('All Articles')
+                          .filter('_type == "article" && section == $section')
+                          .params({ section: value })
+                          .defaultOrdering([{ field: 'date', direction: 'desc' }])
+                      ),
+                    ...(seriesList.length > 0 ? [S.divider()] : []),
+                    ...seriesList.map((series) =>
+                      S.listItem()
+                        .title(series)
+                        .child(
+                          S.documentList()
+                            .title(series)
+                            .filter('_type == "article" && section == $section && series == $series')
+                            .params({ section: value, series })
+                            .defaultOrdering([{ field: 'date', direction: 'desc' }])
+                        )
+                    ),
+                  ])
+              )
+          })
+        )
+
+        return S.list().title('Content').items(items)
+      },
     }),
     visionTool(),
   ],

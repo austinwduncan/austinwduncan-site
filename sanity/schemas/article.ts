@@ -98,6 +98,13 @@ export const article = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'series',
+      title: 'Series',
+      type: 'string',
+      fieldset: 'meta',
+      description: 'For Teaching articles — the series this belongs to (e.g. "Romans", "The Sermon on the Mount")',
+    }),
+    defineField({
       name: 'date',
       title: 'Publish Date',
       type: 'date',
