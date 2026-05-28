@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import { PortableText } from '@portabletext/react'
 import { getBySlug, getSlugs, getAll, sortByDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
 import { getArticleBySlug, getAllSanityArticleSlugs } from '@/sanity/lib/queries'
 import ArticleLayout from '@/components/article-layout'
@@ -137,13 +138,46 @@ export default async function WordForWordArticlePage({ params }: { params: Param
         title={sanity.title}
         date={sanity.date}
         image={sanity.image ?? undefined}
-        readingMinutes={sanity.body ? Math.max(1, Math.round(sanity.body.split(/\s+/).length / 200)) : 0}
+        readingMinutes={0}
         shareUrl={shareUrl}
       >
-        {sanity.body && <MDXRemote source={sanity.body} components={mdxComponents} />}
+        {sanity.body && (
+          <PortableText
+            value={sanity.body as Parameters<typeof PortableText>[0]['value']}
+            components={portableTextComponents}
+          />
+        )}
       </ArticleLayout>
     </>
   )
+}
+
+const portableTextComponents: Parameters<typeof PortableText>[0]['components'] = {
+  block: {
+    h2: ({ children }) => <h2>{children}</h2>,
+    h3: ({ children }) => <h3>{children}</h3>,
+    h4: ({ children }) => <h4>{children}</h4>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    strong: ({ children }) => <strong>{children}</strong>,
+    em: ({ children }) => <em>{children}</em>,
+    underline: ({ children }) => <span style={{ textDecoration: 'underline' }}>{children}</span>,
+    link: ({ value, children }) => (
+      <a href={value?.href} target={value?.blank ? '_blank' : undefined} rel={value?.blank ? 'noopener noreferrer' : undefined}>
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul>{children}</ul>,
+    number: ({ children }) => <ol>{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
+  },
 }
 
 function articleSchema(
