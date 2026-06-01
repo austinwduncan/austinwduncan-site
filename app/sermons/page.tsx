@@ -10,7 +10,10 @@ import {
   BIBLE_BOOKS,
   type SermonFrontmatter,
 } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import SermonsGrid, { type SermonListItem } from '@/components/sermons-grid'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Sermons',
@@ -35,10 +38,14 @@ const BOOK_ORDER = [
   'Hebrews','James','1 Peter','2 Peter','1 John','2 John','3 John','Jude','Revelation',
 ]
 
-export default function SermonsPage() {
+export default async function SermonsPage() {
   const raw = sortByDate(getAll<SermonFrontmatter>('sermons'))
+  const mdxSlugs = new Set(raw.map((s) => s.slug))
 
-  const sermons: SermonListItem[] = raw.map(({ frontmatter: fm, content, slug }) => ({
+  const sanityRaw = await getArticlesBySection('sermons')
+  const sanityNew = sanityRaw.filter((a) => !mdxSlugs.has(a.slug))
+
+  const mdxSermons: SermonListItem[] = raw.map(({ frontmatter: fm, content, slug }) => ({
     slug,
     title: fm.title,
     date: fm.date ?? '',
@@ -50,6 +57,23 @@ export default function SermonsPage() {
     allBooks: primaryBookFromScripture(fm.scripture) ? [primaryBookFromScripture(fm.scripture)!] : [],
     readingMinutes: readingTime(content),
   }))
+
+  const sanitySermons: SermonListItem[] = sanityNew.map((a) => ({
+    slug: a.slug,
+    title: a.title,
+    date: a.date ?? '',
+    formattedDate: formatDate(a.date),
+    excerpt: a.excerpt ?? '',
+    image: a.image ?? undefined,
+    scripture: a.scripture ?? undefined,
+    primaryBook: primaryBookFromScripture(a.scripture ?? undefined) ?? a.series ?? 'Sermon',
+    allBooks: primaryBookFromScripture(a.scripture ?? undefined) ? [primaryBookFromScripture(a.scripture ?? undefined)!] : [],
+    readingMinutes: 0,
+  }))
+
+  const sermons: SermonListItem[] = [...mdxSermons, ...sanitySermons].sort(
+    (a, b) => (b.date ?? '').localeCompare(a.date ?? '')
+  )
 
   const featuredIdx = raw.findIndex((s) => s.frontmatter.featured)
   const startHere = sermons[featuredIdx >= 0 ? featuredIdx : sermons.length - 1]

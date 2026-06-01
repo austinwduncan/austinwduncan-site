@@ -10,6 +10,7 @@ export type SanityArticle = {
   image: string | null
   category: string | null
   series: string | null
+  scripture: string | null
   section: string
   body: unknown[] | null
 }
@@ -24,6 +25,7 @@ const articleFields = `
   "image": image.asset->url,
   category,
   series,
+  scripture,
   section,
 `
 

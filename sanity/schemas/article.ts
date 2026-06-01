@@ -105,6 +105,13 @@ export const article = defineType({
       description: 'For Teaching articles — the series this belongs to (e.g. "Romans", "The Sermon on the Mount")',
     }),
     defineField({
+      name: 'scripture',
+      title: 'Scripture',
+      type: 'string',
+      fieldset: 'meta',
+      description: 'For Sermons — the passage reference (e.g. "John 3:16–17")',
+    }),
+    defineField({
       name: 'date',
       title: 'Publish Date',
       type: 'date',
