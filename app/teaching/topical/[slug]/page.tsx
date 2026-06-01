@@ -1,20 +1,25 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import { PortableText } from '@portabletext/react'
 import {
   getTeachingBySlug, getTeachingSlugs, readingTime, isPublished,
   type TeachingFrontmatter,
 } from '@/lib/content'
+import { getArticleBySlug, getAllSanityArticleSlugs } from '@/sanity/lib/queries'
 import ArticleLayout from '@/components/article-layout'
 import { mdxComponents } from '@/lib/mdx-components'
 import ReadMarker from '@/components/read-marker'
 
-export const revalidate = 1800
+export const revalidate = 60
 
 type Params = Promise<{ slug: string }>
 
 export async function generateStaticParams() {
-  return getTeachingSlugs('topical').map((slug) => ({ slug }))
+  const mdxSlugs = getTeachingSlugs('topical').map((slug) => ({ slug }))
+  const sanitySlugs = (await getAllSanityArticleSlugs('topical')).map((slug) => ({ slug }))
+  const mdxSet = new Set(getTeachingSlugs('topical'))
+  return [...mdxSlugs, ...sanitySlugs.filter((s) => !mdxSet.has(s.slug))]
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -40,26 +45,62 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       },
     }
   } catch {
-    return {}
+    const sanity = await getArticleBySlug('topical', slug)
+    if (!sanity) return {}
+    return {
+      title: sanity.title,
+      description: sanity.excerpt || undefined,
+      openGraph: {
+        title: sanity.title,
+        description: sanity.excerpt || undefined,
+        type: 'article',
+        publishedTime: sanity.date,
+        authors: ['Austin W. Duncan'],
+        ...(sanity.image ? { images: [{ url: sanity.image, width: 1280, height: 720, alt: sanity.title }] } : {}),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: sanity.title,
+        description: sanity.excerpt || undefined,
+        ...(sanity.image ? { images: [sanity.image] } : {}),
+      },
+    }
   }
 }
 
 export default async function TopicalArticlePage({ params }: { params: Params }) {
   const { slug } = await params
 
-  let file
-  try {
-    file = getTeachingBySlug<TeachingFrontmatter>('topical', slug)
-  } catch {
-    notFound()
+  // Try MDX first
+  let mdxFile: Awaited<ReturnType<typeof getTeachingBySlug<TeachingFrontmatter>>> | null = null
+  try { mdxFile = getTeachingBySlug<TeachingFrontmatter>('topical', slug) } catch { /* not in MDX */ }
+
+  if (mdxFile) {
+    const { frontmatter: fm, content } = mdxFile
+    if (!isPublished(fm.date)) notFound()
+    const series = fm.tags?.[fm.tags.length - 1] ?? 'Teaching'
+    const minutes = readingTime(content)
+    return (
+      <>
+        <ReadMarker slug={slug} />
+        <ArticleLayout
+          section="Teaching"
+          sectionHref="/teaching"
+          category={series}
+          title={fm.title}
+          date={fm.date}
+          image={fm.image}
+          readingMinutes={minutes}
+        >
+          <MDXRemote source={content} components={mdxComponents} />
+        </ArticleLayout>
+      </>
+    )
   }
 
-  const { frontmatter: fm, content } = file
-
-  if (!isPublished(fm.date)) notFound()
-
-  const series = fm.tags?.[fm.tags.length - 1] ?? 'Teaching'
-  const minutes = readingTime(content)
+  // Fall back to Sanity
+  const sanity = await getArticleBySlug('topical', slug)
+  if (!sanity) notFound()
 
   return (
     <>
@@ -67,14 +108,46 @@ export default async function TopicalArticlePage({ params }: { params: Params })
       <ArticleLayout
         section="Teaching"
         sectionHref="/teaching"
-        category={series}
-        title={fm.title}
-        date={fm.date}
-        image={fm.image}
-        readingMinutes={minutes}
+        category={sanity.series ?? 'Teaching'}
+        title={sanity.title}
+        date={sanity.date}
+        image={sanity.image ?? undefined}
+        readingMinutes={0}
       >
-        <MDXRemote source={content} components={mdxComponents} />
+        {sanity.body && (
+          <PortableText
+            value={sanity.body as Parameters<typeof PortableText>[0]['value']}
+            components={portableTextComponents}
+          />
+        )}
       </ArticleLayout>
     </>
   )
+}
+
+const portableTextComponents: Parameters<typeof PortableText>[0]['components'] = {
+  block: {
+    h2: ({ children }) => <h2>{children}</h2>,
+    h3: ({ children }) => <h3>{children}</h3>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    strong: ({ children }) => <strong>{children}</strong>,
+    em: ({ children }) => <em>{children}</em>,
+    underline: ({ children }) => <span style={{ textDecoration: 'underline' }}>{children}</span>,
+    link: ({ value, children }) => (
+      <a href={value?.href} target={value?.blank ? '_blank' : undefined} rel={value?.blank ? 'noopener noreferrer' : undefined}>
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul>{children}</ul>,
+    number: ({ children }) => <ol>{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
+  },
 }

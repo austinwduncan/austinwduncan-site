@@ -1,18 +1,25 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import { PortableText } from '@portabletext/react'
 import { getBySlug, getSlugs, getAll, sortByDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getArticleBySlug, getAllSanityArticleSlugs } from '@/sanity/lib/queries'
 import ArticleLayout from '@/components/article-layout'
 import { RelatedArticles } from '@/components/related-articles'
 import { mdxComponents } from '@/lib/mdx-components'
 import ReadMarker from '@/components/read-marker'
+
+export const revalidate = 60
 
 const BASE = 'https://austinwduncan.com'
 
 type Params = Promise<{ slug: string }>
 
 export async function generateStaticParams() {
-  return getSlugs('forum-and-pulpit').map((slug) => ({ slug }))
+  const mdxSlugs = getSlugs('forum-and-pulpit').map((slug) => ({ slug }))
+  const sanitySlugs = (await getAllSanityArticleSlugs('forum-and-pulpit')).map((slug) => ({ slug }))
+  const mdxSet = new Set(getSlugs('forum-and-pulpit'))
+  return [...mdxSlugs, ...sanitySlugs.filter((s) => !mdxSet.has(s.slug))]
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -38,7 +45,26 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       },
     }
   } catch {
-    return {}
+    const sanity = await getArticleBySlug('forum-and-pulpit', slug)
+    if (!sanity) return {}
+    return {
+      title: sanity.title,
+      description: sanity.excerpt || undefined,
+      openGraph: {
+        title: sanity.title,
+        description: sanity.excerpt || undefined,
+        type: 'article',
+        publishedTime: sanity.date,
+        authors: ['Austin W. Duncan'],
+        ...(sanity.image ? { images: [{ url: sanity.image, width: 1280, height: 720, alt: sanity.title }] } : {}),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: sanity.title,
+        description: sanity.excerpt || undefined,
+        ...(sanity.image ? { images: [sanity.image] } : {}),
+      },
+    }
   }
 }
 
@@ -52,39 +78,85 @@ function formatDate(dateStr?: string): string {
 
 export default async function ForumAndPulpitArticlePage({ params }: { params: Params }) {
   const { slug } = await params
-
-  let file
-  try {
-    file = getBySlug<ArticleFrontmatter>('forum-and-pulpit', slug)
-  } catch {
-    notFound()
-  }
-
-  const { frontmatter: fm, content } = file
-  const minutes = readingTime(content)
   const shareUrl = `${BASE}/forum-and-pulpit/${slug}`
 
-  const related = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
-    .filter((a) => a.slug !== slug && !!fm.category && a.frontmatter.category === fm.category)
-    .slice(0, 3)
-    .map((a) => ({
-      slug: a.slug,
-      title: a.frontmatter.title,
-      image: a.frontmatter.image,
-      formattedDate: formatDate(a.frontmatter.date),
-      label: a.frontmatter.category,
-    }))
+  // Try MDX first
+  let mdxFile: Awaited<ReturnType<typeof getBySlug<ArticleFrontmatter>>> | null = null
+  try { mdxFile = getBySlug<ArticleFrontmatter>('forum-and-pulpit', slug) } catch { /* not in MDX */ }
+
+  if (mdxFile) {
+    const { frontmatter: fm, content } = mdxFile
+    const minutes = readingTime(content)
+
+    const related = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
+      .filter((a) => a.slug !== slug && !!fm.category && a.frontmatter.category === fm.category)
+      .slice(0, 3)
+      .map((a) => ({
+        slug: a.slug,
+        title: a.frontmatter.title,
+        image: a.frontmatter.image,
+        formattedDate: formatDate(a.frontmatter.date),
+        label: a.frontmatter.category,
+      }))
+
+    const schema = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: fm.title,
+        description: fm.excerpt || undefined,
+        datePublished: fm.date,
+        author: { '@id': `${BASE}/#person` },
+        publisher: { '@id': `${BASE}/#person` },
+        ...(fm.image ? { image: `${BASE}${fm.image}` } : {}),
+        url: shareUrl,
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+          { '@type': 'ListItem', position: 2, name: 'Forum & Pulpit', item: `${BASE}/forum-and-pulpit` },
+          { '@type': 'ListItem', position: 3, name: fm.title, item: shareUrl },
+        ],
+      },
+    ]
+
+    return (
+      <>
+        <ReadMarker slug={slug} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        <ArticleLayout
+          section="Forum & Pulpit"
+          sectionHref="/forum-and-pulpit"
+          category={fm.category}
+          title={fm.title}
+          date={fm.date}
+          image={fm.image}
+          readingMinutes={minutes}
+          shareUrl={shareUrl}
+        >
+          <MDXRemote source={content} components={mdxComponents} />
+        </ArticleLayout>
+        <RelatedArticles items={related} sectionHref="/forum-and-pulpit" />
+      </>
+    )
+  }
+
+  // Fall back to Sanity
+  const sanity = await getArticleBySlug('forum-and-pulpit', slug)
+  if (!sanity) notFound()
 
   const schema = [
     {
       '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: fm.title,
-      description: fm.excerpt || undefined,
-      datePublished: fm.date,
+      headline: sanity.title,
+      description: sanity.excerpt || undefined,
+      datePublished: sanity.date,
       author: { '@id': `${BASE}/#person` },
       publisher: { '@id': `${BASE}/#person` },
-      ...(fm.image ? { image: `${BASE}${fm.image}` } : {}),
+      ...(sanity.image ? { image: sanity.image } : {}),
       url: shareUrl,
     },
     {
@@ -93,7 +165,7 @@ export default async function ForumAndPulpitArticlePage({ params }: { params: Pa
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
         { '@type': 'ListItem', position: 2, name: 'Forum & Pulpit', item: `${BASE}/forum-and-pulpit` },
-        { '@type': 'ListItem', position: 3, name: fm.title, item: shareUrl },
+        { '@type': 'ListItem', position: 3, name: sanity.title, item: shareUrl },
       ],
     },
   ]
@@ -105,16 +177,47 @@ export default async function ForumAndPulpitArticlePage({ params }: { params: Pa
       <ArticleLayout
         section="Forum & Pulpit"
         sectionHref="/forum-and-pulpit"
-        category={fm.category}
-        title={fm.title}
-        date={fm.date}
-        image={fm.image}
-        readingMinutes={minutes}
+        category={sanity.category ?? undefined}
+        title={sanity.title}
+        date={sanity.date}
+        image={sanity.image ?? undefined}
+        readingMinutes={0}
         shareUrl={shareUrl}
       >
-        <MDXRemote source={content} components={mdxComponents} />
+        {sanity.body && (
+          <PortableText
+            value={sanity.body as Parameters<typeof PortableText>[0]['value']}
+            components={portableTextComponents}
+          />
+        )}
       </ArticleLayout>
-      <RelatedArticles items={related} sectionHref="/forum-and-pulpit" />
     </>
   )
+}
+
+const portableTextComponents: Parameters<typeof PortableText>[0]['components'] = {
+  block: {
+    h2: ({ children }) => <h2>{children}</h2>,
+    h3: ({ children }) => <h3>{children}</h3>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    strong: ({ children }) => <strong>{children}</strong>,
+    em: ({ children }) => <em>{children}</em>,
+    underline: ({ children }) => <span style={{ textDecoration: 'underline' }}>{children}</span>,
+    link: ({ value, children }) => (
+      <a href={value?.href} target={value?.blank ? '_blank' : undefined} rel={value?.blank ? 'noopener noreferrer' : undefined}>
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul>{children}</ul>,
+    number: ({ children }) => <ol>{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
+  },
 }

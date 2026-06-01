@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { ExegeticaBrowser, type ExegeticaItem, type ExegeticaCollection } from '@/components/exegetica-browser'
 import { COLLECTION_DEFS } from '@/lib/exegetica-collections'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Exegetica — Austin W. Duncan',
@@ -23,10 +26,12 @@ function extractAbstract(content: string): string {
   return first.length > 420 ? first.slice(0, 417) + '…' : first
 }
 
-export default function ExegeticaPage() {
+export default async function ExegeticaPage() {
   const raw = sortByDate(getAll<ArticleFrontmatter>('exegetica'))
+  const sanityArticles = await getArticlesBySection('exegetica')
+  const mdxSlugs = new Set(raw.map((a) => a.slug))
 
-  const allItems: ExegeticaItem[] = raw.map(({ frontmatter: fm, content, slug }) => ({
+  const mdxItems: (ExegeticaItem & { _date: string })[] = raw.map(({ frontmatter: fm, content, slug }) => ({
     slug,
     title: fm.title,
     formattedDate: formatDate(fm.date),
@@ -34,7 +39,27 @@ export default function ExegeticaPage() {
     abstract: extractAbstract(content),
     readingMinutes: readingTime(content),
     wordCount: content.trim().split(/\s+/).length,
+    _date: fm.date,
   }))
+
+  const sanityItems: (ExegeticaItem & { _date: string })[] = sanityArticles
+    .filter((a) => !mdxSlugs.has(a.slug))
+    .map((a) => ({
+      slug: a.slug,
+      title: a.title,
+      formattedDate: formatDate(a.date),
+      image: a.image ?? '',
+      abstract: a.excerpt ?? '',
+      readingMinutes: 0,
+      wordCount: 0,
+      _date: a.date,
+    }))
+
+  const allItemsWithDate = [...mdxItems, ...sanityItems].sort((a, b) =>
+    b._date.localeCompare(a._date)
+  )
+  // Strip the _date helper before passing to the browser component
+  const allItems: ExegeticaItem[] = allItemsWithDate.map(({ _date: _d, ...item }) => item)
 
   const slugToItem = Object.fromEntries(allItems.map((a) => [a.slug, a]))
 

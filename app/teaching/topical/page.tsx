@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllTeaching, sortByDate, isPublished, formatDate, type TeachingFrontmatter } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { TEACHING_SERIES, type TeachingLane } from '@/data/teaching-series'
 import SeriesExpander from '@/components/series-expander'
 
-export const revalidate = 1800
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Theological Studies',
@@ -27,10 +28,27 @@ const TOPICAL_GROUPS: { lane: TeachingLane; description: string }[] = [
   },
 ]
 
-export default function TopicalPage() {
-  const all = sortByDate(
+export default async function TopicalPage() {
+  const mdxAll = sortByDate(
     getAllTeaching<TeachingFrontmatter>('topical').filter((a) => isPublished(a.frontmatter.date))
   )
+  const mdxSlugs = new Set(mdxAll.map((a) => a.slug))
+  const sanityArticles = await getArticlesBySection('topical')
+  const sanityMapped = sanityArticles
+    .filter((a) => !mdxSlugs.has(a.slug))
+    .map((a) => ({
+      slug: a.slug,
+      content: '',
+      frontmatter: {
+        title: a.title,
+        date: a.date,
+        excerpt: a.excerpt ?? '',
+        image: a.image ?? undefined,
+        tags: a.tags ?? [],
+        series: a.series ?? undefined,
+      } as TeachingFrontmatter,
+    }))
+  const all = sortByDate([...mdxAll, ...sanityMapped])
 
   const sessionMap = new Map<string, { slug: string; title: string; date: string }[]>()
   for (const { frontmatter: fm, slug } of all) {

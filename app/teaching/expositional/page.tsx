@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen } from 'lucide-react'
 import { getAllTeaching, sortByDate, isPublished, formatDate, type TeachingFrontmatter } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { TEACHING_SERIES } from '@/data/teaching-series'
 import SeriesExpander from '@/components/series-expander'
 
-export const revalidate = 1800
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Bible Book Studies',
@@ -20,10 +21,27 @@ const AMBER_STRIP = `
 const OT_SERIES = ['The Book of Daniel', 'The Minor Prophets']
 const NT_SERIES = ['The Book of Hebrews']
 
-export default function ExpositionalPage() {
-  const all = sortByDate(
+export default async function ExpositionalPage() {
+  const mdxAll = sortByDate(
     getAllTeaching<TeachingFrontmatter>('expositional').filter((a) => isPublished(a.frontmatter.date))
   )
+  const mdxSlugs = new Set(mdxAll.map((a) => a.slug))
+  const sanityArticles = await getArticlesBySection('expositional')
+  const sanityMapped = sanityArticles
+    .filter((a) => !mdxSlugs.has(a.slug))
+    .map((a) => ({
+      slug: a.slug,
+      content: '',
+      frontmatter: {
+        title: a.title,
+        date: a.date,
+        excerpt: a.excerpt ?? '',
+        image: a.image ?? undefined,
+        tags: a.tags ?? [],
+        series: a.series ?? undefined,
+      } as TeachingFrontmatter,
+    }))
+  const all = sortByDate([...mdxAll, ...sanityMapped])
 
   const sessionMap = new Map<string, { slug: string; title: string; date: string }[]>()
   for (const { frontmatter: fm, slug } of all) {

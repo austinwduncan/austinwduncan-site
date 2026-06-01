@@ -140,7 +140,23 @@ function ArticleCard({
 export default async function HomePage() {
   const mdxSermons = getAll<SermonFrontmatter>('sermons').filter(a => isPublished(a.frontmatter.date))
   const mdxSermonSlugs = new Set(mdxSermons.map(s => s.slug))
-  const sanitySermons = (await getArticlesBySection('sermons'))
+  const [
+    sanitySermonArticles,
+    sanityWfwArticles,
+    sanityExegeticaArticles,
+    sanityForumArticles,
+    sanityExpositionalArticles,
+    sanityTopicalArticles,
+  ] = await Promise.all([
+    getArticlesBySection('sermons'),
+    getArticlesBySection('word-for-word'),
+    getArticlesBySection('exegetica'),
+    getArticlesBySection('forum-and-pulpit'),
+    getArticlesBySection('expositional'),
+    getArticlesBySection('topical'),
+  ])
+
+  const sanitySermons = sanitySermonArticles
     .filter(a => !mdxSermonSlugs.has(a.slug))
     .map(a => ({
       slug: a.slug,
@@ -155,17 +171,70 @@ export default async function HomePage() {
       } as SermonFrontmatter,
     }))
   const allSermons = sortByDate([...mdxSermons, ...sanitySermons])
-  const allWfw       = sortByDate(getAll<ArticleFrontmatter>('word-for-word').filter(a => isPublished(a.frontmatter.date)))
-  const allExegetica = sortByDate(getAll<ArticleFrontmatter>('exegetica').filter(a => isPublished(a.frontmatter.date)))
-  const allForum     = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit').filter(a => isPublished(a.frontmatter.date)))
+
+  const mdxWfw = getAll<ArticleFrontmatter>('word-for-word').filter(a => isPublished(a.frontmatter.date))
+  const mdxWfwSlugs = new Set(mdxWfw.map(a => a.slug))
+  const allWfw = sortByDate([
+    ...mdxWfw,
+    ...sanityWfwArticles
+      .filter(a => !mdxWfwSlugs.has(a.slug))
+      .map(a => ({
+        slug: a.slug,
+        content: '',
+        frontmatter: { title: a.title, date: a.date, excerpt: a.excerpt ?? '', image: a.image ?? undefined } as ArticleFrontmatter,
+      })),
+  ])
+
+  const mdxExegetica = getAll<ArticleFrontmatter>('exegetica').filter(a => isPublished(a.frontmatter.date))
+  const mdxExegeticaSlugs = new Set(mdxExegetica.map(a => a.slug))
+  const allExegetica = sortByDate([
+    ...mdxExegetica,
+    ...sanityExegeticaArticles
+      .filter(a => !mdxExegeticaSlugs.has(a.slug))
+      .map(a => ({
+        slug: a.slug,
+        content: '',
+        frontmatter: { title: a.title, date: a.date, excerpt: a.excerpt ?? '', image: a.image ?? undefined } as ArticleFrontmatter,
+      })),
+  ])
+
+  const mdxForum = getAll<ArticleFrontmatter>('forum-and-pulpit').filter(a => isPublished(a.frontmatter.date))
+  const mdxForumSlugs = new Set(mdxForum.map(a => a.slug))
+  const allForum = sortByDate([
+    ...mdxForum,
+    ...sanityForumArticles
+      .filter(a => !mdxForumSlugs.has(a.slug))
+      .map(a => ({
+        slug: a.slug,
+        content: '',
+        frontmatter: { title: a.title, date: a.date, excerpt: a.excerpt ?? '', image: a.image ?? undefined } as ArticleFrontmatter,
+      })),
+  ])
+
+  const mdxExpositional = getAllTeaching<TeachingFrontmatter>('expositional').filter(a => isPublished(a.frontmatter.date))
+  const mdxExpositionalSlugs = new Set(mdxExpositional.map(a => a.slug))
+  const mdxTopical = getAllTeaching<TeachingFrontmatter>('topical').filter(a => isPublished(a.frontmatter.date))
+  const mdxTopicalSlugs = new Set(mdxTopical.map(a => a.slug))
 
   const allTeachingRaw = sortByDate([
-    ...getAllTeaching<TeachingFrontmatter>('expositional')
-      .filter(a => isPublished(a.frontmatter.date))
-      .map(a => ({ ...a, teachingType: 'expositional' as const })),
-    ...getAllTeaching<TeachingFrontmatter>('topical')
-      .filter(a => isPublished(a.frontmatter.date))
-      .map(a => ({ ...a, teachingType: 'topical' as const })),
+    ...mdxExpositional.map(a => ({ ...a, teachingType: 'expositional' as const })),
+    ...sanityExpositionalArticles
+      .filter(a => !mdxExpositionalSlugs.has(a.slug))
+      .map(a => ({
+        slug: a.slug,
+        content: '',
+        frontmatter: { title: a.title, date: a.date, excerpt: a.excerpt ?? '', image: a.image ?? undefined, tags: a.tags ?? [] } as TeachingFrontmatter,
+        teachingType: 'expositional' as const,
+      })),
+    ...mdxTopical.map(a => ({ ...a, teachingType: 'topical' as const })),
+    ...sanityTopicalArticles
+      .filter(a => !mdxTopicalSlugs.has(a.slug))
+      .map(a => ({
+        slug: a.slug,
+        content: '',
+        frontmatter: { title: a.title, date: a.date, excerpt: a.excerpt ?? '', image: a.image ?? undefined, tags: a.tags ?? [] } as TeachingFrontmatter,
+        teachingType: 'topical' as const,
+      })),
   ])
 
   // ── Ticker ───────────────────────────────────────────────────────────────────

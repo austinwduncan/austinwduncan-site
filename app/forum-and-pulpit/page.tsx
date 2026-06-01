@@ -2,8 +2,11 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getAll, sortByDate, formatDate, readingTime, type ArticleFrontmatter } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { FPTicker, type TickerItem } from '@/components/fp-ticker'
 import { FPSectionCarousel, type CarouselSection } from '@/components/fp-section-carousel'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Forum & Pulpit — Austin W. Duncan',
@@ -65,8 +68,24 @@ const SECTIONS = [
   },
 ]
 
-export default function ForumAndPulpitPage() {
-  const raw = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
+export default async function ForumAndPulpitPage() {
+  const mdxRaw = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit'))
+  const mdxSlugs = new Set(mdxRaw.map((a) => a.slug))
+  const sanityArticles = await getArticlesBySection('forum-and-pulpit')
+  const sanityMapped = sanityArticles
+    .filter((a) => !mdxSlugs.has(a.slug))
+    .map((a) => ({
+      slug: a.slug,
+      content: '',
+      frontmatter: {
+        title: a.title,
+        date: a.date,
+        excerpt: a.excerpt ?? '',
+        image: a.image ?? undefined,
+        category: a.category ?? undefined,
+      } as ArticleFrontmatter,
+    }))
+  const raw = sortByDate([...mdxRaw, ...sanityMapped])
   const [primary] = raw
 
   const bySlug = Object.fromEntries(raw.map((a) => [a.slug, a]))
