@@ -10,10 +10,11 @@ import {
   type ArticleFrontmatter,
   type TeachingFrontmatter,
 } from '@/lib/content'
+import { getArticlesBySection } from '@/sanity/lib/queries'
 import { FPTicker, type TickerItem } from '@/components/fp-ticker'
 import { TEACHING_SERIES } from '@/data/teaching-series'
 
-export const revalidate = 1800
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Austin W. Duncan',
@@ -136,8 +137,24 @@ function ArticleCard({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function HomePage() {
-  const allSermons   = sortByDate(getAll<SermonFrontmatter>('sermons').filter(a => isPublished(a.frontmatter.date)))
+export default async function HomePage() {
+  const mdxSermons = getAll<SermonFrontmatter>('sermons').filter(a => isPublished(a.frontmatter.date))
+  const mdxSermonSlugs = new Set(mdxSermons.map(s => s.slug))
+  const sanitySermons = (await getArticlesBySection('sermons'))
+    .filter(a => !mdxSermonSlugs.has(a.slug))
+    .map(a => ({
+      slug: a.slug,
+      content: '',
+      frontmatter: {
+        title: a.title,
+        date: a.date,
+        excerpt: a.excerpt ?? '',
+        scripture: a.scripture ?? undefined,
+        image: a.image ?? undefined,
+        series: a.series ?? undefined,
+      } as SermonFrontmatter,
+    }))
+  const allSermons = sortByDate([...mdxSermons, ...sanitySermons])
   const allWfw       = sortByDate(getAll<ArticleFrontmatter>('word-for-word').filter(a => isPublished(a.frontmatter.date)))
   const allExegetica = sortByDate(getAll<ArticleFrontmatter>('exegetica').filter(a => isPublished(a.frontmatter.date)))
   const allForum     = sortByDate(getAll<ArticleFrontmatter>('forum-and-pulpit').filter(a => isPublished(a.frontmatter.date)))
