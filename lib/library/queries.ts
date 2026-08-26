@@ -79,16 +79,54 @@ function scriptureLabel(
 
 // ─── Assembling pieces ───────────────────────────────────────────────────────
 
+/*
+  PostgREST caps every response at 1000 rows.
+
+  The join tables are larger than the content table: content_topics holds about
+  1050 rows and scripture_references about 1650. A single `.in('content_id',
+  ids)` across all 213 pieces therefore returned a truncated set, and the tail
+  vanished without an error. Unfiltered pages reported Romans, Hebrews, the
+  letters and Revelation as touching no scripture at all.
+
+  This pages until a short page comes back, so the caller always gets the whole
+  set. Found by an agent cross checking rendered counts against a direct query
+  rather than trusting the numbers the layer produced.
+*/
+const PAGE = 1000
+
+async function fetchAllJoinRows<T>(
+  table: 'content_topics' | 'scripture_references',
+  columns: string,
+  ids: string[],
+  order?: string,
+): Promise<T[]> {
+  const out: T[] = []
+  for (let from = 0; ; from += PAGE) {
+    let q = library.from(table).select(columns).in('content_id', ids).range(from, from + PAGE - 1)
+    if (order) q = q.order(order)
+    const { data, error } = await q
+    if (error) throw new Error(`Library ${table} read failed: ${error.message}`)
+    const rows = (data ?? []) as unknown as T[]
+    out.push(...rows)
+    if (rows.length < PAGE) return out
+  }
+}
+
+
 async function decorate(rows: ContentRow[]): Promise<Piece[]> {
   if (!rows.length) return []
   const ids = rows.map(r => r.id)
   const tax = await getTaxonomy()
 
   const [topicLinks, scriptureRows] = await Promise.all([
-    library.from('content_topics').select('content_id, topic_id, is_primary').in('content_id', ids),
-    library.from('scripture_references')
-      .select('content_id, book_id, chapter_start, verse_start, chapter_end, verse_end, is_primary')
-      .in('content_id', ids).order('start_ref'),
+    fetchAllJoinRows<{ content_id: string; topic_id: number; is_primary: boolean }>(
+      'content_topics', 'content_id, topic_id, is_primary', ids),
+    fetchAllJoinRows<{
+      content_id: string; book_id: number; chapter_start: number; verse_start: number | null
+      chapter_end: number | null; verse_end: number | null; is_primary: boolean
+    }>('scripture_references',
+      'content_id, book_id, chapter_start, verse_start, chapter_end, verse_end, is_primary',
+      ids, 'start_ref'),
   ])
 
   const topicById = new Map(tax.topics.map(t => [t.id, t]))
@@ -99,7 +137,7 @@ async function decorate(rows: ContentRow[]): Promise<Piece[]> {
   const levelById = new Map(tax.levels.map(l => [l.id, l]))
 
   const topicsFor = new Map<string, Facet[]>()
-  for (const link of topicLinks.data ?? []) {
+  for (const link of topicLinks) {
     const t = topicById.get(link.topic_id)
     if (!t) continue
     const list = topicsFor.get(link.content_id) ?? []
@@ -110,7 +148,7 @@ async function decorate(rows: ContentRow[]): Promise<Piece[]> {
   }
 
   const scriptureFor = new Map<string, ScriptureRef[]>()
-  for (const s of scriptureRows.data ?? []) {
+  for (const s of scriptureRows) {
     const b = bookById.get(s.book_id)
     if (!b) continue
     const list = scriptureFor.get(s.content_id) ?? []

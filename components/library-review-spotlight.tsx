@@ -146,7 +146,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-3">
               <Link
-                href={`/library/browse?category=${encodeURIComponent(review.category)}`}
+                href={`/reading/browse?category=${encodeURIComponent(review.category)}`}
                 className="inline-flex items-center gap-2 px-5 py-2.5 text-[0.68rem] font-semibold tracking-[0.12em] uppercase transition-all duration-200 hover:opacity-80"
                 style={{ background: '#7A5C1E', color: '#F9F6F0' }}
               >

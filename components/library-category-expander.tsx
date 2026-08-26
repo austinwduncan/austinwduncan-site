@@ -48,7 +48,7 @@ export function LibraryCategoryExpander({
         {featured.map((cat) => (
           <Link
             key={cat.name}
-            href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
+            href={`/reading/browse?category=${encodeURIComponent(cat.name)}`}
             className="group relative overflow-hidden block"
             style={{ aspectRatio: '4/3' }}
           >
@@ -102,7 +102,7 @@ export function LibraryCategoryExpander({
             {all.map((cat) => (
               <Link
                 key={cat.name}
-                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
+                href={`/reading/browse?category=${encodeURIComponent(cat.name)}`}
                 className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-gold hover:bg-[#FEFCF7]"
                 style={{ borderColor: '#D8D0C4', background: '#F5F2EB' }}
               >

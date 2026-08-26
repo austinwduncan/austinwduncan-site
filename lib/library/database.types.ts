@@ -32,6 +32,8 @@ export type ContentRow = {
   seo_description: string | null
   legacy_source: string | null
   legacy_id: string | null
+  created_at: string
+  updated_at: string
 }
 
 export type CollectionRow = {
