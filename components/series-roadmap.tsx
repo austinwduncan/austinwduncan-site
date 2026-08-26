@@ -62,7 +62,7 @@ export default function SeriesRoadmap({
               <span
                 className="shrink-0 text-[0.62rem] font-medium tracking-[0.1em] uppercase"
                 style={{
-                  color: allRead ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#B8892E',
+                  color: allRead ? '#7A5C1E' : nonePublished ? '#C8BFA8' : '#6E5A2E',
                   marginTop: 3,
                 }}
               >
@@ -72,11 +72,13 @@ export default function SeriesRoadmap({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
                   <p
-                    className="leading-snug"
+                    className="uppercase"
                     style={{
-                      fontFamily: 'var(--font-cormorant)',
+                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       fontSize: '1.1rem',
-                      fontWeight: 500,
+                      fontWeight: 700,
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.15,
                       color: nonePublished ? '#9A9189' : '#1A1714',
                     }}
                   >
@@ -107,7 +109,7 @@ export default function SeriesRoadmap({
                         className="h-full"
                         style={{
                           width: `${(readCount / publishedCount) * 100}%`,
-                          background: '#B8892E',
+                          background: '#CDB079',
                           transition: 'width 0.6s ease',
                         }}
                       />
@@ -194,7 +196,7 @@ export default function SeriesRoadmap({
                         {/* Left accent bar */}
                         <div
                           className="absolute left-0 top-0 bottom-0 w-[3px] transition-opacity duration-150 opacity-0 group-hover:opacity-100"
-                          style={{ background: '#B8892E' }}
+                          style={{ background: '#CDB079' }}
                         />
 
                         {/* Session number circle — filled amber if read */}
@@ -207,8 +209,8 @@ export default function SeriesRoadmap({
                             borderRadius: '50%',
                             fontSize: '0.6rem',
                             fontWeight: 600,
-                            color: isRead ? '#fff' : '#B8892E',
-                            background: isRead ? '#B8892E' : '#fff',
+                            color: isRead ? '#fff' : '#6E5A2E',
+                            background: isRead ? '#CDB079' : '#fff',
                             marginTop: 2,
                           }}
                         >
@@ -226,7 +228,7 @@ export default function SeriesRoadmap({
                           <p
                             className="leading-snug mb-0.5 transition-colors duration-150 group-hover:text-[#7A5C1E]"
                             style={{
-                              fontFamily: 'var(--font-cormorant)',
+                              fontFamily: 'var(--font-source-serif), Georgia, serif',
                               fontSize: '1rem',
                               fontWeight: 500,
                               color: isRead ? '#9A9189' : '#1A1714',

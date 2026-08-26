@@ -19,7 +19,7 @@ function ProgressBar({ released, total }: { released: number; total: number }) {
         <span>{pct}%</span>
       </div>
       <div className="h-1" style={{ background: '#E2DACE' }}>
-        <div className="h-full" style={{ width: `${pct}%`, background: '#B8892E' }} />
+        <div className="h-full" style={{ width: `${pct}%`, background: '#CDB079' }} />
       </div>
     </div>
   )
@@ -59,7 +59,7 @@ export default function SeriesExpander({
             className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
             style={{
               background: meta.status === 'Ongoing' ? '#F9F3E8' : '#F2EFE7',
-              color: meta.status === 'Ongoing' ? '#B8892E' : '#9A9189',
+              color: meta.status === 'Ongoing' ? '#6E5A2E' : '#9A9189',
               border: `1px solid ${meta.status === 'Ongoing' ? '#C8A96A' : '#E2DACE'}`,
             }}
           >
@@ -76,11 +76,13 @@ export default function SeriesExpander({
         </div>
 
         <h3
-          className="mb-3 leading-tight tracking-tight"
+          className="mb-3 uppercase tracking-tight"
           style={{
-            fontFamily: 'var(--font-cormorant)',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
-            fontWeight: 500,
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.15,
             color: '#1A1714',
           }}
         >
@@ -140,7 +142,7 @@ export default function SeriesExpander({
             >
               <svg
                 width="11" height="11" viewBox="0 0 24 24" fill="none"
-                stroke="#B8892E" strokeWidth="2.5"
+                stroke="#CDB079" strokeWidth="2.5"
                 className="shrink-0 mt-0.5"
               >
                 <polyline points="20 6 9 17 4 12" />
@@ -166,7 +168,7 @@ export default function SeriesExpander({
             >
               <span
                 className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#6E5A2E' }}
               >
                 {i + 1}
               </span>

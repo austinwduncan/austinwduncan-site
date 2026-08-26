@@ -179,7 +179,7 @@ export default function SermonsGrid({
         <div className="text-center py-16">
           <div
             className="text-3xl font-light mb-2"
-            style={{ fontFamily: 'var(--font-cormorant)', color: '#9A9189' }}
+            style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', color: '#9A9189' }}
           >
             ∅
           </div>
@@ -270,7 +270,7 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
         )}
         <div
           className="absolute bottom-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-          style={{ background: 'linear-gradient(90deg, #7A5C1E, #B8892E 50%, transparent)' }}
+          style={{ background: 'linear-gradient(90deg, #7A5C1E, #CDB079 50%, transparent)' }}
         />
       </div>
 
@@ -284,8 +284,15 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
           </div>
         )}
         <h3
-          className="font-medium leading-snug mb-2.5 flex-1 transition-colors group-hover:text-[#7A5C1E]"
-          style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.2rem', color: '#1A1714' }}
+          className="uppercase mb-2.5 flex-1 transition-colors group-hover:text-[#7A5C1E]"
+          style={{
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
+            fontSize: '1.2rem',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.15,
+            color: '#1A1714',
+          }}
         >
           {sermon.title}
         </h3>

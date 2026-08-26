@@ -38,7 +38,7 @@ function SectionHeader({ title, subtitle, action }: { title: string; subtitle?: 
   return (
     <div className="mb-5">
       <div className="flex items-center gap-4 mb-1.5">
-        <div style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem' }} className="shrink-0">
+        <div style={{ borderLeft: '4px solid #CDB079', paddingLeft: '0.6rem' }} className="shrink-0">
           <h2 className="text-[0.72rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1A1714' }}>{title}</h2>
         </div>
         <div className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
@@ -58,8 +58,8 @@ function SectionHeader({ title, subtitle, action }: { title: string; subtitle?: 
 function WidgetHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <div style={{ width: 3, height: 12, background: '#B8892E', flexShrink: 0 }} />
-      <span className="text-[0.62rem] font-black tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>{title}</span>
+      <div style={{ width: 3, height: 12, background: '#CDB079', flexShrink: 0 }} />
+      <span className="text-[0.62rem] font-black tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>{title}</span>
     </div>
   )
 }
@@ -83,7 +83,7 @@ function StudyCard({ item, studyNum, sizes = '33vw' }: { item: ExegeticaItem; st
         )}
         {/* Study number badge */}
         <div className="absolute top-2.5 left-2.5 px-2 py-0.5" style={{ background: 'rgba(14,12,10,0.82)' }}>
-          <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.7rem', color: '#C9984A', fontStyle: 'italic' }}>
+          <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: '#C9984A' }}>
             Study {String(studyNum).padStart(2, '0')}
           </span>
         </div>
@@ -93,7 +93,7 @@ function StudyCard({ item, studyNum, sizes = '33vw' }: { item: ExegeticaItem; st
             className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ background: 'linear-gradient(to top, rgba(14,12,10,0.97) 0%, rgba(14,12,10,0.88) 55%, rgba(14,12,10,0.5) 100%)' }}
           >
-            <div className="text-[0.5rem] font-black tracking-[0.14em] uppercase mb-1.5" style={{ color: '#B8892E' }}>Abstract</div>
+            <div className="text-[0.5rem] font-black tracking-[0.14em] uppercase mb-1.5" style={{ color: '#CDB079' }}>Abstract</div>
             <p className="text-[0.72rem] leading-[1.6] line-clamp-4" style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: 'rgba(249,246,240,0.7)' }}>
               {item.abstract}
             </p>
@@ -105,13 +105,13 @@ function StudyCard({ item, studyNum, sizes = '33vw' }: { item: ExegeticaItem; st
         )}
       </div>
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-[0.58rem] font-medium tracking-[0.1em] uppercase" style={{ color: '#B8892E' }}>{item.formattedDate}</span>
+        <span className="text-[0.58rem] font-medium tracking-[0.1em] uppercase" style={{ color: '#6E5A2E' }}>{item.formattedDate}</span>
         <span className="w-1 h-1 rounded-full inline-block shrink-0" style={{ background: '#C8BFA8' }} />
         <span className="text-[0.58rem] font-medium tracking-[0.08em] uppercase" style={{ color: '#9A9189' }}>{formatReadingTime(item.readingMinutes)}</span>
       </div>
       <h3
-        className="leading-[1.25] tracking-tight transition-colors group-hover:text-[#7A5C1E]"
-        style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1rem, 1.5vw, 1.28rem)', fontWeight: 500, color: '#1A1714' }}
+        className="transition-colors group-hover:text-[#7A5C1E]"
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1rem, 1.5vw, 1.28rem)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
       >
         {item.title}
       </h3>
@@ -125,7 +125,7 @@ function FeaturedStudy({ item, studyNum }: { item: ExegeticaItem; studyNum: numb
   return (
     <div className="mb-8 pb-8 border-b" style={{ borderColor: '#D8D0C4' }}>
       <div className="flex items-center gap-3 text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-6" style={{ color: '#9A9189' }}>
-        <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1rem', color: '#C9984A', fontStyle: 'italic' }}>
+        <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: '#C9984A' }}>
           Study {String(studyNum).padStart(2, '0')}
         </span>
         <div className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
@@ -143,8 +143,8 @@ function FeaturedStudy({ item, studyNum }: { item: ExegeticaItem; studyNum: numb
         )}
         <div className="flex-1 min-w-0">
           <h2
-            className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
-            style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.6rem, 2.8vw, 2.25rem)', fontWeight: 500, color: '#1A1714' }}
+            className="mb-4 transition-colors group-hover:text-[#7A5C1E]"
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.6rem, 2.8vw, 2.25rem)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.05, color: '#1A1714' }}
           >
             {item.title}
           </h2>
@@ -196,30 +196,30 @@ function AbstractSpotlight({ items }: { items: ExegeticaItem[] }) {
   const current = pool[idx]
 
   return (
-    <div style={{ background: '#0D0B09', borderTop: '2px solid #B8892E', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ background: '#0D0B09', borderTop: '2px solid #CDB079', position: 'relative', overflow: 'hidden' }}>
       <div aria-hidden style={{
         position: 'absolute', inset: 0, opacity: 0.03,
-        backgroundImage: 'linear-gradient(rgba(184,137,46,1) 1px, transparent 1px), linear-gradient(90deg, rgba(184,137,46,1) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(205,176,121,1) 1px, transparent 1px), linear-gradient(90deg, rgba(205,176,121,1) 1px, transparent 1px)',
         backgroundSize: '40px 40px',
       }} />
       <div className="relative mx-auto max-w-[820px] px-6 py-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="h-px w-8" style={{ background: '#B8892E' }} />
-          <span className="text-[0.52rem] font-black tracking-[0.28em] uppercase" style={{ color: '#B8892E' }}>From the Studies</span>
-          <div className="h-px w-8" style={{ background: '#B8892E' }} />
+          <div className="h-px w-8" style={{ background: '#CDB079' }} />
+          <span className="text-[0.52rem] font-black tracking-[0.28em] uppercase" style={{ color: '#CDB079' }}>From the Studies</span>
+          <div className="h-px w-8" style={{ background: '#CDB079' }} />
         </div>
         <div style={{ opacity: fade ? 1 : 0, transform: fade ? 'translateY(0)' : 'translateY(8px)', transition: 'opacity 0.38s ease, transform 0.38s ease' }}>
-          <div aria-hidden style={{ fontFamily: 'Georgia, serif', fontSize: '4rem', lineHeight: 0.75, color: '#B8892E', marginBottom: '0.5rem', userSelect: 'none' }}>&ldquo;</div>
-          <blockquote style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.3rem, 2.2vw, 1.8rem)', fontStyle: 'italic', fontWeight: 500, color: 'rgba(249,246,240,0.88)', lineHeight: 1.6, marginBottom: '2rem' }}>
+          <div aria-hidden style={{ fontFamily: 'Georgia, serif', fontSize: '4rem', lineHeight: 0.75, color: '#CDB079', marginBottom: '0.5rem', userSelect: 'none' }}>&ldquo;</div>
+          <blockquote style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', fontSize: 'clamp(1.3rem, 2.2vw, 1.8rem)', fontStyle: 'italic', fontWeight: 500, color: 'rgba(249,246,240,0.88)', lineHeight: 1.6, marginBottom: '2rem' }}>
             {current.abstract.length > 340 ? current.abstract.slice(0, 337) + '…' : current.abstract}
           </blockquote>
           <div className="flex flex-col items-center gap-2">
-            <div style={{ width: 32, height: 1, background: '#B8892E' }} />
+            <div style={{ width: 32, height: 1, background: '#CDB079' }} />
             <Link href={`/exegetica/${current.slug}`} className="group inline-flex items-center gap-2 mt-1">
               <span className="text-[0.6rem] font-black tracking-[0.16em] uppercase transition-colors group-hover:text-[#C9984A]" style={{ color: 'rgba(255,255,255,0.38)' }}>
                 {current.title.length > 70 ? current.title.slice(0, 67) + '…' : current.title}
               </span>
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#B8892E" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#CDB079" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
         </div>
@@ -230,7 +230,7 @@ function AbstractSpotlight({ items }: { items: ExegeticaItem[] }) {
                 key={i}
                 onClick={() => advance(i)}
                 aria-label={`Study ${i + 1}`}
-                style={{ width: i === idx ? 18 : 5, height: 5, background: i === idx ? '#B8892E' : 'rgba(255,255,255,0.15)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.35s ease' }}
+                style={{ width: i === idx ? 18 : 5, height: 5, background: i === idx ? '#CDB079' : 'rgba(255,255,255,0.15)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.35s ease' }}
               />
             ))}
           </div>
@@ -245,11 +245,11 @@ function AbstractSpotlight({ items }: { items: ExegeticaItem[] }) {
 function BrowseCollections({ collections, onSelect }: { collections: ExegeticaCollection[]; onSelect: (id: string) => void }) {
   const total = collections.reduce((sum, c) => sum + c.items.length, 0)
   return (
-    <div style={{ background: '#1A1714', borderTop: '1px solid rgba(184,137,46,0.18)', borderBottom: '1px solid rgba(184,137,46,0.18)' }}>
+    <div style={{ background: '#1A1714', borderTop: '1px solid rgba(205,176,121,0.18)', borderBottom: '1px solid rgba(205,176,121,0.18)' }}>
       <div className="mx-auto max-w-[1200px] px-6 py-10">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start lg:items-center">
           <div className="shrink-0">
-            <div className="text-[0.52rem] font-black tracking-[0.28em] uppercase mb-1" style={{ color: '#B8892E' }}>Browse by Collection</div>
+            <div className="text-[0.52rem] font-black tracking-[0.28em] uppercase mb-1" style={{ color: '#CDB079' }}>Browse by Collection</div>
             <p className="text-[0.78rem]" style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.35)' }}>
               {total} {total === 1 ? 'study' : 'studies'} across {collections.filter((c) => c.items.length > 0).length} collections
             </p>
@@ -259,13 +259,13 @@ function BrowseCollections({ collections, onSelect }: { collections: ExegeticaCo
               <button
                 key={col.id}
                 onClick={() => onSelect(col.id)}
-                className="flex items-center gap-2 px-4 py-2 border transition-all hover:border-[#B8892E] group"
+                className="flex items-center gap-2 px-4 py-2 border transition-all hover:border-gold group"
                 style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'transparent' }}
               >
-                <span className="text-[0.62rem] font-black tracking-[0.1em] uppercase transition-colors group-hover:text-white" style={{ color: 'rgba(249,246,240,0.45)' }}>
+                <span className="text-[0.62rem] font-black tracking-[0.1em] transition-colors group-hover:text-white" style={{ color: 'rgba(249,246,240,0.45)' }}>
                   {col.title}
                 </span>
-                <span className="text-[0.55rem] font-medium px-1.5 py-0.5" style={{ background: 'rgba(184,137,46,0.15)', color: '#B8892E' }}>
+                <span className="text-[0.55rem] font-medium px-1.5 py-0.5" style={{ background: 'rgba(205,176,121,0.15)', color: '#CDB079' }}>
                   {col.items.length}
                 </span>
               </button>
@@ -311,7 +311,7 @@ function StatsPanel({ itemCount, collectionCount, avgReadMinutes, totalWords }: 
   const rCount = useCountUp(avgReadMinutes, active, 900)
   const wCount = useCountUp(Math.round(totalWords / 1000), active, 1500)
 
-  const statStyle = { fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.6rem, 4vw, 3.6rem)', fontWeight: 500, lineHeight: 1, marginBottom: '0.4rem' }
+  const statStyle = { fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(2.6rem, 4vw, 3.6rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '0.4rem' }
   const labelStyle = { color: '#9A9189' }
 
   return (
@@ -323,7 +323,7 @@ function StatsPanel({ itemCount, collectionCount, avgReadMinutes, totalWords }: 
             <div className="text-[0.58rem] font-black tracking-[0.18em] uppercase" style={labelStyle}>Published Studies</div>
           </div>
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ ...statStyle, color: '#B8892E' }}>{cCount}</div>
+            <div style={{ ...statStyle, color: '#6E5A2E' }}>{cCount}</div>
             <div className="text-[0.58rem] font-black tracking-[0.18em] uppercase" style={labelStyle}>Collections</div>
           </div>
           <div className="flex flex-col items-center text-center lg:px-8">
@@ -389,7 +389,7 @@ export function ExegeticaBrowser({ collections, allItems, avgReadMinutes, totalW
               onChange={(e) => { setSearch(e.target.value); setActiveId(null) }}
               className="w-full pl-8 pr-3 py-2 text-[0.8rem] border outline-none"
               style={{ background: '#F0EDE6', borderColor: '#D8D0C4', color: '#1A1714' }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#B8892E')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#CDB079')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#D8D0C4')}
             />
           </div>
@@ -409,14 +409,14 @@ export function ExegeticaBrowser({ collections, allItems, avgReadMinutes, totalW
                 {i > 0 && <div className="h-px" style={{ background: '#E2DACE' }} />}
                 <button onClick={() => handleCollectionSelect(col.id)} className="w-full flex items-center justify-between gap-3 py-2.5 text-left group">
                   <span
-                    className="text-[0.78rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                    style={{ fontFamily: 'var(--font-cormorant)', fontWeight: activeId === col.id ? 700 : 500, color: activeId === col.id ? '#7A5C1E' : '#1A1714' }}
+                    className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.78rem', fontWeight: activeId === col.id ? 700 : 600, textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.15, color: activeId === col.id ? '#7A5C1E' : '#1A1714' }}
                   >
                     {col.title}
                   </span>
                   <span
                     className="shrink-0 text-[0.58rem] font-black min-w-[22px] text-center py-0.5 px-1.5"
-                    style={{ background: activeId === col.id ? '#B8892E' : '#E2DACE', color: activeId === col.id ? '#ffffff' : '#9A9189' }}
+                    style={{ background: activeId === col.id ? '#CDB079' : '#E2DACE', color: activeId === col.id ? '#ffffff' : '#9A9189' }}
                   >
                     {col.items.length}
                   </span>
@@ -446,24 +446,24 @@ export function ExegeticaBrowser({ collections, allItems, avgReadMinutes, totalW
       `}</style>
 
       {/* Ticker */}
-      <div style={{ background: '#0D0B09', borderBottom: '1px solid rgba(184,137,46,0.2)' }}>
+      <div style={{ background: '#0D0B09', borderBottom: '1px solid rgba(205,176,121,0.2)' }}>
         <div className="mx-auto max-w-[1200px] px-5">
           <div className="flex items-stretch" style={{ height: 38 }}>
-            <div className="shrink-0 flex items-center gap-2 pr-4 mr-4 border-r" style={{ borderColor: 'rgba(184,137,46,0.2)' }}>
-              <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#B8892E' }} />
-              <span className="text-[0.5rem] font-black tracking-[0.24em] uppercase whitespace-nowrap" style={{ color: '#B8892E' }}>Recent Studies</span>
+            <div className="shrink-0 flex items-center gap-2 pr-4 mr-4 border-r" style={{ borderColor: 'rgba(205,176,121,0.2)' }}>
+              <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#CDB079' }} />
+              <span className="text-[0.5rem] font-black tracking-[0.24em] uppercase whitespace-nowrap" style={{ color: '#CDB079' }}>Recent Studies</span>
             </div>
             <div className="flex-1 overflow-hidden flex items-center">
               <div className="exe-track">
                 {[...allItems, ...allItems].map((a, i) => (
                   <Link key={`${a.slug}-${i}`} href={`/exegetica/${a.slug}`} className="flex items-center shrink-0 group">
                     <span
-                      className="text-[0.57rem] whitespace-nowrap transition-colors group-hover:text-[#B8892E] px-5"
+                      className="text-[0.57rem] whitespace-nowrap transition-colors group-hover:text-gold px-5"
                       style={{ color: 'rgba(255,255,255,0.38)', fontFamily: 'var(--font-source-serif)', fontStyle: 'italic' }}
                     >
                       {a.title}
                     </span>
-                    <span className="text-[0.5rem] shrink-0" style={{ color: 'rgba(184,137,46,0.28)' }}>·</span>
+                    <span className="text-[0.5rem] shrink-0" style={{ color: 'rgba(205,176,121,0.28)' }}>·</span>
                   </Link>
                 ))}
               </div>
@@ -498,8 +498,8 @@ export function ExegeticaBrowser({ collections, allItems, avgReadMinutes, totalW
                     <>
                       <div className="mb-5">
                         <div className="flex items-center gap-4 mb-1.5">
-                          <div style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem' }} className="shrink-0">
-                            <h2 className="text-[0.72rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1A1714' }}>{activeCollection.title}</h2>
+                          <div style={{ borderLeft: '4px solid #CDB079', paddingLeft: '0.6rem' }} className="shrink-0">
+                            <h2 className="text-[0.72rem] font-black tracking-[0.12em]" style={{ color: '#1A1714' }}>{activeCollection.title}</h2>
                           </div>
                           <div className="flex-1 h-px" style={{ background: '#D8D0C4' }} />
                           <button onClick={() => setActiveId(null)} className="text-[0.6rem] transition-colors hover:text-[#7A5C1E]" style={{ color: '#9A9189' }}>
@@ -601,12 +601,12 @@ export function ExegeticaBrowser({ collections, allItems, avgReadMinutes, totalW
                 {allItems.map((a, i) => (
                   <div key={a.slug}>
                     <Link href={`/exegetica/${a.slug}`} className="group flex items-start gap-4 py-3">
-                      <span className="shrink-0" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.9rem', fontStyle: 'italic', color: '#C9984A', width: 26, lineHeight: 1.6 }}>
+                      <span className="shrink-0" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.9rem', fontWeight: 700, color: '#C9984A', width: 26, lineHeight: 1.6 }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-[0.92rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#1A1714' }}>
+                          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: '#1A1714' }}>
                           {a.title}
                         </h4>
                       </div>

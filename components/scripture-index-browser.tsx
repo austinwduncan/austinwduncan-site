@@ -142,7 +142,7 @@ export default function ScriptureIndexBrowser({ books }: { books: IndexBook[] })
               className="w-full rounded-md border py-3 pl-10 pr-10 text-[0.88rem] outline-none transition-all"
               style={{
                 background: '#fff',
-                borderColor: query ? '#B8892E' : '#E2DACE',
+                borderColor: query ? '#CDB079' : '#E2DACE',
                 boxShadow: query ? '0 0 0 3px #EFE3C4' : 'none',
                 color: '#1A1714',
               }}
@@ -166,7 +166,7 @@ export default function ScriptureIndexBrowser({ books }: { books: IndexBook[] })
             <div className="text-center py-16">
               <div
                 className="text-3xl font-light mb-2"
-                style={{ fontFamily: 'var(--font-cormorant)', color: '#9A9189' }}
+                style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', color: '#9A9189' }}
               >
                 No results
               </div>
@@ -210,7 +210,7 @@ function TocLink({ book, count }: { book: string; count: number }) {
     <li>
       <a
         href={`#${id}`}
-        className="flex items-center justify-between px-4 py-1.5 text-[0.8rem] transition-colors border-l-2 border-transparent -ml-px hover:border-[#B8892E] hover:text-[#7A5C1E]"
+        className="flex items-center justify-between px-4 py-1.5 text-[0.8rem] transition-colors border-l-2 border-transparent -ml-px hover:border-[#CDB079] hover:text-[#7A5C1E]"
         style={{ color: '#5A544C' }}
       >
         {book}
@@ -247,11 +247,13 @@ function BookBlock({ data }: { data: IndexBook }) {
         style={{ borderColor: '#E2DACE' }}
       >
         <span
-          className="leading-none tracking-tight"
+          className="uppercase tracking-tight"
           style={{
-            fontFamily: 'var(--font-cormorant)',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: '1.6rem',
-            fontWeight: 500,
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.15,
             color: '#1A1714',
           }}
         >
@@ -289,9 +291,9 @@ function BookBlock({ data }: { data: IndexBook }) {
                 </span>
               )}
               <span
-                className="font-medium leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-source-serif), Georgia, serif',
                   fontSize: '1.1rem',
                   color: '#1A1714',
                 }}

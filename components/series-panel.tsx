@@ -55,7 +55,7 @@ export default function SeriesPanel({
           <span
             className="text-[9px] font-bold tracking-[0.14em] uppercase px-2 py-0.5 border"
             style={{
-              color: meta.status === 'Ongoing' ? '#cdb079' : '#999',
+              color: meta.status === 'Ongoing' ? '#6E5A2E' : '#999',
               borderColor: meta.status === 'Ongoing' ? '#cdb079' : '#d4d4d8',
             }}
           >
@@ -67,8 +67,8 @@ export default function SeriesPanel({
 
         {/* Title */}
         <h2
-          className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 mb-2"
-          style={{ fontFamily: 'var(--font-cormorant)' }}
+          className="text-2xl leading-[0.95] text-zinc-900 mb-2"
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' }}
         >
           {meta.title}
         </h2>
@@ -109,7 +109,7 @@ export default function SeriesPanel({
         <div className="flex items-center gap-4 pt-4 border-t border-zinc-100">
           <Link
             href={`/teaching/${meta.type}/${meta.startHere}`}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-[11px] font-bold tracking-[0.14em] uppercase border border-[#cdb079] text-[#cdb079] hover:bg-[#cdb079] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-[11px] font-bold tracking-[0.14em] uppercase border border-[#cdb079] text-[#6E5A2E] hover:bg-[#cdb079] hover:text-white transition-colors"
           >
             Start Series <ArrowRight size={10} />
           </Link>
@@ -138,7 +138,7 @@ export default function SeriesPanel({
               >
                 <span
                   className="flex-shrink-0 text-[12px] font-bold w-5 text-right mt-0.5"
-                  style={{ color: '#cdb079', fontFamily: 'var(--font-cormorant)' }}
+                  style={{ color: '#6E5A2E', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                 >
                   {i + 1}
                 </span>

@@ -55,21 +55,23 @@ export function AboutHero() {
       <div className="absolute bottom-0 left-0 right-0">
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pb-10 lg:pb-12">
           <div className="aw-eyebrow flex items-center gap-2.5 mb-5">
-            <span className="inline-block h-px w-5 shrink-0" style={{ background: '#B8892E' }} />
+            <span className="inline-block h-px w-5 shrink-0" style={{ background: '#CDB079' }} />
             <span
               className="text-[0.63rem] font-medium tracking-[0.2em] uppercase"
-              style={{ color: '#B8892E' }}
+              style={{ color: '#CDB079' }}
             >
               Associate Pastor&nbsp;&nbsp;·&nbsp;&nbsp;Crosswalk Church&nbsp;&nbsp;·&nbsp;&nbsp;Brentwood, TN
             </span>
           </div>
 
           <h1
-            className="aw-name leading-none tracking-tight mb-5 whitespace-nowrap"
+            className="aw-name leading-none mb-5 whitespace-nowrap uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
-              fontWeight: 300,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#F9F6F0',
             }}
           >

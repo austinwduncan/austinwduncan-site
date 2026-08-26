@@ -43,8 +43,8 @@ export default function TeachingSeriesPicker({ series }: { series: SeriesItem[] 
           <span className="text-[12px] text-zinc-400">{active.count} session{active.count !== 1 ? 's' : ''}</span>
         </div>
         <h2
-          className="text-2xl lg:text-[2rem] font-bold leading-tight tracking-tight text-zinc-900 mb-3"
-          style={{ fontFamily: 'var(--font-cormorant)' }}
+          className="text-2xl lg:text-[2rem] uppercase leading-[0.95] text-zinc-900 mb-3"
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' }}
         >
           {active.name}
         </h2>
@@ -56,7 +56,7 @@ export default function TeachingSeriesPicker({ series }: { series: SeriesItem[] 
         <Link
           href={`/teaching/${active.type}/${active.slug}`}
           className="inline-flex items-center gap-1.5 text-[12px] font-bold tracking-[0.12em] uppercase transition-opacity hover:opacity-70"
-          style={{ color: '#cdb079' }}
+          style={{ color: '#6E5A2E' }}
         >
           Begin Series <ArrowRight size={11} />
         </Link>
@@ -92,7 +92,7 @@ export default function TeachingSeriesPicker({ series }: { series: SeriesItem[] 
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <span
                     className="text-[9px] font-bold tracking-[0.12em] uppercase"
-                    style={{ color: i === activeIdx ? '#cdb079' : '#999' }}
+                    style={{ color: i === activeIdx ? '#6E5A2E' : '#999' }}
                   >
                     {s.type === 'expositional' ? 'Expositional' : 'Topical'}
                   </span>
@@ -118,7 +118,7 @@ export default function TeachingSeriesPicker({ series }: { series: SeriesItem[] 
           <Link
             href="/teaching"
             className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity hover:opacity-70"
-            style={{ color: '#cdb079' }}
+            style={{ color: '#6E5A2E' }}
           >
             All Teaching <ArrowRight size={10} />
           </Link>

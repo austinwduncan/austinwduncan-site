@@ -99,17 +99,19 @@ export default async function SermonsPage() {
             <div>
               <div
                 className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
                 Preaching
               </div>
               <h1
-                className="leading-[1.1] tracking-tight"
+                className="uppercase tracking-tight"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#F9F6F0',
                 }}
               >
@@ -219,11 +221,13 @@ export default async function SermonsPage() {
                 </div>
               )}
               <h2
-                className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
+                className="uppercase tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(1.9rem, 3vw, 2.6rem)',
-                  fontWeight: 500,
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#1A1714',
                 }}
               >
@@ -281,7 +285,7 @@ export default async function SermonsPage() {
             {/* Label */}
             <div
               className="flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-8"
-              style={{ color: '#B8892E' }}
+              style={{ color: '#CDB079' }}
             >
               Latest Message
               <span className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
@@ -297,17 +301,19 @@ export default async function SermonsPage() {
                 {(latest.scripture ?? latest.primaryBook) && (
                   <div
                     className="text-[0.68rem] font-medium tracking-[0.12em] uppercase mb-2.5"
-                    style={{ color: '#B8892E' }}
+                    style={{ color: '#CDB079' }}
                   >
                     {latest.scripture ?? latest.primaryBook}
                   </div>
                 )}
                 <h2
-                  className="leading-snug tracking-tight mb-3 transition-colors group-hover:text-[#B8892E]"
+                  className="uppercase tracking-tight mb-3 transition-colors group-hover:text-[#CDB079]"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: 'clamp(1.7rem, 2.5vw, 2.3rem)',
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
+                    lineHeight: 0.95,
                     color: '#F9F6F0',
                   }}
                 >
@@ -332,7 +338,7 @@ export default async function SermonsPage() {
                   <span>{latest.readingMinutes} min read</span>
                 </div>
                 <span
-                  className="inline-flex items-center gap-1.5 text-[0.76rem] font-medium tracking-[0.04em] pb-px border-b transition-colors group-hover:border-[#B8892E] group-hover:text-[#B8892E]"
+                  className="inline-flex items-center gap-1.5 text-[0.76rem] font-medium tracking-[0.04em] pb-px border-b transition-colors group-hover:border-[#CDB079] group-hover:text-[#CDB079]"
                   style={{ color: 'rgba(255,255,255,0.6)', borderColor: 'rgba(255,255,255,0.18)' }}
                 >
                   Read this sermon
@@ -360,7 +366,7 @@ export default async function SermonsPage() {
                   )}
                   <span
                     className="absolute top-3 right-3 text-[0.6rem] font-semibold tracking-[0.12em] uppercase px-2 py-1 rounded"
-                    style={{ background: 'rgba(20,18,16,0.8)', color: '#B8892E', backdropFilter: 'blur(4px)' }}
+                    style={{ background: 'rgba(20,18,16,0.8)', color: '#CDB079', backdropFilter: 'blur(4px)' }}
                   >
                     Latest
                   </span>
@@ -394,10 +400,10 @@ function Stat({ num, label }: { num: number; label: string }) {
       <span
         className="block leading-none mb-1"
         style={{
-          fontFamily: 'var(--font-cormorant)',
+          fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           fontSize: '1.9rem',
-          fontWeight: 300,
-          color: '#B8892E',
+          fontWeight: 700,
+          color: '#CDB079',
         }}
       >
         {num}

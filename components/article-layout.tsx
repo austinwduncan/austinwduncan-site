@@ -93,11 +93,13 @@ export default function ArticleLayout({
 
           {/* Title */}
           <h1
-            className="max-w-[600px] leading-[1.08] tracking-tight text-white"
+            className="max-w-[600px] text-white uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant), Georgia, serif',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-              fontWeight: 500,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
             }}
           >
             {title}

@@ -181,17 +181,19 @@ export default function LibraryPage() {
             <div>
               <div
                 className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
                 Resources
               </div>
               <h1
-                className="leading-[1.1] tracking-tight"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#F9F6F0',
                 }}
               >
@@ -246,17 +248,20 @@ export default function LibraryPage() {
                 A Reading List Worth Your Time
               </div>
               <h2
-                className="leading-[1.08] tracking-tight mb-6"
+                className="mb-6"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.4rem, 4.5vw, 4rem)',
-                  fontWeight: 300,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#F9F6F0',
                 }}
               >
                 Books that shape
                 <br />
-                <em style={{ color: '#C9984A' }}>faithful minds.</em>
+                <em style={{ color: '#C9984A', fontStyle: 'normal' }}>faithful minds.</em>
               </h2>
               <p
                 className="text-[0.95rem] leading-[1.85] mb-8"
@@ -278,9 +283,10 @@ export default function LibraryPage() {
                   style={{
                     background: '#7A5C1E',
                     color: '#F9F6F0',
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: '1rem',
-                    fontWeight: 500,
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                   }}
                 >
@@ -295,8 +301,10 @@ export default function LibraryPage() {
                   style={{
                     borderColor: 'rgba(255,255,255,0.12)',
                     color: 'rgba(249,246,240,0.45)',
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: '1rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                   }}
                 >
@@ -339,7 +347,7 @@ export default function LibraryPage() {
           >
             Essential Reading
             <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
-            <span style={{ color: '#B8892E' }}>Click any book for details &amp; Amazon link</span>
+            <span style={{ color: '#6E5A2E' }}>Click any book for details &amp; Amazon link</span>
           </div>
 
           {/* Client component: portrait grid with modal + Amazon */}
@@ -349,7 +357,7 @@ export default function LibraryPage() {
             <Link
               href="/library/browse?category=Classics"
               className="text-[0.68rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#B8892E' }}
+              style={{ color: '#6E5A2E' }}
             >
               View all essential books →
             </Link>
@@ -377,17 +385,20 @@ export default function LibraryPage() {
             The Full Library
           </div>
           <h2
-            className="leading-tight tracking-tight mb-4"
+            className="mb-4"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 300,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#F9F6F0',
             }}
           >
             {allBooks.length} books. Every category.
             <br />
-            <em style={{ color: 'rgba(249,246,240,0.35)' }}>Search, filter, explore.</em>
+            <em style={{ color: 'rgba(249,246,240,0.35)', fontStyle: 'normal' }}>Search, filter, explore.</em>
           </h2>
           <p
             className="text-[0.88rem] leading-relaxed mb-8 max-w-sm"
@@ -403,11 +414,12 @@ export default function LibraryPage() {
             href="/library/browse"
             className="inline-flex items-center gap-3 px-8 py-4 border transition-all duration-200 hover:bg-[#7A5C1E] hover:border-[#7A5C1E] hover:text-[#F9F6F0]"
             style={{
-              borderColor: '#B8892E',
-              color: '#B8892E',
-              fontFamily: 'var(--font-cormorant)',
+              borderColor: '#CDB079',
+              color: '#CDB079',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '1.1rem',
-              fontWeight: 500,
+              fontWeight: 600,
+              textTransform: 'uppercase',
               letterSpacing: '0.04em',
             }}
           >

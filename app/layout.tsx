@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Cormorant_Garamond, Source_Serif_4, Montserrat } from 'next/font/google'
+import { Geist, Geist_Mono, Source_Serif_4, Montserrat } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/nav'
@@ -28,19 +28,11 @@ const sourceSerif = Source_Serif_4({
   table (designer Julieta Ulanovsky, SIL Open Font License), confirmed by
   reading the woff2 name records. Loading Montserrat from Google gives the same
   typeface with the full variable weight axis instead of four static cuts.
-  Used for display headers; Cormorant still carries editorial headings.
+  Used for every heading, site-wide.
 */
 const montserrat = Montserrat({
   variable: '--font-montserrat',
   subsets: ['latin'],
-  display: 'swap',
-})
-
-const cormorant = Cormorant_Garamond({
-  variable: '--font-cormorant',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
   display: 'swap',
 })
 
@@ -102,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cormorant.variable} ${sourceSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <head>
         <script

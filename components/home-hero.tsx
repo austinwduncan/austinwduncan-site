@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 const DECO =
-  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23B8892E' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23B8892E' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%23B8892E'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%23B8892E'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%23B8892E'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%23B8892E'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23B8892E'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%23B8892E'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%23B8892E'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%23B8892E'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%23B8892E'/%3E%3C/svg%3E"
+  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23CDB079' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23CDB079' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%23CDB079'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%23CDB079'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%23CDB079'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%23CDB079'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23CDB079'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%23CDB079'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%23CDB079'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%23CDB079'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%23CDB079'/%3E%3C/svg%3E"
 
 function CountUp({ end }: { end: number }) {
   const [count, setCount] = useState(0)
@@ -95,7 +95,7 @@ export default function HomeHero({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse at 5% 90%, rgba(184,137,46,0.14) 0%, transparent 55%)',
+            'radial-gradient(ellipse at 5% 90%, rgba(205,176,121,0.14) 0%, transparent 55%)',
         }}
       />
 
@@ -108,18 +108,20 @@ export default function HomeHero({
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-16 lg:py-24">
 
         {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-8" style={{ color: '#B8892E' }}>
-          <span className="inline-block h-px w-8" style={{ background: '#B8892E' }} />
+        <div className="flex items-center gap-3 mb-8" style={{ color: '#CDB079' }}>
+          <span className="inline-block h-px w-8" style={{ background: '#CDB079' }} />
           <span className="text-[0.65rem] font-medium tracking-[0.22em] uppercase">Austin W. Duncan</span>
         </div>
 
         {/* Headline */}
         <h1
-          className="leading-[1.05] tracking-tight mb-5 max-w-[720px]"
+          className="uppercase tracking-tight mb-5 max-w-[720px]"
           style={{
-            fontFamily: 'var(--font-cormorant)',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: 'clamp(2.8rem, 6vw, 4.8rem)',
-            fontWeight: 400,
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            lineHeight: 0.95,
             color: '#F9F6F0',
           }}
         >
@@ -150,7 +152,7 @@ export default function HomeHero({
           {secondaryCtaHref && secondaryCtaLabel && (
             <Link
               href={secondaryCtaHref}
-              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#B8892E] hover:border-[#B8892E]"
+              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#CDB079] hover:border-[#CDB079]"
               style={{ color: 'rgba(255,255,255,0.38)', borderColor: 'rgba(255,255,255,0.14)' }}
             >
               {secondaryCtaLabel}
@@ -168,10 +170,10 @@ export default function HomeHero({
               <p
                 className="leading-none mb-1.5"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
-                  fontWeight: 300,
-                  color: '#B8892E',
+                  fontWeight: 700,
+                  color: '#CDB079',
                 }}
               >
                 <CountUp end={value} />{suffix ?? '+'}

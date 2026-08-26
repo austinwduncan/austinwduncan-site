@@ -58,7 +58,7 @@ export function AboutBioHeadshot() {
         </p>
         <p
           style={{
-            fontFamily: 'var(--font-cormorant)',
+            fontFamily: 'var(--font-source-serif), Georgia, serif',
             fontSize: '1.25rem',
             color: '#1A1714',
           }}
@@ -77,7 +77,7 @@ export function AboutBioHeadshot() {
         }
         .aw-portrait:hover {
           transform: rotate(0deg) scale(1.025);
-          box-shadow: 0 0 0 2.5px #B8892E, 0 12px 40px rgba(0,0,0,0.12);
+          box-shadow: 0 0 0 2.5px #CDB079, 0 12px 40px rgba(0,0,0,0.12);
         }
         .aw-portrait-img {
           filter: sepia(0.38) brightness(0.97);

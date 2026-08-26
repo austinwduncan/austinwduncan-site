@@ -34,8 +34,8 @@ function getTag(a: WFWItem) {
 function SectionHeader({ title, number, action }: { title: string; number?: string; action?: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 mb-5">
-      <div style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem' }} className="flex items-center gap-2 shrink-0">
-        {number && <span className="text-[0.5rem] font-black tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>{number}</span>}
+      <div style={{ borderLeft: '4px solid #CDB079', paddingLeft: '0.6rem' }} className="flex items-center gap-2 shrink-0">
+        {number && <span className="text-[0.5rem] font-black tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>{number}</span>}
         <h2 className="text-[0.74rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1a1a1a' }}>{title}</h2>
       </div>
       <div className="flex-1 h-px" style={{ background: '#e8e8e8' }} />
@@ -47,7 +47,7 @@ function SectionHeader({ title, number, action }: { title: string; number?: stri
 /* ── Category badge ── */
 function CategoryBadge({ label }: { label: string }) {
   return (
-    <span className="inline-block text-[0.52rem] font-black tracking-[0.1em] uppercase px-2 py-0.5" style={{ background: '#B8892E', color: '#ffffff' }}>
+    <span className="inline-block text-[0.52rem] font-black tracking-[0.1em] uppercase px-2 py-0.5" style={{ background: '#CDB079', color: '#ffffff' }}>
       {label}
     </span>
   )
@@ -63,13 +63,13 @@ function ArticleCard({ article, sizes = '25vw', priority = false }: { article: W
           <Image src={article.image} alt="" fill className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" sizes={sizes} priority={priority} />
         ) : (
           <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
-            <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#B8892E' }}>Word for Word</span>
+            <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#CDB079' }}>Word for Word</span>
           </div>
         )}
         {t && <div className="absolute top-0 left-0"><CategoryBadge label={t.short} /></div>}
       </div>
-      <h3 className="leading-[1.28] mb-1.5 transition-colors group-hover:text-[#7A5C1E] line-clamp-2"
-        style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(0.95rem, 1.4vw, 1.15rem)', fontWeight: 700, color: '#1a1a1a' }}>
+      <h3 className="mb-1.5 transition-colors group-hover:text-[#7A5C1E] line-clamp-2"
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(0.95rem, 1.4vw, 1.15rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1a1a1a' }}>
         {article.title}
       </h3>
       <span className="text-[0.62rem]" style={{ color: '#888888' }}>{article.formattedDate}</span>
@@ -80,7 +80,7 @@ function ArticleCard({ article, sizes = '25vw', priority = false }: { article: W
 /* ── Sidebar widget header ── */
 function WidgetHeader({ title }: { title: string }) {
   return (
-    <div className="flex items-center gap-3 mb-4 pb-2" style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem', borderBottom: '1px solid #e8e8e8' }}>
+    <div className="flex items-center gap-3 mb-4 pb-2" style={{ borderLeft: '4px solid #CDB079', paddingLeft: '0.6rem', borderBottom: '1px solid #e8e8e8' }}>
       <h3 className="text-[0.68rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1a1a1a' }}>{title}</h3>
     </div>
   )
@@ -120,7 +120,7 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
         aria-hidden
         style={{
           position: 'absolute', inset: 0, opacity: 0.04,
-          backgroundImage: 'linear-gradient(rgba(184,137,46,1) 1px, transparent 1px), linear-gradient(90deg, rgba(184,137,46,1) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(205,176,121,1) 1px, transparent 1px), linear-gradient(90deg, rgba(205,176,121,1) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }}
       />
@@ -129,11 +129,11 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
 
         {/* Label */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="h-px w-8" style={{ background: '#B8892E' }} />
-          <span className="text-[0.52rem] font-black tracking-[0.3em] uppercase" style={{ color: '#B8892E' }}>
+          <div className="h-px w-8" style={{ background: '#CDB079' }} />
+          <span className="text-[0.52rem] font-black tracking-[0.3em] uppercase" style={{ color: '#CDB079' }}>
             Explore a Question
           </span>
-          <div className="h-px w-8" style={{ background: '#B8892E' }} />
+          <div className="h-px w-8" style={{ background: '#CDB079' }} />
         </div>
 
         {/* Question display */}
@@ -145,12 +145,14 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
               </div>
             )}
             <h2
+              className="uppercase"
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: 'clamp(1.7rem, 3.5vw, 2.8rem)',
                 fontWeight: 700,
+                letterSpacing: '-0.02em',
                 color: 'rgba(249,246,240,0.92)',
-                lineHeight: 1.2,
+                lineHeight: 0.95,
                 marginBottom: '2rem',
               }}
             >
@@ -164,12 +166,12 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
             style={{ opacity: fade ? 1 : 0, transition: 'opacity 0.38s ease' }}
           >
             <span
-              className="text-[0.65rem] font-black tracking-[0.16em] uppercase px-5 py-2.5 border transition-colors hover:border-[#B8892E] hover:text-[#B8892E]"
+              className="text-[0.65rem] font-black tracking-[0.16em] uppercase px-5 py-2.5 border transition-colors hover:border-[#CDB079] hover:text-[#CDB079]"
               style={{ color: 'rgba(249,246,240,0.55)', borderColor: 'rgba(255,255,255,0.15)' }}
             >
               Read the Answer
             </span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#B8892E' }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#CDB079' }}>
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
@@ -185,7 +187,7 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
               style={{
                 height: 4,
                 width: i === idx ? 24 : 6,
-                background: i === idx ? '#B8892E' : 'rgba(255,255,255,0.18)',
+                background: i === idx ? '#CDB079' : 'rgba(255,255,255,0.18)',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.35s ease',
@@ -210,26 +212,26 @@ function QuestionSpotlight({ articles }: { articles: WFWItem[] }) {
    ══════════════════════════════════════════════════════════════ */
 function BrowseStrip({ topics, onSelect }: { topics: TopicWithArticles[]; onSelect: (key: string) => void }) {
   return (
-    <div style={{ background: '#111111', borderTop: '3px solid #B8892E', borderBottom: '3px solid #B8892E' }}>
+    <div style={{ background: '#111111', borderTop: '3px solid #CDB079', borderBottom: '3px solid #CDB079' }}>
       <div className="mx-auto max-w-[1200px] px-5 py-10 lg:py-12">
 
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8">
 
           {/* Left heading */}
           <div className="shrink-0">
-            <p className="text-[0.52rem] font-black tracking-[0.28em] uppercase mb-1" style={{ color: '#B8892E' }}>
+            <p className="text-[0.52rem] font-black tracking-[0.28em] uppercase mb-1" style={{ color: '#CDB079' }}>
               Find Your Question
             </p>
             <h2
-              className="leading-tight"
-              style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 700, color: '#F9F6F0' }}
+              className="uppercase"
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#F9F6F0' }}
             >
               Browse by Topic
             </h2>
           </div>
 
           {/* Vertical rule */}
-          <div className="hidden lg:block shrink-0 w-px self-stretch" style={{ background: 'rgba(184,137,46,0.25)' }} />
+          <div className="hidden lg:block shrink-0 w-px self-stretch" style={{ background: 'rgba(205,176,121,0.25)' }} />
 
           {/* Topic pills */}
           <div className="flex flex-wrap gap-3">
@@ -237,7 +239,7 @@ function BrowseStrip({ topics, onSelect }: { topics: TopicWithArticles[]; onSele
               <button
                 key={t.key}
                 onClick={() => onSelect(t.key)}
-                className="group flex items-center gap-2.5 border transition-all duration-200 hover:border-[#B8892E]"
+                className="group flex items-center gap-2.5 border transition-all duration-200 hover:border-[#CDB079]"
                 style={{ borderColor: 'rgba(255,255,255,0.1)', padding: '0.55rem 1rem' }}
               >
                 <span
@@ -247,14 +249,14 @@ function BrowseStrip({ topics, onSelect }: { topics: TopicWithArticles[]; onSele
                   {t.n}
                 </span>
                 <span
-                  className="text-[0.78rem] font-medium transition-colors group-hover:text-white"
-                  style={{ fontFamily: 'var(--font-cormorant)', color: 'rgba(249,246,240,0.65)', fontWeight: 500 }}
+                  className="text-[0.78rem] uppercase transition-colors group-hover:text-white"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(249,246,240,0.65)', fontWeight: 700, letterSpacing: '-0.02em' }}
                 >
                   {t.label}
                 </span>
                 <span
-                  className="text-[0.52rem] font-black px-1.5 py-0.5 transition-colors group-hover:bg-[#B8892E] group-hover:text-white"
-                  style={{ background: 'rgba(184,137,46,0.15)', color: '#B8892E' }}
+                  className="text-[0.52rem] font-black px-1.5 py-0.5 transition-colors group-hover:bg-[#CDB079] group-hover:text-white"
+                  style={{ background: 'rgba(205,176,121,0.15)', color: '#CDB079' }}
                 >
                   {t.articles.length}
                 </span>
@@ -300,12 +302,12 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
     : ''
 
   return (
-    <div style={{ background: '#f7f7f7', borderTop: '3px solid #B8892E', borderBottom: '1px solid #e8e8e8' }}>
+    <div style={{ background: '#f7f7f7', borderTop: '3px solid #CDB079', borderBottom: '1px solid #e8e8e8' }}>
 
       {/* Header bar */}
       <div style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}>
         <div className="mx-auto max-w-[1200px] px-5 flex items-center justify-between" style={{ height: 36 }}>
-          <span className="text-[0.55rem] font-black tracking-[0.22em] uppercase" style={{ color: '#B8892E' }}>
+          <span className="text-[0.55rem] font-black tracking-[0.22em] uppercase" style={{ color: '#6E5A2E' }}>
             From Word for Word
           </span>
           <span className="text-[0.55rem] font-medium tracking-[0.12em] tabular-nums" style={{ color: '#aaaaaa' }}>
@@ -360,11 +362,12 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
             )}
             <h3
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)',
                 fontWeight: 700,
+                letterSpacing: '-0.02em',
                 color: '#1a1a1a',
-                lineHeight: 1.2,
+                lineHeight: 1.15,
                 marginBottom: '0.7rem',
                 transition: 'color 0.25s',
               }}
@@ -389,11 +392,11 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
             >
               <span
                 className="text-[0.6rem] font-black tracking-[0.18em] uppercase"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#6E5A2E' }}
               >
                 Read the Article
               </span>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B8892E" strokeWidth="2.5">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6E5A2E" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>
@@ -412,7 +415,7 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: '#B8892E',
+                  background: '#CDB079',
                   animation: `wfw-progress ${DURATION}ms linear forwards`,
                 }}
               />
@@ -422,7 +425,7 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
               <button
                 onClick={() => go((idx - 1 + pool.length) % pool.length)}
                 aria-label="Previous"
-                className="hover:text-[#B8892E] transition-colors"
+                className="hover:text-[#6E5A2E] transition-colors"
                 style={{ color: '#cccccc', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 6px' }}
               >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -437,7 +440,7 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
                   style={{
                     width: i === idx ? 18 : 5,
                     height: 5,
-                    background: i === idx ? '#B8892E' : '#d8d8d8',
+                    background: i === idx ? '#CDB079' : '#d8d8d8',
                     border: 'none', cursor: 'pointer', padding: 0,
                     transition: 'all 0.35s ease',
                   }}
@@ -446,7 +449,7 @@ function PullQuoteCarousel({ articles }: { articles: WFWItem[] }) {
               <button
                 onClick={() => go((idx + 1) % pool.length)}
                 aria-label="Next"
-                className="hover:text-[#B8892E] transition-colors"
+                className="hover:text-[#6E5A2E] transition-colors"
                 style={{ color: '#cccccc', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 6px' }}
               >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -498,7 +501,7 @@ function StatItem({ value, label, suffix = '' }: { value: number; label: string;
     <div ref={ref} className="flex flex-col items-center text-center">
       <div
         style={{
-          fontFamily: 'var(--font-cormorant)',
+          fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           fontSize: 'clamp(3rem, 5vw, 4.5rem)',
           fontWeight: 700,
           color: '#1a1a1a',
@@ -536,21 +539,21 @@ function StatsBar({ articleCount, avgReadMinutes }: { articleCount: number; avgR
         <div className="grid grid-cols-3 gap-8 lg:gap-0 lg:divide-x" style={{ '--tw-divide-color': '#e8e8e8' } as React.CSSProperties}>
 
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
+            <div style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
               {qCount}
             </div>
             <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Questions Answered</div>
           </div>
 
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#B8892E', lineHeight: 1, marginBottom: '0.5rem' }}>
+            <div style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '-0.02em', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#6E5A2E', lineHeight: 0.95, marginBottom: '0.5rem' }}>
               Weekly
             </div>
             <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>New Answers</div>
           </div>
 
           <div className="flex flex-col items-center text-center lg:px-8">
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
+            <div style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(3rem, 5vw, 4rem)', fontWeight: 700, color: '#1a1a1a', lineHeight: 1, marginBottom: '0.5rem' }}>
               ~{rCount} min
             </div>
             <div className="text-[0.62rem] font-black tracking-[0.2em] uppercase" style={{ color: '#888888' }}>Avg. Read</div>
@@ -620,7 +623,7 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
             onChange={(e) => { setSearch(e.target.value); setActiveKey(null) }}
             className="w-full pl-8 pr-3 py-2 text-[0.82rem] border outline-none transition-colors"
             style={{ background: '#f7f7f7', borderColor: '#e8e8e8', color: '#1a1a1a' }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = '#B8892E')}
+            onFocus={(e) => (e.currentTarget.style.borderColor = '#CDB079')}
             onBlur={(e) => (e.currentTarget.style.borderColor = '#e8e8e8')}
           />
         </div>
@@ -638,12 +641,12 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
             <div key={a.slug}>
               {i > 0 && <div className="border-t my-3" style={{ borderColor: '#e8e8e8' }} />}
               <Link href={`/word-for-word/${a.slug}`} className="group flex gap-3 items-start">
-                <span className="shrink-0" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.95rem', fontStyle: 'italic', color: '#C9984A', width: 22, lineHeight: 1.4, fontWeight: 700 }}>
+                <span className="shrink-0" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.95rem', color: '#C9984A', width: 22, lineHeight: 1.4, fontWeight: 700 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="flex-1 min-w-0">
-                  {getTag(a) && <div className="text-[0.5rem] font-black tracking-[0.1em] uppercase mb-0.5" style={{ color: '#B8892E' }}>{getTag(a)!.short}</div>}
-                  <h4 className="text-[0.82rem] leading-[1.35] line-clamp-2 transition-colors group-hover:text-[#7A5C1E]" style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 700, color: '#1a1a1a' }}>{a.title}</h4>
+                  {getTag(a) && <div className="text-[0.5rem] font-black tracking-[0.1em] mb-0.5" style={{ color: '#6E5A2E' }}>{getTag(a)!.short}</div>}
+                  <h4 className="text-[0.82rem] line-clamp-2 transition-colors group-hover:text-[#7A5C1E]" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1a1a1a' }}>{a.title}</h4>
                   <span className="text-[0.58rem]" style={{ color: '#888888' }}>{a.formattedDate}</span>
                 </div>
               </Link>
@@ -659,12 +662,12 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
             <div key={t.key}>
               {i > 0 && <div className="h-px" style={{ background: '#f3f3f3' }} />}
               <button onClick={() => handleTopicSelect(t.key)} className="w-full flex items-center justify-between gap-3 py-2.5 text-left group">
-                <span className="text-[0.8rem] leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                  style={{ fontFamily: 'var(--font-cormorant)', fontWeight: activeKey === t.key ? 700 : 500, color: activeKey === t.key ? '#7A5C1E' : '#1a1a1a' }}>
+                <span className="text-[0.8rem] uppercase transition-colors group-hover:text-[#7A5C1E]"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: activeKey === t.key ? '#7A5C1E' : '#1a1a1a' }}>
                   {t.label}
                 </span>
                 <span className="shrink-0 text-[0.6rem] font-black min-w-[26px] text-center py-0.5 px-1.5"
-                  style={{ background: activeKey === t.key ? '#B8892E' : '#f7f7f7', color: activeKey === t.key ? '#ffffff' : '#888888' }}>
+                  style={{ background: activeKey === t.key ? '#CDB079' : '#f7f7f7', color: activeKey === t.key ? '#ffffff' : '#888888' }}>
                   {t.articles.length}
                 </span>
               </button>
@@ -693,21 +696,21 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
         @keyframes wfw-progress { from { width: 0%; } to { width: 100%; } }
       `}</style>
 
-      <div style={{ background: '#111111', borderBottom: '2px solid #B8892E' }}>
+      <div style={{ background: '#111111', borderBottom: '2px solid #CDB079' }}>
         <div className="mx-auto max-w-[1200px] px-5">
           <div className="flex items-stretch" style={{ height: 40 }}>
-            <div className="shrink-0 flex items-center gap-2 pr-4 mr-4 border-r" style={{ borderColor: 'rgba(184,137,46,0.35)' }}>
-              <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#B8892E' }} />
-              <span className="text-[0.52rem] font-black tracking-[0.24em] uppercase whitespace-nowrap" style={{ color: '#B8892E' }}>Trending Now</span>
+            <div className="shrink-0 flex items-center gap-2 pr-4 mr-4 border-r" style={{ borderColor: 'rgba(205,176,121,0.35)' }}>
+              <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#CDB079' }} />
+              <span className="text-[0.52rem] font-black tracking-[0.24em] uppercase whitespace-nowrap" style={{ color: '#CDB079' }}>Trending Now</span>
             </div>
             <div className="flex-1 overflow-hidden flex items-center">
               <div className="wfw-track">
                 {[...articles.slice(0, 16), ...articles.slice(0, 16)].map((a, i) => (
                   <Link key={`${a.slug}-${i}`} href={`/word-for-word/${a.slug}`} className="flex items-center gap-0 shrink-0 group">
-                    <span className="text-[0.6rem] font-medium whitespace-nowrap transition-colors group-hover:text-[#B8892E] px-4" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                    <span className="text-[0.6rem] font-medium whitespace-nowrap transition-colors group-hover:text-[#CDB079] px-4" style={{ color: 'rgba(255,255,255,0.55)' }}>
                       {a.title}
                     </span>
-                    <span className="text-[0.55rem] shrink-0" style={{ color: 'rgba(184,137,46,0.4)' }}>/</span>
+                    <span className="text-[0.55rem] shrink-0" style={{ color: 'rgba(205,176,121,0.4)' }}>/</span>
                   </Link>
                 ))}
               </div>
@@ -760,13 +763,13 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                             <Image src={hero.image} alt="" fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="(min-width: 1200px) 820px, 70vw" priority />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
-                              <span style={{ color: '#B8892E', fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700 }}>Word for Word</span>
+                              <span style={{ color: '#CDB079', fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700 }}>Word for Word</span>
                             </div>
                           )}
                           {getTag(hero) && <div className="absolute top-0 left-0"><CategoryBadge label={getTag(hero)!.short} /></div>}
                         </div>
-                        <h2 className="leading-[1.1] mb-3 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2rem, 3.2vw, 2.75rem)', fontWeight: 700, color: '#1a1a1a' }}>
+                        <h2 className="mb-3 transition-colors group-hover:text-[#7A5C1E]"
+                          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(2rem, 3.2vw, 2.75rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#1a1a1a' }}>
                           {hero.title}
                         </h2>
                         {hero.excerpt && (
@@ -796,7 +799,7 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                       {[{ key: null as string | null, label: 'All' }, ...topics.slice(0, 5).map((t) => ({ key: t.key, label: t.short }))].map(({ key, label }) => (
                         <button key={String(key)} onClick={() => setDontMissTab(key)}
                           className="px-3.5 py-2 text-[0.64rem] font-black tracking-[0.08em] uppercase border-b-2 -mb-px transition-all whitespace-nowrap"
-                          style={{ borderColor: dontMissTab === key ? '#B8892E' : 'transparent', color: dontMissTab === key ? '#B8892E' : '#888888' }}>
+                          style={{ borderColor: dontMissTab === key ? '#CDB079' : 'transparent', color: dontMissTab === key ? '#6E5A2E' : '#888888' }}>
                           {label}
                         </button>
                       ))}
@@ -809,13 +812,13 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                               <Image src={dontMissFeature.image} alt="" fill className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 1200px) 380px, 40vw" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center" style={{ background: '#1a1a1a' }}>
-                                <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#B8892E' }}>Word for Word</span>
+                                <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase" style={{ color: '#CDB079' }}>Word for Word</span>
                               </div>
                             )}
                             {getTag(dontMissFeature) && <div className="absolute top-0 left-0"><CategoryBadge label={getTag(dontMissFeature)!.short} /></div>}
                           </div>
-                          <h3 className="leading-[1.2] mb-2.5 transition-colors group-hover:text-[#7A5C1E]"
-                            style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.3rem, 2vw, 1.65rem)', fontWeight: 700, color: '#1a1a1a' }}>
+                          <h3 className="mb-2.5 transition-colors group-hover:text-[#7A5C1E]"
+                            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.3rem, 2vw, 1.65rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1a1a1a' }}>
                             {dontMissFeature.title}
                           </h3>
                           {dontMissFeature.excerpt && (
@@ -837,8 +840,8 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                                 )}
                                 <div className="flex-1 min-w-0">
                                   {getTag(a) && <div className="mb-1"><CategoryBadge label={getTag(a)!.short} /></div>}
-                                  <h4 className="leading-[1.3] line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
-                                    style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.98rem', fontWeight: 700, color: '#1a1a1a' }}>
+                                  <h4 className="line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
+                                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.98rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1a1a1a' }}>
                                     {a.title}
                                   </h4>
                                   <span className="text-[0.6rem]" style={{ color: '#888888' }}>{a.formattedDate}</span>
@@ -911,16 +914,16 @@ export function WFWBrowser({ articles, avgReadMinutes }: { articles: WFWItem[]; 
                   return (
                     <div key={a.slug}>
                       <Link href={`/word-for-word/${a.slug}`} className="group flex items-start gap-4 py-3">
-                        <span className="shrink-0" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.92rem', fontStyle: 'italic', color: '#C9984A', width: 26, lineHeight: 1.6 }}>
+                        <span className="shrink-0" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.92rem', fontWeight: 700, color: '#C9984A', width: 26, lineHeight: 1.6 }}>
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <div className="flex-1 min-w-0 flex flex-wrap items-start gap-x-2 gap-y-1">
                           {t && (
-                            <span className="shrink-0 text-[0.5rem] font-black tracking-[0.1em] uppercase px-1.5 py-0.5" style={{ background: '#f7f7f7', color: '#B8892E', border: '1px solid #e8e8e8', marginTop: 2 }}>
+                            <span className="shrink-0 text-[0.5rem] font-black tracking-[0.1em] uppercase px-1.5 py-0.5" style={{ background: '#f7f7f7', color: '#6E5A2E', border: '1px solid #e8e8e8', marginTop: 2 }}>
                               {t.short}
                             </span>
                           )}
-                          <span className="text-[0.93rem] leading-snug transition-colors group-hover:text-[#7A5C1E]" style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 700, color: '#1a1a1a' }}>
+                          <span className="text-[0.93rem] transition-colors group-hover:text-[#7A5C1E]" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1a1a1a' }}>
                             {a.title}
                           </span>
                         </div>

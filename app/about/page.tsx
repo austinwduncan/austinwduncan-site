@@ -58,8 +58,8 @@ export default function AboutPage() {
             {/* Text */}
             <div>
               <div className="flex items-center gap-3 mb-10">
-                <span className="h-px w-8" style={{ background: '#B8892E' }} />
-                <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>
+                <span className="h-px w-8" style={{ background: '#CDB079' }} />
+                <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
                   Biography
                 </span>
               </div>
@@ -88,7 +88,7 @@ export default function AboutPage() {
                 style={{
                   fontFamily: 'var(--font-source-serif)',
                   color: '#5A544C',
-                  borderLeft: '2.5px solid #B8892E',
+                  borderLeft: '2.5px solid #CDB079',
                 }}
               >
                 "It's my desire that while in service to others, my life reflects a total reliance
@@ -107,9 +107,9 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[900px] px-8 py-24 lg:py-32 text-center">
           <div className="mb-8 inline-block h-px w-12" style={{ background: '#7A5C1E' }} />
           <blockquote
-            className="leading-[1.2] tracking-tight"
+            className="leading-[1.2]"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-source-serif), Georgia, serif',
               fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
               fontWeight: 300,
               fontStyle: 'italic',
@@ -126,17 +126,19 @@ export default function AboutPage() {
       <section style={{ background: '#FAFAF7' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8" style={{ background: '#B8892E' }} />
-            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>
+            <span className="h-px w-8" style={{ background: '#CDB079' }} />
+            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
               Mission
             </span>
           </div>
           <h2
-            className="mb-12 leading-tight"
+            className="mb-12 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 400,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#1A1714',
             }}
           >
@@ -150,15 +152,15 @@ export default function AboutPage() {
                   {m.n}
                 </div>
                 <div
-                  className="mb-2 leading-tight"
-                  style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.35rem', fontWeight: 500, color: '#1A1714' }}
+                  className="mb-2"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
                 >
                   {m.title}
                 </div>
                 <p className="text-[0.84rem] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}>
                   {m.body}
                 </p>
-                <p className="text-[0.68rem] italic" style={{ color: '#B8892E' }}>
+                <p className="text-[0.68rem] italic" style={{ color: '#6E5A2E' }}>
                   {m.ref}
                 </p>
               </div>
@@ -171,17 +173,19 @@ export default function AboutPage() {
       <section style={{ background: '#F0EDE6' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8" style={{ background: '#B8892E' }} />
-            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#B8892E' }}>
+            <span className="h-px w-8" style={{ background: '#CDB079' }} />
+            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
               Education
             </span>
           </div>
           <h2
-            className="mb-12 leading-tight"
+            className="mb-12 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 400,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#1A1714',
             }}
           >
@@ -195,8 +199,8 @@ export default function AboutPage() {
                   {d.school}
                 </p>
                 <p
-                  className="leading-tight mb-1"
-                  style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.2rem', fontWeight: 500, color: '#1A1714' }}
+                  className="mb-1 uppercase"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
                 >
                   {d.degree}
                 </p>
@@ -221,11 +225,13 @@ export default function AboutPage() {
             </span>
           </div>
           <h2
-            className="mb-12 leading-tight"
+            className="mb-12 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 400,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#F9F6F0',
             }}
           >
@@ -250,7 +256,7 @@ export default function AboutPage() {
               <Link
                 key={card.href}
                 href={card.href}
-                className="group flex flex-col justify-between p-8 lg:p-10 border transition-colors duration-200 hover:border-[#B8892E]"
+                className="group flex flex-col justify-between p-8 lg:p-10 border transition-colors duration-200 hover:border-[#CDB079]"
                 style={{ borderColor: 'rgba(255,255,255,0.07)', background: '#1A1714', minHeight: 200 }}
               >
                 <div>
@@ -258,8 +264,8 @@ export default function AboutPage() {
                     {card.tag}
                   </div>
                   <h3
-                    className="leading-tight"
-                    style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.8rem, 2.5vw, 2.4rem)', fontWeight: 400, color: '#F9F6F0' }}
+                    
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.8rem, 2.5vw, 2.4rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#F9F6F0' }}
                   >
                     {card.title}
                   </h3>
@@ -286,7 +292,7 @@ export default function AboutPage() {
           <div className="mt-6 text-center">
             <Link
               href="/about/faq"
-              className="text-[0.78rem] tracking-[0.06em] transition-colors hover:text-[#B8892E]"
+              className="text-[0.78rem] tracking-[0.06em] transition-colors hover:text-[#CDB079]"
               style={{ color: 'rgba(255,255,255,0.22)' }}
             >
               Frequently Asked Questions →

@@ -15,16 +15,18 @@ export default function GreekToolPage() {
         <div className="mb-10">
           <p
             className="text-[0.62rem] font-bold tracking-[0.22em] uppercase mb-3"
-            style={{ color: '#B8892E' }}
+            style={{ color: '#6E5A2E' }}
           >
             Tool
           </p>
           <h1
-            className="leading-[1.06] tracking-tight mb-4"
+            className="mb-4 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 600,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#1A1714',
             }}
           >

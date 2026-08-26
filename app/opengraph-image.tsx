@@ -17,7 +17,7 @@ export default function OGImage() {
         }}
       >
         {/* Amber top bar */}
-        <div style={{ width: '100%', height: 8, backgroundColor: '#B8892E', flexShrink: 0 }} />
+        <div style={{ width: '100%', height: 8, backgroundColor: '#CDB079', flexShrink: 0 }} />
 
         {/* Center content */}
         <div
@@ -44,11 +44,11 @@ export default function OGImage() {
             Austin W. Duncan
           </div>
 
-          <div style={{ width: 72, height: 2, backgroundColor: '#B8892E', marginBottom: 32 }} />
+          <div style={{ width: 72, height: 2, backgroundColor: '#CDB079', marginBottom: 32 }} />
 
           <div
             style={{
-              color: 'rgba(184,137,46,0.85)',
+              color: 'rgba(205,176,121,0.85)',
               fontSize: 22,
               letterSpacing: '7px',
               textTransform: 'uppercase',

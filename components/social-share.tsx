@@ -28,7 +28,7 @@ export function SocialShare({ url, title }: { url: string; title: string }) {
 
   return (
     <div className="flex flex-wrap items-center gap-2.5">
-      <span className="text-[0.55rem] font-black tracking-[0.18em] uppercase mr-1" style={{ color: '#B8892E' }}>
+      <span className="text-[0.55rem] font-black tracking-[0.18em] uppercase mr-1" style={{ color: '#6E5A2E' }}>
         Share
       </span>
 
@@ -36,8 +36,8 @@ export function SocialShare({ url, title }: { url: string; title: string }) {
         onClick={handleCopy}
         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border transition-all"
         style={{
-          borderColor: copied ? '#B8892E' : '#D8D8D8',
-          color: copied ? '#B8892E' : '#666666',
+          borderColor: copied ? '#CDB079' : '#D8D8D8',
+          color: copied ? '#6E5A2E' : '#666666',
           background: 'transparent',
           cursor: 'pointer',
         }}
@@ -64,7 +64,7 @@ export function SocialShare({ url, title }: { url: string; title: string }) {
         href={twitterUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border transition-all hover:border-[#B8892E] hover:text-[#B8892E]"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border transition-all hover:border-[#CDB079] hover:text-[#6E5A2E]"
         style={{ borderColor: '#D8D8D8', color: '#666666' }}
       >
         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +77,7 @@ export function SocialShare({ url, title }: { url: string; title: string }) {
         href={facebookUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border transition-all hover:border-[#B8892E] hover:text-[#B8892E]"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border transition-all hover:border-[#CDB079] hover:text-[#6E5A2E]"
         style={{ borderColor: '#D8D8D8', color: '#666666' }}
       >
         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">

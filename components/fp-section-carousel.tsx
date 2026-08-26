@@ -51,17 +51,16 @@ export function FPSectionCarousel({ sections }: { sections: CarouselSection[] })
           >
             <span
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: '0.85rem',
-                fontStyle: 'italic',
                 color: i === current ? '#C9984A' : '#C0B8AE',
-                fontWeight: 500,
+                fontWeight: 700,
               }}
             >
               {s.number}
             </span>
             <span
-              className="text-[0.68rem] font-semibold tracking-[0.07em] uppercase"
+              className="text-[0.68rem] font-semibold tracking-[0.07em]"
               style={{ color: i === current ? '#1A1714' : '#9A9189' }}
             >
               {s.title}
@@ -106,23 +105,24 @@ export function FPSectionCarousel({ sections }: { sections: CarouselSection[] })
         <div className="flex items-center gap-5 mb-10">
           <span
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '0.8rem',
-              fontStyle: 'italic',
               color: '#C9984A',
-              fontWeight: 500,
+              fontWeight: 700,
               letterSpacing: '0.04em',
             }}
           >
             {section.number}
           </span>
-          <div className="h-px flex-none w-6" style={{ background: '#B8892E' }} />
+          <div className="h-px flex-none w-6" style={{ background: '#CDB079' }} />
           <h2
-            className="shrink-0 tracking-tight"
+            className="shrink-0 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.4rem, 2vw, 1.75rem)',
-              fontWeight: 500,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.15,
               color: '#1A1714',
             }}
           >
@@ -168,11 +168,12 @@ export function FPSectionCarousel({ sections }: { sections: CarouselSection[] })
               </div>
               <Link href={`/forum-and-pulpit/${lead.slug}`} className="group block">
                 <h3
-                  className="leading-[1.15] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
+                  className="leading-[1.15] uppercase mb-4 transition-colors group-hover:text-[#7A5C1E]"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: lead.image ? 'clamp(1.35rem, 2.2vw, 1.9rem)' : 'clamp(1.7rem, 2.8vw, 2.4rem)',
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
                     color: '#1A1714',
                   }}
                 >
@@ -191,7 +192,7 @@ export function FPSectionCarousel({ sections }: { sections: CarouselSection[] })
                 <Link
                   href={`/forum-and-pulpit/${lead.slug}`}
                   className="inline-flex items-center gap-1.5 text-[0.68rem] tracking-[0.06em] uppercase font-medium transition-colors hover:text-[#7A5C1E]"
-                  style={{ color: '#B8892E' }}
+                  style={{ color: '#6E5A2E' }}
                 >
                   Read essay
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -237,15 +238,16 @@ export function FPSectionCarousel({ sections }: { sections: CarouselSection[] })
                     </span>
                   </div>
                 )}
-                <div className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2" style={{ color: '#B8892E' }}>
+                <div className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2" style={{ color: '#6E5A2E' }}>
                   {article.date}
                 </div>
                 <h4
-                  className="leading-[1.25] tracking-tight mb-3 transition-colors group-hover:text-[#7A5C1E]"
+                  className="leading-[1.15] uppercase mb-3 transition-colors group-hover:text-[#7A5C1E]"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
                     color: '#1A1714',
                   }}
                 >

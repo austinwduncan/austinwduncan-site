@@ -48,9 +48,11 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
         >
           <span
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '1rem',
-              fontStyle: 'italic',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '-0.01em',
               color: '#7A5C1E',
             }}
           >
@@ -104,7 +106,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
               aria-hidden
               className="absolute -top-4 -left-3 select-none pointer-events-none"
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-source-serif), Georgia, serif',
                 fontSize: '9rem',
                 lineHeight: 1,
                 color: '#C9984A',
@@ -118,7 +120,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
             <blockquote
               className="leading-[1.65] mb-8 relative z-10"
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-source-serif), Georgia, serif',
                 fontStyle: 'italic',
                 fontWeight: 400,
                 fontSize: 'clamp(1.45rem, 2.2vw, 1.9rem)',
@@ -130,7 +132,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
 
             {/* Attribution */}
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-8 h-px" style={{ background: '#B8892E' }} />
+              <div className="w-8 h-px" style={{ background: '#CDB079' }} />
               <p
                 className="text-[0.72rem] tracking-[0.04em]"
                 style={{ fontFamily: 'var(--font-source-serif)', color: '#6A5E52', fontStyle: 'italic' }}

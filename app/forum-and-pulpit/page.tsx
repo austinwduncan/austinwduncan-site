@@ -198,7 +198,7 @@ export default async function ForumAndPulpitPage() {
             >
               <span
                 className="text-[0.55rem] font-bold tracking-[0.22em] uppercase"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#6E5A2E' }}
               >
                 Front Page
               </span>
@@ -230,16 +230,17 @@ export default async function ForumAndPulpitPage() {
                 )}
                 <div
                   className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-3"
-                  style={{ color: '#B8892E' }}
+                  style={{ color: '#6E5A2E' }}
                 >
                   {formatDate(primary.frontmatter.date)}
                 </div>
                 <h2
-                  className="leading-[1.12] tracking-tight mb-4 transition-colors group-hover:text-[#7A5C1E]"
+                  className="uppercase leading-[0.95] mb-4 transition-colors group-hover:text-[#7A5C1E]"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: 'clamp(1.9rem, 3.5vw, 2.8rem)',
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
                     color: '#1A1714',
                   }}
                 >
@@ -277,16 +278,17 @@ export default async function ForumAndPulpitPage() {
                     <Link href={`/forum-and-pulpit/${article.slug}`} className="group block">
                       <div
                         className="text-[0.58rem] font-medium tracking-[0.12em] uppercase mb-2"
-                        style={{ color: '#B8892E' }}
+                        style={{ color: '#6E5A2E' }}
                       >
                         {formatDate(article.frontmatter.date)}
                       </div>
                       <h3
-                        className="leading-[1.25] tracking-tight mb-2 transition-colors group-hover:text-[#7A5C1E]"
+                        className="uppercase leading-[1.15] mb-2 transition-colors group-hover:text-[#7A5C1E]"
                         style={{
-                          fontFamily: 'var(--font-cormorant)',
+                          fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                           fontSize: 'clamp(1.1rem, 1.8vw, 1.35rem)',
-                          fontWeight: 500,
+                          fontWeight: 700,
+                          letterSpacing: '-0.02em',
                           color: '#1A1714',
                         }}
                       >
@@ -324,18 +326,18 @@ export default async function ForumAndPulpitPage() {
         >
           <defs>
             <pattern id="fp-topo" x="0" y="0" width="340" height="260" patternUnits="userSpaceOnUse">
-              <ellipse cx="170" cy="130" rx="155" ry="115" fill="none" stroke="#B8892E" strokeWidth="0.6" opacity="0.14"/>
-              <ellipse cx="170" cy="130" rx="122" ry="88" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.11"/>
-              <ellipse cx="170" cy="130" rx="90" ry="64" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.09"/>
-              <ellipse cx="170" cy="130" rx="60" ry="42" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-              <ellipse cx="170" cy="130" rx="32" ry="22" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.07"/>
-              <ellipse cx="0" cy="0" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
-              <ellipse cx="0" cy="0" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-              <ellipse cx="0" cy="0" rx="28" ry="18" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.06"/>
-              <ellipse cx="340" cy="260" rx="90" ry="65" fill="none" stroke="#B8892E" strokeWidth="0.5" opacity="0.10"/>
-              <ellipse cx="340" cy="260" rx="58" ry="40" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-              <ellipse cx="340" cy="0" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
-              <ellipse cx="0" cy="260" rx="75" ry="55" fill="none" stroke="#B8892E" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="170" cy="130" rx="155" ry="115" fill="none" stroke="#CDB079" strokeWidth="0.6" opacity="0.14"/>
+              <ellipse cx="170" cy="130" rx="122" ry="88" fill="none" stroke="#CDB079" strokeWidth="0.5" opacity="0.11"/>
+              <ellipse cx="170" cy="130" rx="90" ry="64" fill="none" stroke="#CDB079" strokeWidth="0.5" opacity="0.09"/>
+              <ellipse cx="170" cy="130" rx="60" ry="42" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="170" cy="130" rx="32" ry="22" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.07"/>
+              <ellipse cx="0" cy="0" rx="90" ry="65" fill="none" stroke="#CDB079" strokeWidth="0.5" opacity="0.10"/>
+              <ellipse cx="0" cy="0" rx="58" ry="40" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="0" cy="0" rx="28" ry="18" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.06"/>
+              <ellipse cx="340" cy="260" rx="90" ry="65" fill="none" stroke="#CDB079" strokeWidth="0.5" opacity="0.10"/>
+              <ellipse cx="340" cy="260" rx="58" ry="40" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="340" cy="0" rx="75" ry="55" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.08"/>
+              <ellipse cx="0" cy="260" rx="75" ry="55" fill="none" stroke="#CDB079" strokeWidth="0.4" opacity="0.08"/>
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#fp-topo)"/>
@@ -369,12 +371,14 @@ export default async function ForumAndPulpitPage() {
 
           {/* Display quote */}
           <p
+            className="uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.7rem, 3.2vw, 2.5rem)',
-              fontWeight: 400,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
               color: 'rgba(249,246,240,0.88)',
-              lineHeight: 1.3,
+              lineHeight: 0.95,
             }}
           >
             The church does not step back from the world — it speaks into it.
@@ -397,8 +401,8 @@ export default async function ForumAndPulpitPage() {
             {SECTIONS.map((s) => (
               <span
                 key={s.id}
-                className="text-[0.57rem] font-medium tracking-[0.14em] uppercase px-3 py-1.5"
-                style={{ border: '1px solid rgba(184,137,46,0.22)', color: 'rgba(249,246,240,0.4)' }}
+                className="text-[0.57rem] font-medium tracking-[0.14em] px-3 py-1.5"
+                style={{ border: '1px solid rgba(205,176,121,0.22)', color: 'rgba(249,246,240,0.4)' }}
               >
                 {s.title}
               </span>
@@ -426,7 +430,7 @@ export default async function ForumAndPulpitPage() {
                 <div>
                   <div
                     className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
-                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                    style={{ color: '#6E5A2E', borderColor: '#E2DACE' }}
                   >
                     About This Column
                   </div>
@@ -442,7 +446,7 @@ export default async function ForumAndPulpitPage() {
                 <div>
                   <div
                     className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
-                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                    style={{ color: '#6E5A2E', borderColor: '#E2DACE' }}
                   >
                     Topics
                   </div>
@@ -453,7 +457,7 @@ export default async function ForumAndPulpitPage() {
                         <div key={section.id} className="flex items-baseline justify-between gap-3">
                           <span
                             className="text-[0.72rem] leading-snug"
-                            style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#1A1714' }}
+                            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 600, letterSpacing: '-0.01em', color: '#1A1714' }}
                           >
                             {section.title}
                           </span>
@@ -473,7 +477,7 @@ export default async function ForumAndPulpitPage() {
                 <div>
                   <div
                     className="text-[0.55rem] font-bold tracking-[0.18em] uppercase mb-3 pb-2 border-b"
-                    style={{ color: '#B8892E', borderColor: '#E2DACE' }}
+                    style={{ color: '#6E5A2E', borderColor: '#E2DACE' }}
                   >
                     All Essays
                   </div>
@@ -492,7 +496,7 @@ export default async function ForumAndPulpitPage() {
                         </div>
                         <p
                           className="text-[0.75rem] leading-snug line-clamp-2 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 500, color: '#3A3530' }}
+                          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 600, letterSpacing: '-0.01em', color: '#3A3530' }}
                         >
                           {article.frontmatter.title}
                         </p>

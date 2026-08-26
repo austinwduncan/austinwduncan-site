@@ -75,8 +75,8 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
             </span>
           )}
           <h2
-            className="leading-snug tracking-tight mb-1"
-            style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.4rem', fontWeight: 500, color: '#1A1714' }}
+            className="mb-1"
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.4rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
           >
             {book.title}
           </h2>
@@ -156,19 +156,19 @@ export function LibraryEssentialGrid({ books }: { books: EssentialBook[] }) {
             >
               <div
                 className="text-[0.48rem] font-bold tracking-[0.18em] uppercase mb-1"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
                 {book.recommendationLevel ?? 'Essential'}
               </div>
               <h3
-                className="leading-snug mb-1"
-                style={{ fontFamily: 'var(--font-cormorant)', fontSize: '0.82rem', fontWeight: 500, color: '#F9F6F0' }}
+                className="mb-1"
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.15, color: '#F9F6F0' }}
               >
                 {book.title}
               </h3>
               <span
                 className="text-[0.55rem] font-medium tracking-[0.08em] uppercase mt-1.5"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
                 Click for details →
               </span>

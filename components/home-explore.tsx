@@ -34,21 +34,21 @@ export default function HomeExplore({ sections }: { sections: ExploreSection[] }
           {/* Left accent bar */}
           <div
             className="absolute left-0 top-0 bottom-0 w-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            style={{ background: '#B8892E' }}
+            style={{ background: '#CDB079' }}
           />
 
           {/* Count */}
           <p
             className="relative leading-none mb-1 transition-colors duration-200"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-              fontWeight: 300,
+              fontWeight: 700,
               color: '#E2DACE',
             }}
           >
             <span
-              className="transition-colors duration-200 group-hover:text-[#B8892E]"
+              className="transition-colors duration-200 group-hover:text-[#6E5A2E]"
               style={{ color: 'inherit' }}
             >
               {section.count}
@@ -63,11 +63,13 @@ export default function HomeExplore({ sections }: { sections: ExploreSection[] }
           </p>
 
           <p
-            className="relative font-medium leading-snug mb-2 transition-colors duration-200 group-hover:text-[#7A5C1E]"
+            className="relative uppercase mb-2 transition-colors duration-200 group-hover:text-[#7A5C1E]"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '1.2rem',
-              fontWeight: 500,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.15,
               color: '#1A1714',
             }}
           >

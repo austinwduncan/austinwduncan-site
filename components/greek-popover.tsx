@@ -114,7 +114,7 @@ export default function GreekPopover({ word, entries, loading, onClose, anchorEl
         left: pos.left,
         width: 320,
         background: '#141210',
-        border: '1px solid rgba(184,137,46,0.28)',
+        border: '1px solid rgba(205,176,121,0.28)',
         boxShadow: '0 16px 48px rgba(0,0,0,0.7)',
         zIndex: 9999,
       }}
@@ -127,7 +127,7 @@ export default function GreekPopover({ word, entries, loading, onClose, anchorEl
         <div style={{ flex: 1, minWidth: 0 }}>
           <span
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-source-serif), Georgia, serif',
               fontSize: '1.7rem',
               fontWeight: 400,
               color: '#F9F6F0',
@@ -257,7 +257,7 @@ function EntryPanel({
   if (compact) {
     return (
       <div className="px-4 py-2.5">
-        <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(184,137,46,0.6)', marginBottom: 3 }}>
+        <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(205,176,121,0.6)', marginBottom: 3 }}>
           {entry.parsing_human}
         </p>
         <p style={{ fontFamily: 'var(--font-source-serif)', fontSize: '0.82rem', color: 'rgba(249,246,240,0.55)', fontStyle: 'italic' }}>
@@ -277,7 +277,7 @@ function EntryPanel({
 
       {/* Gloss */}
       <div>
-        <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(184,137,46,0.6)', marginRight: 6 }}>
+        <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(205,176,121,0.6)', marginRight: 6 }}>
           Gloss:
         </span>
         <span style={{ fontFamily: 'var(--font-source-serif)', fontSize: '0.82rem', color: 'rgba(249,246,240,0.6)' }}>

@@ -55,17 +55,19 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
             <div>
               <div
                 className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
                 Library
               </div>
               <h1
-                className="leading-[1.1] tracking-tight"
+                className="uppercase tracking-tight"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#F9F6F0',
                 }}
               >
@@ -113,11 +115,13 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
           </div>
 
           <h2
-            className="mb-6"
+            className="mb-6 uppercase"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
-              fontWeight: 500,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.15,
               color: '#1A1714',
             }}
           >
@@ -132,13 +136,13 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                 className="group text-left flex items-start gap-3 p-4 transition-all"
                 style={{
                   background: activeIntent === id ? '#F9F3E8' : '#F9F6F0',
-                  border: `1px solid ${activeIntent === id ? '#B8892E' : '#E2DACE'}`,
+                  border: `1px solid ${activeIntent === id ? '#CDB079' : '#E2DACE'}`,
                 }}
               >
                 <Icon
                   size={13}
                   className="mt-0.5 shrink-0"
-                  style={{ color: activeIntent === id ? '#B8892E' : '#9A9189' }}
+                  style={{ color: activeIntent === id ? '#CDB079' : '#9A9189' }}
                 />
                 <span
                   className="text-[0.83rem] leading-snug"
@@ -160,18 +164,20 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
             >
               <div
                 className="text-[0.68rem] font-medium tracking-[0.14em] uppercase mb-4"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#6E5A2E' }}
               >
                 Recommended for you
               </div>
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 sm:items-start">
                 <div className="flex-1 min-w-0">
                   <h3
-                    className="mb-2 leading-tight"
+                    className="mb-2 uppercase"
                     style={{
-                      fontFamily: 'var(--font-cormorant)',
+                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       fontSize: 'clamp(1.4rem, 2vw, 1.8rem)',
-                      fontWeight: 500,
+                      fontWeight: 700,
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.15,
                       color: '#1A1714',
                     }}
                   >
@@ -211,7 +217,7 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                       >
                         <span
                           className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
-                          style={{ color: '#B8892E' }}
+                          style={{ color: '#6E5A2E' }}
                         >
                           {i + 1}
                         </span>
@@ -261,7 +267,7 @@ function Stat({ num, label }: { num: number; label: string }) {
     <div className="text-center">
       <span
         className="block leading-none mb-1"
-        style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.9rem', fontWeight: 300, color: '#B8892E' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.9rem', fontWeight: 700, color: '#CDB079' }}
       >
         {num}
       </span>
@@ -343,7 +349,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
               className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2 py-0.5"
               style={{
                 background: meta.status === 'Ongoing' ? '#F9F3E8' : '#F2EFE7',
-                color: meta.status === 'Ongoing' ? '#B8892E' : '#9A9189',
+                color: meta.status === 'Ongoing' ? '#6E5A2E' : '#9A9189',
                 border: `1px solid ${meta.status === 'Ongoing' ? '#C8A96A' : '#E2DACE'}`,
               }}
             >
@@ -360,11 +366,13 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
           </div>
 
           <h3
-            className="mb-3 leading-tight tracking-tight"
+            className="mb-3 uppercase tracking-tight"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
-              fontWeight: 500,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.15,
               color: '#1A1714',
             }}
           >
@@ -427,7 +435,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
               >
                 <svg
                   width="11" height="11" viewBox="0 0 24 24" fill="none"
-                  stroke="#B8892E" strokeWidth="2.5"
+                  stroke="#CDB079" strokeWidth="2.5"
                   className="shrink-0 mt-0.5"
                 >
                   <polyline points="20 6 9 17 4 12" />
@@ -453,7 +461,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
               >
                 <span
                   className="text-[0.65rem] font-medium shrink-0 w-4 text-right"
-                  style={{ color: '#B8892E' }}
+                  style={{ color: '#6E5A2E' }}
                 >
                   {i + 1}
                 </span>
@@ -493,7 +501,7 @@ function ProgressBar({ released, total }: { released: number; total: number }) {
         <span>{pct}%</span>
       </div>
       <div className="h-1" style={{ background: '#E2DACE' }}>
-        <div className="h-full" style={{ width: `${pct}%`, background: '#B8892E' }} />
+        <div className="h-full" style={{ width: `${pct}%`, background: '#CDB079' }} />
       </div>
     </div>
   )

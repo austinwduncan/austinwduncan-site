@@ -64,8 +64,8 @@ export default function TeachingChooser({ allSeries }: { allSeries: SeriesWithSe
     <div>
       {/* Prompt */}
       <p
-        className="text-2xl font-bold leading-tight tracking-tight text-zinc-900 mb-6"
-        style={{ fontFamily: 'var(--font-cormorant)' }}
+        className="text-2xl uppercase leading-[0.95] text-zinc-900 mb-6"
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' }}
       >
         What are you trying to study?
       </p>
@@ -133,8 +133,8 @@ export default function TeachingChooser({ allSeries }: { allSeries: SeriesWithSe
                   <span className="text-[11px] text-zinc-400">{meta.totalSessions} sessions</span>
                 </div>
                 <h3
-                  className="text-[18px] font-bold leading-tight tracking-tight text-zinc-900 mb-1.5"
-                  style={{ fontFamily: 'var(--font-cormorant)' }}
+                  className="text-[18px] leading-[1.15] text-zinc-900 mb-1.5"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' }}
                 >
                   {meta.title}
                 </h3>
@@ -142,7 +142,7 @@ export default function TeachingChooser({ allSeries }: { allSeries: SeriesWithSe
                 <Link
                   href={`/teaching/${meta.type}/${meta.startHere}`}
                   className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity hover:opacity-70"
-                  style={{ color: '#cdb079' }}
+                  style={{ color: '#6E5A2E' }}
                 >
                   Start Series <ArrowRight size={10} />
                 </Link>

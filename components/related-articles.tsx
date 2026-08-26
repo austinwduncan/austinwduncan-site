@@ -25,7 +25,7 @@ export function RelatedArticles({
       <div className="mx-auto max-w-[720px] px-6 py-10">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-7">
-          <div style={{ borderLeft: '4px solid #B8892E', paddingLeft: '0.6rem' }}>
+          <div style={{ borderLeft: '4px solid #CDB079', paddingLeft: '0.6rem' }}>
             <h2 className="text-[0.68rem] font-black tracking-[0.12em] uppercase" style={{ color: '#1A1A1A' }}>
               {heading}
             </h2>
@@ -51,7 +51,7 @@ export function RelatedArticles({
                     sizes="(min-width: 640px) 220px, 100vw"
                   />
                   {item.label && (
-                    <div className="absolute top-2 left-2 px-1.5 py-0.5" style={{ background: '#B8892E' }}>
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5" style={{ background: '#CDB079' }}>
                       <span className="text-[0.48rem] font-black tracking-[0.1em] uppercase text-white">
                         {item.label}
                       </span>
@@ -60,8 +60,14 @@ export function RelatedArticles({
                 </div>
               )}
               <h3
-                className="text-[0.9rem] leading-snug mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
-                style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 600, color: '#1A1A1A' }}
+                className="text-[0.9rem] uppercase mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
+                style={{
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.15,
+                  color: '#1A1A1A',
+                }}
               >
                 {item.title}
               </h3>

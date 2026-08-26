@@ -34,7 +34,7 @@ export default function GreekToolClient() {
             border: '1px solid #E2DACE',
             color: '#1A1714',
           }}
-          onFocus={(e) => (e.target.style.borderColor = '#B8892E')}
+          onFocus={(e) => (e.target.style.borderColor = '#CDB079')}
           onBlur={(e) => (e.target.style.borderColor = '#E2DACE')}
         />
         <div className="flex items-center gap-3 mt-2.5">
@@ -48,7 +48,7 @@ export default function GreekToolClient() {
           </button>
           <button
             onClick={() => { setInput(''); setSubmitted(PLACEHOLDER) }}
-            className="text-[0.72rem] font-medium tracking-[0.08em] uppercase transition-colors hover:text-[#B8892E]"
+            className="text-[0.72rem] font-medium tracking-[0.08em] uppercase transition-colors hover:text-[#6E5A2E]"
             style={{ color: '#9A9189' }}
           >
             Reset

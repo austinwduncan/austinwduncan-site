@@ -18,17 +18,19 @@ export default function DisclosurePage() {
             <div>
               <div
                 className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
                 About
               </div>
               <h1
-                className="leading-[1.1] tracking-tight"
+                className="uppercase"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 0.95,
                   color: '#F9F6F0',
                 }}
               >
@@ -73,11 +75,13 @@ export default function DisclosurePage() {
             </p>
 
             <h3
-              className="pt-4"
+              className="pt-4 uppercase"
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: '1.4rem',
-                fontWeight: 400,
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.15,
                 color: '#7A5C1E',
               }}
             >
@@ -101,11 +105,13 @@ export default function DisclosurePage() {
             </p>
 
             <h3
-              className="pt-4"
+              className="pt-4 uppercase"
               style={{
-                fontFamily: 'var(--font-cormorant)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: '1.4rem',
-                fontWeight: 400,
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.15,
                 color: '#7A5C1E',
               }}
             >

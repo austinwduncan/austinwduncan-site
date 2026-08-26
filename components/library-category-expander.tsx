@@ -37,7 +37,7 @@ export function LibraryCategoryExpander({
           type="button"
           onClick={() => setExpanded((v) => !v)}
           className="flex items-center gap-1 transition-colors hover:text-[#7A5C1E]"
-          style={{ color: '#B8892E' }}
+          style={{ color: '#6E5A2E' }}
         >
           {expanded ? 'Show less ↑' : `View all ${all.length} →`}
         </button>
@@ -66,16 +66,19 @@ export function LibraryCategoryExpander({
             <div className="absolute inset-0 flex flex-col justify-end p-4">
               <span
                 className="text-[0.55rem] font-semibold tracking-[0.14em] uppercase mb-1 transition-colors group-hover:text-[#C9984A]"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
                 {cat.count} books
               </span>
               <h3
-                className="leading-tight tracking-tight transition-colors group-hover:text-[#F9F6F0]"
+                className="transition-colors group-hover:text-[#F9F6F0]"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
-                  fontWeight: 500,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.15,
                   color: 'rgba(249,246,240,0.9)',
                 }}
               >
@@ -100,7 +103,7 @@ export function LibraryCategoryExpander({
               <Link
                 key={cat.name}
                 href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
-                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-[#B8892E] hover:bg-[#FEFCF7]"
+                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-gold hover:bg-[#FEFCF7]"
                 style={{ borderColor: '#D8D0C4', background: '#F5F2EB' }}
               >
                 <span
@@ -110,7 +113,7 @@ export function LibraryCategoryExpander({
                   {cat.name}
                 </span>
                 <span
-                  className="text-[0.56rem] font-medium tracking-[0.06em] transition-colors group-hover:text-[#B8892E]"
+                  className="text-[0.56rem] font-medium tracking-[0.06em] transition-colors group-hover:text-[#6E5A2E]"
                   style={{ color: '#B0A898' }}
                 >
                   {cat.count}

@@ -57,7 +57,7 @@ export default function ExegeticaArticleLayout({
             <Link
               href="/exegetica"
               className="text-[0.58rem] font-black tracking-[0.14em] uppercase transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#B8892E' }}
+              style={{ color: '#6E5A2E' }}
             >
               Exegetica
             </Link>
@@ -72,7 +72,7 @@ export default function ExegeticaArticleLayout({
           {/* Study number */}
           <div className="flex items-center gap-4 mb-5">
             <span
-              style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.05rem', fontStyle: 'italic', color: '#C9984A' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.05rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', color: '#C9984A' }}
             >
               Study {String(studyNum).padStart(2, '0')}
             </span>
@@ -83,9 +83,12 @@ export default function ExegeticaArticleLayout({
           <h1
             className="leading-[1.08] tracking-tight mb-7"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2rem, 4vw, 2.9rem)',
-              fontWeight: 500,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '-0.02em',
+              lineHeight: 0.95,
               color: '#1A1714',
             }}
           >
@@ -117,7 +120,7 @@ export default function ExegeticaArticleLayout({
       </div>
 
       {/* Thin amber gradient divider */}
-      <div style={{ height: 3, background: 'linear-gradient(90deg, #7A5C1E 0%, #B8892E 50%, #7A5C1E 100%)' }} />
+      <div style={{ height: 3, background: 'linear-gradient(90deg, #7A5C1E 0%, #CDB079 50%, #7A5C1E 100%)' }} />
 
       {/* ── Hero image ─────────────────────────────────────────────────────── */}
       {image && (
@@ -149,11 +152,11 @@ export default function ExegeticaArticleLayout({
             {abstract && (
               <div
                 className="mt-9 mb-9 p-6"
-                style={{ background: '#F0EDE6', borderLeft: '3px solid #B8892E' }}
+                style={{ background: '#F0EDE6', borderLeft: '3px solid #CDB079' }}
               >
                 <div
                   className="text-[0.52rem] font-black tracking-[0.22em] uppercase mb-3"
-                  style={{ color: '#B8892E' }}
+                  style={{ color: '#6E5A2E' }}
                 >
                   Abstract
                 </div>

@@ -14,7 +14,6 @@ import { getArticlesBySection } from '@/sanity/lib/queries'
 import { TEACHING_SERIES } from '@/data/teaching-series'
 import ScrollReveal from '@/components/scroll-reveal'
 import VideoBackground from '@/components/video-background'
-import AccentToggle from '@/components/accent-toggle'
 
 export const revalidate = 60
 
@@ -921,9 +920,6 @@ export default async function HomePage() {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* TEMPORARY: remove once the secondary accent is chosen. */}
-      <AccentToggle />
     </>
   )
 }

@@ -76,17 +76,18 @@ export default async function ExpositionalPage() {
               <Link
                 href="/teaching"
                 className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3 transition-colors hover:opacity-80"
-                style={{ color: '#B8892E' }}
+                style={{ color: '#CDB079' }}
               >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
                 Teaching
               </Link>
               <h1
-                className="leading-[1.1] tracking-tight"
+                className="uppercase leading-[0.95]"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 400,
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
                   color: '#F9F6F0',
                 }}
               >
@@ -143,8 +144,8 @@ export default async function ExpositionalPage() {
                 style={{ background: '#F9F6F0', border: '1px solid #E2DACE' }}
               >
                 <p
-                  className="text-[0.92rem] font-medium mb-1.5 leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                  style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714', fontSize: '1.05rem' }}
+                  className="mb-1.5 leading-[1.15] transition-colors group-hover:text-[#7A5C1E]"
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em', color: '#1A1714', fontSize: '1.05rem' }}
                 >
                   {meta.title}
                 </p>

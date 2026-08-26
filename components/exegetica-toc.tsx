@@ -82,7 +82,7 @@ export function ExegeticaTOC({ items }: { items: TocItem[] }) {
         >
           <p
             className="text-[0.5rem] font-bold tracking-[0.22em] uppercase mb-5"
-            style={{ color: '#B8892E' }}
+            style={{ color: '#6E5A2E' }}
           >
             In This Study
           </p>
@@ -136,7 +136,7 @@ export function ExegeticaTOC({ items }: { items: TocItem[] }) {
           <div className="flex items-center justify-between mb-8">
             <span
               className="text-[0.5rem] font-bold tracking-[0.22em] uppercase"
-              style={{ color: '#B8892E' }}
+              style={{ color: '#CDB079' }}
             >
               Article Outline
             </span>

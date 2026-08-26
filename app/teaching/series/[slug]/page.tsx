@@ -106,9 +106,9 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
             className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.08em] uppercase mb-10"
             style={{ color: 'rgba(255,255,255,0.3)' }}
           >
-            <Link href="/teaching" className="hover:text-[#B8892E] transition-colors">Teaching</Link>
+            <Link href="/teaching" className="hover:text-[#CDB079] transition-colors">Teaching</Link>
             <span>/</span>
-            <Link href={laneHref} className="hover:text-[#B8892E] transition-colors">{meta.primaryLane}</Link>
+            <Link href={laneHref} className="hover:text-[#CDB079] transition-colors">{meta.primaryLane}</Link>
           </div>
 
           {/* Cover image — gradient bleeds into dark background below */}
@@ -131,19 +131,20 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
           {/* Lane eyebrow */}
           <div
             className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-4"
-            style={{ color: '#B8892E' }}
+            style={{ color: '#CDB079' }}
           >
-            <span className="inline-block h-px w-[18px]" style={{ background: '#B8892E' }} />
+            <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
             {meta.primaryLane}
           </div>
 
           {/* Title */}
           <h1
-            className="leading-[1.1] tracking-tight mb-3"
+            className="uppercase leading-[0.95] mb-3"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2.4rem, 4vw, 3.5rem)',
-              fontWeight: 400,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
               color: '#F9F6F0',
             }}
           >
@@ -156,7 +157,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
             style={{
               fontFamily: 'var(--font-source-serif)',
               fontSize: 'clamp(1rem, 1.5vw, 1.15rem)',
-              color: '#B8892E',
+              color: '#CDB079',
               fontStyle: 'italic',
             }}
           >
@@ -180,9 +181,9 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
             <span
               className="text-[0.65rem] font-medium tracking-[0.1em] uppercase px-2.5 py-1"
               style={{
-                background: meta.status === 'Ongoing' ? 'rgba(184,137,46,0.15)' : 'rgba(255,255,255,0.07)',
-                color: meta.status === 'Ongoing' ? '#B8892E' : 'rgba(255,255,255,0.4)',
-                border: `1px solid ${meta.status === 'Ongoing' ? 'rgba(184,137,46,0.4)' : 'rgba(255,255,255,0.1)'}`,
+                background: meta.status === 'Ongoing' ? 'rgba(205,176,121,0.15)' : 'rgba(255,255,255,0.07)',
+                color: meta.status === 'Ongoing' ? '#CDB079' : 'rgba(255,255,255,0.4)',
+                border: `1px solid ${meta.status === 'Ongoing' ? 'rgba(205,176,121,0.4)' : 'rgba(255,255,255,0.1)'}`,
               }}
             >
               {meta.status === 'Ongoing'
@@ -227,7 +228,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
             </Link>
             <a
               href="#roadmap"
-              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#B8892E] hover:border-[#B8892E]"
+              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#CDB079] hover:border-[#CDB079]"
               style={{ color: 'rgba(255,255,255,0.4)', borderColor: 'rgba(255,255,255,0.15)' }}
             >
               View Series Roadmap
@@ -269,7 +270,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                   <div style={{ background: '#fff', border: '1px solid #E2DACE' }} className="p-5">
                     <p
                       className="text-[0.65rem] font-medium tracking-[0.1em] uppercase mb-3"
-                      style={{ color: '#B8892E' }}
+                      style={{ color: '#6E5A2E' }}
                     >
                       Best for
                     </p>
@@ -280,7 +281,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                           className="flex gap-2 text-[0.82rem] leading-snug"
                           style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
                         >
-                          <span className="shrink-0" style={{ color: '#B8892E', marginTop: 2 }}>—</span>
+                          <span className="shrink-0" style={{ color: '#6E5A2E', marginTop: 2 }}>—</span>
                           {item}
                         </li>
                       ))}
@@ -291,7 +292,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                   <div style={{ background: '#fff', border: '1px solid #E2DACE' }} className="p-5">
                     <p
                       className="text-[0.65rem] font-medium tracking-[0.1em] uppercase mb-3"
-                      style={{ color: '#B8892E' }}
+                      style={{ color: '#6E5A2E' }}
                     >
                       You&apos;ll encounter
                     </p>
@@ -312,7 +313,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                   <div style={{ background: '#fff', border: '1px solid #E2DACE' }} className="p-5">
                     <p
                       className="text-[0.65rem] font-medium tracking-[0.1em] uppercase mb-3"
-                      style={{ color: '#B8892E' }}
+                      style={{ color: '#6E5A2E' }}
                     >
                       By the end
                     </p>
@@ -325,7 +326,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         >
                           <svg
                             width="10" height="10" viewBox="0 0 24 24" fill="none"
-                            stroke="#B8892E" strokeWidth="2.5"
+                            stroke="#6E5A2E" strokeWidth="2.5"
                             className="shrink-0"
                             style={{ marginTop: 3 }}
                           >
@@ -366,7 +367,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         className="h-full"
                         style={{
                           width: `${Math.round((publishedSessions.length / meta.totalSessions) * 100)}%`,
-                          background: '#B8892E',
+                          background: '#6E5A2E',
                           transition: 'width 0.8s ease',
                         }}
                       />
@@ -403,7 +404,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         >
                           <span
                             className="shrink-0 text-[0.65rem] font-medium"
-                            style={{ color: '#B8892E', minWidth: 16, marginTop: 3 }}
+                            style={{ color: '#6E5A2E', minWidth: 16, marginTop: 3 }}
                           >
                             {i + 1}.
                           </span>
@@ -451,7 +452,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                   )}
                   <div className="flex justify-between">
                     <span>Status</span>
-                    <span style={{ color: meta.status === 'Ongoing' ? '#B8892E' : '#5A544C' }}>
+                    <span style={{ color: meta.status === 'Ongoing' ? '#6E5A2E' : '#5A544C' }}>
                       {meta.status}
                     </span>
                   </div>
@@ -477,11 +478,12 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                       >
                         <div className="flex-1 min-w-0">
                           <p
-                            className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
+                            className="uppercase leading-[1.15] transition-colors group-hover:text-[#7A5C1E]"
                             style={{
-                              fontFamily: 'var(--font-cormorant)',
+                              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                               fontSize: '0.95rem',
-                              fontWeight: 500,
+                              fontWeight: 700,
+                              letterSpacing: '-0.02em',
                               color: '#1A1714',
                             }}
                           >
@@ -529,16 +531,17 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                     )}
                     <p
                       className="text-[0.68rem] font-medium tracking-[0.1em] uppercase mb-1"
-                      style={{ color: '#B8892E' }}
+                      style={{ color: '#6E5A2E' }}
                     >
                       {nextSeries.primaryLane}
                     </p>
                     <p
-                      className="leading-snug mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
+                      className="uppercase leading-[1.15] mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
                       style={{
-                        fontFamily: 'var(--font-cormorant)',
+                        fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                         fontSize: '1.1rem',
-                        fontWeight: 500,
+                        fontWeight: 700,
+                        letterSpacing: '-0.02em',
                         color: '#1A1714',
                       }}
                     >
