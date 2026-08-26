@@ -90,6 +90,7 @@ export type ScriptureReferenceRow = {
   chapter_end: number | null
   verse_end: number | null
   is_primary: boolean
+  is_sweep: boolean
   start_ref: number
   end_ref: number
   source: string

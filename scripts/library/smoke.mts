@@ -26,3 +26,16 @@ console.log(`  getPieceBySlug: ${one?.title.slice(0,44)} (body ${one?.bodyText?.
 
 const rel = await getRelated(all[0].id)
 console.log(`  getRelated: ${rel.length} neighbours`)
+
+// Sweeps must not count as teaching on a chapter.
+const t2 = await getTaxonomy()
+const psalms = t2.books.find(b => b.slug === 'psalms')!
+let touched = 0
+for (let c = 1; c <= psalms.chapter_count; c++) {
+  if ((await scriptureIds('psalms', c)).length) touched++
+}
+console.log(`  Psalms chapters with direct teaching: ${touched} of ${psalms.chapter_count}`)
+const jude = t2.books.find(b => b.slug === 'jude')!
+console.log(`  Jude still covered: ${(await scriptureIds('jude', 1)).length > 0}`)
+const directCount = (await getPieces()).filter(p => p.scripture.length).length
+console.log(`  pieces with a direct reference: ${directCount}`)

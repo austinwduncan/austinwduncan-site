@@ -123,9 +123,9 @@ async function decorate(rows: ContentRow[]): Promise<Piece[]> {
       'content_topics', 'content_id, topic_id, is_primary', ids),
     fetchAllJoinRows<{
       content_id: string; book_id: number; chapter_start: number; verse_start: number | null
-      chapter_end: number | null; verse_end: number | null; is_primary: boolean
+      chapter_end: number | null; verse_end: number | null; is_primary: boolean; is_sweep: boolean
     }>('scripture_references',
-      'content_id, book_id, chapter_start, verse_start, chapter_end, verse_end, is_primary',
+      'content_id, book_id, chapter_start, verse_start, chapter_end, verse_end, is_primary, is_sweep',
       ids, 'start_ref'),
   ])
 
@@ -150,7 +150,9 @@ async function decorate(rows: ContentRow[]): Promise<Piece[]> {
   const scriptureFor = new Map<string, ScriptureRef[]>()
   for (const s of scriptureRows) {
     const b = bookById.get(s.book_id)
-    if (!b) continue
+    // A whole book sweep is a gesture at the book, not a passage taught, so it
+    // is not shown as one of the piece's references. See migration 0008.
+    if (!b || s.is_sweep) continue
     const list = scriptureFor.get(s.content_id) ?? []
     list.push({
       book: b.name, bookSlug: b.slug,
@@ -241,6 +243,11 @@ export const getPieces = cache(async (filters: LibraryFilters = {}): Promise<Pie
 /*
   Scripture lookup by integer bounds.
 
+  Sweeps are excluded. A sermon tagged "Psalms 1-150" matched all 150 chapters
+  under the overlap test, which made a whole book gesture look like teaching on
+  every psalm. Counting direct references only, Psalms goes from 150 of 150 to
+  36 of 150.
+
   A reference is stored as a closed interval, encoded as
   book_position * 1000000 + chapter * 1000 + verse. Asking what touches a
   passage is therefore an overlap test, `start_ref <= target_end AND
@@ -260,7 +267,8 @@ export const scriptureIds = cache(
       : base + book.chapter_count * 1_000 + 999
 
     const { data } = await library.from('scripture_references')
-      .select('content_id').lte('start_ref', end).gte('end_ref', start)
+      .select('content_id').eq('is_sweep', false)
+      .lte('start_ref', end).gte('end_ref', start)
     return [...new Set((data ?? []).map(r => r.content_id as string))]
   },
 )
