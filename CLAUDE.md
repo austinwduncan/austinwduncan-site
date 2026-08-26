@@ -169,9 +169,22 @@ faceted URL state, the Scripture explorer, generated topic pages, and search.
   needs a terminal or a desktop. This has killed features before.
 - **Never print secrets.** Show key names only. If one leaks, tell him to
   rotate it.
+- **A long-running dev server will not see a new directory.** Tailwind v4
+  auto-detects sources when it starts. Create `components/library/` two hours
+  into a session and every class in it silently fails to generate: the class
+  lands in the DOM, resolves to nothing, and an element sized by a utility
+  falls back to its intrinsic size. A card meant to be 13.5rem rendered at its
+  image's natural 1920px. `next build` is unaffected, so an agent that verifies
+  by building will report success while the running page is broken. Restart the
+  dev server after adding a directory.
 - **Chrome serves stale bundles constantly in dev.** Before diagnosing a bug,
   load a different page and come back, or check the server HTML with curl.
   Several hours were lost to phantom bugs that were only cache.
+- **IntersectionObserver does not fire in a non-foreground automated tab.**
+  Every `ScrollReveal` on the page will read `opacity: 0` and the content looks
+  missing. Before calling that a bug, run the same check against a page known
+  to work. On the homepage all 50 reveals read zero under automation and are
+  perfectly fine in a real browser.
 - Full-page screenshots of pages with heavy `backdrop-blur` render near-black
   and lie. Zoomed captures are accurate; computed styles are better still.
 

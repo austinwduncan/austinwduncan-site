@@ -59,9 +59,39 @@ export function collectionKicker(p: Piece): string | null {
 }
 
 /** Where a piece sits inside its own show. Used on the per show shelves. */
-export function showKicker(p: Piece): string | null {
-  const place = p.series?.name ?? p.scripture[0]?.label ?? null
-  return join([place, p.episode != null ? `Episode ${p.episode}` : null])
+/*
+  One kind of kicker per row, decided by the row rather than per card.
+
+  Choosing per card produced rows reading "Romans 3", "Exegetica", "Ezekiel 1",
+  "Genesis 1:1-3:24", because a piece with a series showed its series, one with
+  only scripture showed a passage, and one with neither showed its collection.
+  Three different kinds of label in a single row reads as noise.
+
+  A mode is used only when every piece in the row can supply it, so the row is
+  uniform or it falls back to something all of them have.
+*/
+export type KickerMode = 'series' | 'scripture' | 'collection' | 'none'
+
+export function chooseKickerMode(pieces: Piece[]): KickerMode {
+  if (!pieces.length) return 'none'
+  if (pieces.every(p => p.series)) return 'series'
+  if (pieces.every(p => p.scripture.length > 0)) return 'scripture'
+  if (pieces.every(p => p.collection)) return 'collection'
+  return 'none'
+}
+
+/** Episode numbers only appear when the whole row has them. */
+export function kickerFor(pieces: Piece[]): (p: Piece) => string | null {
+  const mode = chooseKickerMode(pieces)
+  const numbered = pieces.length > 0 && pieces.every(p => p.episode != null)
+  return (p: Piece) => {
+    const place =
+      mode === 'series' ? (p.series?.name ?? null)
+      : mode === 'scripture' ? (p.scripture[0]?.label ?? null)
+      : mode === 'collection' ? (p.collection?.name ?? null)
+      : null
+    return join([place, numbered && p.episode != null ? `Episode ${p.episode}` : null])
+  }
 }
 
 export function toCard(p: Piece, kicker: string | null): HubCard {

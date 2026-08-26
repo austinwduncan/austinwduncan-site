@@ -3,6 +3,19 @@ import ScrollReveal from '@/components/scroll-reveal'
 import type { Piece } from '@/lib/library/types'
 
 /*
+  Grade calibrated against the artwork, not assumed.
+
+  The original treatment assumed Austin's covers ran near white to near black
+  and needed flattening. Measuring all 272 of them says otherwise: the median
+  sits at 35 percent brightness and 133 are already below that. The old grade
+  then halved it to 18 percent, which pushed the darkest covers to near black.
+  "War with Iran" read as an empty card on the shelf.
+
+  So the brightness cut is gone and the graphite veil drops from 42 to 20
+  percent. Grayscale, the steel tint and the vignette stay, which is what keeps
+  a shelf reading as one set. Full colour still returns on hover.
+*/
+/*
   Shared furniture for the three legacy property indexes: Word for Word,
   Exegetica, and Forum & Pulpit.
 
@@ -97,7 +110,7 @@ function Artwork({ src, priority = false }: { src: string | null; priority?: boo
           src={src}
           alt=""
           loading={priority ? 'eager' : 'lazy'}
-          className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] brightness-[0.86] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
+          className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
         />
       ) : (
         <span aria-hidden className="section-pattern absolute inset-0" />
@@ -106,7 +119,7 @@ function Artwork({ src, priority = false }: { src: string | null; priority?: boo
       <span
         aria-hidden
         className="absolute inset-0 transition-opacity duration-[600ms] group-hover:opacity-0"
-        style={{ background: 'rgba(44,48,47,0.42)' }}
+        style={{ background: 'rgba(44,48,47,0.20)' }}
       />
       <span
         aria-hidden

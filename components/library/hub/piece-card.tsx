@@ -3,6 +3,19 @@ import { ArrowRight } from 'lucide-react'
 import type { HubCard } from '@/components/library/hub/cards'
 
 /*
+  Grade calibrated against the artwork, not assumed.
+
+  The original treatment assumed Austin's covers ran near white to near black
+  and needed flattening. Measuring all 272 of them says otherwise: the median
+  sits at 35 percent brightness and 133 are already below that. The old grade
+  then halved it to 18 percent, which pushed the darkest covers to near black.
+  "War with Iran" read as an empty card on the shelf.
+
+  So the brightness cut is gone and the graphite veil drops from 42 to 20
+  percent. Grayscale, the steel tint and the vignette stay, which is what keeps
+  a shelf reading as one set. Full colour still returns on hover.
+*/
+/*
   A Library tile.
 
   The grade is the point. Austin's artwork runs from near white (Hebrews) to
@@ -38,16 +51,43 @@ export default function PieceCard({ card }: { card: HubCard }) {
             src={card.image}
             alt=""
             loading="lazy"
-            className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] brightness-[0.86] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
+            className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
           />
         ) : (
-          <span aria-hidden className="section-pattern absolute inset-0" />
+          /*
+            Thirteen pieces have no artwork, and an empty frame reads as a
+            broken image rather than a card. Austin typesets titles into his
+            covers, so a title card is the house idiom: the same thing his art
+            does, done in CSS until the real cover exists.
+          */
+          <span
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center px-4 text-center"
+            style={{
+              background:
+                'radial-gradient(120% 120% at 30% 20%, rgba(116,135,144,0.22) 0%, transparent 60%), var(--awd-graphite)',
+            }}
+          >
+            <span
+              className="line-clamp-3"
+              style={{
+                fontFamily: HEADING,
+                fontWeight: 700,
+                fontSize: 'clamp(0.72rem, 1.5vw, 0.95rem)',
+                letterSpacing: '-0.01em',
+                lineHeight: 1.15,
+                color: 'rgba(238,234,225,0.5)',
+              }}
+            >
+              {card.title}
+            </span>
+          </span>
         )}
 
         <span
           aria-hidden
           className="absolute inset-0 transition-opacity duration-[600ms] group-hover:opacity-0"
-          style={{ background: 'rgba(44,48,47,0.42)' }}
+          style={{ background: 'rgba(44,48,47,0.20)' }}
         />
         <span
           aria-hidden

@@ -6,7 +6,7 @@ import type { Piece } from '@/lib/library/types'
 import ScrollReveal from '@/components/scroll-reveal'
 import Billboard from '@/components/library/hub/billboard'
 import Shelf, { type ShelfProps } from '@/components/library/hub/shelf'
-import { collectionKicker, showKicker, toCard } from '@/components/library/hub/cards'
+import { kickerFor, toCard } from '@/components/library/hub/cards'
 
 /*
   The Library home.
@@ -64,9 +64,28 @@ export default async function LibraryHomePage() {
   // ── Latest across everything ──────────────────────────────────────────────
   // The featured piece is already the top of the page, so it is not repeated
   // immediately underneath itself.
+  /*
+    Latest takes at most two per show. Austin's recent publishing is almost all
+    one collection, so a straight newest-first row was four In the Text pieces
+    that then repeated in the In the Text row directly beneath it. Capping per
+    show makes the row say what it means: the newest thing across everything.
+  */
+  const perShow = new Map<number, number>()
+  const latest: Piece[] = []
+  for (const p of all) {
+    if (p.id === featured.id) continue
+    const key = p.collection?.id ?? -1
+    const used = perShow.get(key) ?? 0
+    if (used >= 2) continue
+    perShow.set(key, used + 1)
+    latest.push(p)
+    if (latest.length === ROW) break
+  }
+  const latestKicker = kickerFor(latest)
+
   shelves.push({
     title: 'Latest',
-    cards: all.filter(p => p.id !== featured.id).slice(0, ROW).map(p => toCard(p, collectionKicker(p))),
+    cards: latest.map(p => toCard(p, latestKicker(p))),
     seeAllHref: `${BROWSE}?sort=newest`,
     seeAllLabel: 'See all',
     total: all.length,
@@ -78,9 +97,11 @@ export default async function LibraryHomePage() {
   for (const show of shows) {
     const mine = all.filter(p => p.collection?.id === show.id)
     if (!mine.length) continue
+    const row = mine.slice(0, ROW)
+    const kicker = kickerFor(row)
     shelves.push({
       title: show.name,
-      cards: mine.slice(0, ROW).map(p => toCard(p, showKicker(p) ?? collectionKicker(p))),
+      cards: row.map(p => toCard(p, kicker(p))),
       titleHref: `/library/${show.slug}`,
       seeAllHref: `${BROWSE}?collection=${show.slug}`,
       seeAllLabel: 'See all',
@@ -97,7 +118,7 @@ export default async function LibraryHomePage() {
   if (startHere.length) {
     shelves.push({
       title: 'Start here',
-      cards: startHere.slice(0, ROW).map(p => toCard(p, collectionKicker(p))),
+      cards: (() => { const r = startHere.slice(0, ROW); const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
       seeAllHref: `${BROWSE}?level=${shallowest.slug}`,
       seeAllLabel: 'See all',
       total: startHere.length,
@@ -117,7 +138,7 @@ export default async function LibraryHomePage() {
     if (shortest.length) {
       shelves.push({
         title: 'Start here',
-        cards: shortest.map(p => toCard(p, collectionKicker(p))),
+        cards: (() => { const r = shortest; const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
         seeAllHref: `${BROWSE}?sort=newest`,
         seeAllLabel: 'See all',
       })
@@ -146,7 +167,7 @@ export default async function LibraryHomePage() {
     const mine = all.filter(p => p.topics.some(t => t.slug === topic.slug))
     shelves.push({
       title: topic.name,
-      cards: mine.slice(0, ROW).map(p => toCard(p, collectionKicker(p))),
+      cards: (() => { const r = mine.slice(0, ROW); const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
       seeAllHref: `${BROWSE}?topic=${topic.slug}`,
       seeAllLabel: 'See all',
       total: mine.length,

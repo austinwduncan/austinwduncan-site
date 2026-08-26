@@ -18,6 +18,35 @@ import type { BibleBookRow, ContentRow } from './database.types'
   far easier to read.
 */
 
+/*
+  Transient database failures are retried.
+
+  The build prerenders 478 pages with 9 workers, all reading Postgres at once,
+  and Supabase cancels a statement that waits too long under that contention.
+  It is intermittent: the same build fails and then succeeds unchanged, which
+  makes it a coin flip in CI rather than a reproducible fault.
+
+  Retrying with backoff turns a failed deploy into a slower one. Only transient
+  classes are retried; a real error, a bad column or a policy denial, still
+  fails immediately rather than being retried three times and hidden.
+*/
+const TRANSIENT = /statement timeout|connection|ECONNRESET|ETIMEDOUT|fetch failed|too many/i
+
+async function resilient<T>(label: string, run: () => Promise<T>): Promise<T> {
+  let lastError: unknown
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      return await run()
+    } catch (error) {
+      lastError = error
+      if (!TRANSIENT.test(String((error as Error)?.message ?? error))) throw error
+      if (attempt === 4) break
+      await new Promise(r => setTimeout(r, 250 * 2 ** (attempt - 1)))
+    }
+  }
+  throw new Error(`Library ${label} failed after 4 attempts: ${String(lastError)}`)
+}
+
 // ─── Taxonomy ────────────────────────────────────────────────────────────────
 
 export const getTaxonomy = cache(async () => {
@@ -118,9 +147,11 @@ async function fetchAllJoinRows<T>(
   for (let from = 0; ; from += PAGE) {
     let q = library.from(table).select(columns).in('content_id', ids).range(from, from + PAGE - 1)
     if (order) q = q.order(order)
-    const { data, error } = await q
-    if (error) throw new Error(`Library ${table} read failed: ${error.message}`)
-    const rows = (data ?? []) as unknown as T[]
+    const rows = await resilient(table, async () => {
+      const { data, error } = await q
+      if (error) throw new Error(error.message)
+      return (data ?? []) as unknown as T[]
+    })
     out.push(...rows)
     if (rows.length < PAGE) return out
   }
@@ -249,9 +280,12 @@ export const getPieces = cache(async (filters: LibraryFilters = {}): Promise<Pie
   q = q.order(sort.column, { ascending: sort.ascending, nullsFirst: false })
   if (filters.limit) q = q.range(filters.offset ?? 0, (filters.offset ?? 0) + filters.limit - 1)
 
-  const { data, error } = await q
-  if (error) throw new Error(`Library getPieces failed: ${error.message}`)
-  return decorate((data ?? []) as ContentRow[])
+  const rows = await resilient('getPieces', async () => {
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return (data ?? []) as ContentRow[]
+  })
+  return decorate(rows)
 })
 
 /*
@@ -280,10 +314,13 @@ export const scriptureIds = cache(
       ? base + chapter * 1_000 + (verse ?? 999)
       : base + book.chapter_count * 1_000 + 999
 
-    const { data } = await library.from('scripture_references')
-      .select('content_id').eq('is_sweep', false)
-      .lte('start_ref', end).gte('end_ref', start)
-    return [...new Set((data ?? []).map(r => r.content_id as string))]
+    return resilient('scriptureIds', async () => {
+      const { data, error } = await library.from('scripture_references')
+        .select('content_id').eq('is_sweep', false)
+        .lte('start_ref', end).gte('end_ref', start)
+      if (error) throw new Error(error.message)
+      return [...new Set((data ?? []).map(r => r.content_id as string))]
+    })
   },
 )
 
