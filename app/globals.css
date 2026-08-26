@@ -275,3 +275,61 @@
   a { color: #000; text-decoration: none; }
 }
 .print-only { display: none; }
+
+/*
+  Austin W. Duncan palette (2026-08-25). Dark dominant, roughly:
+  55% soft black, 20% graphite, 10% warm bone, 8% gold, 5% secondary, 2% stone.
+
+  The gold is the identity, but it is deliberately NOT a large field. It earns
+  its presence as typography, rules, icons, borders and single focal elements
+  against the near-black.
+
+  Measured contrast on #171918: gold 8.48, bone 14.72, stone 7.34,
+  sage 4.89, steel 4.72. All clear AA.
+
+  Two hard rules:
+    - On warm bone, gold is 1.73 and stone is 2.00. Neither is ever text there.
+    - On graphite, sage/steel fall to ~3.6, so large text or non-text only.
+
+  --awd-accent-2 resolves from the data-accent attribute on <html> so the
+  sage and steel options can be compared live. Remove the [data-accent] block
+  and the AccentToggle component once one is chosen.
+*/
+:root {
+  --awd-black: #171918;      /* soft black   */
+  --awd-graphite: #2c302f;   /* graphite     */
+  --awd-gold: #cdb079;       /* antique gold */
+  --awd-bone: #eeeae1;       /* warm bone    */
+  --awd-stone: #aaa79e;      /* stone        */
+
+  --awd-sage: #7f8a78;       /* muted sage       */
+  --awd-steel: #748790;      /* muted steel blue */
+  --awd-accent-2: var(--awd-steel);
+}
+
+:root[data-accent="sage"] {
+  --awd-accent-2: var(--awd-sage);
+}
+:root[data-accent="steel"] {
+  --awd-accent-2: var(--awd-steel);
+}
+
+@theme inline {
+  --color-black-soft: var(--awd-black);
+  --color-graphite: var(--awd-graphite);
+  --color-gold: var(--awd-gold);
+  --color-bone: var(--awd-bone);
+  --color-stone: var(--awd-stone);
+  --color-accent-2: var(--awd-accent-2);
+  --font-cmg: var(--font-montserrat);
+}
+
+/* Browse shelves scroll natively but hide their scrollbar, so the row reads as
+   a shelf rather than a scroll area. Arrow controls and swipe still work. */
+.shelf-scroller {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.shelf-scroller::-webkit-scrollbar {
+  display: none;
+}

@@ -34,8 +34,9 @@ export default function ScrollReveal({ children, delay = 0, className }: Props) 
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(28px)',
-        transition: `opacity 0.65s ease ${delay}ms, transform 0.65s ease ${delay}ms`,
+        transform: visible ? 'translateY(0)' : 'translateY(34px)',
+        // Matches the Crosswalk reveal: 0.85s on a decelerating curve.
+        transition: `opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
       }}
     >
       {children}

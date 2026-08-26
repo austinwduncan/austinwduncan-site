@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Cormorant_Garamond, Source_Serif_4 } from 'next/font/google'
+import { Geist, Geist_Mono, Cormorant_Garamond, Source_Serif_4, Montserrat } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/nav'
@@ -23,6 +23,19 @@ const sourceSerif = Source_Serif_4({
   display: 'swap',
 })
 
+/*
+  CMG Sans. The church's licensed "CMG Sans" is Montserrat with a renamed name
+  table (designer Julieta Ulanovsky, SIL Open Font License), confirmed by
+  reading the woff2 name records. Loading Montserrat from Google gives the same
+  typeface with the full variable weight axis instead of four static cuts.
+  Used for display headers; Cormorant still carries editorial headings.
+*/
+const montserrat = Montserrat({
+  variable: '--font-montserrat',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
   subsets: ['latin'],
@@ -37,7 +50,7 @@ export const metadata: Metadata = {
     default: 'Austin W. Duncan',
   },
   description:
-    'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+    'Sermons, biblical teaching, scholarly articles, and cultural commentary from Austin W. Duncan.',
   metadataBase: new URL('https://austinwduncan.com'),
   openGraph: {
     type: 'website',
@@ -68,14 +81,14 @@ const SITE_SCHEMA = {
       name: 'Austin W. Duncan',
       url: 'https://austinwduncan.com',
       jobTitle: 'Pastor, Teacher, Theologian',
-      description: 'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+      description: 'Sermons, biblical teaching, scholarly articles, and cultural commentary from Austin W. Duncan.',
     },
     {
       '@type': 'WebSite',
       '@id': 'https://austinwduncan.com/#website',
       url: 'https://austinwduncan.com',
       name: 'Austin W. Duncan',
-      description: 'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+      description: 'Sermons, biblical teaching, scholarly articles, and cultural commentary from Austin W. Duncan.',
       author: { '@id': 'https://austinwduncan.com/#person' },
     },
   ],
@@ -89,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} ${sourceSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cormorant.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -138,7 +151,7 @@ export default function RootLayout({
         `}
       </Script>
 
-      {/* Umami — add data-website-id once you have your Umami instance URL */}
+      {/* Umami: add data-website-id once you have your Umami instance URL */}
       {/* <Script src="https://your-umami-instance/script.js" data-website-id="YOUR_ID" strategy="afterInteractive" /> */}
     </html>
   )

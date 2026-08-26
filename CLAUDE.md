@@ -1,227 +1,182 @@
 @AGENTS.md
 
-# Word for Word Page — Design Spec
+# austinwduncan.com
 
-## Project Context
-
-This is the `Word for Word` page of Austin Duncan's personal pastor website, built with **Next.js / React**. The goal is a content-rich news/magazine-style page modeled as closely as possible on the **Newspaper Pro** WordPress theme demo:
-
-**Reference template:** https://demo.tagdiv.com/newspaper_pro/
-
-Study that URL before making layout or style decisions. When in doubt, match it.
+The personal site of Austin W. Duncan: pastor and Bible teacher at Crosswalk
+Church in Brentwood, Tennessee. Sermons, teaching series, scholarly papers,
+cultural commentary, and a reading library.
 
 ---
 
-## Design Philosophy
+## What this site is NOT
 
-This page should feel like a **professional editorial publication**, not a blog. Think: dense, organized, image-forward, scannable. Every section should feel deliberate. Content hierarchy is communicated through size, weight, and position — not color overload.
+An earlier version of this file instructed cloning the "Newspaper Pro" tagdiv
+WordPress demo. **That brief is retired.** Do not reintroduce any of it:
 
-Key traits to preserve from the reference:
+- ❌ trending tickers
+- ❌ right-hand sidebars alongside content
+- ❌ colored category badges pinned to image corners
+- ❌ dense 3- and 4-up card grids as the organizing metaphor
+- ❌ sub-0.7rem uppercase metadata as a structural device
+- ❌ "latest posts" as the dominant structure
 
-- Information-dense layout without feeling cluttered
-- Strong typographic hierarchy (big bold headlines dominate)
-- Featured content leads the page; supporting content fills out sections below
-- Red (or strong accent color) used sparingly — category labels, section borders, interactive highlights
-- Sidebar on the right for secondary content (popular posts, categories, recent items)
-- Clear section demarcation with bold uppercase section headers
-
----
-
-## Color System
-
-Match these values closely. Adjust brand accent from red to whatever accent color is already established in the project — but keep the structural palette.
-
-| Token | Value | Usage |
-| :---- | :---- | :---- |
-| `--color-bg` | `#ffffff` | Page background |
-| `--color-surface` | `#f7f7f7` | Section backgrounds, sidebar |
-| `--color-border` | `#e8e8e8` | Dividers, card borders |
-| `--color-text-primary` | `#1a1a1a` | Headlines, body |
-| `--color-text-secondary` | `#555555` | Metadata (dates, authors) |
-| `--color-text-muted` | `#888888` | Labels, captions |
-| `--color-accent` | site gold `#B8892E` / hover `#7A5C1E` | Category badges, hover states, section header borders |
-| `--color-header-bg` | `#111111` | Ticker / dark bars |
-| `--color-header-text` | `#ffffff` | Nav text |
+If a change makes the page feel like a magazine or a blog, it is wrong.
 
 ---
 
-## Typography
+## Hard rules
 
-Use the existing Cormorant Garamond for headlines and Source Serif 4 for body/excerpts.
+These were each learned the expensive way. Breaking them is a regression.
 
-### Type Scale
+### 1. Headings are never serif
 
-| Element | Size | Weight | Notes |
-| :---- | :---- | :---- | :---- |
-| Hero headline | 2.4–3rem | 700–800 | Dominates the page |
-| Section headline | 1.25–1.5rem | 700 | Card titles, article titles |
-| Section header label | 0.75rem | 900 (font-black) | Uppercase, letter-spaced |
-| Category badge | 0.55–0.65rem | 700 | Uppercase, amber background, white text |
-| Author / date | 0.65rem | 400 | Muted (#888888) |
-| Body text | 0.875–1rem | 400 | Comfortable line height (1.65) |
+Every heading is **CMG Sans**, which is Montserrat (see below), via
+`--font-cmg`. Body copy is Source Serif. This is not a preference to be
+re-litigated.
 
----
+`app/page.tsx` routes every heading through a single `Heading` component and
+names the typeface in exactly one constant, so it cannot drift. Do the same in
+new work rather than hand-rolling headings.
 
-## Page Layout Structure
+> **CMG Sans is Montserrat.** The church's licensed "CMG Sans" woff2 files are
+> Montserrat with a renamed name table (designer Julieta Ulanovsky, SIL Open
+> Font License), confirmed by reading the font's name records. We load real
+> Montserrat from Google Fonts to get the full variable weight axis instead of
+> four static cuts. Montserrat is wide and geometric: at display sizes it needs
+> `tracking-[-0.02em]`, leading near 0.95, and weight 700 uppercase.
 
-The page is composed of a **full-width trending ticker**, then a **main content column (~70%)** and a **right sidebar (~30%)**, wrapped in a centered container with a max-width of `1200px`. The sidebar runs alongside the hero AND all content sections below it.
+### 2. No em dashes or en dashes. Anywhere.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  TRENDING TICKER (scrolling row of article titles)          │
-├──────────────────────────────────┬──────────────────────────┤
-│                                  │                          │
-│  HERO / FEATURED ARTICLE         │  SIDEBAR                 │
-│  (large 16:9 image, big headline)│  - Popular Posts         │
-│                                  │  - Categories w/ counts  │
-│  4-UP RECENT GRID                │  - Search                │
-│  (4 cards, image + badge + title)│  - About                 │
-│                                  │                          │
-│  DON'T MISS (tabbed section)     │                          │
-│  1 large + 4 stacked small       │                          │
-│                                  │                          │
-│  PER-TOPIC SECTIONS              │                          │
-│  (3-col card grids, each topic)  │                          │
-│                                  │                          │
-│  ALL QUESTIONS (numbered list)   │                          │
-│                                  │                          │
-└──────────────────────────────────┴──────────────────────────┘
-```
+Same rule as the Crosswalk site. Applies to all copy, comments, docs and
+commit messages. Rewrite the sentence instead.
+
+Currently clean: `app/page.tsx`, `app/browse/`, nav, footer, metadata.
+Still dirty: MDX article bodies (~9,000) and `data/teaching-series.ts` (33).
+
+### 3. Swapping an asset is not permission to restyle
+
+When asked to change a photo or video, change the `src` and the framing. Do
+not move the layout around it. This has been asked for explicitly.
 
 ---
 
-## Component Specifications
+## Palette
 
-### 1. Trending Ticker
+Dark dominant, roughly 55 / 20 / 10 / 8 / 5 / 2.
 
-- Full-width, dark background (`#111111`)
-- "Trending Now:" label on left (accent color, bold)
-- Auto-scrolling headlines using CSS animation (pause on hover)
-- Titles separated by `/` dividers
+```
+--awd-black     #171918   soft black   ~55%   primary surface
+--awd-graphite  #2C302F   graphite     ~20%
+--awd-bone      #EEEAE1   warm bone    ~10%   light bands, reading
+--awd-gold      #CDB079   antique gold  ~8%   THE signature
+--awd-accent-2            secondary     ~5%   steel #748790 or sage #7F8A78
+--awd-stone     #AAA79E   stone         ~2%   metadata
+```
 
-### 2. Hero Article Block
+**Gold is never a large field.** It is type, rules, brackets, and one button.
 
-- Large featured image (16:9 aspect ratio), full main column width
-- Category badge overlaid top-left corner on image (amber background, white text)
-- Headline below image: very large, bold, Cormorant
-- Short excerpt below headline (Source Serif, muted)
-- Date in muted small text
+### Measured contrast, non-negotiable
 
-### 3. Article Card (reusable)
+On `#171918`: gold 8.48, bone 14.72, stone 7.34, sage 4.89, steel 4.72. All
+clear AA.
 
-- Thumbnail image (top, 16:9 aspect ratio)
-- Category badge overlaid on image top-left
-- Headline (bold Cormorant, 2–3 lines max, truncated)
-- Date (muted, small, #888888)
-- No body text on standard cards
-- Hover: image scale(1.04) + headline color to #7A5C1E
+| Surface | Rule |
+| :-- | :-- |
+| Warm bone | gold is **1.73** and stone **2.00**. Neither is ever text here. Use `#6E5A2E` (5.53) for the accent clause, graphite (11.13) for body. |
+| Graphite | the secondary accent falls to ~3.6. Large text or non-text only. |
 
-### 4. Section Header
-
-- Left border: `4px solid #B8892E`
-- Label: uppercase, font-black, ~0.78rem, letter-spacing
-- Followed by a full-width horizontal rule (thin, #e8e8e8)
-- Pattern: `| LATEST ARTICLES`, `| DON'T MISS`, `| GOD & THEOLOGY`
-
-### 5. "Don't Miss" Tabbed Section
-
-- Section header at top
-- Row of category filter tabs: All | Theology | Life | Apologetics | NT Issues | OT Issues
-- Active tab: amber bottom border + amber text color
-- Content: 1 large card (left, 3:2 image + headline + excerpt) + 4 stacked small articles (right, thumbnail + badge + title + date)
-- Vertical divider between large and small columns
-
-### 6. Per-Topic Sections
-
-- One section per topic that has articles
-- Section header with topic number badge + topic name + "All N →" action
-- 3-column article card grid (or 2-col if fewer articles)
-- Clicking "All N →" activates the topic filter
-
-### 7. All Questions Numbered List
-
-- At the bottom of the main column
-- Each row: Cormorant italic number | category badge (amber bg) | headline | date
-- Thin dividers between rows
-- Shows ALL articles
-
-### 8. Sidebar Widgets (all use the same section header style)
-
-**Search**: input with border, focus turns amber
-
-**Popular Posts**: numbered 01–05, each with category badge + headline + date
-
-**Categories**: list of topic names with article count badges (amber bg when active)
-
-**About**: short italic description of the series
+**Open decision:** secondary accent is still steel vs sage.
+`components/accent-toggle.tsx` is a temporary chip that flips `data-accent` on
+`<html>`. Once chosen, hard-code `--awd-accent-2` in `globals.css` and delete
+the toggle.
 
 ---
 
-## Article Card Grid Patterns
+## Visual language
 
-### 4-Up Grid (recent articles after hero)
-```
-[ card ] [ card ] [ card ] [ card ]
-```
-Equal width, 16:9 image, category badge, headline, date. Responsive: 2-up tablet, 1-up mobile.
+Carried over from the Crosswalk site deliberately, since Austin designed it:
+the ruled eyebrow, generous vertical rhythm (`py-28 lg:py-36`), scroll reveals
+on every section, glass surfaces (`backdrop-blur` over a translucent
+near-black), and the L-shaped corner bracket motif, rendered in gold here
+rather than Crosswalk's white.
 
-### 1 Large + 4 Stacked (Don't Miss)
-```
-[ === LARGE CARD === ] | [ small ]
-                       | [ small ]
-                       | [ small ]
-                       | [ small ]
-```
-Large: ~50% width, 3:2 image, headline, excerpt. Small: thumbnail + badge + title + date.
+**Media treatment.** Two techniques that matter:
 
-### 3-Column Section Grid (per topic)
-```
-[ card ] [ card ] [ card ]
-```
-
----
-
-## Spacing & Layout
-
-```
-section-gap: 40px (border-t + pt-6 between sections)
-card-gap: 20px (gap-5)
-container-max: 1200px
-container-pad: 20px (px-5)
-sidebar-width: 280px
-border-radius: 0 (editorial feel — no rounded corners)
-```
+- **Bake video blur into the file with ffmpeg, never CSS.** A large CSS blur on
+  a full-width video element locked the renderer outright. Pre-blurred footage
+  also compresses hard: the preaching loop is ~200KB against an 8MB source.
+- **Pad the frame to move a subject sideways.** A section wider than its
+  footage shows the full source width, so horizontal position in the file maps
+  straight to position on screen. Padding costs no resolution; cropping does.
+- **Grade all artwork to one tonal range.** Austin's art runs near-white
+  (Hebrews) to near-black (Daniel). Shown raw, a grid of it reads as noise.
+  Grayscale, reduced contrast and brightness, a graphite veil, an accent tint,
+  all lifting on hover.
 
 ---
 
-## Interaction & Behavior
+## Architecture: The Library
 
-- **Article cards**: hover → image scale(1.04) + headline color to #7A5C1E
-- **Trending ticker**: CSS animation auto-scroll, pauses on hover
-- **Category tabs** in Don't Miss: filter the content below
-- **Category buttons** in sidebar: activate the filter (same as clicking a topic in main content)
-- **Active filter**: hero and 4-up grid hide; filtered results show in main column; sidebar stays
-- **Clear filters**: button appears when filter is active
+The site is being rebuilt around one idea: **everything Austin has taught lives
+in one collection**, entered through Scripture, topic, format, series, depth,
+search, or one of the branded properties.
+
+Word for Word, Exegetica, Forum & Pulpit and In the Text keep their identities
+as **collections**, but they are one dimension among many, not the spine. A
+visitor should never have to know what "Exegetica" means to find an answer.
+
+### Dimensions are independent
+
+The old `tags` field conflated four things at once (a Bible book, a series, a
+collection and a topic in one array). That is the mistake the schema exists to
+prevent. Format is what a piece **is**; approach is how it **argues**; they do
+not compete.
+
+### Data
+
+**Postgres (Supabase) is the source of truth.** Not MDX, not Sanity.
+
+- `supabase/migrations/` — numbered SQL, lowercase, idempotent, RLS on with
+  explicit grants to `service_role`. Austin runs these himself.
+- Article bodies will be **Tiptap** documents stored as JSONB, so custom blocks
+  (scripture, original language, key idea, citation) stay queryable.
+- Scripture is stored as structured refs **plus integer bounds**:
+  `book_position * 1_000_000 + chapter * 1_000 + verse`. A passage is a closed
+  interval, so "what touches Luke 15:11-32" is an index-backed range
+  intersection. This is what makes `/scripture/luke/15/11-32` generate itself.
+- `content_slug_history` preserves every legacy URL. ~220 published paths must
+  never 404.
+- **AI never writes taxonomy directly.** The Claude pipeline proposes into
+  `content_suggestions` with a confidence and rationale; Austin accepts or
+  rejects from the admin.
+
+### Scripts
+
+- `scripts/library/transform.mjs` — MDX to normalized records
+- `scripts/library/load.mjs` — records into Postgres, idempotent
+- `scripts/library/verify.mjs` — connection and migration state
+
+### Still to build
+
+Custom admin/editor at a staff route, the enrichment pass, `/explore` with
+faceted URL state, the Scripture explorer, generated topic pages, and search.
 
 ---
 
-## Responsive Breakpoints
+## Tooling notes
 
-| Breakpoint | Behavior |
-| :---- | :---- |
-| >= 1024px | Full layout: main + sidebar side by side |
-| 640px–1023px | Main column goes full width; sidebar hidden |
-| < 640px | Single column; 2-up grids go 1-up |
+- **Austin's tools must work from his phone.** He rejects any admin step that
+  needs a terminal or a desktop. This has killed features before.
+- **Never print secrets.** Show key names only. If one leaks, tell him to
+  rotate it.
+- **Chrome serves stale bundles constantly in dev.** Before diagnosing a bug,
+  load a different page and come back, or check the server HTML with curl.
+  Several hours were lost to phantom bugs that were only cache.
+- Full-page screenshots of pages with heavy `backdrop-blur` render near-black
+  and lie. Zoomed captures are accurate; computed styles are better still.
 
----
+## Stack
 
-## Do Not
-
-- Do not use a card-heavy "Pinterest grid" or masonry layout
-- Do not use gradients on section backgrounds — keep it flat and clean
-- Do not use more than 2 accent colors
-- Do not add shadows heavier than `box-shadow: 0 2px 8px rgba(0,0,0,0.08)`
-- Do not put body text on standard article cards (only excerpt on hero/large cards)
-- Do not skip the sidebar or collapse it into the main flow at desktop widths
-- Do not use rounded corners on cards, badges, or buttons (border-radius: 0)
-- Do not use the warm cream palette (#FAFAF7, #F0EDE6) for the WFW page background — use white (#ffffff) and light gray (#f7f7f7)
+Next.js 16 App Router, React 19, Tailwind v4 (CSS-first `@theme`), Supabase
+Postgres, deployed on Vercel. Read `node_modules/next/dist/docs/` before
+assuming Next behavior; see AGENTS.md.

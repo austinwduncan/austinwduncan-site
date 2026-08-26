@@ -37,7 +37,7 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
-              Pastor, teacher, and theologian — committed to faithful exposition of Scripture.
+              Pastor, teacher, and theologian, committed to faithful exposition of Scripture.
             </p>
           </div>
 

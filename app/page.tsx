@@ -11,23 +11,55 @@ import {
   type TeachingFrontmatter,
 } from '@/lib/content'
 import { getArticlesBySection } from '@/sanity/lib/queries'
-import { FPTicker, type TickerItem } from '@/components/fp-ticker'
 import { TEACHING_SERIES } from '@/data/teaching-series'
+import ScrollReveal from '@/components/scroll-reveal'
+import VideoBackground from '@/components/video-background'
+import AccentToggle from '@/components/accent-toggle'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Austin W. Duncan',
   description:
-    'Pastor, teacher, and theologian — sermons, biblical teaching, scholarly articles, and cultural commentary.',
+    'Sermons, biblical teaching, scholarly articles, and cultural commentary from Austin W. Duncan.',
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+/*
+  Homepage.
+
+  TYPE RULE, not negotiable: every heading on this page is CMG Sans
+  (Montserrat, via --font-cmg). No serif headings. Body copy is Source Serif.
+  Use the Heading component below rather than hand-rolling a heading so this
+  cannot drift again.
+
+  PALETTE, distributed to the intended weights rather than nominally present:
+    ~55% soft black #171918   hero, mosaic, index
+    ~20% graphite   #2C302F   mission, recent sermons, closing
+    ~10% warm bone  #EEEAE1   the Start Here funnel, a real light band
+    ~8%  gold       #CDB079   headings accents, rules, the primary CTA
+    ~5%  accent-2             eyebrow rules, chips, icons, hovers
+    ~2%  stone      #AAA79E   metadata
+
+  CONTRAST, measured. On soft black: gold 8.48, bone 14.72, stone 7.34,
+  sage 4.89, steel 4.72. On warm bone gold is 1.73 and stone 2.00, so on the
+  light band text is graphite and the accent is decorative only.
+
+  House copy rule, same as Crosswalk: no em dashes or en dashes anywhere.
+*/
+
+const BLACK = '#171918'
+const GRAPHITE = '#2C302F'
+const GOLD = '#CDB079'
+const BONE = '#EEEAE1'
+const STONE = '#AAA79E'
+
+/* The one place the heading typeface is named. */
+const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 
 function fmt(dateStr: string): string {
   const [y, m, d] = dateStr.split('-').map(Number)
   return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
   })
 }
 
@@ -42,95 +74,245 @@ function clean(text?: string): string {
     .trim()
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+type Piece = {
+  section: string
+  title: string
+  href: string
+  date: string
+  raw: string
+  image?: string
+  excerpt?: string
+}
 
-function SectionLabel({
-  label,
-  href,
-  count,
+/*
+  Every heading goes through here. CMG Sans, uppercase, tight. `accent` marks
+  the clause that carries the gold, so the emphasis is colour rather than a
+  change of typeface.
+*/
+function Heading({
+  as: Tag = 'h2',
+  children,
+  accent,
+  size = 'md',
+  color = BONE,
+  className = '',
 }: {
-  label: string
-  href?: string
-  count?: number
+  as?: 'h1' | 'h2' | 'h3'
+  children: React.ReactNode
+  accent?: React.ReactNode
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  color?: string
+  className?: string
 }) {
+  const sizes = {
+    sm: 'clamp(1.15rem, 1.7vw, 1.5rem)',
+    md: 'clamp(1.9rem, 3.4vw, 3rem)',
+    lg: 'clamp(2.2rem, 4.2vw, 3.6rem)',
+    xl: 'clamp(2.1rem, 4.4vw, 3.9rem)',
+  }
+  return (
+    <Tag
+      className={`uppercase text-balance ${className}`}
+      style={{
+        fontFamily: HEADING,
+        fontSize: sizes[size],
+        fontWeight: 700,
+        lineHeight: size === 'sm' ? 1.15 : 0.95,
+        letterSpacing: '-0.02em',
+        color,
+      }}
+    >
+      {children}
+      {accent && (
+        <>
+          {' '}
+          <span style={{ color: GOLD }}>{accent}</span>
+        </>
+      )}
+    </Tag>
+  )
+}
+
+/* Ruled eyebrow. The rule carries the secondary accent, the word carries gold. */
+function Eyebrow({ children, on = 'dark' }: { children: React.ReactNode; on?: 'dark' | 'light' }) {
+  const text = on === 'dark' ? GOLD : GRAPHITE
   return (
     <div
-      className="flex items-center gap-3 mb-5 pl-3.5"
-      style={{ borderLeft: '4px solid #B8892E' }}
+      className="flex items-center gap-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em]"
+      style={{ color: text, fontFamily: HEADING }}
     >
-      <span
-        className="text-[0.72rem] font-black tracking-[0.22em] uppercase"
-        style={{ color: '#1A1714' }}
+      <span className="inline-block h-px w-[26px]" style={{ background: 'var(--awd-accent-2)' }} />
+      {children}
+    </div>
+  )
+}
+
+function CornerBracket({
+  position,
+  tone = 'gold',
+}: {
+  position: 'tl' | 'tr' | 'bl' | 'br'
+  tone?: 'gold' | 'bone' | 'accent'
+}) {
+  const edges: Record<string, string> = {
+    tl: 'left-4 top-4 border-l border-t sm:left-6 sm:top-6',
+    tr: 'right-4 top-4 border-r border-t sm:right-6 sm:top-6',
+    bl: 'left-4 bottom-4 border-l border-b sm:left-6 sm:bottom-6',
+    br: 'right-4 bottom-4 border-r border-b sm:right-6 sm:bottom-6',
+  }
+  const colors = {
+    gold: 'rgba(205,176,121,0.5)',
+    bone: 'rgba(238,234,225,0.28)',
+    accent: 'var(--awd-accent-2)',
+  }
+  return (
+    <span
+      aria-hidden
+      className={`pointer-events-none absolute z-20 h-8 w-8 sm:h-12 sm:w-12 ${edges[position]}`}
+      style={{ borderColor: colors[tone] }}
+    />
+  )
+}
+
+function GlassPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] backdrop-blur"
+      style={{
+        fontFamily: HEADING,
+        borderColor: 'rgba(238,234,225,0.18)',
+        background: 'rgba(23,25,24,0.45)',
+        color: 'rgba(238,234,225,0.82)',
+      }}
+    >
+      {children}
+    </span>
+  )
+}
+
+/*
+  Section tile. Carries a real one-line reason to click rather than a bare
+  label, because a first-time visitor has no idea what "Exegetica" is.
+*/
+function Tile({
+  href, tag, title, blurb, image, count,
+}: {
+  href: string; tag: string; title: string; blurb: string; image?: string; count?: string
+}) {
+  return (
+    <Link href={href} className="group block">
+      <div className="relative overflow-hidden" style={{ aspectRatio: '16/9', background: GRAPHITE }}>
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt=""
+            loading="lazy"
+            className="h-full w-full scale-[1.03] object-cover grayscale transition-all duration-[900ms] ease-out group-hover:scale-100 group-hover:grayscale-0"
+          />
+        ) : (
+          <span aria-hidden className="section-pattern absolute inset-0" />
+        )}
+        {count && (
+          <span
+            className="absolute left-4 top-4 z-10 rounded-full border px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.16em] backdrop-blur-sm"
+            style={{
+              fontFamily: HEADING,
+              borderColor: 'color-mix(in srgb, var(--awd-accent-2) 55%, transparent)',
+              background: 'rgba(23,25,24,0.5)',
+              color: 'var(--awd-accent-2)',
+            }}
+          >
+            {count}
+          </span>
+        )}
+        <CornerBracket position="tr" />
+      </div>
+      <p
+        className="mt-5 text-[0.66rem] font-semibold uppercase tracking-[0.2em]"
+        style={{ color: 'var(--awd-accent-2)', fontFamily: HEADING }}
       >
-        {label}
-      </span>
-      <div className="flex-1" />
-      {count !== undefined && (
-        <span className="text-[0.65rem]" style={{ color: '#9A9189' }}>
-          {count}
-        </span>
-      )}
-      {href && (
-        <Link
-          href={href}
-          className="flex items-center gap-1 text-[0.65rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#B8892E]"
-          style={{ color: '#9A9189' }}
-        >
-          All <ArrowRight size={9} />
-        </Link>
+        {tag}
+      </p>
+      <Heading as="h3" size="sm" className="mt-2 transition-colors group-hover:text-[var(--awd-gold)]">
+        {title}
+      </Heading>
+      <p
+        className="mt-3 text-[0.95rem] leading-relaxed"
+        style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.6)' }}
+      >
+        {blurb}
+      </p>
+    </Link>
+  )
+}
+
+function SectionHead({
+  eyebrow, title, accent, href, linkLabel, count, intro,
+}: {
+  eyebrow: string; title: string; accent?: string
+  href?: string; linkLabel?: string; count?: number; intro?: string
+}) {
+  return (
+    <div className="mb-14">
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-2xl">
+          <ScrollReveal><Eyebrow>{eyebrow}</Eyebrow></ScrollReveal>
+          <ScrollReveal delay={80}>
+            <Heading className="mt-5" accent={accent}>{title}</Heading>
+          </ScrollReveal>
+        </div>
+        {href && (
+          <ScrollReveal delay={160}>
+            <Link
+              href={href}
+              className="group inline-flex shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] backdrop-blur transition-colors hover:bg-white/10"
+              style={{
+                fontFamily: HEADING,
+                borderColor: 'color-mix(in srgb, var(--awd-accent-2) 45%, transparent)',
+                background: 'rgba(238,234,225,0.04)',
+                color: BONE,
+              }}
+            >
+              {linkLabel ?? 'View all'}
+              {count !== undefined && <span style={{ color: 'var(--awd-accent-2)' }}>{count}</span>}
+              <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </ScrollReveal>
+        )}
+      </div>
+      {intro && (
+        <ScrollReveal delay={200}>
+          <p
+            className="mt-7 max-w-2xl text-[1.02rem] leading-[1.85]"
+            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.66)' }}
+          >
+            {intro}
+          </p>
+        </ScrollReveal>
       )}
     </div>
   )
 }
 
-function ArticleCard({
-  title,
-  href,
-  date,
-  image,
-  section,
-}: {
-  title: string
-  href: string
-  date: string
-  image?: string
-  section: string
-}) {
+function IndexRow({ piece, n }: { piece: Piece; n?: number }) {
   return (
-    <Link href={href} className="group flex flex-col">
-      <div
-        className="relative overflow-hidden mb-2.5"
-        style={{ aspectRatio: '16/9', background: '#F0EDE6' }}
-      >
-        {image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={image}
-            alt=""
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-        )}
-        <span
-          className="absolute top-2 left-2 text-[0.5rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white"
-          style={{ background: '#B8892E' }}
-        >
-          {section}
+    <Link
+      href={piece.href}
+      className="group flex gap-4 border-b py-4 transition-colors"
+      style={{ borderColor: 'rgba(238,234,225,0.10)' }}
+    >
+      {n !== undefined && (
+        <span className="w-6 shrink-0 pt-1 text-right text-[0.7rem] font-semibold tabular-nums"
+          style={{ fontFamily: HEADING, color: 'var(--awd-accent-2)' }}>{n}</span>
+      )}
+      <span className="min-w-0 flex-1">
+        <span className="block text-[0.98rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
+          style={{ fontFamily: 'var(--font-source-serif)', color: BONE }}>
+          {piece.title}
         </span>
-      </div>
-      <h3
-        className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
-        style={{
-          fontFamily: 'var(--font-cormorant)',
-          fontSize: '1.05rem',
-          fontWeight: 700,
-          color: '#1A1714',
-        }}
-      >
-        {title}
-      </h3>
-      <p className="text-[0.68rem] mt-1" style={{ color: '#9A9189' }}>
-        {date}
-      </p>
+        <span className="mt-1 block text-[0.72rem]" style={{ color: STONE }}>{piece.date}</span>
+      </span>
     </Link>
   )
 }
@@ -237,589 +419,511 @@ export default async function HomePage() {
       })),
   ])
 
-  // ── Ticker ───────────────────────────────────────────────────────────────────
-  const makeTickerItems = (
-    items: { frontmatter: { title: string; date: string }; slug: string }[],
-    base: string
-  ): TickerItem[] =>
-    items.slice(0, 4).map(a => ({
-      title: a.frontmatter.title,
-      date: fmt(a.frontmatter.date),
-      slug: a.slug,
-      href: `${base}/${a.slug}`,
-    }))
+  // ── Derived ──────────────────────────────────────────────────────────────────
+  const featured = allSermons[0] ?? null
 
-  const tickerRaw: TickerItem[] = []
-  const tS = makeTickerItems(allSermons, '/sermons')
-  const tW = makeTickerItems(allWfw, '/word-for-word')
-  const tF = makeTickerItems(allForum, '/forum-and-pulpit')
-  const tE = makeTickerItems(allExegetica, '/exegetica')
-  const tT = allTeachingRaw.slice(0, 4).map(a => ({
-    title: a.frontmatter.title,
-    date: fmt(a.frontmatter.date),
-    slug: a.slug,
-    href: `/teaching/${a.teachingType}/${a.slug}`,
-  }))
-  const maxLen = Math.max(tS.length, tW.length, tF.length, tE.length, tT.length)
-  for (let i = 0; i < maxLen; i++) {
-    if (tS[i]) tickerRaw.push(tS[i])
-    if (tW[i]) tickerRaw.push(tW[i])
-    if (tF[i]) tickerRaw.push(tF[i])
-    if (tE[i]) tickerRaw.push(tE[i])
-    if (tT[i]) tickerRaw.push(tT[i])
+  const toPiece = (
+    a: { slug: string; frontmatter: { title: string; date: string; excerpt?: string; image?: string } },
+    section: string, base: string
+  ): Piece => ({
+    section, title: a.frontmatter.title, href: `${base}/${a.slug}`,
+    date: fmt(a.frontmatter.date), raw: a.frontmatter.date,
+    image: a.frontmatter.image, excerpt: a.frontmatter.excerpt,
+  })
+
+  const recentSermons = allSermons.slice(1, 4).map(a => toPiece(a, 'Sermon', '/sermons'))
+  const wfwIndex = allWfw.slice(0, 15).map(a => toPiece(a, 'Word for Word', '/word-for-word'))
+  const topSeries = [...TEACHING_SERIES].sort((a, b) => a.priority - b.priority)
+
+  const art = {
+    sermons: allSermons[0]?.frontmatter.image,
+    teaching: topSeries[0]?.image,
+    wfw: allWfw[0]?.frontmatter.image,
+    exegetica: allExegetica[0]?.frontmatter.image,
+    forum: allForum[0]?.frontmatter.image,
   }
-
-  // ── Featured pieces ──────────────────────────────────────────────────────────
-  const heroSermon = allSermons[0] ?? null
-
-  const dontMiss = [
-    allTeachingRaw[0] && {
-      section: 'Teaching',
-      title: allTeachingRaw[0].frontmatter.title,
-      href: `/teaching/${allTeachingRaw[0].teachingType}/${allTeachingRaw[0].slug}`,
-      date: fmt(allTeachingRaw[0].frontmatter.date),
-      image: allTeachingRaw[0].frontmatter.image,
-    },
-    allWfw[0] && {
-      section: 'Word for Word',
-      title: allWfw[0].frontmatter.title,
-      href: `/word-for-word/${allWfw[0].slug}`,
-      date: fmt(allWfw[0].frontmatter.date),
-      image: allWfw[0].frontmatter.image,
-    },
-    allExegetica[0] && {
-      section: 'Exegetica',
-      title: allExegetica[0].frontmatter.title,
-      href: `/exegetica/${allExegetica[0].slug}`,
-      date: fmt(allExegetica[0].frontmatter.date),
-      image: allExegetica[0].frontmatter.image,
-    },
-    allForum[0] && {
-      section: 'Forum & Pulpit',
-      title: allForum[0].frontmatter.title,
-      href: `/forum-and-pulpit/${allForum[0].slug}`,
-      date: fmt(allForum[0].frontmatter.date),
-      image: allForum[0].frontmatter.image,
-    },
-  ].filter(Boolean) as { section: string; title: string; href: string; date: string; image?: string }[]
-
-  const featuredSeries = TEACHING_SERIES
-    .filter(s => s.featured)
-    .sort((a, b) => a.priority - b.priority)
-    .slice(0, 3)
-
-  const sidebarSeries = TEACHING_SERIES
-    .sort((a, b) => a.priority - b.priority)
-    .slice(0, 5)
 
   return (
     <>
-      {/* ── Ticker ─────────────────────────────────────────────────────────── */}
-      {tickerRaw.length > 0 && <FPTicker items={tickerRaw} />}
+      {/*
+        ── Featured sermon hero ────────────────────────────────────────────────
+        Now a true full-bleed, the way the Crosswalk Messages header works: a
+        real photograph (no baked-in type, unlike the sermon artwork) pushed
+        right, a hard left-to-black gradient seating the words on solid ground
+        on desktop, and a bottom-up gradient doing the same job on mobile.
+      */}
+      {featured && (
+        // -mt-[60px] slides the hero up under the sticky header so the photo
+        // runs to the very top while the header is transparent. The pt below
+        // already clears the 60px bar.
+        <section className="relative -mt-[60px] overflow-hidden" style={{ background: BLACK }}>
+          <div className="relative flex min-h-[78svh] items-end pt-32 lg:min-h-[86svh] lg:pt-36">
+            <div className="absolute inset-0 overflow-hidden lg:left-[26%]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/home/austin-preaching.jpg"
+                alt="Austin preaching at Crosswalk Church"
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{ objectPosition: '46% 16%' }}
+              />
+              {/* A wash of the secondary accent so the room sits in the palette. */}
+              <span
+                aria-hidden
+                className="absolute inset-0 opacity-[0.14] mix-blend-soft-light"
+                style={{ background: 'var(--awd-accent-2)' }}
+              />
+              <span
+                aria-hidden
+                className="absolute inset-0"
+                style={{ background: 'radial-gradient(130% 105% at 62% 38%, transparent 42%, rgba(23,25,24,0.55) 100%)' }}
+              />
+            </div>
 
-      {/* ── Dark hero ──────────────────────────────────────────────────────── */}
-      {heroSermon && (
-        <section style={{ background: '#141210' }}>
-          <div className="mx-auto max-w-[1200px] px-5 py-10 lg:py-14">
-            <div className="flex flex-col-reverse lg:flex-row lg:items-center gap-8 lg:gap-14">
+            {/* desktop: hard left-to-black behind the words */}
+            <span aria-hidden className="absolute inset-0 hidden lg:block"
+              style={{ background: 'linear-gradient(90deg,#171918 0%,#171918 22%,rgba(23,25,24,.8) 40%,rgba(23,25,24,.22) 64%,transparent 84%)' }} />
+            <span aria-hidden className="absolute inset-0 hidden lg:block"
+              style={{ background: 'linear-gradient(0deg,#171918 0%,transparent 38%)' }} />
+            {/* mobile: bottom-up */}
+            <span aria-hidden className="absolute inset-0 lg:hidden"
+              style={{ background: 'linear-gradient(0deg,#171918 0%,#171918 22%,rgba(23,25,24,.74) 52%,rgba(23,25,24,.18) 82%,transparent 100%)' }} />
 
-              {/* Text */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2.5 mb-5">
-                  <span className="inline-block h-px w-8 shrink-0" style={{ background: '#B8892E' }} />
+            <CornerBracket position="tl" tone="bone" />
+            <CornerBracket position="bl" tone="bone" />
+
+            <div className="relative mx-auto w-full max-w-[1180px] px-6 pb-16 lg:px-10 lg:pb-24">
+              <div className="max-w-2xl">
+                <ScrollReveal>
                   <span
-                    className="text-[0.6rem] font-bold tracking-[0.22em] uppercase"
-                    style={{ color: '#B8892E' }}
-                  >
-                    Latest Sermon
-                  </span>
-                </div>
-
-                {heroSermon.frontmatter.scripture && (
-                  <p
-                    className="text-[0.72rem] tracking-[0.12em] uppercase mb-4"
+                    className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] backdrop-blur"
                     style={{
-                      fontFamily: 'var(--font-source-serif)',
-                      color: 'rgba(255,255,255,0.28)',
+                      fontFamily: HEADING,
+                      borderColor: 'color-mix(in srgb, var(--awd-accent-2) 50%, transparent)',
+                      background: 'color-mix(in srgb, var(--awd-accent-2) 16%, transparent)',
+                      color: 'var(--awd-accent-2)',
                     }}
                   >
-                    {heroSermon.frontmatter.scripture}
-                  </p>
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--awd-accent-2)' }} />
+                    Newest sermon
+                  </span>
+                </ScrollReveal>
+
+                <ScrollReveal delay={110}>
+                  <Heading as="h1" size="xl" className="mt-5">
+                    {featured.frontmatter.title}
+                  </Heading>
+                </ScrollReveal>
+
+                {featured.frontmatter.excerpt && (
+                  <ScrollReveal delay={160}>
+                    <p className="mt-6 line-clamp-3 max-w-lg text-[1.02rem] leading-relaxed"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.78)' }}>
+                      {clean(featured.frontmatter.excerpt)}
+                    </p>
+                  </ScrollReveal>
                 )}
 
-                <Link href={`/sermons/${heroSermon.slug}`} className="group block mb-5">
-                  <h2
-                    className="leading-[1.05] tracking-tight transition-colors duration-300 group-hover:text-[#C8A96A]"
-                    style={{
-                      fontFamily: 'var(--font-cormorant)',
-                      fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
-                      fontWeight: 700,
-                      color: '#F9F6F0',
-                    }}
-                  >
-                    {heroSermon.frontmatter.title}
-                  </h2>
-                </Link>
-
-                {heroSermon.frontmatter.excerpt && (
-                  <p
-                    className="leading-[1.75] mb-8 line-clamp-2"
-                    style={{
-                      fontFamily: 'var(--font-source-serif)',
-                      fontSize: '0.9rem',
-                      color: 'rgba(255,255,255,0.38)',
-                    }}
-                  >
-                    {clean(heroSermon.frontmatter.excerpt)}
-                  </p>
-                )}
-
-                <div className="flex items-center gap-6">
-                  <Link
-                    href={`/sermons/${heroSermon.slug}`}
-                    className="flex items-center gap-2 text-[0.7rem] font-bold tracking-[0.16em] uppercase transition-opacity hover:opacity-70"
-                    style={{ color: '#B8892E' }}
-                  >
-                    Listen Now <ArrowRight size={11} />
-                  </Link>
-                  <span
-                    className="text-[0.68rem]"
-                    style={{ color: 'rgba(255,255,255,0.18)' }}
-                  >
-                    {fmt(heroSermon.frontmatter.date)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Image */}
-              {heroSermon.frontmatter.image && (
-                <Link
-                  href={`/sermons/${heroSermon.slug}`}
-                  className="group relative lg:w-[48%] shrink-0 overflow-hidden block"
-                  style={{ background: '#1E1B18' }}
-                >
-                  <div style={{ aspectRatio: '16/10' }} className="overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={heroSermon.frontmatter.image}
-                      alt=""
-                      className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
+                <ScrollReveal delay={210}>
+                  <div className="mt-7 flex flex-wrap items-center gap-2">
+                    {featured.frontmatter.scripture && <GlassPill>{featured.frontmatter.scripture}</GlassPill>}
+                    <GlassPill>{fmt(featured.frontmatter.date)}</GlassPill>
+                    <GlassPill>Full text, free</GlassPill>
                   </div>
-                  {/* left-edge vignette blends image into dark background */}
-                  <div
-                    className="absolute inset-0 pointer-events-none hidden lg:block"
-                    style={{
-                      background: 'linear-gradient(to right, #141210 0%, transparent 28%)',
-                    }}
-                  />
-                </Link>
-              )}
+                </ScrollReveal>
+
+                <ScrollReveal delay={260}>
+                  <div className="mt-9 flex flex-wrap gap-3">
+                    <Link
+                      href={`/sermons/${featured.slug}`}
+                      className="group/cta inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.03]"
+                      style={{ fontFamily: HEADING, background: GOLD, color: BLACK }}
+                    >
+                      Read it now
+                      <ArrowRight size={14} className="transition-transform duration-200 group-hover/cta:translate-x-0.5" />
+                    </Link>
+                    <Link
+                      href="/sermons"
+                      className="inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] backdrop-blur transition-colors hover:bg-white/10"
+                      style={{
+                        fontFamily: HEADING,
+                        borderColor: 'rgba(238,234,225,0.28)',
+                        background: 'rgba(23,25,24,0.3)',
+                        color: BONE,
+                      }}
+                    >
+                      {allSermons.length} more sermons
+                    </Link>
+                  </div>
+                </ScrollReveal>
+              </div>
             </div>
           </div>
-
-          {/* Amber bottom rule */}
-          <div
-            style={{
-              height: 2,
-              background: 'linear-gradient(to right, #B8892E 35%, transparent)',
-            }}
-          />
         </section>
       )}
 
-      {/* ── Editorial body ─────────────────────────────────────────────────── */}
-      <div style={{ background: '#FAFAF7' }}>
-        <div className="mx-auto max-w-[1200px] px-5">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-14 py-8 lg:py-10">
+      {/*
+        ── Who and where (warm bone, the 10% light band) ───────────────────────
+        The practical band. A stranger's first question is "who is this person
+        and is he real", so this answers it with facts rather than a pitch: the
+        monogram, the role, the church, and live counts pulled from the content
+        itself so they are never stale.
 
-            {/* ── Main column ─────────────────────────────────────────────── */}
-            <main className="flex-1 min-w-0">
+        Deliberately omitted: a weekly preaching/teaching rhythm. The Crosswalk
+        sermon catalogue shows Austin preaching in rotation with Josh Huisman
+        and Gavin Booser, so "preaching Sundays" would overstate it. Add the
+        real line here once confirmed.
 
-              {/* Don't Miss — 1 large + 3 stacked small ─────────────────── */}
-              {dontMiss.length > 0 && (
-                <section className="mb-10">
-                  <SectionLabel label="Don't Miss" />
-                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        On bone, gold is 1.73 and steel 3.12, so text is graphite (11.13) and
+        the numerals use the darkened gold at 5.53.
+      */}
+      <section style={{ background: BONE }} className="relative py-24 lg:py-32">
+        <div className="mx-auto max-w-[1180px] px-6 text-center lg:px-10">
+          <ScrollReveal>
+            {/*
+              Height is set inline rather than with a height utility: `h-11`
+              resolved to 560px on this element even though the generated rule
+              is identical to the nav's working `h-8`. Not fully root-caused;
+              an explicit height is deterministic either way.
+            */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/AWDLogoWhite.svg"
+              alt=""
+              aria-hidden
+              className="mx-auto mb-8 w-auto"
+              style={{ height: '68px', filter: 'invert(1)', opacity: 0.62 }}
+            />
+          </ScrollReveal>
 
-                    {/* Large card */}
-                    {dontMiss[0] && (
-                      <Link
-                        href={dontMiss[0].href}
-                        className="group lg:w-[55%] shrink-0 flex flex-col"
-                      >
-                        <div
-                          className="relative overflow-hidden mb-3"
-                          style={{ aspectRatio: '4/3', background: '#F0EDE6' }}
-                        >
-                          {dontMiss[0].image && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={dontMiss[0].image}
-                              alt=""
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                            />
-                          )}
-                          <span
-                            className="absolute top-2 left-2 text-[0.55rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white"
-                            style={{ background: '#B8892E' }}
-                          >
-                            {dontMiss[0].section}
-                          </span>
-                        </div>
-                        <h3
-                          className="leading-[1.1] tracking-tight mb-1.5 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{
-                            fontFamily: 'var(--font-cormorant)',
-                            fontSize: 'clamp(1.35rem, 2.5vw, 1.8rem)',
-                            fontWeight: 700,
-                            color: '#1A1714',
-                          }}
-                        >
-                          {dontMiss[0].title}
-                        </h3>
-                        <p className="text-[0.68rem]" style={{ color: '#9A9189' }}>
-                          {dontMiss[0].date}
-                        </p>
-                      </Link>
-                    )}
+          <ScrollReveal delay={80}>
+            <Heading size="md" color={BLACK}>Austin W. Duncan</Heading>
+          </ScrollReveal>
 
-                    {/* Vertical divider */}
-                    <div
-                      className="hidden lg:block w-px shrink-0 self-stretch"
-                      style={{ background: '#E2DACE' }}
-                    />
+          <ScrollReveal delay={140}>
+            <p
+              className="mx-auto mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.78rem] font-semibold uppercase tracking-[0.16em]"
+              style={{ fontFamily: HEADING, color: 'rgba(23,25,24,0.62)' }}
+            >
+              <span>Pastor and Bible teacher</span>
+              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
+              <span>Crosswalk Church</span>
+              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
+              <span>Brentwood, Tennessee</span>
+            </p>
+          </ScrollReveal>
 
-                    {/* Stacked small cards */}
-                    <div className="flex-1 divide-y" style={{ borderColor: '#E2DACE' }}>
-                      {dontMiss.slice(1).map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className="group flex items-start gap-3 py-3.5 first:pt-0"
-                        >
-                          {item.image && (
-                            <div
-                              className="shrink-0 overflow-hidden"
-                              style={{ width: 80, aspectRatio: '16/9', background: '#F0EDE6' }}
-                            >
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={item.image}
-                                alt=""
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              />
-                            </div>
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <span
-                              className="text-[0.5rem] font-bold tracking-[0.14em] uppercase px-1.5 py-0.5 text-white inline-block mb-1.5"
-                              style={{ background: '#B8892E' }}
-                            >
-                              {item.section}
-                            </span>
-                            <p
-                              className="text-[0.9rem] font-bold leading-snug transition-colors group-hover:text-[#7A5C1E] line-clamp-2 mb-0.5"
-                              style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
-                            >
-                              {item.title}
-                            </p>
-                            <p className="text-[0.63rem]" style={{ color: '#C8BFA8' }}>
-                              {item.date}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </section>
-              )}
+          <ScrollReveal delay={200}>
+            <dl className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-y-8 sm:grid-cols-4">
+              {[
+                { n: allSermons.length, label: 'Sermons' },
+                { n: allTeachingRaw.length, label: 'Teaching sessions' },
+                { n: allWfw.length, label: 'Questions answered' },
+                { n: allExegetica.length, label: 'Papers' },
+              ].map(stat => (
+                <div key={stat.label} className="px-2">
+                  <dt
+                    className="tabular-nums leading-none"
+                    style={{ fontFamily: HEADING, fontSize: '2.6rem', fontWeight: 700, color: '#6E5A2E' }}
+                  >
+                    {stat.n}
+                  </dt>
+                  <dd
+                    className="mt-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em]"
+                    style={{ fontFamily: HEADING, color: 'rgba(23,25,24,0.55)' }}
+                  >
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </ScrollReveal>
 
-              {/* Teaching series ──────────────────────────────────────────── */}
-              {featuredSeries.length > 0 && (
-                <section className="mb-10">
-                  <SectionLabel label="Teaching Series" href="/teaching" />
-                  <div className="grid sm:grid-cols-3 gap-5 lg:gap-6">
-                    {featuredSeries.map((series) => (
-                      <Link
-                        key={series.slug}
-                        href={`/teaching/series/${series.slug}`}
-                        className="group"
-                      >
-                        {series.image && (
-                          <div
-                            className="relative overflow-hidden mb-2.5"
-                            style={{ aspectRatio: '3/1', background: '#F0EDE6' }}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={series.image}
-                              alt=""
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                            />
-                            {/* Dark overlay on hover */}
-                            <div
-                              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                              style={{ background: 'rgba(122,92,30,0.15)' }}
-                            />
-                          </div>
-                        )}
-                        <p
-                          className="text-[0.6rem] font-bold tracking-[0.12em] uppercase mb-0.5"
-                          style={{ color: '#B8892E' }}
-                        >
-                          {series.primaryLane}
-                        </p>
-                        <p
-                          className="font-bold leading-snug mb-1 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{
-                            fontFamily: 'var(--font-cormorant)',
-                            fontSize: '1.08rem',
-                            color: '#1A1714',
-                          }}
-                        >
-                          {series.title}
-                        </p>
-                        {'subtitle' in series && (series as { subtitle?: string }).subtitle && (
-                          <p
-                            className="text-[0.75rem] leading-[1.5] mb-1 line-clamp-2"
-                            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
-                          >
-                            {(series as { subtitle?: string }).subtitle}
-                          </p>
-                        )}
-                        <p className="text-[0.65rem]" style={{ color: '#C8BFA8' }}>
-                          {series.totalSessions} sessions
-                          {series.status === 'Ongoing' ? ' · Ongoing' : ''}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="mt-5 pt-4" style={{ borderTop: '1px solid #E2DACE' }}>
-                    <Link
-                      href="/teaching"
-                      className="flex items-center gap-1.5 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#B8892E]"
-                      style={{ color: '#9A9189' }}
-                    >
-                      Browse all teaching series <ArrowRight size={10} />
-                    </Link>
-                  </div>
-                </section>
-              )}
+          <ScrollReveal delay={260}>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/about"
+                className="rounded-full px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.03]"
+                style={{ fontFamily: HEADING, background: BLACK, color: BONE }}
+              >
+                About me
+              </Link>
+              <a
+                href="https://crosswalktn.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-colors hover:bg-white"
+                style={{
+                  fontFamily: HEADING,
+                  borderColor: 'color-mix(in srgb, var(--awd-accent-2) 55%, transparent)',
+                  color: GRAPHITE,
+                }}
+              >
+                Crosswalk Church
+                <ArrowRight size={13} className="-rotate-45 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-              {/* Word for Word — numbered list ───────────────────────────── */}
-              {allWfw.length > 0 && (
-                <section className="mb-10">
-                  <SectionLabel label="Word for Word" href="/word-for-word" count={allWfw.length} />
-                  <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
-                    {allWfw.slice(0, 7).map((article, i) => (
-                      <Link
-                        key={article.slug}
-                        href={`/word-for-word/${article.slug}`}
-                        className="group flex items-baseline gap-4 py-2.5"
-                      >
-                        <span
-                          className="shrink-0 w-5 text-right text-[0.7rem] font-bold leading-none tabular-nums"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#D4C4A0' }}
-                        >
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span
-                          className="shrink-0 text-[0.65rem] hidden sm:block"
-                          style={{ color: '#C8BFA8', minWidth: 80 }}
-                        >
-                          {fmt(article.frontmatter.date)}
-                        </span>
-                        <h3
-                          className="flex-1 text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
-                        >
-                          {article.frontmatter.title}
-                        </h3>
-                        <ArrowRight
-                          size={11}
-                          className="shrink-0 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
-                          style={{ color: '#B8892E' }}
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              )}
+      {/*
+        ── What I am after (preaching loop, film treatment) ────────────────────
+        Mirrors the hero: there the words sit left and the picture right, so
+        here it flips. A right-to-black gradient seats the type on the right
+        while the footage stays open on the left, which also solves the
+        collision that came from centring words over a centred figure.
 
-              {/* Exegetica — numbered list ───────────────────────────────── */}
-              {allExegetica.length > 0 && (
-                <section>
-                  <SectionLabel label="Exegetica" href="/exegetica" count={allExegetica.length} />
-                  <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
-                    {allExegetica.slice(0, 5).map((article, i) => (
-                      <Link
-                        key={article.slug}
-                        href={`/exegetica/${article.slug}`}
-                        className="group flex items-baseline gap-4 py-2.5"
-                      >
-                        <span
-                          className="shrink-0 w-5 text-right text-[0.7rem] font-bold leading-none tabular-nums"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#D4C4A0' }}
-                        >
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span
-                          className="shrink-0 text-[0.65rem] hidden sm:block"
-                          style={{ color: '#C8BFA8', minWidth: 80 }}
-                        >
-                          {fmt(article.frontmatter.date)}
-                        </span>
-                        <h3
-                          className="flex-1 text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
-                        >
-                          {article.frontmatter.title}
-                        </h3>
-                        <ArrowRight
-                          size={11}
-                          className="shrink-0 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
-                          style={{ color: '#B8892E' }}
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              )}
-            </main>
+        The component's centre scrim is switched off (scrim={0}) because this
+        directional gradient does the separating instead.
+      */}
+      <section className="relative overflow-hidden" style={{ background: GRAPHITE }}>
+        <VideoBackground
+          src="/video/preaching-loop.mp4"
+          poster="/video/preaching-loop-poster.jpg"
+          focusY="50%"
+          fadeTo={BLACK}
+          scrim={0}
+        />
+        {/* desktop: fades out of the footage on the left, into black on the right */}
+        {/* The pad seam in the source sits at 67% of frame width; the gradient
+            is fully solid by 66%, so it never shows. */}
+        <span aria-hidden className="absolute inset-0 hidden lg:block"
+          style={{ background: 'linear-gradient(90deg, rgba(23,25,24,0.12) 0%, rgba(23,25,24,0.3) 26%, rgba(23,25,24,0.88) 50%, #171918 66%)' }} />
+        {/* mobile: no room to split, so bottom-up */}
+        <span aria-hidden className="absolute inset-0 lg:hidden"
+          style={{ background: 'linear-gradient(0deg,#171918 0%,rgba(23,25,24,0.9) 42%,rgba(23,25,24,0.45) 78%,rgba(23,25,24,0.25) 100%)' }} />
+        <CornerBracket position="tl" tone="accent" />
 
-            {/* ── Sidebar ─────────────────────────────────────────────────── */}
-            <aside className="lg:w-[260px] shrink-0 space-y-9 lg:sticky lg:top-6 lg:self-start">
-
-              {/* About ──────────────────────────────────────────────────── */}
-              <div>
-                <SectionLabel label="About" href="/about" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/Headshots/Austin Duncan Headshot.jpg"
-                  alt="Austin W. Duncan"
-                  className="w-full mb-3 object-cover object-top"
-                  style={{ aspectRatio: '4/3' }}
-                />
-                <p
-                  className="text-[0.85rem] leading-[1.75] mb-3"
-                  style={{
-                    fontFamily: 'var(--font-source-serif)',
-                    color: '#5A544C',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  I&apos;m a pastor and Bible teacher at Crosswalk Church in Brentwood, TN. This site
-                  collects everything I&apos;m writing, preaching, and studying — for Christians who
-                  want to go deeper without it being made harder than it needs to be.
-                </p>
+        {/* A wider container than the rest of the page so the type sits further
+            right, closer to the edge, away from the figure on the left. */}
+        <div className="relative mx-auto max-w-[1400px] px-6 py-28 lg:px-10 lg:py-40">
+          <div className="lg:ml-auto lg:max-w-xl">
+            <ScrollReveal><Eyebrow>What I am after</Eyebrow></ScrollReveal>
+            <ScrollReveal delay={90}>
+              <Heading className="mt-6" size="lg" accent="hardest questions.">
+                The Bible can handle your
+              </Heading>
+            </ScrollReveal>
+            <ScrollReveal delay={150}>
+              <p className="mt-8 max-w-lg text-[1.05rem] leading-[1.9]"
+                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}>
+                My aim is simple: help you read Scripture carefully and understand
+                what you find, without pretending the hard parts are easy or the
+                easy parts are hard.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={210}>
+              <div className="mt-10 flex flex-wrap gap-3">
                 <Link
-                  href="/about"
-                  className="flex items-center gap-1 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
-                  style={{ color: '#B8892E' }}
+                  href="/about/beliefs"
+                  className="rounded-full px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.03]"
+                  style={{ fontFamily: HEADING, background: GOLD, color: BLACK }}
                 >
-                  More about Austin <ArrowRight size={9} />
+                  What I believe
                 </Link>
               </div>
-
-              {/* Series ─────────────────────────────────────────────────── */}
-              <div>
-                <SectionLabel label="Series" href="/teaching" />
-                <div className="divide-y" style={{ borderColor: '#E2DACE' }}>
-                  {sidebarSeries.map((series) => (
-                    <Link
-                      key={series.slug}
-                      href={`/teaching/series/${series.slug}`}
-                      className="group flex items-start gap-3 py-2.5"
-                    >
-                      {series.image && (
-                        <div
-                          className="shrink-0 overflow-hidden"
-                          style={{ width: 48, aspectRatio: '3/1', background: '#F0EDE6' }}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={series.image}
-                            alt=""
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <p
-                          className="text-[0.85rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
-                        >
-                          {series.title}
-                        </p>
-                        <p className="text-[0.65rem] mt-0.5" style={{ color: '#9A9189' }}>
-                          {series.totalSessions} sessions
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Library ────────────────────────────────────────────────── */}
-              <div>
-                <SectionLabel label="Library" href="/library" />
-                <p
-                  className="text-[0.82rem] leading-[1.65] mb-3"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
-                >
-                  793 books curated for pastors, teachers, and serious readers.
-                </p>
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {['Bible Study', 'Theology', 'Pastoral', 'Church History'].map((cat) => (
-                    <Link
-                      key={cat}
-                      href={`/library?category=${encodeURIComponent(cat)}`}
-                      className="text-[0.6rem] font-medium tracking-[0.08em] uppercase px-2 py-0.5 transition-colors hover:text-[#B8892E] hover:border-[#B8892E]"
-                      style={{ border: '1px solid #E2DACE', color: '#9A9189' }}
-                    >
-                      {cat}
-                    </Link>
-                  ))}
-                </div>
-                <Link
-                  href="/library"
-                  className="flex items-center gap-1 text-[0.68rem] font-bold tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
-                  style={{ color: '#B8892E' }}
-                >
-                  Browse the library <ArrowRight size={9} />
-                </Link>
-              </div>
-
-              {/* Forum & Pulpit ─────────────────────────────────────────── */}
-              {allForum.length > 0 && (
-                <div>
-                  <SectionLabel label="Forum & Pulpit" href="/forum-and-pulpit" />
-                  <div className="space-y-3">
-                    {allForum.slice(0, 4).map((article) => (
-                      <Link
-                        key={article.slug}
-                        href={`/forum-and-pulpit/${article.slug}`}
-                        className="group block"
-                      >
-                        <p
-                          className="text-[0.85rem] font-semibold leading-snug transition-colors group-hover:text-[#7A5C1E] mb-0.5"
-                          style={{ fontFamily: 'var(--font-cormorant)', color: '#1A1714' }}
-                        >
-                          {article.frontmatter.title}
-                        </p>
-                        <p className="text-[0.65rem]" style={{ color: '#C8BFA8' }}>
-                          {fmt(article.frontmatter.date)}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </aside>
+            </ScrollReveal>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── The mosaic ─────────────────────────────────────────────────────── */}
+      <section style={{ background: BLACK }} className="py-28 lg:py-36">
+        <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
+          <SectionHead
+            eyebrow="No paywall, no sign-up"
+            title="Every sermon, study, and article."
+            accent="Free, in full."
+            intro="Most of what you find online is a summary, a clip, or a teaser for something you have to buy. This is the whole thing: complete sermon texts, full teaching series you can work through start to finish, and papers with the footnotes left in."
+          />
+          <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            <ScrollReveal>
+              <Tile href="/sermons" tag="Sunday preaching" title="Sermons" image={art.sermons}
+                count={`${allSermons.length}`}
+                blurb="What I preached at Crosswalk, written out in full so you can read it instead of hunting for a timestamp." />
+            </ScrollReveal>
+            <ScrollReveal delay={70}>
+              <Tile href="/teaching" tag="Verse by verse" title="Teaching Series" image={art.teaching}
+                count={`${TEACHING_SERIES.length}`}
+                blurb="Book studies and biblical theology built to be worked through in order, from Hebrews to the Minor Prophets." />
+            </ScrollReveal>
+            <ScrollReveal delay={140}>
+              <Tile href="/word-for-word" tag="Because truth matters" title="Word for Word" image={art.wfw}
+                count={`${allWfw.length}`}
+                blurb="Straight answers to the questions people actually ask, worked out from the text rather than from received opinion." />
+            </ScrollReveal>
+            <ScrollReveal delay={210}>
+              <Tile href="/exegetica" tag="For the deep end" title="Exegetica" image={art.exegetica}
+                count={`${allExegetica.length}`}
+                blurb="Longer scholarly papers with the Greek and Hebrew left in, for when the short answer is not enough." />
+            </ScrollReveal>
+            <ScrollReveal delay={280}>
+              <Tile href="/forum-and-pulpit" tag="Culture and comment" title="Forum & Pulpit" image={art.forum}
+                count={`${allForum.length}`}
+                blurb="What Scripture has to say about what is actually happening right now, written without flinching." />
+            </ScrollReveal>
+            <ScrollReveal delay={350}>
+              <Tile href="/library" tag="Books worth your time" title="The Library"
+                image="/book-covers/knowing-god.webp" count="793"
+                blurb="Every book I recommend, sorted and rated, so you can spend your reading time on the ones that repay it." />
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/*
+        ── Photographic breather ───────────────────────────────────────────────
+        A full-bleed band between two dense sections. Crosswalk uses imagery
+        this way to let the page breathe; the only text is a single line, so
+        the photograph carries it.
+      */}
+      <section className="relative overflow-hidden" style={{ background: BLACK }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/home/hand-raised.jpg"
+          alt=""
+          aria-hidden
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: '50% 38%' }}
+        />
+        <span aria-hidden className="absolute inset-0" style={{ background: 'rgba(23,25,24,0.7)' }} />
+        <span
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(0deg,#171918 0%,transparent 45%,transparent 55%,#171918 100%)' }}
+        />
+        <CornerBracket position="tl" tone="accent" />
+        <CornerBracket position="br" tone="accent" />
+        <div className="relative mx-auto max-w-[1180px] px-6 py-28 text-center lg:px-10 lg:py-36">
+          <ScrollReveal>
+            <p
+              className="mx-auto max-w-2xl text-[1.35rem] leading-[1.6] sm:text-[1.6rem]"
+              style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: BONE }}
+            >
+              &ldquo;So faith comes from hearing, and hearing through the word of Christ.&rdquo;
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={90}>
+            <p
+              className="mt-6 text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
+              style={{ fontFamily: HEADING, color: 'var(--awd-accent-2)' }}
+            >
+              Romans 10:17
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── Recent sermons (graphite) ──────────────────────────────────────── */}
+      {recentSermons.length > 0 && (
+        <section style={{ background: GRAPHITE }} className="py-28 lg:py-36">
+          <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
+            <SectionHead eyebrow="Keep listening" title="More from" accent="the pulpit."
+              href="/sermons" linkLabel="All sermons" count={allSermons.length} />
+            <div className="grid gap-8 sm:grid-cols-3">
+              {recentSermons.map((piece, i) => (
+                <ScrollReveal key={piece.href} delay={i * 80}>
+                  <Link href={piece.href} className="group block">
+                    <div className="relative overflow-hidden" style={{ aspectRatio: '16/9', background: BLACK }}>
+                      {piece.image && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={piece.image} alt="" loading="lazy"
+                          className="h-full w-full object-cover grayscale transition-all duration-[900ms] ease-out group-hover:grayscale-0" />
+                      )}
+                      <CornerBracket position="tr" />
+                    </div>
+                    <Heading as="h3" size="sm" className="mt-5 transition-colors group-hover:text-[var(--awd-gold)]">
+                      {piece.title}
+                    </Heading>
+                    <p className="mt-2 text-[0.72rem] uppercase tracking-[0.12em]"
+                      style={{ fontFamily: HEADING, color: 'var(--awd-accent-2)' }}>
+                      {piece.date}
+                    </p>
+                  </Link>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Word for Word index ────────────────────────────────────────────── */}
+      {wfwIndex.length > 0 && (
+        <section style={{ background: BLACK }} className="py-28 lg:py-36">
+          <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
+            <SectionHead eyebrow="Questions people actually ask" title="You have probably wondered"
+              accent="some of these." href="/word-for-word" linkLabel="All questions" count={allWfw.length} />
+            <div className="grid gap-x-14 md:grid-cols-2 lg:grid-cols-3">
+              {wfwIndex.map((piece, i) => (
+                <ScrollReveal key={piece.href} delay={(i % 3) * 60}>
+                  <IndexRow piece={piece} n={i + 1} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Closing ────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden" style={{ background: GRAPHITE }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/home/congregation-praying.jpg"
+          alt="The congregation at Crosswalk Church with hands raised"
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: '50% 40%' }}
+        />
+        <span aria-hidden className="absolute inset-0" style={{ background: 'rgba(23,25,24,0.86)' }} />
+        <span
+          aria-hidden
+          className="absolute inset-0 opacity-[0.25] mix-blend-soft-light"
+          style={{ background: 'var(--awd-accent-2)' }}
+        />
+        <div className="relative mx-auto max-w-[1180px] px-6 py-24 lg:px-10 lg:py-32">
+          <ScrollReveal>
+            <div
+              className="relative border p-8 backdrop-blur-md lg:p-12"
+              style={{ borderColor: 'color-mix(in srgb, var(--awd-accent-2) 40%, transparent)', background: 'rgba(238,234,225,0.05)' }}
+            >
+              <CornerBracket position="tl" tone="accent" />
+              <CornerBracket position="br" tone="accent" />
+              <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-xl">
+                  <Eyebrow>If you only do one thing</Eyebrow>
+                  <Heading className="mt-5" accent="straight through.">
+                    Pick a series and read it
+                  </Heading>
+                  <p className="mt-6 text-[1.02rem] leading-[1.85]"
+                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.68)' }}>
+                    A single sermon helps. A book worked through end to end
+                    changes how you read everything else.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {[
+                    { href: '/teaching', label: 'Browse series' },
+                    { href: '/library', label: 'Library' },
+                    { href: '/sermons/scripture-index', label: 'By Scripture' },
+                    { href: '/about', label: 'About' },
+                  ].map(l => (
+                    <Link key={l.href} href={l.href}
+                      className="group inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] backdrop-blur transition-colors hover:bg-white/10"
+                      style={{ fontFamily: HEADING, borderColor: 'rgba(238,234,225,0.2)', color: 'rgba(238,234,225,0.85)' }}>
+                      {l.label}
+                      <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* TEMPORARY: remove once the secondary accent is chosen. */}
+      <AccentToggle />
     </>
   )
 }
