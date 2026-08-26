@@ -55,7 +55,10 @@ const facet = (r: { id: number; slug: string; name: string } | undefined): Facet
   published URLs exist in the wild and none of them may 404, so the display
   label ("In the Text") and the path segment ("teaching") are allowed to differ.
 */
-export function hrefFor(row: Pick<ContentRow, 'slug' | 'legacy_id'>): string {
+export function hrefFor(
+  row: Pick<ContentRow, 'slug' | 'legacy_id' | 'collection_id'>,
+  collections?: { id: number; slug: string }[],
+): string {
   // legacy_source is always "mdx"; the original path lives in legacy_id.
   const path = row.legacy_id ?? ''
   if (path.includes('/word-for-word/')) return `/word-for-word/${row.slug}`
@@ -64,7 +67,18 @@ export function hrefFor(row: Pick<ContentRow, 'slug' | 'legacy_id'>): string {
   if (path.includes('/sermons/')) return `/sermons/${row.slug}`
   if (path.includes('/topical/')) return `/teaching/topical/${row.slug}`
   if (path.includes('/expositional/')) return `/teaching/expositional/${row.slug}`
-  return `/library/${row.slug}`
+
+  /*
+    No legacy path, which today means a piece authored after the import.
+    Detail pages still render from MDX, so such a piece has no page of its own
+    yet. Send the reader to the show that contains it, which always exists.
+
+    The previous fallback was `/library/${slug}`, and that collides with
+    `/library/[show]` and returns a 404. Landing on the right show is a poor
+    answer but an honest one; a 404 is neither.
+  */
+  const collection = collections?.find(c => c.id === row.collection_id)
+  return collection ? `/library/${collection.slug}` : '/library'
 }
 
 /** Builds "Luke 15:11-32" style labels. Uses a plain hyphen, never a dash. */
@@ -166,7 +180,7 @@ async function decorate(rows: ContentRow[]): Promise<Piece[]> {
   return rows.map(r => ({
     id: r.id,
     slug: r.slug,
-    href: hrefFor(r),
+    href: hrefFor(r, tax.collections),
     title: r.title,
     subtitle: r.subtitle,
     summary: r.summary,
@@ -312,8 +326,9 @@ export const resolveLegacyPath = cache(async (oldPath: string): Promise<string |
     .select('content_id').eq('old_path', oldPath).maybeSingle()
   if (!data) return null
   const { data: row } = await library.from('content')
-    .select('slug, legacy_id').eq('id', data.content_id).maybeSingle()
-  return row ? hrefFor(row as ContentRow) : null
+    .select('slug, legacy_id, collection_id').eq('id', data.content_id).maybeSingle()
+  const tax = await getTaxonomy()
+  return row ? hrefFor(row as ContentRow, tax.collections) : null
 })
 
 // ─── Shows and seasons ───────────────────────────────────────────────────────
