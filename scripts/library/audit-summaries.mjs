@@ -13,7 +13,7 @@
     node scripts/library/audit-summaries.mjs             all
     node scripts/library/audit-summaries.mjs --limit 40  a sample
 */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, appendFileSync, mkdirSync } from 'node:fs'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 
@@ -34,9 +34,19 @@ const { data: pieces } = await db.from('content')
   .not('summary', 'is', null)
   .is('subtitle', null)
   .not('body_text', 'is', null)
-  .limit(LIMIT)
+  .limit(1000)
 
-console.log(`\n  auditing ${pieces.length} summaries\n`)
+// A summary cannot be checked against a body that does not exist. Twelve MDX
+// files are frontmatter only, so they are reported separately rather than
+// graded, which would otherwise bury the real findings under false positives.
+const bodyless = pieces.filter(p => (p.body_text ?? '').trim().length < 400)
+const gradable = pieces.filter(p => (p.body_text ?? '').trim().length >= 400).slice(0, LIMIT)
+
+if (bodyless.length) {
+  console.log(`\n  ${bodyless.length} pieces have no body text and cannot be audited:`)
+  for (const p of bodyless) console.log(`    ${p.title.slice(0, 60)}`)
+}
+console.log(`\n  auditing ${gradable.length} summaries\n`)
 
 const SCHEMA = {
   type: 'object', additionalProperties: false,
@@ -68,8 +78,12 @@ Mark promotional when it is selling rather than describing.
 
 House style: never use an em dash or an en dash.`
 
+mkdirSync('.library', { recursive: true })
+const JSONL = '.library/summary-audit.jsonl'
+const appendResult = r => appendFileSync(JSONL, JSON.stringify(r) + '\n')
+
 const results = []
-for (const [i, p] of pieces.entries()) {
+for (const [i, p] of gradable.entries()) {
   let res = null
   for (let a = 1; a <= 3 && !res; a++) {
     try {
@@ -92,8 +106,18 @@ ${(p.body_text ?? '').slice(0, 14000)}` }],
     }
   }
   if (!res) continue
-  const out = JSON.parse(res.content.find(b => b.type === 'text')?.text ?? '{}')
+  let out
+  try {
+    out = JSON.parse(res.content.find(b => b.type === 'text')?.text ?? '{}')
+  } catch {
+    console.log(`  UNPARSEABLE  ${p.title.slice(0, 52)}`)
+    results.push({ slug: p.slug, title: p.title, verdict: 'unparseable', issues: [], note: null })
+    appendResult(results.at(-1))
+    continue
+  }
+  if (!out.verdict) continue
   results.push({ slug: p.slug, title: p.title, ...out })
+  appendResult(results.at(-1))
   if (out.verdict !== 'accurate') {
     console.log(`  ${out.verdict.toUpperCase().padEnd(12)} ${p.title.slice(0, 52)}`)
     if (out.note) console.log(`               ${out.note}`)
@@ -108,6 +132,8 @@ console.log(`  accurate     ${String(by('accurate')).padStart(3)}`)
 console.log(`  vague        ${String(by('vague')).padStart(3)}`)
 console.log(`  inaccurate   ${String(by('inaccurate')).padStart(3)}`)
 console.log(`  promotional  ${String(by('promotional')).padStart(3)}`)
+console.log(`  unparseable  ${String(by('unparseable')).padStart(3)}`)
+console.log(`  no body      ${String(bodyless.length).padStart(3)}  (not graded)`)
 console.log(`  ────────────────────────────────`)
 console.log(`  audited      ${String(results.length).padStart(3)}`)
 
