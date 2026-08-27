@@ -169,6 +169,14 @@ faceted URL state, the Scripture explorer, generated topic pages, and search.
   needs a terminal or a desktop. This has killed features before.
 - **Never print secrets.** Show key names only. If one leaks, tell him to
   rotate it.
+- **Never send `immutable` on `/_next/static/` in development.** Production
+  filenames are content hashed, so immutable is right there. In dev Next reuses
+  a stable name across every rebuild, and immutable then tells the browser not
+  to revalidate for a year. A stylesheet cached before a directory existed is
+  kept forever: the page renders with classes that no longer resolve while the
+  server serves correct CSS, and no reload or restart fixes it. `next.config.ts`
+  now sends `no-store` in dev. Escaping a cache already poisoned this way takes
+  one hard reload.
 - **A long-running dev server will not see a new directory.** Tailwind v4
   auto-detects sources when it starts. Create `components/library/` two hours
   into a session and every class in it silently fails to generate: the class
