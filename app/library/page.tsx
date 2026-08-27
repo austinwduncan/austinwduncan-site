@@ -46,11 +46,7 @@ const CHANNEL_VIDEO: Record<string, string> = {
   'word-for-word': '/video/wfw-bumper.mp4',
   // Three clips stitched into one, taken from the middle of each.
   exegetica: '/video/exegetica-loop.mp4',
-  /*
-    Cut from Austin's own teaching and taken to black and white, which suits a
-    column about the news without using anyone else's news footage.
-  */
-  'forum-and-pulpit': '/video/forum-pulpit-loop.mp4',
+  // Forum & Pulpit is on its cover until Austin cuts its footage himself.
 }
 const BROWSE = '/library/browse'
 
