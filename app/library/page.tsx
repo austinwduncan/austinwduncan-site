@@ -4,37 +4,23 @@ import { ArrowRight } from 'lucide-react'
 import { getPieces, getShows } from '@/lib/library/queries'
 import type { Piece, Show } from '@/lib/library/types'
 import ScrollReveal from '@/components/scroll-reveal'
-import Billboard from '@/components/library/hub/billboard'
-import ChannelHeader from '@/components/library/hub/channel-header'
+import ChannelWall, { type WallChannel } from '@/components/library/hub/channel-wall'
 import Row from '@/components/library/hub/row'
-import ShowCard from '@/components/library/hub/show-card'
 import PieceCard from '@/components/library/hub/piece-card'
 import { kickerFor, toCard } from '@/components/library/hub/cards'
 
 /*
-  The Library home.
+  The Library home is a chooser.
 
-  Organised by channel, and inside a channel by show, because that is how the
-  work is actually shaped. Daniel is a show. Hebrews is a show. Words That
-  Change Everything is a show. Treating them as loose pieces inside a collection
-  called "In the Text" hid them behind a name a visitor has no reason to know.
+  Its only job is getting a reader to the right property. It used to answer that
+  with shelves, which asked a visitor to recognise a piece before they could
+  recognise a channel, and buried the four things Austin actually wants
+  understood under rows of similar looking cards.
 
-  So each channel leads with its own wordmark and a sentence saying what it is,
-  and then offers whichever unit that channel is really browsed by:
-
-    Bible Teaching Series   six studies, each a show
-    Word for Word           eight subjects, each a run of questions
-    Sermons                 individual messages, no series
-    Exegetica               individual papers
-    Forum & Pulpit          individual essays
-
-  There is deliberately no topic row and no "start here" row. Both were rows
-  the site invented rather than rows the work suggested, and they sat far down
-  a page answering a question nobody had asked.
-
-  One read of the whole set feeds everything. getPieces and getShows are both
-  wrapped in React cache and ask for the same newest sorted set, so the two
-  awaits collapse into one trip and every grouping after that is in memory.
+  So: one row of what is newest, for a reader who already knows the place, and
+  then five bands. Each band is a channel presenting itself with its own mark,
+  a sentence saying what it is, what it holds, and a way in. Depth lives on the
+  channel page, which is where a reader arrives having already chosen.
 */
 
 export const revalidate = 300
@@ -48,9 +34,6 @@ export const metadata: Metadata = {
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 const BROWSE = '/library/browse'
 
-/** Cards in a row. Deep enough to feel like a library, short enough to stay cheap. */
-const ROW = 20
-
 /** What a channel calls its pieces, so a count reads like the thing it counts. */
 const UNIT: Record<string, [string, string]> = {
   'in-the-text': ['study', 'studies'],
@@ -63,82 +46,6 @@ const UNIT: Record<string, [string, string]> = {
 function countLabel(slug: string, n: number): string {
   const [one, many] = UNIT[slug] ?? ['piece', 'pieces']
   return `${n} ${n === 1 ? one : many}`
-}
-
-function CardWrap({ children }: { children: React.ReactNode }) {
-  return <div className="w-[14.5rem] shrink-0 snap-start sm:w-[16.5rem]">{children}</div>
-}
-
-/* A channel whose shows are the browse unit. */
-function ShowChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
-  const seasons = show.seasons.filter(s => s.episodes.length)
-  if (!seasons.length) return null
-
-  return (
-    <section className="pt-20 lg:pt-28">
-      <ScrollReveal>
-        <div className="px-6 lg:px-10">
-          <ChannelHeader
-            show={show}
-            href={`/library/${show.slug}`}
-            action={`All ${UNIT[show.slug]?.[1] ?? 'pieces'}`}
-            meta={`${seasons.length} ${seasons.length === 1 ? 'show' : 'shows'} · ${countLabel(show.slug, pieces.length)}`}
-          />
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={80}>
-        <div className="mt-11 lg:mt-14" />
-        <Row count={seasons.length}>
-          {seasons.map(season => (
-            <CardWrap key={season.id}>
-              <ShowCard
-                show={{
-                  name: season.name,
-                  href: `/library/${show.slug}?season=${season.slug}`,
-                  artwork: season.artwork,
-                  count: countLabel(show.slug, season.episodes.length),
-                }}
-              />
-            </CardWrap>
-          ))}
-        </Row>
-      </ScrollReveal>
-    </section>
-  )
-}
-
-/* A channel browsed as individual pieces, because it has no series. */
-function PieceChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
-  const row = pieces.slice(0, ROW)
-  if (!row.length) return null
-  const kicker = kickerFor(row)
-
-  return (
-    <section className="pt-20 lg:pt-28">
-      <ScrollReveal>
-        <div className="px-6 lg:px-10">
-          <ChannelHeader
-            show={show}
-            href={`${BROWSE}?collection=${show.slug}`}
-            action={`All ${countLabel(show.slug, pieces.length).split(' ')[1]}`}
-            meta={countLabel(show.slug, pieces.length)}
-          />
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={80}>
-        <div className="mt-11 lg:mt-14" />
-        <Row count={row.length}>
-          {row.map(piece => (
-            <CardWrap key={piece.id}>
-              <PieceCard card={toCard(piece, kicker(piece))} />
-            </CardWrap>
-          ))}
-        </Row>
-      </ScrollReveal>
-    </section>
-  )
 }
 
 export default async function LibraryHomePage() {
@@ -157,55 +64,125 @@ export default async function LibraryHomePage() {
     )
   }
 
-  // The billboard needs artwork to be a billboard, and something to say.
-  const featured =
-    all.find(p => p.artwork && (p.subtitle || p.summary)) ?? all.find(p => p.artwork) ?? all[0]
+  /*
+    Latest takes at most two per channel. Austin's recent publishing is heavily
+    one property, so a straight newest first row was the same channel four times
+    and told a reader nothing about the breadth underneath.
+  */
+  const perChannel = new Map<number, number>()
+  const latest: Piece[] = []
+  for (const piece of all) {
+    const key = piece.collection?.id ?? -1
+    const used = perChannel.get(key) ?? 0
+    if (used >= 2) continue
+    perChannel.set(key, used + 1)
+    latest.push(piece)
+    if (latest.length === 12) break
+  }
+  const latestKicker = kickerFor(latest)
 
   const piecesOf = (show: Show) => all.filter(p => p.collection?.id === show.id)
 
-  // Channels that run as series lead, because a show is a bigger invitation
-  // than a single piece. Order otherwise follows the collection's position.
-  const ordered = [...shows].sort((a, b) => {
-    const seriesA = a.seasons.length > 0 ? 0 : 1
-    const seriesB = b.seasons.length > 0 ? 0 : 1
-    return seriesA - seriesB
-  })
+  const wall: WallChannel[] = shows
+    .map(show => {
+      const mine = piecesOf(show)
+      const seasons = show.seasons.filter(s => s.episodes.length)
+      return {
+        id: show.id,
+        name: show.name,
+        slug: show.slug,
+        logo: show.logo,
+        blurb: show.blurb,
+        href: `/library/${show.slug}`,
+        meta: seasons.length
+          ? `${seasons.length} ${seasons.length === 1 ? 'show' : 'shows'} · ${countLabel(show.slug, mine.length)}`
+          : countLabel(show.slug, mine.length),
+        covers: mine.map(p => p.artwork).filter(Boolean).slice(0, 4) as string[],
+        count: mine.length,
+      }
+    })
+    .filter(c => c.count > 0)
 
   return (
     <div style={{ background: 'var(--awd-black)' }}>
-      <Billboard piece={featured} pieceCount={all.length} showCount={shows.reduce((n, s) => n + (s.seasons.length || 1), 0)} />
+      <section className="px-6 pb-7 pt-20 lg:px-10 lg:pb-8 lg:pt-24">
+        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
+            <h1
+              className="text-[0.72rem] font-semibold uppercase tracking-[0.24em]"
+              style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
+            >
+              The Library
+            </h1>
+          </div>
+          <p
+            className="text-[0.95rem]"
+            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.7)' }}
+          >
+            {all.length} pieces across five properties. Start wherever you came for.
+          </p>
+        </div>
+      </section>
 
-      <div className="pb-28 lg:pb-36">
-        {ordered.map(show =>
-          show.seasons.length ? (
-            <ShowChannel key={show.id} show={show} pieces={piecesOf(show)} />
-          ) : (
-            <PieceChannel key={show.id} show={show} pieces={piecesOf(show)} />
-          ),
-        )}
 
-        <div className="mt-24 px-6 lg:mt-32 lg:px-10">
-          <div className="h-px w-full" style={{ background: 'rgba(238,234,225,0.1)' }} />
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link
-              href={BROWSE}
-              className="group/all inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+      <section>
+        <ChannelWall channels={wall} />
+      </section>
+
+      <section className="pb-20 pt-20 lg:pb-24 lg:pt-24">
+        <ScrollReveal>
+          <div className="mb-6 flex items-baseline justify-between gap-6 px-6 lg:px-10">
+            <h2
+              className="text-[0.74rem] font-semibold uppercase tracking-[0.2em]"
               style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
             >
-              Browse all {all.length} pieces
-              <ArrowRight size={14} className="transition-transform duration-200 group-hover/all:translate-x-0.5" />
-            </Link>
+              Latest
+            </h2>
             <Link
-              href="/scripture"
-              className="group/scr inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
-              style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+              href={`${BROWSE}?sort=newest`}
+              className="group/see inline-flex shrink-0 items-center gap-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.16em] transition-colors hover:text-[var(--awd-gold)]"
+              style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
             >
-              Browse by Scripture
-              <ArrowRight size={14} className="transition-transform duration-200 group-hover/scr:translate-x-0.5" />
+              See all
+              <ArrowRight size={12} className="transition-transform duration-200 group-hover/see:translate-x-0.5" />
             </Link>
           </div>
+          <Row count={latest.length}>
+            {latest.map(piece => (
+              <div key={piece.id} className="w-[14.5rem] shrink-0 snap-start sm:w-[16.5rem]">
+                <PieceCard card={toCard(piece, latestKicker(piece))} />
+              </div>
+            ))}
+          </Row>
+        </ScrollReveal>
+      </section>
+
+
+
+      <section
+        className="border-t px-6 py-16 lg:px-10 lg:py-20"
+        style={{ borderColor: 'rgba(238,234,225,0.12)' }}
+      >
+        <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+          <Link
+            href={BROWSE}
+            className="group/all inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+          >
+            Browse all {all.length} pieces
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover/all:translate-x-0.5" />
+          </Link>
+          <Link
+            href="/scripture"
+            className="group/scr inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+          >
+            Browse by Scripture
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover/scr:translate-x-0.5" />
+          </Link>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
