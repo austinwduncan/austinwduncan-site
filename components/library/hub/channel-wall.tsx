@@ -39,7 +39,7 @@ export type WallChannel = {
   video?: string | null
 }
 
-function Ground({ covers, video }: { covers: string[]; video?: string | null }) {
+function Ground({ covers, video, active }: { covers: string[]; video?: string | null; active?: boolean }) {
   /*
     A channel with its own footage uses it. Word for Word has a thirteen second
     bumper Austin cut for the property, which says what the show is far better
@@ -54,6 +54,16 @@ function Ground({ covers, video }: { covers: string[]; video?: string | null }) 
       <span aria-hidden className="absolute inset-0 overflow-hidden">
         <video
           className="h-full w-full object-cover"
+          /*
+            Pushed right while the panel is open. Opening widens the panel, and
+            object-cover recentres as it does, which walks the subject's face
+            left into the copy. Shifting the crop the other way keeps the face
+            roughly where it started and clear of the wordmark.
+          */
+          style={{
+            objectPosition: active ? '66% 50%' : '50% 50%',
+            transition: 'object-position 620ms cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
           src={video}
           autoPlay
           muted
@@ -81,7 +91,10 @@ function Ground({ covers, video }: { covers: string[]; video?: string | null }) 
         alt=""
         loading="eager"
         className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover/panel:scale-[1.04]"
-        style={{ objectPosition: '50% 34%' }}
+        style={{
+          objectPosition: active ? '66% 34%' : '50% 34%',
+          transition: 'object-position 620ms cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
       />
     </span>
   )
@@ -152,7 +165,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 transition: 'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             >
-              <Ground covers={channel.covers} video={channel.video} />
+              <Ground covers={channel.covers} video={channel.video} active={active} />
               <span
                 aria-hidden
                 className="absolute inset-0 transition-opacity duration-500"
@@ -163,6 +176,22 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                   opacity: dimmed ? 1 : 1,
                 }}
               />
+              {/*
+                Black falling off to the right, so the mark, the sentence and
+                the count sit on ground rather than on footage. Only while the
+                panel is open, since a collapsed panel has nothing under it that
+                needs protecting.
+              */}
+              <span
+                aria-hidden
+                className="absolute inset-0 transition-opacity duration-500"
+                style={{
+                  opacity: active ? 1 : 0,
+                  background:
+                    'linear-gradient(90deg, rgba(23,25,24,0.96) 0%, rgba(23,25,24,0.88) 26%, rgba(23,25,24,0.55) 52%, rgba(23,25,24,0.12) 78%, transparent 100%)',
+                }}
+              />
+
               {dimmed && (
                 <span aria-hidden className="absolute inset-0" style={{ background: 'rgba(23,25,24,0.32)' }} />
               )}

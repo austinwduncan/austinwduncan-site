@@ -46,7 +46,13 @@ const CHANNEL_VIDEO: Record<string, string> = {
   'word-for-word': '/video/wfw-bumper.mp4',
   // Three clips stitched into one, taken from the middle of each.
   exegetica: '/video/exegetica-loop.mp4',
-  // Forum & Pulpit is on its cover until Austin cuts its footage himself.
+  /*
+    Austin's own footage as the spine with news b-roll cut in: AP Archive's
+    Supreme Court exterior and the Paris opening ceremony. The inserts are taken
+    down to near monochrome with a contrast lift so they read as archival
+    against his colour, which is what tells a viewer which shots are his.
+  */
+  'forum-and-pulpit': '/video/forum-pulpit-loop.mp4',
 }
 const BROWSE = '/library/browse'
 
