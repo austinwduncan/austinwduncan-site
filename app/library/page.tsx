@@ -32,6 +32,15 @@ export const metadata: Metadata = {
 }
 
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
+
+/*
+  Channels with footage of their own. Encoded from Austin's uploads into muted
+  loops under a megabyte and served locally, so there is no YouTube iframe and
+  no player chrome over the artwork.
+*/
+const CHANNEL_VIDEO: Record<string, string> = {
+  'word-for-word': '/video/wfw-bumper.mp4',
+}
 const BROWSE = '/library/browse'
 
 /** What a channel calls its pieces, so a count reads like the thing it counts. */
@@ -98,13 +107,20 @@ export default async function LibraryHomePage() {
           ? `${seasons.length} ${seasons.length === 1 ? 'show' : 'shows'} · ${countLabel(show.slug, mine.length)}`
           : countLabel(show.slug, mine.length),
         covers: mine.map(p => p.artwork).filter(Boolean).slice(0, 4) as string[],
+        video: CHANNEL_VIDEO[show.slug] ?? null,
         count: mine.length,
       }
     })
     .filter(c => c.count > 0)
 
   return (
-    <div style={{ background: 'var(--awd-black)' }}>
+    /*
+      Slid up under the sticky 60px nav so the page's own ground runs behind it,
+      the way the homepage hero does. Without this the nav sits on whatever is
+      behind the page rather than on the page itself, and its transparent at
+      rest state has nothing to be transparent over.
+    */
+    <div className="-mt-[60px]" style={{ background: 'var(--awd-black)' }}>
       {/*
         The header has to do the explaining, because the wall below it shows
         five marks and a reader who does not already know the properties cannot
@@ -115,7 +131,7 @@ export default async function LibraryHomePage() {
         Kept deliberately tight. Every line here pushes the wall down, and the
         whole point of the wall is that all five channels clear the fold.
       */}
-      <section className="px-6 pb-9 pt-20 lg:px-10 lg:pb-11 lg:pt-24">
+      <section className="px-6 pb-9 pt-[8.75rem] lg:px-10 lg:pb-11 lg:pt-[9.75rem]">
         <div className="flex items-center gap-3">
           <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
           <span

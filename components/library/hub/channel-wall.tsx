@@ -35,34 +35,54 @@ export type WallChannel = {
   meta: string
   href: string
   covers: string[]
+  /** A short muted loop for this channel's ground, in place of a cover. */
+  video?: string | null
 }
 
-function Ground({ covers }: { covers: string[] }) {
-  if (!covers.length) return null
-  return (
-    <span aria-hidden className="absolute inset-0 flex overflow-hidden">
-      {covers.map((src, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={`${src}-${i}`}
-          src={src}
-          alt=""
-          loading="eager"
-          className="h-full flex-1 object-cover"
-          /*
-            Pushed hard on purpose. The covers average roughly a third
-            brightness, blurring averages them darker still, and any scrim on
-            top took three of the five panels to flat black. Lifting brightness
-            and saturation before the scrim is what lets Austin's colour survive
-            the whole stack.
-          */
-          style={{
-            minWidth: 0,
-            filter: 'blur(26px) saturate(1.9) brightness(1.95)',
-            transform: 'scale(1.25)',
-          }}
+function Ground({ covers, video }: { covers: string[]; video?: string | null }) {
+  /*
+    A channel with its own footage uses it. Word for Word has a thirteen second
+    bumper Austin cut for the property, which says what the show is far better
+    than a still of one episode's cover can.
+
+    Encoded locally rather than embedded from YouTube: a muted loop under a
+    megabyte, no iframe, no third party script, and no player chrome sitting on
+    top of the artwork.
+  */
+  if (video) {
+    return (
+      <span aria-hidden className="absolute inset-0 overflow-hidden">
+        <video
+          className="h-full w-full object-cover"
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          tabIndex={-1}
         />
-      ))}
+      </span>
+    )
+  }
+
+  if (!covers.length) return null
+  /*
+    Sharp, at Austin's request. One cover per panel rather than a tiled strip,
+    because four landscape covers squeezed into a tall panel crops each one to
+    its centre, which is exactly where he typesets the title.
+  */
+  return (
+    <span aria-hidden className="absolute inset-0 overflow-hidden">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={covers[0]}
+        alt=""
+        loading="eager"
+        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover/panel:scale-[1.04]"
+        style={{ objectPosition: '50% 34%' }}
+      />
     </span>
   )
 }
@@ -132,14 +152,14 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 transition: 'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             >
-              <Ground covers={channel.covers} />
+              <Ground covers={channel.covers} video={channel.video} />
               <span
                 aria-hidden
                 className="absolute inset-0 transition-opacity duration-500"
                 style={{
                   background: active
-                    ? 'linear-gradient(180deg, rgba(23,25,24,0.12) 0%, rgba(23,25,24,0.5) 50%, rgba(23,25,24,0.93) 100%)'
-                    : 'linear-gradient(180deg, rgba(23,25,24,0.2) 0%, rgba(23,25,24,0.55) 45%, rgba(23,25,24,0.88) 100%)',
+                    ? 'linear-gradient(180deg, rgba(23,25,24,0.18) 0%, rgba(23,25,24,0.55) 46%, rgba(23,25,24,0.97) 82%, rgba(23,25,24,0.99) 100%)'
+                    : 'linear-gradient(180deg, rgba(23,25,24,0.26) 0%, rgba(23,25,24,0.6) 44%, rgba(23,25,24,0.95) 80%, rgba(23,25,24,0.98) 100%)',
                   opacity: dimmed ? 1 : 1,
                 }}
               />
@@ -198,11 +218,11 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
             className="relative block overflow-hidden border-t"
             style={{ borderColor: 'rgba(238,234,225,0.14)' }}
           >
-            <Ground covers={channel.covers} />
+            <Ground covers={channel.covers} video={channel.video} />
             <span
               aria-hidden
               className="absolute inset-0"
-              style={{ background: 'linear-gradient(180deg, rgba(23,25,24,0.28) 0%, rgba(23,25,24,0.9) 100%)' }}
+              style={{ background: 'linear-gradient(180deg, rgba(23,25,24,0.32) 0%, rgba(23,25,24,0.96) 100%)' }}
             />
             <span className="relative block px-6 py-10">
               <Mark channel={channel} small />

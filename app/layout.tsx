@@ -102,7 +102,18 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-zinc-900">
+      {/*
+        The ground lives here, not on a page. bg-white and text-zinc-900
+        were left from the old light design, and a utility on body beats
+        anything in the base layer, so every page that did not paint its
+        own background showed white behind the nav. The nav is transparent
+        until it scrolls, so that white strip was the first thing a reader
+        saw on all but the homepage.
+
+        Pages that want a light ground still set their own, for example
+        /about on warm bone.
+      */}
+      <body className="min-h-full flex flex-col" style={{ background: 'var(--awd-black)', color: 'var(--awd-bone)' }}>
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

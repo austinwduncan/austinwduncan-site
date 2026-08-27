@@ -124,7 +124,16 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /*
+      The site is dark dominant, and --background is the shadcn default of pure
+      white that nobody chose. The nav is transparent until it scrolls, so a
+      white body meant every page except the homepage showed a white strip
+      behind the nav rather than the page continuing underneath it.
+
+      Pages that want a light ground set their own, for example /about.
+    */
+    background: var(--awd-black);
   }
   html {
     @apply font-sans;
