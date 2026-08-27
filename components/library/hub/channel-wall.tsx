@@ -55,14 +55,19 @@ function Ground({ covers, video, active }: { covers: string[]; video?: string | 
         <video
           className="h-full w-full object-cover"
           /*
-            Pushed right while the panel is open. Opening widens the panel, and
-            object-cover recentres as it does, which walks the subject's face
-            left into the copy. Shifting the crop the other way keeps the face
-            roughly where it started and clear of the wordmark.
+            Slides right while the panel is open, so the subject clears the fade
+            and the wordmark sitting over the left of the frame.
+
+            Done with a transform rather than object-position. Both express the
+            same idea, but object-position animates on the main thread and moves
+            in visible steps, while a transform is composited and actually
+            glides. The video is scaled slightly first so there is material to
+            slide into instead of an edge appearing.
           */
           style={{
-            objectPosition: active ? '66% 50%' : '50% 50%',
-            transition: 'object-position 620ms cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: active ? 'scale(1.16) translateX(7%)' : 'scale(1.16) translateX(0%)',
+            transition: 'transform 720ms cubic-bezier(0.16, 1, 0.3, 1)',
+            willChange: 'transform',
           }}
           src={video}
           autoPlay
@@ -90,10 +95,12 @@ function Ground({ covers, video, active }: { covers: string[]; video?: string | 
         src={covers[0]}
         alt=""
         loading="eager"
-        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover/panel:scale-[1.04]"
+        className="h-full w-full object-cover"
         style={{
-          objectPosition: active ? '66% 34%' : '50% 34%',
-          transition: 'object-position 620ms cubic-bezier(0.16, 1, 0.3, 1)',
+          objectPosition: '50% 34%',
+          transform: active ? 'scale(1.16) translateX(7%)' : 'scale(1.16) translateX(0%)',
+          transition: 'transform 720ms cubic-bezier(0.16, 1, 0.3, 1)',
+          willChange: 'transform',
         }}
       />
     </span>
