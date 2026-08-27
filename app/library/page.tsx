@@ -105,25 +105,59 @@ export default async function LibraryHomePage() {
 
   return (
     <div style={{ background: 'var(--awd-black)' }}>
-      <section className="px-6 pb-7 pt-20 lg:px-10 lg:pb-8 lg:pt-24">
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-          <div className="flex items-center gap-3">
-            <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
-            <h1
-              className="text-[0.72rem] font-semibold uppercase tracking-[0.24em]"
-              style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
-            >
-              The Library
-            </h1>
-          </div>
-          <p
-            className="text-[0.95rem]"
-            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.7)' }}
+      {/*
+        The header has to do the explaining, because the wall below it shows
+        five marks and a reader who does not already know the properties cannot
+        infer what they are from a logo. So: the name, one line saying what the
+        place is, and a paragraph that names all five avenues in plain words
+        before a single brand appears.
+
+        Kept deliberately tight. Every line here pushes the wall down, and the
+        whole point of the wall is that all five channels clear the fold.
+      */}
+      <section className="px-6 pb-9 pt-20 lg:px-10 lg:pb-11 lg:pt-24">
+        <div className="flex items-center gap-3">
+          <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
+          <span
+            className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
+            style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
           >
-            {all.length} pieces across five properties. Start wherever you came for.
-          </p>
+            {all.length} pieces
+          </span>
         </div>
+
+        <h1
+          className="mt-5 uppercase"
+          style={{
+            fontFamily: HEADING,
+            fontWeight: 700,
+            fontSize: 'clamp(2.1rem, 4.6vw, 3.5rem)',
+            letterSpacing: '-0.02em',
+            lineHeight: 0.95,
+            color: 'var(--awd-bone)',
+          }}
+        >
+          The Library
+        </h1>
+
+        <p
+          className="mt-4 text-[1.05rem] lg:text-[1.15rem]"
+          style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-gold)' }}
+        >
+          Five avenues of teaching, gathered in one place.
+        </p>
+
+        <p
+          className="mt-5 max-w-[52rem] text-[0.99rem] leading-relaxed lg:text-[1.04rem]"
+          style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.72)' }}
+        >
+          Sunday preaching from the pulpit. Book studies worked verse by verse. Honest
+          answers to the questions people actually ask. Academic papers with the Greek and
+          Hebrew left in. And commentary on what is happening right now. Start with
+          whichever one you came for.
+        </p>
       </section>
+
 
 
       <section>

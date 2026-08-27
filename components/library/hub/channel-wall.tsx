@@ -47,7 +47,7 @@ function Ground({ covers }: { covers: string[] }) {
           key={`${src}-${i}`}
           src={src}
           alt=""
-          loading="lazy"
+          loading="eager"
           className="h-full flex-1 object-cover"
           /*
             Pushed hard on purpose. The covers average roughly a third
@@ -112,7 +112,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
           line, so all five channels clear the fold on a laptop. Clamped so it
           never collapses on a short window or stretches absurdly on a tall one.
         */
-        style={{ height: 'clamp(24rem, calc(100vh - 16.5rem), 38rem)' }}
+        style={{ height: 'clamp(18rem, calc(100vh - 29rem), 34rem)' }}
         onMouseLeave={() => setOpen(null)}
       >
         {channels.map(channel => {
