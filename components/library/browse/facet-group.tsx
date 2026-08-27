@@ -80,7 +80,7 @@ export default function FacetGroup({
                   borderLeft: on ? '2px solid var(--awd-gold)' : '2px solid transparent',
                 }}
               >
-                <span className="min-w-0 flex-1 truncate">{option.name}</span>
+                <span className="min-w-0 flex-1 ">{option.name}</span>
                 <span
                   className="shrink-0 text-[0.66rem] tabular-nums"
                   style={{ color: on ? 'var(--awd-gold)' : 'var(--awd-stone)', opacity: on ? 1 : 0.7 }}

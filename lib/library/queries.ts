@@ -392,6 +392,7 @@ export const getShows = cache(async (): Promise<Show[]> => {
     return {
       id: c.id, slug: c.slug, name: c.name, tagline: c.tagline,
       description: c.description, artwork: c.artwork_url,
+      logo: c.logo_url, blurb: c.blurb,
       count: mine.length,
       seasons,
       loose: mine.filter(p => !p.series),

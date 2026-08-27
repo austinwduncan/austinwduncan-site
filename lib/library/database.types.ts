@@ -43,6 +43,8 @@ export type CollectionRow = {
   tagline: string | null
   description: string | null
   artwork_url: string | null
+  logo_url: string | null
+  blurb: string | null
   position: number
 }
 

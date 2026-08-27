@@ -284,7 +284,7 @@ export function PieceCard({
 
       {kicker && (
         <p
-          className="mt-4 line-clamp-1 text-[0.72rem] font-semibold"
+          className="mt-4 text-[0.72rem] font-semibold"
           style={{ fontFamily: HEADING, letterSpacing: '0.02em', color: 'var(--awd-accent-2)' }}
         >
           {kicker}
@@ -292,7 +292,7 @@ export function PieceCard({
       )}
 
       <h3
-        className="mt-1.5 line-clamp-3 text-[1.02rem] transition-colors group-hover:text-[var(--awd-gold)]"
+        className="mt-1.5 text-[1.02rem] transition-colors group-hover:text-[var(--awd-gold)]"
         style={{ fontFamily: HEADING, fontWeight: 600, letterSpacing: '-0.01em', lineHeight: 1.28, color: BONE }}
       >
         {piece.title}

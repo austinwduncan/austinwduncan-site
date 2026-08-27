@@ -46,7 +46,7 @@ function EpisodeRow({ piece, first }: { piece: Piece; first: boolean }) {
         </p>
 
         <h3
-          className="mt-2.5 line-clamp-3 text-[1.24rem] leading-[1.28] transition-colors duration-200 group-hover:text-[var(--awd-gold)] lg:text-[1.34rem]"
+          className="mt-2.5 text-[1.24rem] leading-[1.28] transition-colors duration-200 group-hover:text-[var(--awd-gold)] lg:text-[1.34rem]"
           style={{
             fontFamily: HEADING,
             fontWeight: 600,

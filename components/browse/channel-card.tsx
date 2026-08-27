@@ -123,7 +123,7 @@ export default function ChannelCard({
         </p>
       )}
       <h3
-        className="mt-1.5 line-clamp-2 text-[1rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
+        className="mt-1.5 text-[1rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
         style={{ fontFamily: 'var(--font-source-serif)', color: '#EEEAE1' }}
       >
         {item.title}

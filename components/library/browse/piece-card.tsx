@@ -87,7 +87,7 @@ export default function BrowsePieceCard({ piece }: { piece: Piece }) {
 
       {kicker && (
         <p
-          className="mt-3.5 line-clamp-1 text-[0.62rem] font-semibold uppercase tracking-[0.18em]"
+          className="mt-3.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em]"
           style={{ fontFamily: HEADING, color: 'var(--awd-accent-2)' }}
         >
           {kicker}
@@ -99,7 +99,7 @@ export default function BrowsePieceCard({ piece }: { piece: Piece }) {
         questions and uppercase eats the line clamp.
       */}
       <h3
-        className="mt-1.5 line-clamp-2 text-[0.95rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
+        className="mt-1.5 text-[0.95rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
         style={{
           fontFamily: HEADING,
           fontWeight: 600,

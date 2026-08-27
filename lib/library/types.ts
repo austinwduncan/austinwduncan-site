@@ -78,6 +78,10 @@ export type Show = {
   tagline: string | null
   description: string | null
   artwork: string | null
+  /** White on transparent wordmark for the dark ground. */
+  logo: string | null
+  /** One plain sentence saying what this channel is. */
+  blurb: string | null
   count: number
   seasons: Season[]
   /** Pieces in this show that belong to no season. */

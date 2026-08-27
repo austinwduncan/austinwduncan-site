@@ -90,7 +90,7 @@ export default function Billboard({
               className="text-[0.66rem] font-semibold uppercase tracking-[0.18em]"
               style={{ fontFamily: HEADING, color: 'rgba(238,234,225,0.42)' }}
             >
-              {pieceCount} pieces · {showCount} collections
+              {pieceCount} pieces · {showCount} shows
             </span>
           </div>
 

@@ -40,7 +40,7 @@ export default function ActiveFilters({
             {filter.label}
           </span>
           <span
-            className="min-w-0 truncate text-[0.78rem]"
+            className="min-w-0 text-[0.78rem]"
             style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-gold)' }}
           >
             {filter.value}

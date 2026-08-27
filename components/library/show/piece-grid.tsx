@@ -94,7 +94,7 @@ function Card({ piece }: { piece: Piece }) {
       )}
 
       <h3
-        className="mt-2 line-clamp-3 text-[1.02rem] leading-[1.3] transition-colors duration-200 group-hover:text-[var(--awd-gold)]"
+        className="mt-2 text-[1.02rem] leading-[1.3] transition-colors duration-200 group-hover:text-[var(--awd-gold)]"
         style={{
           fontFamily: HEADING,
           fontWeight: 600,

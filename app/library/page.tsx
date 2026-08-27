@@ -1,25 +1,40 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { getPieces, getShows, getTaxonomy } from '@/lib/library/queries'
-import type { Piece } from '@/lib/library/types'
+import { getPieces, getShows } from '@/lib/library/queries'
+import type { Piece, Show } from '@/lib/library/types'
 import ScrollReveal from '@/components/scroll-reveal'
 import Billboard from '@/components/library/hub/billboard'
-import Shelf, { type ShelfProps } from '@/components/library/hub/shelf'
+import ChannelHeader from '@/components/library/hub/channel-header'
+import Row from '@/components/library/hub/row'
+import ShowCard from '@/components/library/hub/show-card'
+import PieceCard from '@/components/library/hub/piece-card'
 import { kickerFor, toCard } from '@/components/library/hub/cards'
 
 /*
   The Library home.
 
-  Everything Austin has taught, entered the way a streaming home is entered: a
-  billboard, then shelves. The collections keep their names but they are one
-  row among several, not the spine, which is why a topic row and a depth row
-  sit alongside them.
+  Organised by channel, and inside a channel by show, because that is how the
+  work is actually shaped. Daniel is a show. Hebrews is a show. Words That
+  Change Everything is a show. Treating them as loose pieces inside a collection
+  called "In the Text" hid them behind a name a visitor has no reason to know.
 
-  One read of the whole set feeds every row. getPieces and getShows are both
-  wrapped in React cache and getShows asks for the same newest sorted set, so
-  the three awaits below collapse into a single trip and every grouping after
-  that is done in memory.
+  So each channel leads with its own wordmark and a sentence saying what it is,
+  and then offers whichever unit that channel is really browsed by:
+
+    Bible Teaching Series   six studies, each a show
+    Word for Word           eight subjects, each a run of questions
+    Sermons                 individual messages, no series
+    Exegetica               individual papers
+    Forum & Pulpit          individual essays
+
+  There is deliberately no topic row and no "start here" row. Both were rows
+  the site invented rather than rows the work suggested, and they sat far down
+  a page answering a question nobody had asked.
+
+  One read of the whole set feeds everything. getPieces and getShows are both
+  wrapped in React cache and ask for the same newest sorted set, so the two
+  awaits collapse into one trip and every grouping after that is in memory.
 */
 
 export const revalidate = 300
@@ -27,27 +42,110 @@ export const revalidate = 300
 export const metadata: Metadata = {
   title: 'Library',
   description:
-    'Everything Austin W. Duncan has taught in one place: sermons, book studies, questions answered, scholarly papers and cultural commentary.',
+    'Everything Austin W. Duncan has taught in one place: book studies, questions answered, sermons, scholarly papers and cultural commentary.',
 }
 
-/** Cards per row. Enough to feel deep, short enough to stay cheap. */
-const ROW = 24
-
+const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 const BROWSE = '/library/browse'
 
+/** Cards in a row. Deep enough to feel like a library, short enough to stay cheap. */
+const ROW = 20
+
+/** What a channel calls its pieces, so a count reads like the thing it counts. */
+const UNIT: Record<string, [string, string]> = {
+  'in-the-text': ['study', 'studies'],
+  'word-for-word': ['question', 'questions'],
+  sermons: ['sermon', 'sermons'],
+  exegetica: ['paper', 'papers'],
+  'forum-and-pulpit': ['essay', 'essays'],
+}
+
+function countLabel(slug: string, n: number): string {
+  const [one, many] = UNIT[slug] ?? ['piece', 'pieces']
+  return `${n} ${n === 1 ? one : many}`
+}
+
+function CardWrap({ children }: { children: React.ReactNode }) {
+  return <div className="w-[14.5rem] shrink-0 snap-start sm:w-[16.5rem]">{children}</div>
+}
+
+/* A channel whose shows are the browse unit. */
+function ShowChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
+  const seasons = show.seasons.filter(s => s.episodes.length)
+  if (!seasons.length) return null
+
+  return (
+    <section className="pt-24 lg:pt-32">
+      <ScrollReveal>
+        <div className="px-6 lg:px-10">
+          <ChannelHeader
+            show={show}
+            href={`/library/${show.slug}`}
+            action={`All ${UNIT[show.slug]?.[1] ?? 'pieces'}`}
+          />
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal delay={80}>
+        <Row count={seasons.length}>
+          {seasons.map(season => (
+            <CardWrap key={season.id}>
+              <ShowCard
+                show={{
+                  name: season.name,
+                  href: `/library/${show.slug}?season=${season.slug}`,
+                  artwork: season.artwork,
+                  count: countLabel(show.slug, season.episodes.length),
+                }}
+              />
+            </CardWrap>
+          ))}
+        </Row>
+      </ScrollReveal>
+    </section>
+  )
+}
+
+/* A channel browsed as individual pieces, because it has no series. */
+function PieceChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
+  const row = pieces.slice(0, ROW)
+  if (!row.length) return null
+  const kicker = kickerFor(row)
+
+  return (
+    <section className="pt-24 lg:pt-32">
+      <ScrollReveal>
+        <div className="px-6 lg:px-10">
+          <ChannelHeader
+            show={show}
+            href={`${BROWSE}?collection=${show.slug}`}
+            action={`All ${countLabel(show.slug, pieces.length).split(' ')[1]}`}
+          />
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal delay={80}>
+        <Row count={row.length}>
+          {row.map(piece => (
+            <CardWrap key={piece.id}>
+              <PieceCard card={toCard(piece, kicker(piece))} />
+            </CardWrap>
+          ))}
+        </Row>
+      </ScrollReveal>
+    </section>
+  )
+}
+
 export default async function LibraryHomePage() {
-  const [all, shows, tax] = await Promise.all([
-    getPieces({ sort: 'newest' }),
-    getShows(),
-    getTaxonomy(),
-  ])
+  const [all, shows] = await Promise.all([getPieces({ sort: 'newest' }), getShows()])
 
   if (!all.length) {
     return (
       <div className="px-6 py-40 lg:px-10" style={{ background: 'var(--awd-black)' }}>
         <p
           className="text-[0.82rem] font-semibold uppercase tracking-[0.16em]"
-          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'var(--awd-stone)' }}
+          style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
         >
           The Library is empty
         </p>
@@ -59,146 +157,49 @@ export default async function LibraryHomePage() {
   const featured =
     all.find(p => p.artwork && (p.subtitle || p.summary)) ?? all.find(p => p.artwork) ?? all[0]
 
-  const shelves: ShelfProps[] = []
+  const piecesOf = (show: Show) => all.filter(p => p.collection?.id === show.id)
 
-  // ── Latest across everything ──────────────────────────────────────────────
-  // The featured piece is already the top of the page, so it is not repeated
-  // immediately underneath itself.
-  /*
-    Latest takes at most two per show. Austin's recent publishing is almost all
-    one collection, so a straight newest-first row was four In the Text pieces
-    that then repeated in the In the Text row directly beneath it. Capping per
-    show makes the row say what it means: the newest thing across everything.
-  */
-  const perShow = new Map<number, number>()
-  const latest: Piece[] = []
-  for (const p of all) {
-    if (p.id === featured.id) continue
-    const key = p.collection?.id ?? -1
-    const used = perShow.get(key) ?? 0
-    if (used >= 2) continue
-    perShow.set(key, used + 1)
-    latest.push(p)
-    if (latest.length === ROW) break
-  }
-  const latestKicker = kickerFor(latest)
-
-  shelves.push({
-    title: 'Latest',
-    cards: latest.map(p => toCard(p, latestKicker(p))),
-    seeAllHref: `${BROWSE}?sort=newest`,
-    seeAllLabel: 'See all',
-    total: all.length,
+  // Channels that run as series lead, because a show is a bigger invitation
+  // than a single piece. Order otherwise follows the collection's position.
+  const ordered = [...shows].sort((a, b) => {
+    const seriesA = a.seasons.length > 0 ? 0 : 1
+    const seriesB = b.seasons.length > 0 ? 0 : 1
+    return seriesA - seriesB
   })
-
-  // ── One row per show ──────────────────────────────────────────────────────
-  // The heading goes to the show itself, the See all goes to the same set
-  // inside the browse view, so both routes into a collection are available.
-  for (const show of shows) {
-    const mine = all.filter(p => p.collection?.id === show.id)
-    if (!mine.length) continue
-    const row = mine.slice(0, ROW)
-    const kicker = kickerFor(row)
-    shelves.push({
-      title: show.name,
-      cards: row.map(p => toCard(p, kicker(p))),
-      titleHref: `/library/${show.slug}`,
-      seeAllHref: `${BROWSE}?collection=${show.slug}`,
-      seeAllLabel: 'See all',
-      total: mine.length,
-    })
-  }
-
-  // ── Start here ────────────────────────────────────────────────────────────
-  // Levels are ordered by depth, so the first row is the shallowest one.
-  const shallowest = tax.levels[0]
-  const startHere: Piece[] = shallowest
-    ? all.filter(p => p.level?.slug === shallowest.slug)
-    : []
-  if (startHere.length) {
-    shelves.push({
-      title: 'Start here',
-      cards: (() => { const r = startHere.slice(0, ROW); const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
-      seeAllHref: `${BROWSE}?level=${shallowest.slug}`,
-      seeAllLabel: 'See all',
-      total: startHere.length,
-    })
-  } else {
-    /*
-      Depth has not been assigned yet: the import carried format, collection
-      and scripture across but the level column is still filling in during
-      enrichment. Rather than drop the on ramp entirely, the shortest reads
-      stand in for it, which is the same promise the row is making. Once
-      levels land, the branch above takes over on its own.
-    */
-    const shortest = all
-      .filter(p => p.readingMinutes != null && p.artwork)
-      .sort((a, b) => (a.readingMinutes ?? 0) - (b.readingMinutes ?? 0))
-      .slice(0, ROW)
-    if (shortest.length) {
-      shelves.push({
-        title: 'Start here',
-        cards: (() => { const r = shortest; const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
-        seeAllHref: `${BROWSE}?sort=newest`,
-        seeAllLabel: 'See all',
-      })
-    }
-  }
-
-  // ── The largest topics ────────────────────────────────────────────────────
-  // Topics came out of the content itself, so a few of them still shadow a
-  // collection or a series name. Those are dropped: a topic row that is just
-  // a show row again teaches the reader nothing.
-  const shadowed = new Set<string>([
-    ...tax.collections.map(c => c.slug),
-    ...tax.series.map(s => s.slug),
-  ])
-  const topicCounts = new Map<string, { name: string; slug: string; n: number }>()
-  for (const p of all) {
-    for (const t of p.topics) {
-      if (shadowed.has(t.slug)) continue
-      const seen = topicCounts.get(t.slug)
-      if (seen) seen.n += 1
-      else topicCounts.set(t.slug, { name: t.name, slug: t.slug, n: 1 })
-    }
-  }
-  const biggest = [...topicCounts.values()].filter(t => t.n >= 5).sort((a, b) => b.n - a.n).slice(0, 2)
-  for (const topic of biggest) {
-    const mine = all.filter(p => p.topics.some(t => t.slug === topic.slug))
-    shelves.push({
-      title: topic.name,
-      cards: (() => { const r = mine.slice(0, ROW); const k = kickerFor(r); return r.map(p => toCard(p, k(p))) })(),
-      seeAllHref: `${BROWSE}?topic=${topic.slug}`,
-      seeAllLabel: 'See all',
-      total: mine.length,
-    })
-  }
 
   return (
     <div style={{ background: 'var(--awd-black)' }}>
-      <Billboard piece={featured} pieceCount={all.length} showCount={shows.filter(s => s.count).length} />
+      <Billboard piece={featured} pieceCount={all.length} showCount={shows.reduce((n, s) => n + (s.seasons.length || 1), 0)} />
 
-      {/*
-        The billboard already carries its own bottom padding, so the shelves
-        open a little tighter than the house py-28 and still close on it.
-      */}
-      <div className="pb-28 pt-16 lg:pb-36 lg:pt-20">
-        {shelves.map((shelf, i) => (
-          <ScrollReveal key={`${shelf.title}-${shelf.seeAllHref}`} delay={i === 0 ? 0 : 60}>
-            <Shelf {...shelf} />
-          </ScrollReveal>
-        ))}
+      <div className="pb-28 lg:pb-36">
+        {ordered.map(show =>
+          show.seasons.length ? (
+            <ShowChannel key={show.id} show={show} pieces={piecesOf(show)} />
+          ) : (
+            <PieceChannel key={show.id} show={show} pieces={piecesOf(show)} />
+          ),
+        )}
 
-        <div className="mt-20 px-6 lg:px-10">
+        <div className="mt-24 px-6 lg:mt-32 lg:px-10">
           <div className="h-px w-full" style={{ background: 'rgba(238,234,225,0.1)' }} />
-          <Link
-            href={BROWSE}
-            className="mt-8 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
-            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'var(--awd-bone)' }}
-          >
-            Browse everything
-            <ArrowRight size={14} />
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <Link
+              href={BROWSE}
+              className="group/all inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+              style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+            >
+              Browse all {all.length} pieces
+              <ArrowRight size={14} className="transition-transform duration-200 group-hover/all:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/scripture"
+              className="group/scr inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+              style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+            >
+              Browse by Scripture
+              <ArrowRight size={14} className="transition-transform duration-200 group-hover/scr:translate-x-0.5" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
