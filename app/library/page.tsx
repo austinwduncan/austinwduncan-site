@@ -39,7 +39,14 @@ const HEADING = 'var(--font-cmg), system-ui, sans-serif'
   no player chrome over the artwork.
 */
 const CHANNEL_VIDEO: Record<string, string> = {
+  sermons: '/video/brand-loop.mp4',
+  // No footage of its own yet, so it borrows the teaching loop, which is the
+  // closest thing to what these studies are.
+  'in-the-text': '/video/grow-loop.mp4',
   'word-for-word': '/video/wfw-bumper.mp4',
+  // Three clips stitched into one, taken from the middle of each.
+  exegetica: '/video/exegetica-loop.mp4',
+  // Forum & Pulpit keeps its cover until Austin has footage for it.
 }
 const BROWSE = '/library/browse'
 
