@@ -75,18 +75,20 @@ function ShowChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
   if (!seasons.length) return null
 
   return (
-    <section className="pt-24 lg:pt-32">
+    <section className="pt-20 lg:pt-28">
       <ScrollReveal>
         <div className="px-6 lg:px-10">
           <ChannelHeader
             show={show}
             href={`/library/${show.slug}`}
             action={`All ${UNIT[show.slug]?.[1] ?? 'pieces'}`}
+            meta={`${seasons.length} ${seasons.length === 1 ? 'show' : 'shows'} · ${countLabel(show.slug, pieces.length)}`}
           />
         </div>
       </ScrollReveal>
 
       <ScrollReveal delay={80}>
+        <div className="mt-11 lg:mt-14" />
         <Row count={seasons.length}>
           {seasons.map(season => (
             <CardWrap key={season.id}>
@@ -113,18 +115,20 @@ function PieceChannel({ show, pieces }: { show: Show; pieces: Piece[] }) {
   const kicker = kickerFor(row)
 
   return (
-    <section className="pt-24 lg:pt-32">
+    <section className="pt-20 lg:pt-28">
       <ScrollReveal>
         <div className="px-6 lg:px-10">
           <ChannelHeader
             show={show}
             href={`${BROWSE}?collection=${show.slug}`}
             action={`All ${countLabel(show.slug, pieces.length).split(' ')[1]}`}
+            meta={countLabel(show.slug, pieces.length)}
           />
         </div>
       </ScrollReveal>
 
       <ScrollReveal delay={80}>
+        <div className="mt-11 lg:mt-14" />
         <Row count={row.length}>
           {row.map(piece => (
             <CardWrap key={piece.id}>
