@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Artwork from '@/components/library/artwork'
 import { ArrowRight } from 'lucide-react'
 import type { HubCard } from '@/components/library/hub/cards'
 
@@ -29,9 +30,6 @@ import type { HubCard } from '@/components/library/hub/cards'
   that is already there. Everything the card says sits below the frame.
 */
 
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")"
-
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 
 export default function PieceCard({ card }: { card: HubCard }) {
@@ -41,93 +39,35 @@ export default function PieceCard({ card }: { card: HubCard }) {
       className="group relative block outline-none focus-visible:z-30"
       style={{ zIndex: 0 }}
     >
-      <div
+      <Artwork
+        src={card.image}
+        title={card.title}
+        aspect="16/9"
         className="relative overflow-hidden rounded-[3px] transition-all duration-300 ease-out group-hover:z-20 group-hover:-translate-y-1.5 group-hover:shadow-[0_22px_50px_rgba(0,0,0,0.55)] group-focus-visible:-translate-y-1.5"
-        style={{ aspectRatio: '16/9', background: 'var(--awd-graphite)' }}
       >
-        {card.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={card.image}
-            alt=""
-            loading="lazy"
-            className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
-          />
-        ) : (
-          /*
-            Thirteen pieces have no artwork, and an empty frame reads as a
-            broken image rather than a card. Austin typesets titles into his
-            covers, so a title card is the house idiom: the same thing his art
-            does, done in CSS until the real cover exists.
-          */
-          <span
-            aria-hidden
-            className="absolute inset-0 flex items-center justify-center px-4 text-center"
-            style={{
-              background:
-                'radial-gradient(120% 120% at 30% 20%, rgba(116,135,144,0.22) 0%, transparent 60%), var(--awd-graphite)',
-            }}
-          >
-            <span
-              className="line-clamp-3"
-              style={{
-                fontFamily: HEADING,
-                fontWeight: 700,
-                fontSize: 'clamp(0.72rem, 1.5vw, 0.95rem)',
-                letterSpacing: '-0.01em',
-                lineHeight: 1.15,
-                color: 'rgba(238,234,225,0.5)',
-              }}
-            >
-              {card.title}
-            </span>
-          </span>
-        )}
-
-        <span
-          aria-hidden
-          className="absolute inset-0 transition-opacity duration-[600ms] group-hover:opacity-0"
-          style={{ background: 'rgba(44,48,47,0.20)' }}
-        />
-        <span
-          aria-hidden
-          className="absolute inset-0 opacity-30 mix-blend-color transition-opacity duration-[600ms] group-hover:opacity-0"
-          style={{ background: 'var(--awd-accent-2)' }}
-        />
-        <span
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(120% 100% at 50% 40%, transparent 45%, rgba(23,25,24,0.5) 100%)' }}
-        />
-        <span
-          aria-hidden
-          className="absolute inset-0 opacity-20 mix-blend-overlay"
-          style={{ backgroundImage: GRAIN }}
-        />
-
         {/* Hover panel. It only ever adds; nothing readable is hidden behind it. */}
         <span
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 translate-y-2 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-          style={{ background: 'linear-gradient(0deg, rgba(23,25,24,0.96) 30%, transparent 100%)' }}
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 translate-y-2 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+        style={{ background: 'linear-gradient(0deg, rgba(23,25,24,0.96) 30%, transparent 100%)' }}
         >
-          {card.blurb && (
-            <span
-              className="mb-3 line-clamp-2 block text-[0.78rem] leading-snug"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}
-            >
-              {card.blurb}
-            </span>
-          )}
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em]"
-            style={{ fontFamily: HEADING, background: 'var(--awd-gold)', color: 'var(--awd-black)' }}
-          >
-            Read
-            <ArrowRight size={11} />
-          </span>
+        {card.blurb && (
+        <span
+        className="mb-3 line-clamp-2 block text-[0.78rem] leading-snug"
+        style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}
+        >
+        {card.blurb}
         </span>
-      </div>
+        )}
+        <span
+        className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em]"
+        style={{ fontFamily: HEADING, background: 'var(--awd-gold)', color: 'var(--awd-black)' }}
+        >
+        Read
+        <ArrowRight size={11} />
+        </span>
+        </span>
+      </Artwork>
 
       {card.kicker && (
         <p

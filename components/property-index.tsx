@@ -1,3 +1,4 @@
+import SharedArtwork from '@/components/library/artwork'
 import Link from 'next/link'
 import ScrollReveal from '@/components/scroll-reveal'
 import type { Piece } from '@/lib/library/types'
@@ -43,9 +44,6 @@ const HAIRLINE = 'rgba(238,234,225,0.12)'
   The same grain the browse cards use. Artwork here spans near white to near
   black, so every image runs one grade and lifts it on hover.
 */
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")"
-
 // ─── Text helpers ────────────────────────────────────────────────────────────
 
 /** Strips the markdown that survives in summaries pulled from MDX bodies. */
@@ -94,49 +92,14 @@ function metaLine(parts: (string | null | undefined)[]): string {
 
 // ─── Artwork ─────────────────────────────────────────────────────────────────
 
-/*
-  Graded artwork. Austin types the title into the art itself, so nothing is
-  ever laid over it. Every label sits below the frame.
-*/
-function Artwork({ src, priority = false }: { src: string | null; priority?: boolean }) {
+/* Thin wrapper over the shared grade, adding this surface's hover lift. */
+function Artwork({ src, title }: { src: string | null; title: string }) {
   return (
-    <div
-      className="relative overflow-hidden rounded-[3px] transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-[0_22px_50px_rgba(0,0,0,0.55)] group-focus-visible:-translate-y-1.5"
-      style={{ aspectRatio: '16/9', background: GRAPHITE }}
-    >
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt=""
-          loading={priority ? 'eager' : 'lazy'}
-          className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
-        />
-      ) : (
-        <span aria-hidden className="section-pattern absolute inset-0" />
-      )}
-
-      <span
-        aria-hidden
-        className="absolute inset-0 transition-opacity duration-[600ms] group-hover:opacity-0"
-        style={{ background: 'rgba(44,48,47,0.20)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-30 mix-blend-color transition-opacity duration-[600ms] group-hover:opacity-0"
-        style={{ background: 'var(--awd-accent-2)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0"
-        style={{ background: 'radial-gradient(120% 100% at 50% 40%, transparent 45%, rgba(23,25,24,0.5) 100%)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-20 mix-blend-overlay"
-        style={{ backgroundImage: GRAIN }}
-      />
-    </div>
+    <SharedArtwork
+      src={src}
+      title={title}
+      className="transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-[0_22px_50px_rgba(0,0,0,0.55)] group-focus-visible:-translate-y-1.5"
+    />
   )
 }
 
@@ -317,7 +280,7 @@ export function PieceCard({
 
   return (
     <Link href={piece.href} className="group block outline-none">
-      <Artwork src={piece.artwork} priority={priority} />
+      <Artwork src={piece.artwork} title={piece.title} />
 
       {kicker && (
         <p
@@ -370,7 +333,7 @@ export function PieceRow({ piece, priority = false }: { piece: Piece; priority?:
   return (
     <Link href={piece.href} className="group flex flex-col gap-6 outline-none md:flex-row md:gap-9">
       <div className="w-full shrink-0 md:w-[300px] lg:w-[360px]">
-        <Artwork src={piece.artwork} priority={priority} />
+        <Artwork src={piece.artwork} title={piece.title} />
       </div>
 
       <div className="min-w-0 flex-1 md:pt-1">

@@ -141,7 +141,7 @@ export default function ShowHero({ show }: { show: Show }) {
 
           {show.artwork && (
             <div className="group w-full shrink-0 lg:w-[24rem]">
-              <ArtFrame src={show.artwork} ratio="16/9" eager />
+              <ArtFrame src={show.artwork} title={show.name} ratio="16/9" />
             </div>
           )}
         </div>

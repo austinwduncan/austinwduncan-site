@@ -1,87 +1,32 @@
+import Artwork from '@/components/library/artwork'
 
 /*
-  Grade calibrated against the artwork, not assumed.
-
-  The original treatment assumed Austin's covers ran near white to near black
-  and needed flattening. Measuring all 272 of them says otherwise: the median
-  sits at 35 percent brightness and 133 are already below that. The old grade
-  then halved it to 18 percent, which pushed the darkest covers to near black.
-  "War with Iran" read as an empty card on the shelf.
-
-  So the brightness cut is gone and the graphite veil drops from 42 to 20
-  percent. Grayscale, the steel tint and the vignette stay, which is what keeps
-  a shelf reading as one set. Full colour still returns on hover.
+  The show page's frame. The grade itself lives in components/library/artwork,
+  which is the single definition; this only adds the lift on hover that a card
+  in a list wants and a hero backdrop does not.
 */
-/*
-  One graded artwork frame, the treatment every piece of art on the site runs
-  through.
-
-  Austin's artwork spans an enormous tonal range, from a nearly white Hebrews
-  cover to a nearly black Daniel one, and much of it has type baked into the
-  image. So two rules hold here: every frame gets the same grade so a page of
-  them reads as one set, and nothing is ever overlaid on the art itself. Labels
-  live below the frame, where they cannot collide with typography inside the
-  picture.
-
-  This mirrors components/browse/channel-card.tsx deliberately. It is a server
-  component because the whole effect is CSS hover on an ancestor marked
-  `group`, so no client runtime is needed.
-*/
-
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")"
 
 export default function ArtFrame({
   src,
+  title,
   ratio = '16/9',
   rounded = '3px',
   className = '',
-  eager = false,
 }: {
   src?: string | null
+  /** Used for the title card when a piece has no artwork. */
+  title: string
   ratio?: string
   rounded?: string
   className?: string
-  eager?: boolean
 }) {
   return (
-    <div
-      className={`relative overflow-hidden transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_22px_50px_rgba(0,0,0,0.55)] ${className}`}
-      style={{ aspectRatio: ratio, borderRadius: rounded, background: 'var(--awd-graphite)' }}
-    >
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt=""
-          loading={eager ? 'eager' : 'lazy'}
-          className="h-full w-full scale-[1.04] object-cover grayscale contrast-[0.88] transition-all duration-[600ms] ease-out group-hover:scale-[1.09] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100"
-        />
-      ) : (
-        <span aria-hidden className="section-pattern absolute inset-0" />
-      )}
-
-      {/* Grade layers, all lifting together on hover. */}
-      <span
-        aria-hidden
-        className="absolute inset-0 transition-opacity duration-[600ms] group-hover:opacity-0"
-        style={{ background: 'rgba(44,48,47,0.20)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-30 mix-blend-color transition-opacity duration-[600ms] group-hover:opacity-0"
-        style={{ background: 'var(--awd-accent-2)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0"
-        style={{ background: 'radial-gradient(120% 100% at 50% 40%, transparent 45%, rgba(23,25,24,0.5) 100%)' }}
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-20 mix-blend-overlay"
-        style={{ backgroundImage: GRAIN }}
-      />
-    </div>
+    <Artwork
+      src={src ?? null}
+      title={title}
+      aspect={ratio}
+      className={`transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_22px_50px_rgba(0,0,0,0.55)] ${className}`}
+      style={{ borderRadius: rounded }}
+    />
   )
 }

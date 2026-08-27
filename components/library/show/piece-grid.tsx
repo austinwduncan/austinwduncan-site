@@ -36,7 +36,7 @@ function Feature({ piece }: { piece: Piece }) {
   return (
     <Link href={piece.href} className="group mb-16 flex flex-col gap-8 lg:flex-row lg:gap-12">
       <div className="w-full shrink-0 lg:w-[34rem]">
-        <ArtFrame src={piece.artwork} ratio="16/9" eager />
+        <ArtFrame src={piece.artwork} title={piece.title} ratio="16/9" />
       </div>
 
       <div className="min-w-0 flex-1 lg:pt-2">
@@ -82,7 +82,7 @@ function Card({ piece }: { piece: Piece }) {
 
   return (
     <Link href={piece.href} className="group block min-w-0">
-      <ArtFrame src={piece.artwork} ratio="16/9" />
+      <ArtFrame src={piece.artwork} title={piece.title} ratio="16/9" />
 
       {label && (
         <p

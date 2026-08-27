@@ -34,7 +34,7 @@ function EpisodeRow({ piece, first }: { piece: Piece; first: boolean }) {
       style={{ borderColor: 'rgba(238,234,225,0.08)' }}
     >
       <div className="w-full shrink-0 sm:w-[15rem] lg:w-[17rem]">
-        <ArtFrame src={piece.artwork} ratio="16/9" />
+        <ArtFrame src={piece.artwork} title={piece.title} ratio="16/9" />
       </div>
 
       <div className="min-w-0 flex-1 sm:pt-1">
