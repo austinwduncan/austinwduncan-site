@@ -65,7 +65,7 @@ function Ground({ covers, video, active }: { covers: string[]; video?: string | 
             slide into instead of an edge appearing.
           */
           style={{
-            transform: active ? 'scale(1.16) translateX(7%)' : 'scale(1.16) translateX(0%)',
+            transform: active ? 'scale(1.28) translateX(11%)' : 'scale(1.28) translateX(0%)',
             transition: 'transform 720ms cubic-bezier(0.16, 1, 0.3, 1)',
             willChange: 'transform',
           }}
@@ -98,7 +98,7 @@ function Ground({ covers, video, active }: { covers: string[]; video?: string | 
         className="h-full w-full object-cover"
         style={{
           objectPosition: '50% 34%',
-          transform: active ? 'scale(1.16) translateX(7%)' : 'scale(1.16) translateX(0%)',
+          transform: active ? 'scale(1.28) translateX(11%)' : 'scale(1.28) translateX(0%)',
           transition: 'transform 720ms cubic-bezier(0.16, 1, 0.3, 1)',
           willChange: 'transform',
         }}
