@@ -160,7 +160,13 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
           line, so all five channels clear the fold on a laptop. Clamped so it
           never collapses on a short window or stretches absurdly on a tall one.
         */
-        style={{ height: 'clamp(23rem, calc(100vh - 27rem), 34rem)' }}
+        /*
+          Gaps and padding turn one continuous filmstrip into five objects
+          sitting on the page. Nothing is coloured to tell them apart; the dark
+          ground showing between them does that work, which is why this survives
+          any future change to the footage.
+        */
+        style={{ height: 'clamp(23rem, calc(100vh - 27rem), 34rem)', gap: '0.85rem' }}
         onMouseLeave={() => setOpen(null)}
       >
         {channels.map(channel => {
@@ -172,12 +178,15 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
               href={channel.href}
               onMouseEnter={() => setOpen(channel.id)}
               onFocus={() => setOpen(channel.id)}
-              className="group/panel relative block min-w-0 overflow-hidden border-l outline-none first:border-l-0"
+              className="group/panel relative block min-w-0 overflow-hidden rounded-[4px] border outline-none"
               style={{
                 flexGrow: active ? 2.35 : 1,
                 flexBasis: 0,
-                borderColor: 'rgba(238,234,225,0.14)',
-                transition: 'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1)',
+                // A hairline frame, brighter on the open one so the choice is
+                // legible without anything moving or changing colour.
+                borderColor: active ? 'rgba(238,234,225,0.30)' : 'rgba(238,234,225,0.13)',
+                transition:
+                  'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1), border-color 420ms ease',
               }}
             >
               <Ground covers={channel.covers} video={channel.video} active={active} />
@@ -218,38 +227,6 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 the sentence and the button read as one block on solid footing
                 rather than four things floating over footage.
               */}
-              {/*
-                The channel's own colour, laid over its footage.
-
-                Every panel is Austin talking in a similar room, so without this
-                they read as one thing seen five times. The wash is multiplied
-                into the picture rather than laid on top of it, which tints the
-                footage instead of fogging it, and it is strongest at the foot
-                where the copy sits.
-              */}
-              {channel.accent && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0 transition-opacity duration-[620ms]"
-                  style={{
-                    opacity: active ? 0.78 : 0.62,
-                    mixBlendMode: 'multiply',
-                    background: `linear-gradient(165deg, ${channel.accent} 0%, ${channel.accent} 46%, #171918 100%)`,
-                  }}
-                />
-              )}
-              {channel.accent && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0 transition-opacity duration-[620ms]"
-                  style={{
-                    opacity: active ? 0.3 : 0.22,
-                    mixBlendMode: 'color',
-                    background: channel.accent,
-                  }}
-                />
-              )}
-
               <span
                 aria-hidden
                 className="absolute inset-x-0 bottom-0 transition-all duration-[620ms]"

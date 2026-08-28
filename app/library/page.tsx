@@ -145,52 +145,65 @@ export default async function LibraryHomePage() {
         Kept deliberately tight. Every line here pushes the wall down, and the
         whole point of the wall is that all five channels clear the fold.
       */}
-      <section className="px-6 pb-9 pt-[8.75rem] lg:px-10 lg:pb-11 lg:pt-[9.75rem]">
-        <div className="flex items-center gap-3">
-          <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
-          <span
-            className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
-            style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
+      {/*
+        Two columns on a wide screen: the name and its line on the left, the
+        paragraph that names all five avenues on the right.
+
+        Stacked, this header ran 462px of a 746px viewport and pushed the wall
+        off the fold on any short laptop. The wall clearing the fold is the
+        whole point of the wall, so the header earns its space sideways instead
+        of downwards.
+      */}
+      <section className="px-6 pb-8 pt-[7.5rem] lg:px-10 lg:pb-10 lg:pt-[8.25rem]">
+        <div className="flex flex-col gap-y-6 lg:flex-row lg:items-end lg:justify-between lg:gap-x-16">
+          <div className="min-w-0">
+            <div className="flex items-center gap-3">
+              <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
+              <span
+                className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
+                style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
+              >
+                {all.length} pieces
+              </span>
+            </div>
+
+            <h1
+              className="mt-4 uppercase"
+              style={{
+                fontFamily: HEADING,
+                fontWeight: 700,
+                fontSize: 'clamp(2rem, 4.2vw, 3.2rem)',
+                letterSpacing: '-0.02em',
+                lineHeight: 0.95,
+                color: 'var(--awd-bone)',
+              }}
+            >
+              The Library
+            </h1>
+
+            <p
+              className="mt-3 text-[1.02rem] lg:text-[1.1rem]"
+              style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-gold)' }}
+            >
+              Five avenues of teaching, gathered in one place.
+            </p>
+          </div>
+
+          <p
+            className="max-w-[34rem] text-[0.95rem] leading-relaxed lg:pb-1 lg:text-[0.99rem]"
+            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.7)' }}
           >
-            {all.length} pieces
-          </span>
+            Sunday preaching from the pulpit. Book studies worked verse by verse. Honest
+            answers to the questions people actually ask. Academic papers with the Greek and
+            Hebrew left in. And commentary on what is happening right now.
+          </p>
         </div>
-
-        <h1
-          className="mt-5 uppercase"
-          style={{
-            fontFamily: HEADING,
-            fontWeight: 700,
-            fontSize: 'clamp(2.1rem, 4.6vw, 3.5rem)',
-            letterSpacing: '-0.02em',
-            lineHeight: 0.95,
-            color: 'var(--awd-bone)',
-          }}
-        >
-          The Library
-        </h1>
-
-        <p
-          className="mt-4 text-[1.05rem] lg:text-[1.15rem]"
-          style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-gold)' }}
-        >
-          Five avenues of teaching, gathered in one place.
-        </p>
-
-        <p
-          className="mt-5 max-w-[52rem] text-[0.99rem] leading-relaxed lg:text-[1.04rem]"
-          style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.72)' }}
-        >
-          Sunday preaching from the pulpit. Book studies worked verse by verse. Honest
-          answers to the questions people actually ask. Academic papers with the Greek and
-          Hebrew left in. And commentary on what is happening right now. Start with
-          whichever one you came for.
-        </p>
       </section>
 
 
 
-      <section>
+
+      <section className="px-6 lg:px-10">
         <ChannelWall channels={wall} />
       </section>
 
