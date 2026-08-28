@@ -178,18 +178,36 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
               href={channel.href}
               onMouseEnter={() => setOpen(channel.id)}
               onFocus={() => setOpen(channel.id)}
-              className="group/panel relative block min-w-0 overflow-hidden rounded-[4px] border outline-none"
+              className="group/panel relative block min-w-0 overflow-hidden rounded-[4px] outline-none"
               style={{
                 flexGrow: active ? 2.35 : 1,
                 flexBasis: 0,
-                // A hairline frame, brighter on the open one so the choice is
-                // legible without anything moving or changing colour.
-                borderColor: active ? 'rgba(238,234,225,0.30)' : 'rgba(238,234,225,0.13)',
-                transition:
-                  'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1), border-color 420ms ease',
+                transition: 'flex-grow 620ms cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             >
               <Ground covers={channel.covers} video={channel.video} active={active} />
+
+              {/*
+                The frame, drawn as an overlay rather than a border, so it can
+                fade out toward the foot of the panel the way the footage does.
+                A border cannot carry a gradient; a masked overlay can, and a
+                mask keeps the rounded corners a border-image would lose.
+
+                The effect is that a panel has a defined top and shoulders and
+                then dissolves into the page, which reads as depth rather than
+                as five rectangles sitting on a background.
+              */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-[4px] border transition-colors duration-[420ms]"
+                style={{
+                  borderColor: active ? 'rgba(238,234,225,0.34)' : 'rgba(238,234,225,0.15)',
+                  maskImage:
+                    'linear-gradient(180deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 72%, transparent 96%)',
+                  WebkitMaskImage:
+                    'linear-gradient(180deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 72%, transparent 96%)',
+                }}
+              />
               <span
                 aria-hidden
                 className="absolute inset-0 transition-opacity duration-500"
