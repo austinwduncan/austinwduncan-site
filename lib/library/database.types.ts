@@ -45,6 +45,7 @@ export type CollectionRow = {
   artwork_url: string | null
   logo_url: string | null
   blurb: string | null
+  accent: string | null
   position: number
 }
 

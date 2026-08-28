@@ -121,6 +121,7 @@ export default async function LibraryHomePage() {
           : countLabel(show.slug, mine.length),
         covers: mine.map(p => p.artwork).filter(Boolean).slice(0, 4) as string[],
         video: CHANNEL_VIDEO[show.slug] ?? null,
+        accent: show.accent,
         count: mine.length,
       }
     })

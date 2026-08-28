@@ -34,6 +34,7 @@ export type WallChannel = {
   blurb: string | null
   meta: string
   href: string
+  accent: string | null
   covers: string[]
   /** A short muted loop for this channel's ground, in place of a cover. */
   video?: string | null
@@ -107,7 +108,7 @@ function Ground({ covers, video, active }: { covers: string[]; video?: string | 
   )
 }
 
-function Mark({ channel, small }: { channel: WallChannel; small?: boolean }) {
+function Mark({ channel, small, active }: { channel: WallChannel; small?: boolean; active?: boolean }) {
   if (channel.logo) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -116,8 +117,15 @@ function Mark({ channel, small }: { channel: WallChannel; small?: boolean }) {
         alt={channel.name}
         className="h-auto w-auto object-contain"
         style={{
-          maxWidth: small ? 'min(100%, 13rem)' : 'min(100%, 22rem)',
-          maxHeight: small ? '2.6rem' : '4.6rem',
+          maxWidth: small ? 'min(100%, 13rem)' : active ? 'min(100%, 17rem)' : 'min(100%, 22rem)',
+          /*
+            Shrinks on open. The panel can be as short as 22rem, and the stack
+            of mark, count, sentence and button needs more room than that once
+            the sentence appears. The brand giving up height is what pays for
+            the button being visible at all.
+          */
+          maxHeight: small ? '2.6rem' : active ? '3.1rem' : '4.6rem',
+          transition: 'max-height 620ms cubic-bezier(0.16, 1, 0.3, 1), max-width 620ms cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       />
     )
@@ -152,7 +160,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
           line, so all five channels clear the fold on a laptop. Clamped so it
           never collapses on a short window or stretches absurdly on a tall one.
         */
-        style={{ height: 'clamp(18rem, calc(100vh - 29rem), 34rem)' }}
+        style={{ height: 'clamp(23rem, calc(100vh - 27rem), 34rem)' }}
         onMouseLeave={() => setOpen(null)}
       >
         {channels.map(channel => {
@@ -210,6 +218,38 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 the sentence and the button read as one block on solid footing
                 rather than four things floating over footage.
               */}
+              {/*
+                The channel's own colour, laid over its footage.
+
+                Every panel is Austin talking in a similar room, so without this
+                they read as one thing seen five times. The wash is multiplied
+                into the picture rather than laid on top of it, which tints the
+                footage instead of fogging it, and it is strongest at the foot
+                where the copy sits.
+              */}
+              {channel.accent && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 transition-opacity duration-[620ms]"
+                  style={{
+                    opacity: active ? 0.78 : 0.62,
+                    mixBlendMode: 'multiply',
+                    background: `linear-gradient(165deg, ${channel.accent} 0%, ${channel.accent} 46%, #171918 100%)`,
+                  }}
+                />
+              )}
+              {channel.accent && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 transition-opacity duration-[620ms]"
+                  style={{
+                    opacity: active ? 0.3 : 0.22,
+                    mixBlendMode: 'color',
+                    background: channel.accent,
+                  }}
+                />
+              )}
+
               <span
                 aria-hidden
                 className="absolute inset-x-0 bottom-0 transition-all duration-[620ms]"
@@ -220,8 +260,8 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 }}
               />
 
-              <span className="relative flex h-full flex-col justify-end p-8 lg:p-9">
-                <Mark channel={channel} />
+              <span className="relative flex h-full flex-col justify-end p-7 lg:p-8">
+                <Mark channel={channel} active={active} />
 
                 <span
                   className="mt-5 block text-[0.66rem] font-semibold uppercase tracking-[0.18em]"
@@ -235,21 +275,21 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 <span
                   className="block overflow-hidden"
                   style={{
-                    maxHeight: active ? '18rem' : '0rem',
+                    maxHeight: active ? '15rem' : '0rem',
                     opacity: active ? 1 : 0,
                     transition: 'max-height 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms ease',
                   }}
                 >
                   {channel.blurb && (
                     <span
-                      className="mt-7 block max-w-[26rem] border-t pt-6 text-[0.95rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.82)', borderColor: 'rgba(238,234,225,0.18)' }}
+                      className="mt-5 block max-w-[26rem] text-[0.95rem] leading-relaxed"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.82)' }}
                     >
                       {channel.blurb}
                     </span>
                   )}
                   <span
-                    className="mt-7 inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em]"
+                    className="mt-5 inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em]"
                     style={{ fontFamily: HEADING, background: 'var(--awd-gold)', color: '#171918' }}
                   >
                     Open

@@ -82,6 +82,8 @@ export type Show = {
   logo: string | null
   /** One plain sentence saying what this channel is. */
   blurb: string | null
+  /** Hex wash for this channel, over video only. Never used as text. */
+  accent: string | null
   count: number
   seasons: Season[]
   /** Pieces in this show that belong to no season. */
