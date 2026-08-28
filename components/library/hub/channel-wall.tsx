@@ -203,11 +203,28 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 <span aria-hidden className="absolute inset-0" style={{ background: 'rgba(23,25,24,0.32)' }} />
               )}
 
-              <span className="relative flex h-full flex-col justify-end p-7">
+              {/*
+                A ground for the copy itself, rising from the foot of the panel.
+                The panel gradient and the left fade both sit behind the whole
+                frame; this one is sized to the stack, so the mark, the count,
+                the sentence and the button read as one block on solid footing
+                rather than four things floating over footage.
+              */}
+              <span
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 transition-all duration-[620ms]"
+                style={{
+                  height: active ? '78%' : '52%',
+                  background:
+                    'linear-gradient(180deg, transparent 0%, rgba(23,25,24,0.55) 34%, rgba(23,25,24,0.9) 66%, rgba(23,25,24,0.98) 100%)',
+                }}
+              />
+
+              <span className="relative flex h-full flex-col justify-end p-8 lg:p-9">
                 <Mark channel={channel} />
 
                 <span
-                  className="mt-4 block text-[0.66rem] font-semibold uppercase tracking-[0.18em]"
+                  className="mt-5 block text-[0.66rem] font-semibold uppercase tracking-[0.18em]"
                   style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
                 >
                   {channel.meta}
@@ -218,21 +235,21 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                 <span
                   className="block overflow-hidden"
                   style={{
-                    maxHeight: active ? '14rem' : '0rem',
+                    maxHeight: active ? '18rem' : '0rem',
                     opacity: active ? 1 : 0,
                     transition: 'max-height 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms ease',
                   }}
                 >
                   {channel.blurb && (
                     <span
-                      className="mt-5 block max-w-[26rem] text-[0.95rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.82)' }}
+                      className="mt-7 block max-w-[26rem] border-t pt-6 text-[0.95rem] leading-relaxed"
+                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.82)', borderColor: 'rgba(238,234,225,0.18)' }}
                     >
                       {channel.blurb}
                     </span>
                   )}
                   <span
-                    className="mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em]"
+                    className="mt-7 inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em]"
                     style={{ fontFamily: HEADING, background: 'var(--awd-gold)', color: '#171918' }}
                   >
                     Open
