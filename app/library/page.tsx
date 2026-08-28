@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { getPieces, getShows } from '@/lib/library/queries'
+import { getCanonCoverage, getPieces, getShows } from '@/lib/library/queries'
 import type { Piece, Show } from '@/lib/library/types'
 import ScrollReveal from '@/components/scroll-reveal'
 import ChannelWall, { type WallChannel } from '@/components/library/hub/channel-wall'
 import Row from '@/components/library/hub/row'
 import PieceCard from '@/components/library/hub/piece-card'
+import CanonMap from '@/components/library/hub/canon-map'
 import { kickerFor, toCard } from '@/components/library/hub/cards'
 
 /*
@@ -71,7 +72,11 @@ function countLabel(slug: string, n: number): string {
 }
 
 export default async function LibraryHomePage() {
-  const [all, shows] = await Promise.all([getPieces({ sort: 'newest' }), getShows()])
+  const [all, shows, canon] = await Promise.all([
+    getPieces({ sort: 'newest' }),
+    getShows(),
+    getCanonCoverage(),
+  ])
 
   if (!all.length) {
     return (
@@ -238,27 +243,24 @@ export default async function LibraryHomePage() {
 
 
       <section
-        className="border-t px-6 py-16 lg:px-10 lg:py-20"
+        className="border-t px-6 py-20 lg:px-10 lg:py-24"
         style={{ borderColor: 'rgba(238,234,225,0.12)' }}
       >
-        <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-          <Link
-            href={BROWSE}
-            className="group/all inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
-            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
-          >
-            Browse all {all.length} pieces
-            <ArrowRight size={14} className="transition-transform duration-200 group-hover/all:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/scripture"
-            className="group/scr inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
-            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
-          >
-            Browse by Scripture
-            <ArrowRight size={14} className="transition-transform duration-200 group-hover/scr:translate-x-0.5" />
-          </Link>
-        </div>
+        <CanonMap books={canon} />
+      </section>
+
+      <section
+        className="border-t px-6 py-12 lg:px-10 lg:py-14"
+        style={{ borderColor: 'rgba(238,234,225,0.12)' }}
+      >
+        <Link
+          href={BROWSE}
+          className="group/all inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-[var(--awd-gold)]"
+          style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
+        >
+          Browse all {all.length} pieces
+          <ArrowRight size={14} className="transition-transform duration-200 group-hover/all:translate-x-0.5" />
+        </Link>
       </section>
     </div>
   )

@@ -405,6 +405,64 @@ export const getShow = cache(async (slug: string): Promise<Show | null> => {
   return shows.find(s => s.slug === slug) ?? null
 })
 
+// ─── Canon coverage ──────────────────────────────────────────────────────────
+
+export type BookCoverage = {
+  name: string
+  abbreviation: string
+  slug: string
+  testament: 'OT' | 'NT'
+  chapterCount: number
+  /** Distinct chapters with at least one direct reference. */
+  taught: number
+}
+
+/*
+  How much of the canon has actually been taught.
+
+  Counts distinct chapters rather than references, so a book worked through
+  once weighs the same as a book quoted forty times in passing. Sweeps are
+  excluded for the same reason they are excluded everywhere else: a piece
+  tagged Psalms 1-150 is a gesture at the book, not teaching on every psalm.
+*/
+export const getCanonCoverage = cache(async (): Promise<BookCoverage[]> => {
+  const tax = await getTaxonomy()
+
+  const rows: { book_id: number; chapter_start: number; chapter_end: number | null }[] = []
+  for (let from = 0; ; from += PAGE) {
+    const page = await resilient('canon coverage', async () => {
+      const { data, error } = await library
+        .from('scripture_references')
+        .select('book_id, chapter_start, chapter_end')
+        .eq('is_sweep', false)
+        .range(from, from + PAGE - 1)
+      if (error) throw new Error(error.message)
+      return data ?? []
+    })
+    rows.push(...page)
+    if (page.length < PAGE) break
+  }
+
+  const chapters = new Map<number, Set<number>>()
+  for (const r of rows) {
+    const book = tax.books.find(b => b.id === r.book_id)
+    if (!book) continue
+    const set = chapters.get(r.book_id) ?? new Set<number>()
+    const to = Math.min(book.chapter_count, r.chapter_end ?? r.chapter_start)
+    for (let c = Math.max(1, r.chapter_start); c <= to; c++) set.add(c)
+    chapters.set(r.book_id, set)
+  }
+
+  return tax.books.map(b => ({
+    name: b.name,
+    abbreviation: b.abbreviation ?? b.name.slice(0, 4),
+    slug: b.slug,
+    testament: b.testament === 'OT' ? 'OT' : 'NT',
+    chapterCount: b.chapter_count,
+    taught: chapters.get(b.id)?.size ?? 0,
+  }))
+})
+
 // ─── Related ─────────────────────────────────────────────────────────────────
 
 /** Nearest neighbours by shared topics, then shared scripture. */
