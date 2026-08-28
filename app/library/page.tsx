@@ -151,34 +151,44 @@ export default async function LibraryHomePage() {
         whole point of the wall is that all five channels clear the fold.
       */}
       {/*
-        No headline.
+        Centred title and a paragraph that says what each property is, so a
+        reader knows what the five marks below mean before they meet them.
 
-        Three versions of this page led with a big sentence over the channels,
-        and every one of them competed with the five wordmarks sitting directly
-        beneath it. The wall is the hero. A sentence about the wall is not.
-
-        So the top is one line of orientation, and the roughly two hundred
-        pixels the old header ate go to the channels instead. The counts move
-        below the wall, where they belong to the canon map rather than to a
-        masthead.
+        No counts here. The scale of the thing belongs to the canon map further
+        down the page; up here the only job is telling someone what these five
+        shows are so they can pick one.
       */}
-      <section className="px-6 pb-7 pt-[7.25rem] lg:px-10 lg:pb-8 lg:pt-[7.75rem]">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
-          <h1
-            className="text-[0.78rem] font-semibold uppercase tracking-[0.22em]"
-            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
-          >
-            Pick where you want to grow
-          </h1>
-          <span
-            className="text-[0.72rem] tracking-[0.02em]"
-            style={{ fontFamily: HEADING, fontWeight: 400, color: 'var(--awd-stone)' }}
-          >
-            {all.length} pieces across five properties
-          </span>
-        </div>
+      <section className="px-6 pb-9 pt-[7rem] text-center lg:px-10 lg:pb-10 lg:pt-[7.25rem]">
+        <h1
+          className="uppercase"
+          style={{
+            fontFamily: HEADING,
+            fontWeight: 700,
+            fontSize: 'clamp(2.4rem, 6vw, 4.6rem)',
+            letterSpacing: '-0.025em',
+            lineHeight: 0.92,
+            color: 'var(--awd-bone)',
+          }}
+        >
+          Teaching
+        </h1>
+
+        <p
+          className="mx-auto mt-7 max-w-[70rem] text-[0.98rem] leading-relaxed lg:text-[1.02rem]"
+          style={{ fontFamily: HEADING, fontWeight: 400, color: 'rgba(238,234,225,0.7)' }}
+        >
+          <span style={{ color: 'var(--awd-bone)' }}>Sermons</span> are the messages preached on
+          Sunday at Crosswalk. <span style={{ color: 'var(--awd-bone)' }}>In the Text</span> works
+          through a book of the Bible, or a doctrine traced from end to end, verse by verse and in
+          order. <span style={{ color: 'var(--awd-bone)' }}>Word for Word</span> takes one honest
+          question an episode, the hard ones people actually ask, and answers them from Scripture
+          rather than around it. <span style={{ color: 'var(--awd-bone)' }}>Exegetica</span> is the
+          academic work, full length papers with the Greek and Hebrew left in and the sources
+          cited. <span style={{ color: 'var(--awd-bone)' }}>Forum and Pulpit</span> is what
+          Scripture says about what is happening right now, written in the week the news broke.
+        </p>
       </section>
+
 
 
 

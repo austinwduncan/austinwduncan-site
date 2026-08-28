@@ -171,7 +171,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
           Floor raised from 23rem and the viewport subtraction cut from 27rem,
           which is what the one line header no longer needs.
         */
-        style={{ height: 'clamp(28rem, calc(100vh - 15rem), 44rem)', gap: '0.85rem' }}
+        style={{ height: 'clamp(24rem, calc(100vh - 27.5rem), 40rem)', gap: '0.85rem' }}
         onMouseLeave={() => setOpen(null)}
       >
         {channels.map(channel => {
