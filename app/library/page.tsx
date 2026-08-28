@@ -151,79 +151,35 @@ export default async function LibraryHomePage() {
         whole point of the wall is that all five channels clear the fold.
       */}
       {/*
-        The header leads with what the place is, not what it is called.
+        No headline.
 
-        It used to headline THE LIBRARY, which the nav already says two inches
-        above it, and then explain itself in a paragraph. The name is demoted to
-        an eyebrow and the counts do the work instead, because the scale is the
-        point and a number states it faster than a sentence can.
+        Three versions of this page led with a big sentence over the channels,
+        and every one of them competed with the five wordmarks sitting directly
+        beneath it. The wall is the hero. A sentence about the wall is not.
 
-        Everything here is CMG Sans. There is no serif anywhere on this site.
+        So the top is one line of orientation, and the roughly two hundred
+        pixels the old header ate go to the channels instead. The counts move
+        below the wall, where they belong to the canon map rather than to a
+        masthead.
       */}
-      <section className="px-6 pb-9 pt-[7.5rem] lg:px-10 lg:pb-11 lg:pt-[8.25rem]">
-        <div className="flex items-center gap-3">
+      <section className="px-6 pb-7 pt-[7.25rem] lg:px-10 lg:pb-8 lg:pt-[7.75rem]">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
           <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
-          <span
-            className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
-            style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
+          <h1
+            className="text-[0.78rem] font-semibold uppercase tracking-[0.22em]"
+            style={{ fontFamily: HEADING, color: 'var(--awd-bone)' }}
           >
-            The Library
+            Pick where you want to grow
+          </h1>
+          <span
+            className="text-[0.72rem] tracking-[0.02em]"
+            style={{ fontFamily: HEADING, fontWeight: 400, color: 'var(--awd-stone)' }}
+          >
+            {all.length} pieces across five properties
           </span>
         </div>
-
-        <div className="mt-6 flex flex-col gap-y-8 lg:flex-row lg:items-end lg:justify-between lg:gap-x-20">
-          <h1
-            className="min-w-0 max-w-[20ch] uppercase"
-            style={{
-              fontFamily: HEADING,
-              fontWeight: 700,
-              fontSize: 'clamp(2.1rem, 4.8vw, 3.7rem)',
-              letterSpacing: '-0.025em',
-              lineHeight: 0.94,
-              color: 'var(--awd-bone)',
-            }}
-          >
-            Everything I have taught, in one place
-          </h1>
-
-          <p
-            className="max-w-[30rem] text-[0.95rem] leading-relaxed lg:pb-2"
-            style={{ fontFamily: HEADING, fontWeight: 400, color: 'rgba(238,234,225,0.66)' }}
-          >
-            Five properties. Sunday preaching, book studies worked verse by verse, honest
-            answers to hard questions, academic papers, and commentary on what is happening
-            now.
-          </p>
-        </div>
-
-        {/*
-          The counts, set the way the canon map sets them, so the two sections
-          of this page speak with one voice.
-        */}
-        <dl className="mt-11 flex flex-wrap gap-x-12 gap-y-5">
-          {([
-            [String(all.length), 'pieces'],
-            [String(wall.length), 'properties'],
-            [`${canon.filter(b => b.taught > 0).length} of ${canon.length}`, 'books of the Bible'],
-            [String(canon.reduce((n, b) => n + b.taught, 0)), 'chapters taught'],
-          ] as [string, string][]).map(([value, label]) => (
-            <div key={label}>
-              <dt
-                className="text-[1.5rem] leading-none lg:text-[1.8rem]"
-                style={{ fontFamily: HEADING, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--awd-gold)' }}
-              >
-                {value}
-              </dt>
-              <dd
-                className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em]"
-                style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
-              >
-                {label}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </section>
+
 
 
 

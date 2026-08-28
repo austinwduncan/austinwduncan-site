@@ -166,7 +166,12 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
           ground showing between them does that work, which is why this survives
           any future change to the footage.
         */
-        style={{ height: 'clamp(23rem, calc(100vh - 27rem), 34rem)', gap: '0.85rem' }}
+        /*
+          The wall is the page now, so it takes the height the header used to.
+          Floor raised from 23rem and the viewport subtraction cut from 27rem,
+          which is what the one line header no longer needs.
+        */
+        style={{ height: 'clamp(28rem, calc(100vh - 15rem), 44rem)', gap: '0.85rem' }}
         onMouseLeave={() => setOpen(null)}
       >
         {channels.map(channel => {
