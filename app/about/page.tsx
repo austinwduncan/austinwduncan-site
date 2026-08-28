@@ -66,7 +66,7 @@ export default function AboutPage() {
 
               <div
                 className="space-y-6 text-[1rem] leading-[1.9]"
-                style={{ fontFamily: 'var(--font-source-serif)', color: '#1A1714' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#1A1714' }}
               >
                 <p className="text-[1.1rem] leading-[1.85]" style={{ color: '#2A2420' }}>
                   Austin is the Associate Pastor of Crosswalk Church in Brentwood, TN — a church
@@ -86,7 +86,7 @@ export default function AboutPage() {
               <blockquote
                 className="mt-10 pl-5 text-[0.97rem] leading-[1.85] italic"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   color: '#5A544C',
                   borderLeft: '2.5px solid #CDB079',
                 }}
@@ -109,7 +109,7 @@ export default function AboutPage() {
           <blockquote
             className="leading-[1.2]"
             style={{
-              fontFamily: 'var(--font-source-serif), Georgia, serif',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
               fontWeight: 300,
               fontStyle: 'italic',
@@ -157,7 +157,7 @@ export default function AboutPage() {
                 >
                   {m.title}
                 </div>
-                <p className="text-[0.84rem] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}>
+                <p className="text-[0.84rem] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}>
                   {m.body}
                 </p>
                 <p className="text-[0.68rem] italic" style={{ color: '#6E5A2E' }}>
@@ -205,7 +205,7 @@ export default function AboutPage() {
                   {d.degree}
                 </p>
                 {d.focus && (
-                  <p className="text-[0.82rem] italic" style={{ fontFamily: 'var(--font-source-serif)', color: '#7A6F65' }}>
+                  <p className="text-[0.82rem] italic" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#7A6F65' }}>
                     {d.focus}
                   </p>
                 )}
@@ -271,7 +271,7 @@ export default function AboutPage() {
                   </h3>
                   <p
                     className="mt-3 text-[0.87rem] leading-relaxed"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(249,246,240,0.38)' }}
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(249,246,240,0.38)' }}
                   >
                     {card.desc}
                   </p>

@@ -162,7 +162,7 @@ export default function ExegeticaArticleLayout({
                 </div>
                 <p
                   className="text-[0.93rem] leading-[1.9]"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C', fontStyle: 'italic' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C', fontStyle: 'italic' }}
                 >
                   {abstract}
                 </p>

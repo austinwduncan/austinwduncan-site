@@ -23,7 +23,7 @@ export const STEEL = '#748790'
 export const GOLD_ON_LIGHT = '#6E5A2E'
 
 export const HEADING = 'var(--font-cmg), system-ui, sans-serif'
-export const SERIF = 'var(--font-source-serif), Georgia, serif'
+export const SERIF = 'var(--font-cmg), system-ui, sans-serif'
 
 const HEADING_SIZES = {
   xs: 'clamp(0.95rem, 1.1vw, 1.05rem)',

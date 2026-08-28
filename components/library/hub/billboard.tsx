@@ -114,7 +114,7 @@ export default function Billboard({
           {blurb && (
             <p
               className="mt-6 line-clamp-3 max-w-[38rem] text-[1.02rem] leading-relaxed"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.76)' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.76)' }}
             >
               {blurb}
             </p>

@@ -267,7 +267,7 @@ export default async function LibraryBrowsePage({
               </h1>
               <p
                 className="mt-3 max-w-[46ch] text-[0.9rem] italic leading-relaxed"
-                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.42)' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.42)' }}
               >
                 One collection, entered any way you like. Narrow by collection, format,
                 depth, topic, doctrine or a word in the title.
@@ -350,7 +350,7 @@ export default async function LibraryBrowsePage({
                 </p>
                 <p
                   className="mx-auto mt-4 max-w-[52ch] text-[1rem] leading-relaxed"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.72)' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.72)' }}
                 >
                   {chips.length
                     ? `Nothing in the Library matches ${chips.map(c => `${c.label} ${c.value}`).join(' and ')}.`

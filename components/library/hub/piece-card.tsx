@@ -54,7 +54,7 @@ export default function PieceCard({ card }: { card: HubCard }) {
         {card.blurb && (
         <span
         className="mb-3 line-clamp-2 block text-[0.78rem] leading-snug"
-        style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.8)' }}
         >
         {card.blurb}
         </span>

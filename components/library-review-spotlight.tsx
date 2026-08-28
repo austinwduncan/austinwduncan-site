@@ -106,7 +106,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
               aria-hidden
               className="absolute -top-4 -left-3 select-none pointer-events-none"
               style={{
-                fontFamily: 'var(--font-source-serif), Georgia, serif',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontSize: '9rem',
                 lineHeight: 1,
                 color: '#C9984A',
@@ -120,7 +120,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
             <blockquote
               className="leading-[1.65] mb-8 relative z-10"
               style={{
-                fontFamily: 'var(--font-source-serif), Georgia, serif',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 fontStyle: 'italic',
                 fontWeight: 400,
                 fontSize: 'clamp(1.45rem, 2.2vw, 1.9rem)',
@@ -135,7 +135,7 @@ export function LibraryReviewSpotlight({ reviews }: { reviews: ReviewItem[] }) {
               <div className="w-8 h-px" style={{ background: '#CDB079' }} />
               <p
                 className="text-[0.72rem] tracking-[0.04em]"
-                style={{ fontFamily: 'var(--font-source-serif)', color: '#6A5E52', fontStyle: 'italic' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#6A5E52', fontStyle: 'italic' }}
               >
                 Austin Duncan, on{' '}
                 <em style={{ fontStyle: 'normal', color: '#3A2E24' }}>{review.book}</em>

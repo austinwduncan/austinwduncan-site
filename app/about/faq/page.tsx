@@ -108,7 +108,7 @@ export default function FAQPage() {
                   <p
                     className="text-[0.95rem] leading-relaxed"
                     style={{
-                      fontFamily: 'var(--font-source-serif)',
+                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       color: '#5A544C',
                     }}
                   >

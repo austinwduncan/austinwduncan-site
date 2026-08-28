@@ -278,7 +278,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
                   {channel.blurb && (
                     <span
                       className="mt-5 block max-w-[26rem] text-[0.95rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.82)' }}
+                      style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.82)' }}
                     >
                       {channel.blurb}
                     </span>
@@ -317,7 +317,7 @@ export default function ChannelWall({ channels }: { channels: WallChannel[] }) {
               {channel.blurb && (
                 <span
                   className="mt-4 block text-[0.95rem] leading-relaxed"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.8)' }}
                 >
                   {channel.blurb}
                 </span>

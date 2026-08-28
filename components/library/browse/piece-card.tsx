@@ -113,7 +113,7 @@ export default function BrowsePieceCard({ piece }: { piece: Piece }) {
       {blurb && (
         <p
           className="mt-1.5 line-clamp-2 text-[0.8rem] leading-snug"
-          style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.62)' }}
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.62)' }}
         >
           {blurb}
         </p>

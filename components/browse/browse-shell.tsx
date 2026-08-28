@@ -189,7 +189,7 @@ export default function BrowseShell({
                 </h1>
                 {billboard.blurb && (
                   <p className="mt-4 line-clamp-2 text-[1rem] leading-relaxed"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.76)' }}>
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.76)' }}>
                     {billboard.blurb}
                   </p>
                 )}
@@ -267,7 +267,7 @@ export default function BrowseShell({
                 <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
               <p className="mt-2 text-[0.78rem] leading-relaxed"
-                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.35)' }}>
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.35)' }}>
                 793 books. Not my work, but the books behind it.
               </p>
             </div>
@@ -289,7 +289,7 @@ export default function BrowseShell({
                   </span>
                 </h2>
                 <p className="mt-2.5 max-w-xl text-[0.95rem] leading-relaxed"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.6)' }}>
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.6)' }}>
                   {active === 'all'
                     ? 'The newest thing from every channel, most recent first.'
                     : current?.blurb}

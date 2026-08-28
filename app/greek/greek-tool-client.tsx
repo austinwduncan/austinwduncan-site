@@ -29,7 +29,7 @@ export default function GreekToolClient() {
           rows={4}
           className="w-full resize-y px-4 py-3 text-[1rem] outline-none transition-colors"
           style={{
-            fontFamily: 'var(--font-source-serif)',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             background: '#fff',
             border: '1px solid #E2DACE',
             color: '#1A1714',
@@ -56,7 +56,7 @@ export default function GreekToolClient() {
           {!wasmReady && (
             <span
               className="text-[0.68rem]"
-              style={{ fontFamily: 'var(--font-source-serif)', color: '#C8BFA8', fontStyle: 'italic' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#C8BFA8', fontStyle: 'italic' }}
             >
               Loading morphology database…
             </span>
@@ -70,7 +70,7 @@ export default function GreekToolClient() {
         style={{
           background: '#fff',
           border: '1px solid #E2DACE',
-          fontFamily: 'var(--font-source-serif)',
+          fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
           color: '#1A1714',
         }}
@@ -105,7 +105,7 @@ export default function GreekToolClient() {
       {/* Instructions */}
       <p
         className="mt-4 text-[0.75rem] leading-[1.7]"
-        style={{ fontFamily: 'var(--font-source-serif)', color: '#C8BFA8' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#C8BFA8' }}
       >
         Hover to preview · Click to pin open · Click again or press Escape to dismiss.
         Data: MorphGNT (SBL Greek NT) + Dodson NT Lexicon.

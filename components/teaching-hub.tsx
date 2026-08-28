@@ -83,7 +83,7 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
           <div className="py-7">
             <p
               className="text-[0.97rem] leading-[1.7] max-w-[580px]"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
             >
               <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.72)' }}>
                 Verse-by-verse Bible studies and theological series
@@ -147,7 +147,7 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                 <span
                   className="text-[0.83rem] leading-snug"
                   style={{
-                    fontFamily: 'var(--font-source-serif)',
+                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     color: activeIntent === id ? '#7A5C1E' : '#5A544C',
                   }}
                 >
@@ -185,7 +185,7 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                   </h3>
                   <p
                     className="text-[0.9rem] leading-[1.7] mb-5"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
                   >
                     {recommended.meta.whyStudy}
                   </p>
@@ -223,7 +223,7 @@ export default function TeachingHub({ allSeries }: { allSeries: SeriesWithSessio
                         </span>
                         <span
                           className="text-[0.78rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
-                          style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                          style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                         >
                           {s.title}
                         </span>
@@ -310,7 +310,7 @@ function LaneSection({
       </div>
       <p
         className="text-[0.88rem] leading-relaxed mb-8"
-        style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', fontStyle: 'italic' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189', fontStyle: 'italic' }}
       >
         {description}
       </p>
@@ -381,14 +381,14 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
 
           <p
             className="text-[0.92rem] leading-[1.7] mb-4"
-            style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
           >
             {meta.whyStudy}
           </p>
 
           <p
             className="text-[0.85rem] leading-[1.65] mb-5 pl-3 border-l-2 italic"
-            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', borderColor: '#C8A96A' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189', borderColor: '#C8A96A' }}
           >
             {meta.bestFor[0]}
           </p>
@@ -440,7 +440,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span style={{ fontFamily: 'var(--font-source-serif)' }}>{outcome}</span>
+                <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>{outcome}</span>
               </div>
             ))}
           </div>
@@ -467,7 +467,7 @@ function SeriesCard({ meta, sessions }: { meta: SeriesMetadata; sessions: Sessio
                 </span>
                 <span
                   className="text-[0.8rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
-                  style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                  style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                 >
                   {session.title}
                 </span>

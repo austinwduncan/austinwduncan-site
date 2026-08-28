@@ -58,7 +58,7 @@ export function AboutBioHeadshot() {
         </p>
         <p
           style={{
-            fontFamily: 'var(--font-source-serif), Georgia, serif',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: '1.25rem',
             color: '#1A1714',
           }}

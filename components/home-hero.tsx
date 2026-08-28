@@ -132,7 +132,7 @@ export default function HomeHero({
         <p
           className="leading-[1.72] mb-10 max-w-[520px]"
           style={{
-            fontFamily: 'var(--font-source-serif)',
+            fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: 'clamp(0.92rem, 1.4vw, 1.05rem)',
             color: 'rgba(255,255,255,0.42)',
           }}

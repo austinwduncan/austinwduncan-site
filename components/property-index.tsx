@@ -31,7 +31,7 @@ import type { Piece } from '@/lib/library/types'
 */
 
 export const HEADING = 'var(--font-cmg), system-ui, sans-serif'
-export const SERIF = 'var(--font-source-serif), Georgia, serif'
+export const SERIF = 'var(--font-cmg), system-ui, sans-serif'
 
 const BLACK = '#171918'
 const GRAPHITE = '#2C302F'

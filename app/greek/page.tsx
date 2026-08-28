@@ -35,7 +35,7 @@ export default function GreekToolPage() {
           <p
             className="leading-[1.72] max-w-[560px]"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '0.95rem',
               color: '#5A544C',
             }}

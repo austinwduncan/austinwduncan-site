@@ -28,11 +28,16 @@ If a change makes the page feel like a magazine or a blog, it is wrong.
 
 These were each learned the expensive way. Breaking them is a regression.
 
-### 1. Headings are never serif
+### 1. There is no serif anywhere
 
-Every heading is **CMG Sans**, which is Montserrat (see below), via
-`--font-cmg`. Body copy is Source Serif. This is not a preference to be
+Every word on this site is **CMG Sans**, which is Montserrat (see below), via
+`--font-cmg`. Headings, body copy, article prose, metadata, all of it. Source
+Serif is no longer loaded and Cormorant is gone. This is not a preference to be
 re-litigated.
+
+Reading text needs different settings from display text: weight 400, leading
+near 1.72, and **letter-spacing 0**. The negative tracking display sizes need
+makes a paragraph cramped.
 
 `app/page.tsx` routes every heading through a single `Heading` component and
 names the typeface in exactly one constant, so it cannot drift. Do the same in
@@ -53,7 +58,13 @@ commit messages. Rewrite the sentence instead.
 Currently clean: `app/page.tsx`, `app/browse/`, nav, footer, metadata.
 Still dirty: MDX article bodies (~9,000) and `data/teaching-series.ts` (33).
 
-### 3. Swapping an asset is not permission to restyle
+### 3. Branding is Austin's call, never a reason to stall
+
+He owns the logos, the names and the visual identity, and he edits them as he
+sees fit. Raise a concern once if there is one, then build what was asked. Do
+not hold work back waiting on a branding decision.
+
+### 4. Swapping an asset is not permission to restyle
 
 When asked to change a photo or video, change the `src` and the framing. Do
 not move the layout around it. This has been asked for explicitly.

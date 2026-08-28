@@ -179,13 +179,13 @@ export default function SermonsGrid({
         <div className="text-center py-16">
           <div
             className="text-3xl font-light mb-2"
-            style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', color: '#9A9189' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
           >
             ∅
           </div>
           <p
             className="text-sm italic"
-            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
           >
             No sermons in this book yet — check back soon.
           </p>
@@ -298,7 +298,7 @@ function SermonCard({ sermon }: { sermon: SermonListItem }) {
         </h3>
         <p
           className="text-[0.84rem] leading-relaxed mb-3 line-clamp-3"
-          style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
         >
           {sermon.excerpt.replace(/\*\*/g, '')}
         </p>

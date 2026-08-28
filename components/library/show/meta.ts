@@ -11,7 +11,7 @@ import type { Piece } from '@/lib/library/types'
 */
 
 export const HEADING = 'var(--font-cmg), system-ui, sans-serif'
-export const BODY = 'var(--font-source-serif), Georgia, serif'
+export const BODY = 'var(--font-cmg), system-ui, sans-serif'
 
 /** "Episode 51", or null for a show that never numbered its pieces. */
 export function episodeLabel(piece: Piece): string | null {

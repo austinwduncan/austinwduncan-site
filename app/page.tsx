@@ -238,7 +238,7 @@ function Tile({
       </Heading>
       <p
         className="mt-3 text-[0.95rem] leading-relaxed"
-        style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.6)' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.6)' }}
       >
         {blurb}
       </p>
@@ -284,7 +284,7 @@ function SectionHead({
         <ScrollReveal delay={200}>
           <p
             className="mt-7 max-w-2xl text-[1.02rem] leading-[1.85]"
-            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.66)' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.66)' }}
           >
             {intro}
           </p>
@@ -307,7 +307,7 @@ function IndexRow({ piece, n }: { piece: Piece; n?: number }) {
       )}
       <span className="min-w-0 flex-1">
         <span className="block text-[0.98rem] leading-snug transition-colors group-hover:text-[var(--awd-gold)]"
-          style={{ fontFamily: 'var(--font-source-serif)', color: BONE }}>
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: BONE }}>
           {piece.title}
         </span>
         <span className="mt-1 block text-[0.72rem]" style={{ color: STONE }}>{piece.date}</span>
@@ -516,7 +516,7 @@ export default async function HomePage() {
                 {featured.frontmatter.excerpt && (
                   <ScrollReveal delay={160}>
                     <p className="mt-6 line-clamp-3 max-w-lg text-[1.02rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.78)' }}>
+                      style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.78)' }}>
                       {clean(featured.frontmatter.excerpt)}
                     </p>
                   </ScrollReveal>
@@ -705,7 +705,7 @@ export default async function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={150}>
               <p className="mt-8 max-w-lg text-[1.05rem] leading-[1.9]"
-                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}>
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.8)' }}>
                 My aim is simple: help you read Scripture carefully and understand
                 what you find, without pretending the hard parts are easy or the
                 easy parts are hard.
@@ -798,7 +798,7 @@ export default async function HomePage() {
           <ScrollReveal>
             <p
               className="mx-auto max-w-2xl text-[1.35rem] leading-[1.6] sm:text-[1.6rem]"
-              style={{ fontFamily: 'var(--font-source-serif)', fontStyle: 'italic', color: BONE }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontStyle: 'italic', color: BONE }}
             >
               &ldquo;So faith comes from hearing, and hearing through the word of Christ.&rdquo;
             </p>
@@ -895,7 +895,7 @@ export default async function HomePage() {
                     Pick a series and read it
                   </Heading>
                   <p className="mt-6 text-[1.02rem] leading-[1.85]"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.68)' }}>
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.68)' }}>
                     A single sermon helps. A book worked through end to end
                     changes how you read everything else.
                   </p>

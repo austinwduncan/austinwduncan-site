@@ -41,7 +41,7 @@ export default function ActiveFilters({
           </span>
           <span
             className="min-w-0 text-[0.78rem]"
-            style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-gold)' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'var(--awd-gold)' }}
           >
             {filter.value}
           </span>

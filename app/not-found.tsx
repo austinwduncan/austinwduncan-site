@@ -25,7 +25,7 @@ const STONE = '#AAA79E'
 const STEEL = '#748790'
 
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
-const SERIF = 'var(--font-source-serif), Georgia, serif'
+const SERIF = 'var(--font-cmg), system-ui, sans-serif'
 
 /** The ruled eyebrow, carried over from the Crosswalk visual language. */
 function Eyebrow({ children }: { children: React.ReactNode }) {

@@ -83,7 +83,7 @@ export function AboutHero() {
           <p
             className="aw-desc text-[1rem] leading-[1.8]"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontStyle: 'italic',
               color: 'rgba(249,246,240,0.45)',
             }}

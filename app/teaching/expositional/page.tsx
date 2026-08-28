@@ -105,7 +105,7 @@ export default async function ExpositionalPage() {
           <div className="py-7">
             <p
               className="text-[0.97rem] leading-[1.7] max-w-[580px]"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
             >
               <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.72)' }}>
                 Verse-by-verse studies working through individual books and collections of the Bible
@@ -151,7 +151,7 @@ export default async function ExpositionalPage() {
                 </p>
                 <p
                   className="text-[0.78rem] leading-snug"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
                 >
                   {meta.startHereNote}
                 </p>

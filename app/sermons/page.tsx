@@ -149,7 +149,7 @@ export default async function SermonsPage() {
           <div className="flex items-center justify-between gap-10">
             <p
               className="text-[0.97rem] leading-[1.7] italic max-w-[560px]"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.42)' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.42)' }}
             >
               <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.68)' }}>
                 Expository sermons preached verse by verse through books of the Bible.
@@ -208,7 +208,7 @@ export default async function SermonsPage() {
             <div className="flex-1 min-w-0">
               <p
                 className="text-[0.88rem] italic mb-3"
-                style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
               >
                 A good place to begin
               </p>
@@ -236,7 +236,7 @@ export default async function SermonsPage() {
               {startHere.excerpt && (
                 <p
                   className="text-[0.95rem] leading-[1.75] mb-5 line-clamp-4"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
                 >
                   {startHere.excerpt.replace(/\*\*/g, '')}
                 </p>
@@ -322,7 +322,7 @@ export default async function SermonsPage() {
                 {latest.excerpt && (
                   <p
                     className="text-[0.92rem] leading-[1.7] mb-4 line-clamp-2"
-                    style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.52)' }}
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.52)' }}
                   >
                     {latest.excerpt.replace(/\*\*/g, '')}
                   </p>

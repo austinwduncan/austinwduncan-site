@@ -144,15 +144,23 @@
 /* ── Article prose ─────────────────────────────────────────────────────────── */
 .article-prose {
   color: #1A1714;
-  font-family: var(--font-source-serif), Georgia, serif;
-  font-size: 1.09rem;
-  line-height: 1.78;
+  font-family: var(--font-cmg), system-ui, sans-serif;
+  /*
+    Tuned for a geometric sans rather than a serif. Montserrat sets wider per
+    character, so the body drops a little and the leading comes in from 1.78,
+    which was set for Source Serif and reads airy here. Tracking stays at zero:
+    the negative tracking that display sizes need makes reading text cramped.
+  */
+  font-size: 1.04rem;
+  line-height: 1.72;
+  letter-spacing: 0;
+  font-weight: 400;
   background-color: #FAFAF7;
 }
 
 /* Drop cap on the very first paragraph */
 .article-prose > p:first-child::first-letter {
-  font-family: var(--font-source-serif), Georgia, serif;
+  font-family: var(--font-cmg), system-ui, sans-serif;
   font-size: 4.2rem;
   font-weight: 600;
   line-height: 0.78;

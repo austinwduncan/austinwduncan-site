@@ -96,7 +96,7 @@ export default function SeriesRoadmap({
                 </div>
                 <p
                   className="text-[0.82rem] leading-[1.6]"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
                 >
                   {part.description}
                 </p>
@@ -176,7 +176,7 @@ export default function SeriesRoadmap({
                           </div>
                           <p
                             className="text-[0.85rem] italic pt-0.5"
-                            style={{ fontFamily: 'var(--font-source-serif)', color: '#C8BFA8' }}
+                            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#C8BFA8' }}
                           >
                             Coming soon
                           </p>
@@ -228,7 +228,7 @@ export default function SeriesRoadmap({
                           <p
                             className="leading-snug mb-0.5 transition-colors duration-150 group-hover:text-[#7A5C1E]"
                             style={{
-                              fontFamily: 'var(--font-source-serif), Georgia, serif',
+                              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                               fontSize: '1rem',
                               fontWeight: 500,
                               color: isRead ? '#9A9189' : '#1A1714',
@@ -239,7 +239,7 @@ export default function SeriesRoadmap({
                           {session.excerpt && (
                             <p
                               className="text-[0.78rem] leading-[1.55] line-clamp-2"
-                              style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
                             >
                               {session.excerpt}
                             </p>

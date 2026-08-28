@@ -51,7 +51,7 @@ export default function ShowCard({ show }: { show: ShowCardData }) {
       </h3>
       <p
         className="mt-1.5 text-[0.72rem]"
-        style={{ fontFamily: 'var(--font-source-serif)', color: 'var(--awd-stone)' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'var(--awd-stone)' }}
       >
         {show.count}
       </p>

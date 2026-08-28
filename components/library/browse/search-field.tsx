@@ -32,7 +32,7 @@ export default function SearchField({ params }: { params: Params }) {
         placeholder="Search titles and summaries"
         className="min-w-0 flex-1 rounded-[2px] border px-3 py-2 text-[0.82rem] outline-none placeholder:opacity-50 focus:border-[var(--awd-gold)]"
         style={{
-          fontFamily: 'var(--font-source-serif)',
+          fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           borderColor: 'rgba(238,234,225,0.16)',
           background: 'rgba(44,48,47,0.5)',
           color: 'var(--awd-bone)',

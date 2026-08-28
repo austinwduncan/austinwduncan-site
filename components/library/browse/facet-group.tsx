@@ -75,7 +75,7 @@ export default function FacetGroup({
                 aria-current={on ? 'true' : undefined}
                 className="flex min-w-0 items-baseline justify-between gap-2 py-[3px] pl-2.5 text-[0.8rem] leading-snug transition-colors"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   color: on ? 'var(--awd-gold)' : 'rgba(238,234,225,0.68)',
                   borderLeft: on ? '2px solid var(--awd-gold)' : '2px solid transparent',
                 }}

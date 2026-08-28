@@ -166,13 +166,13 @@ export default function ScriptureIndexBrowser({ books }: { books: IndexBook[] })
             <div className="text-center py-16">
               <div
                 className="text-3xl font-light mb-2"
-                style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', color: '#9A9189' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
               >
                 No results
               </div>
               <p
                 className="text-sm italic"
-                style={{ color: '#9A9189', fontFamily: 'var(--font-source-serif)' }}
+                style={{ color: '#9A9189', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
               >
                 Try a different book name or sermon title.
               </p>
@@ -293,7 +293,7 @@ function BookBlock({ data }: { data: IndexBook }) {
               <span
                 className="leading-snug transition-colors group-hover:text-[#7A5C1E]"
                 style={{
-                  fontFamily: 'var(--font-source-serif), Georgia, serif',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: '1.1rem',
                   color: '#1A1714',
                 }}

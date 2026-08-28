@@ -116,7 +116,7 @@ export default function ChannelBand({
             {show.blurb && (
               <p
                 className="mt-7 max-w-[42rem] text-[1.05rem] leading-relaxed lg:text-[1.1rem]"
-                style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.8)' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.8)' }}
               >
                 {show.blurb}
               </p>

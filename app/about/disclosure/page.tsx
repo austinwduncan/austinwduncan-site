@@ -40,7 +40,7 @@ export default function DisclosurePage() {
             <p
               className="text-[0.92rem] italic max-w-[340px] text-right pb-0.5 leading-relaxed shrink-0"
               style={{
-                fontFamily: 'var(--font-source-serif)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 color: 'rgba(255,255,255,0.35)',
               }}
             >
@@ -66,7 +66,7 @@ export default function DisclosurePage() {
           <div
             className="space-y-6 text-[0.97rem] leading-[1.8]"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               color: '#1A1714',
             }}
           >

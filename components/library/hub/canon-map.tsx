@@ -132,7 +132,7 @@ export default function CanonMap({ books }: { books: BookCoverage[] }) {
 
         <p
           className="max-w-[34rem] text-[0.95rem] leading-relaxed lg:pb-1 lg:text-[0.99rem]"
-          style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.7)' }}
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.7)' }}
         >
           Every book below links to what has been taught in it, chapter by chapter. The
           brighter a book, the more of it has been worked through.

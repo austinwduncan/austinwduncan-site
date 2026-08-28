@@ -102,7 +102,7 @@ export default async function TopicalPage() {
           <div className="py-7">
             <p
               className="text-[0.97rem] leading-[1.7] max-w-[580px]"
-              style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}
             >
               <span style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.72)' }}>
                 Multi-part series on key biblical and theological topics
@@ -148,7 +148,7 @@ export default async function TopicalPage() {
                 </p>
                 <p
                   className="text-[0.78rem] leading-snug"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
                 >
                   {meta.startHereNote}
                 </p>
@@ -178,7 +178,7 @@ export default async function TopicalPage() {
                 </div>
                 <p
                   className="text-[0.88rem] leading-relaxed mb-8"
-                  style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', fontStyle: 'italic' }}
+                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189', fontStyle: 'italic' }}
                 >
                   {description}
                 </p>

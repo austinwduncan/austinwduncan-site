@@ -51,7 +51,7 @@ export function ExegeticaTOC({ items }: { items: TocItem[] }) {
                   ? 'rgba(249,246,240,0.28)'
                   : 'rgba(249,246,240,0.68)'
                 : itemColor(idx),
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontStyle: item.level === 3 ? 'italic' : 'normal',
               fontWeight: idx === currentIndex ? 500 : 400,
             }}

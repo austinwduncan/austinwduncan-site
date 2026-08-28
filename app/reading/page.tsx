@@ -204,7 +204,7 @@ export default function LibraryPage() {
               <p
                 className="text-[0.9rem] italic leading-relaxed mb-1 hidden sm:block"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   color: 'rgba(255,255,255,0.35)',
                   maxWidth: 300,
                 }}
@@ -266,7 +266,7 @@ export default function LibraryPage() {
               <p
                 className="text-[0.95rem] leading-[1.85] mb-8"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontStyle: 'italic',
                   color: 'rgba(249,246,240,0.42)',
                   maxWidth: 420,
@@ -403,7 +403,7 @@ export default function LibraryPage() {
           <p
             className="text-[0.88rem] leading-relaxed mb-8 max-w-sm"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontStyle: 'italic',
               color: 'rgba(249,246,240,0.35)',
             }}

@@ -91,14 +91,14 @@ export default function SeriesExpander({
 
         <p
           className="text-[0.92rem] leading-[1.7] mb-4"
-          style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
         >
           {meta.whyStudy}
         </p>
 
         <p
           className="text-[0.85rem] leading-[1.65] mb-5 pl-3 border-l-2 italic"
-          style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189', borderColor: '#C8A96A' }}
+          style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189', borderColor: '#C8A96A' }}
         >
           {meta.bestFor[0]}
         </p>
@@ -147,7 +147,7 @@ export default function SeriesExpander({
               >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span style={{ fontFamily: 'var(--font-source-serif)' }}>{outcome}</span>
+              <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>{outcome}</span>
             </div>
           ))}
         </div>
@@ -174,7 +174,7 @@ export default function SeriesExpander({
               </span>
               <span
                 className="text-[0.8rem] leading-snug flex-1 line-clamp-1 transition-colors group-hover:text-[#7A5C1E]"
-                style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
               >
                 {session.title}
               </span>

@@ -155,7 +155,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
           <p
             className="mb-6 leading-[1.6]"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: 'clamp(1rem, 1.5vw, 1.15rem)',
               color: '#CDB079',
               fontStyle: 'italic',
@@ -168,7 +168,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
           <p
             className="leading-[1.75] mb-8 max-w-[640px]"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '1rem',
               color: 'rgba(255,255,255,0.62)',
             }}
@@ -279,7 +279,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         <li
                           key={item}
                           className="flex gap-2 text-[0.82rem] leading-snug"
-                          style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                          style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                         >
                           <span className="shrink-0" style={{ color: '#6E5A2E', marginTop: 2 }}>—</span>
                           {item}
@@ -322,7 +322,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         <li
                           key={outcome}
                           className="flex gap-2 text-[0.82rem] leading-snug"
-                          style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                          style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                         >
                           <svg
                             width="10" height="10" viewBox="0 0 24 24" fill="none"
@@ -400,7 +400,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                         <li
                           key={i}
                           className="flex gap-3 text-[0.88rem] leading-[1.65]"
-                          style={{ color: '#5A544C', fontFamily: 'var(--font-source-serif)' }}
+                          style={{ color: '#5A544C', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}
                         >
                           <span
                             className="shrink-0 text-[0.65rem] font-medium"
@@ -549,7 +549,7 @@ export default async function SeriesLandingPage({ params }: { params: Params }) 
                     </p>
                     <p
                       className="text-[0.78rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+                      style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
                     >
                       {nextSeries.startHereNote}
                     </p>

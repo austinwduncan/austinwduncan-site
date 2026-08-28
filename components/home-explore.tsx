@@ -78,7 +78,7 @@ export default function HomeExplore({ sections }: { sections: ExploreSection[] }
 
           <p
             className="relative text-[0.82rem] leading-[1.65] flex-1 mb-5"
-            style={{ fontFamily: 'var(--font-source-serif)', color: '#9A9189' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#9A9189' }}
           >
             {section.description}
           </p>

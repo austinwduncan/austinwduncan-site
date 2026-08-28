@@ -74,7 +74,7 @@ export default function ChannelHeader({
         {show.blurb && (
           <p
             className="mt-7 max-w-[44rem] text-[1.05rem] leading-relaxed lg:text-[1.12rem]"
-            style={{ fontFamily: 'var(--font-source-serif)', color: 'rgba(238,234,225,0.76)' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.76)' }}
           >
             {show.blurb}
           </p>

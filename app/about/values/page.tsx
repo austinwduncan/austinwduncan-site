@@ -122,7 +122,7 @@ export default function ValuesPage() {
             <p
               className="text-[0.92rem] italic max-w-[340px] text-right pb-0.5 leading-relaxed shrink-0"
               style={{
-                fontFamily: 'var(--font-source-serif)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 color: 'rgba(255,255,255,0.35)',
               }}
             >
@@ -148,7 +148,7 @@ export default function ValuesPage() {
           <p
             className="text-[0.97rem] leading-[1.8] mb-14"
             style={{
-              fontFamily: 'var(--font-source-serif)',
+              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               color: '#5A544C',
             }}
           >
@@ -181,7 +181,7 @@ export default function ValuesPage() {
                   <div
                     className="space-y-4 text-[0.97rem] leading-[1.8] mb-4"
                     style={{
-                      fontFamily: 'var(--font-source-serif)',
+                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       color: '#1A1714',
                     }}
                   >
@@ -191,7 +191,7 @@ export default function ValuesPage() {
                   <p
                     className="text-[0.78rem] leading-relaxed italic"
                     style={{
-                      fontFamily: 'var(--font-source-serif)',
+                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       color: '#9A9189',
                     }}
                   >

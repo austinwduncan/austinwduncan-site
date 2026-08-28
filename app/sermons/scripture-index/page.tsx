@@ -100,7 +100,7 @@ export default function ScriptureIndexPage() {
             <p
               className="text-[0.92rem] italic max-w-[380px] text-right pb-0.5 leading-relaxed"
               style={{
-                fontFamily: 'var(--font-source-serif)',
+                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                 color: 'rgba(255,255,255,0.35)',
               }}
             >

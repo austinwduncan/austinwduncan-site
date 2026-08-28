@@ -92,7 +92,7 @@ export default async function LibraryBrowsePage({
               <p
                 className="text-[0.9rem] italic leading-relaxed mb-1 hidden sm:block"
                 style={{
-                  fontFamily: 'var(--font-source-serif)',
+                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   color: 'rgba(255,255,255,0.35)',
                   maxWidth: 300,
                 }}

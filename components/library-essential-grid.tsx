@@ -99,7 +99,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
           {book.shortRecommendation && (
             <p
               className="text-[0.88rem] leading-[1.75] mb-6 flex-1"
-              style={{ fontFamily: 'var(--font-source-serif)', color: '#5A544C' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
             >
               {book.shortRecommendation}
             </p>
