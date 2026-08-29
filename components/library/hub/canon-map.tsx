@@ -89,45 +89,26 @@ function Cell({ book }: { book: BookCoverage }) {
 export default function CanonMap({ books }: { books: BookCoverage[] }) {
   const ot = books.filter(b => b.testament === 'OT')
   const nt = books.filter(b => b.testament === 'NT')
-  const taughtBooks = books.filter(b => b.taught > 0).length
-  const taughtChapters = books.reduce((n, b) => n + b.taught, 0)
-  const totalChapters = books.reduce((n, b) => n + b.chapterCount, 0)
-  const percent = Math.round((taughtChapters / totalChapters) * 100)
-
-  const stats: [string, string][] = [
-    [`${taughtBooks} of ${books.length}`, 'books taught'],
-    [`${taughtChapters}`, `chapters, ${percent}% of the canon`],
-    [`${ot.filter(b => b.taught).length} of ${ot.length}`, 'Old Testament'],
-    [`${nt.filter(b => b.taught).length} of ${nt.length}`, 'New Testament'],
-  ]
-
   return (
     <div>
       <div className="flex flex-col gap-y-6 lg:flex-row lg:items-end lg:justify-between lg:gap-x-16">
         <div className="min-w-0">
           <div className="flex items-center gap-3">
             <span aria-hidden className="h-px w-10" style={{ background: 'var(--awd-gold)' }} />
-            <span
-              className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
-              style={{ fontFamily: HEADING, color: 'var(--awd-gold)' }}
+            <h2
+              className="uppercase"
+              style={{
+                fontFamily: HEADING,
+                fontWeight: 700,
+                fontSize: 'clamp(1.7rem, 3.4vw, 2.6rem)',
+                letterSpacing: '-0.02em',
+                lineHeight: 0.98,
+                color: 'var(--awd-bone)',
+              }}
             >
               Browse by Scripture
-            </span>
+            </h2>
           </div>
-
-          <h2
-            className="mt-4 uppercase"
-            style={{
-              fontFamily: HEADING,
-              fontWeight: 700,
-              fontSize: 'clamp(1.9rem, 3.8vw, 2.9rem)',
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
-              color: 'var(--awd-bone)',
-            }}
-          >
-            Nearly the whole canon
-          </h2>
         </div>
 
         <p
@@ -139,30 +120,11 @@ export default function CanonMap({ books }: { books: BookCoverage[] }) {
         </p>
       </div>
 
-      <dl className="mt-9 flex flex-wrap gap-x-12 gap-y-5">
-        {stats.map(([value, label]) => (
-          <div key={label}>
-            <dt
-              className="text-[1.5rem] leading-none lg:text-[1.8rem]"
-              style={{ fontFamily: HEADING, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--awd-gold)' }}
-            >
-              {value}
-            </dt>
-            <dd
-              className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em]"
-              style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
-            >
-              {label}
-            </dd>
-          </div>
-        ))}
-      </dl>
-
       {[
         ['Old Testament', ot],
         ['New Testament', nt],
-      ].map(([label, list]) => (
-        <div key={label as string} className="mt-10">
+      ].map(([label, list], i) => (
+        <div key={label as string} className={i === 0 ? 'mt-12' : 'mt-10'}>
           <p
             className="mb-3 text-[0.64rem] font-semibold uppercase tracking-[0.2em]"
             style={{ fontFamily: HEADING, color: 'var(--awd-stone)' }}
