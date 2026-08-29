@@ -10,9 +10,10 @@ import Artwork from '@/components/library/artwork'
   the page is a record by year, and the date and the passage lead each row
   rather than trailing it as metadata.
 
-  No artwork in the list. Every sermon has a cover, but 47 covers stacked down
-  a page is a grid, and this is a record. The newest sermon gets the one image,
-  because that is the thing a visitor is most likely here for.
+  Every sermon shows its cover. An earlier version kept the list text only on
+  the theory that 47 covers stacked down a page stops being a record, but a
+  record nobody wants to look at is worse. The covers run small beside the date
+  so the year groupings still read as a record rather than as a gallery.
 */
 
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
@@ -115,7 +116,7 @@ export default function SermonsChannel({ pieces }: { pieces: Piece[] }) {
               <li key={piece.id}>
                 <Link
                   href={piece.href}
-                  className="group grid items-baseline gap-x-6 gap-y-1 border-b py-5 lg:grid-cols-[5.5rem_minmax(0,1fr)_11rem]"
+                  className="group grid items-center gap-x-6 gap-y-3 border-b py-5 lg:grid-cols-[5.5rem_minmax(0,10rem)_minmax(0,1fr)_10rem]"
                   style={{ borderColor: 'rgba(238,234,225,0.08)' }}
                 >
                   <span
@@ -124,6 +125,12 @@ export default function SermonsChannel({ pieces }: { pieces: Piece[] }) {
                   >
                     {dayAndMonth(piece.publishedAt)}
                   </span>
+
+                  <Artwork
+                    src={piece.artwork}
+                    title={piece.title}
+                    className="transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                  />
 
                   <span
                     className="min-w-0 text-[1.02rem] transition-colors group-hover:text-[var(--awd-gold)] lg:text-[1.08rem]"

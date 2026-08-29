@@ -110,7 +110,7 @@ export default function InTheTextChannel({
               <li key={piece.id}>
                 <Link
                   href={piece.href}
-                  className="group grid items-baseline gap-x-6 gap-y-2 border-b py-6 lg:grid-cols-[3rem_minmax(0,1fr)_10rem]"
+                  className="group grid items-start gap-x-6 gap-y-4 border-b py-6 lg:grid-cols-[2.5rem_minmax(0,12rem)_minmax(0,1fr)_9rem]"
                   style={{ borderColor: 'rgba(238,234,225,0.09)' }}
                 >
                   <span
@@ -124,6 +124,12 @@ export default function InTheTextChannel({
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
+
+                  <Artwork
+                    src={piece.artwork}
+                    title={piece.title}
+                    className="transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                  />
 
                   <span className="min-w-0">
                     <span

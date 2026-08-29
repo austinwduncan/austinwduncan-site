@@ -31,10 +31,27 @@ import { HEADING, byNewest } from '@/components/library/show/meta'
 */
 
 /** What a channel calls one of its pieces, so a count reads like the thing. */
-const UNIT: Record<string, string> = {"sermons": "sermon", "in-the-text": "study", "word-for-word": "question", "exegetica": "paper", "forum-and-pulpit": "essay"}
+const UNIT: Record<string, [string, string]> = {
+  sermons: ['sermon', 'sermons'],
+  // A piece here is a session; the grouping it belongs to is the study. Naming
+  // both "study" produced "72 studys across 6 studys".
+  'in-the-text': ['session', 'sessions'],
+  'word-for-word': ['question', 'questions'],
+  exegetica: ['paper', 'papers'],
+  'forum-and-pulpit': ['essay', 'essays'],
+}
 
 /** What a channel calls a grouping of them. */
-const SET: Record<string, string> = { 'in-the-text': 'study', 'word-for-word': 'subject' }
+const SET: Record<string, [string, string]> = {
+  'in-the-text': ['study', 'studies'],
+  'word-for-word': ['subject', 'subjects'],
+}
+
+/** Plurals come from the table, never from adding an s. */
+const plural = (pair: [string, string] | undefined, n: number, fallback: [string, string]) => {
+  const [one, many] = pair ?? fallback
+  return `${n} ${n === 1 ? one : many}`
+}
 
 type Params = Promise<{ show: string }>
 type Search = Promise<{ [key: string]: string | string[] | undefined }>
@@ -101,10 +118,9 @@ export default async function ShowPage({
   const seasons = show.seasons.filter(s => s.episodes.length)
   const requestedSeason = show.seasons.find(s => s.slug === requested) ?? seasons[0] ?? null
 
-  const noun = UNIT[show.slug] ?? 'piece'
-  const count = `${mine.length} ${mine.length === 1 ? noun : noun + 's'}`
+  const count = plural(UNIT[show.slug], mine.length, ['piece', 'pieces'])
   const meta = seasons.length
-    ? `${count} across ${seasons.length} ${seasons.length === 1 ? SET[show.slug] ?? 'set' : (SET[show.slug] ?? 'set') + 's'}`
+    ? `${count} across ${plural(SET[show.slug], seasons.length, ['set', 'sets'])}`
     : count
 
   return (

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Piece } from '@/lib/library/types'
+import Artwork from '@/components/library/artwork'
 
 /*
   Exegetica, laid out as a journal.
@@ -9,10 +10,13 @@ import type { Piece } from '@/lib/library/types'
   needs before committing. So length is stated plainly on every entry, next to
   the passage and the subject rather than buried under a title.
 
-  Text forward by design. Only two thirds of these carry artwork, and a grid
-  half full of covers and half full of title cards reads as a fault rather than
-  as a choice. Every paper gets the same treatment instead: a number, a title,
-  its abstract, and what it costs to read.
+  Every paper shows its cover. An earlier version left them out on the grounds
+  that only two thirds have real artwork, which was the wrong call: it turned
+  the channel into a wall of text, and the pieces missing a cover fall back to a
+  title card rather than a hole anyway.
+
+  The cover leads on the left and the abstract runs beside it, so the page still
+  reads as a journal rather than as a grid of tiles.
 
   Numbered in reverse, newest first, the way an issue run is numbered.
 */
@@ -33,15 +37,22 @@ export default function ExegeticaChannel({ pieces }: { pieces: Piece[] }) {
   const papers = [...pieces].sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''))
 
   return (
-    <div className="mx-auto max-w-[62rem] px-6 py-16 lg:px-8 lg:py-20">
+    <div className="mx-auto max-w-[1180px] px-6 py-16 lg:px-8 lg:py-20">
       <ol>
         {papers.map((paper, i) => (
           <li key={paper.id}>
             <Link
               href={paper.href}
-              className="group block border-b py-10 lg:py-12"
+              className="group grid gap-x-10 gap-y-6 border-b py-10 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:py-12"
               style={{ borderColor: 'rgba(238,234,225,0.1)' }}
             >
+              <Artwork
+                src={paper.artwork}
+                title={paper.title}
+                className="transition-transform duration-300 ease-out group-hover:-translate-y-1"
+              />
+
+              <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
                 <span
                   className="tabular-nums"
@@ -85,7 +96,7 @@ export default function ExegeticaChannel({ pieces }: { pieces: Piece[] }) {
 
               {(paper.summary || paper.subtitle) && (
                 <p
-                  className="mt-5 max-w-[52rem] text-[0.97rem] leading-[1.72]"
+                  className="mt-5 text-[0.97rem] leading-[1.72]"
                   style={{ fontFamily: HEADING, fontWeight: 400, color: 'rgba(238,234,225,0.68)' }}
                 >
                   {paper.summary ?? paper.subtitle}
@@ -100,6 +111,7 @@ export default function ExegeticaChannel({ pieces }: { pieces: Piece[] }) {
                   {paper.topics.slice(0, 4).map(t => t.name).join('  ·  ')}
                 </p>
               )}
+              </div>
             </Link>
           </li>
         ))}

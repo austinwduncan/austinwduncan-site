@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import type { Piece, Season } from '@/lib/library/types'
+import Artwork from '@/components/library/artwork'
 
 /*
   Word for Word, laid out as questions.
@@ -12,8 +13,10 @@ import type { Piece, Season } from '@/lib/library/types'
   be read, so the question is the whole row, set at a size you read rather than
   scan, and everything else sits under it in small type.
 
-  No artwork. The covers are handsome but they are title cards, so a column of
-  them would set the question twice, once as a picture and once as text.
+  Every episode shows its cover. An earlier version left them out on the theory
+  that a title card beside a title sets the same words twice, which was a
+  designer's objection rather than a reader's: a page of questions with nothing
+  to look at is a wall of text.
 
   Subjects filter in place rather than navigating, because a reader scanning
   for a question they have is browsing, not committing.
@@ -73,9 +76,16 @@ export default function WordForWordChannel({
           <li key={piece.id}>
             <Link
               href={piece.href}
-              className="group block border-b py-8 lg:py-9"
+              className="group grid gap-x-8 gap-y-5 border-b py-8 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:py-9"
               style={{ borderColor: 'rgba(238,234,225,0.09)' }}
             >
+              <Artwork
+                src={piece.artwork}
+                title={piece.title}
+                className="transition-transform duration-300 ease-out group-hover:-translate-y-1"
+              />
+
+              <div className="min-w-0">
               <div className="flex items-baseline gap-5">
                 {piece.episode != null && (
                   <span
@@ -109,7 +119,7 @@ export default function WordForWordChannel({
 
               {(piece.subtitle || piece.summary) && (
                 <p
-                  className="mt-4 max-w-[52rem] text-[0.95rem] leading-relaxed lg:pl-[3.1rem]"
+                  className="mt-4 text-[0.95rem] leading-relaxed lg:pl-[3.1rem]"
                   style={{ fontFamily: HEADING, fontWeight: 400, color: 'rgba(238,234,225,0.66)' }}
                 >
                   {piece.subtitle ?? piece.summary}
@@ -128,6 +138,7 @@ export default function WordForWordChannel({
                   .filter(Boolean)
                   .join('  ·  ')}
               </p>
+              </div>
             </Link>
           </li>
         ))}
