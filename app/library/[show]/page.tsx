@@ -1,26 +1,40 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import ScrollReveal from '@/components/scroll-reveal'
-import { getShow, getShows } from '@/lib/library/queries'
-import ShowHero from '@/components/library/show/show-hero'
-import SeasonNav from '@/components/library/show/season-nav'
-import EpisodeList from '@/components/library/show/episode-list'
-import PieceGrid from '@/components/library/show/piece-grid'
-import { HEADING, BODY, byNewest } from '@/components/library/show/meta'
+import { getPieces, getShow, getShows } from '@/lib/library/queries'
+import Masthead from '@/components/library/show/masthead'
+import SermonsChannel from '@/components/library/show/channels/sermons'
+import InTheTextChannel from '@/components/library/show/channels/in-the-text'
+import WordForWordChannel from '@/components/library/show/channels/word-for-word'
+import ExegeticaChannel from '@/components/library/show/channels/exegetica'
+import ForumAndPulpitChannel from '@/components/library/show/channels/forum-and-pulpit'
+import { HEADING, byNewest } from '@/components/library/show/meta'
 
 /*
-  A show page: Word for Word, In the Text, Sermons, Exegetica, Forum and Pulpit.
+  A channel page. Each of the five is laid out differently on purpose.
 
-  The whole page is a server component. Season selection is a ?season= search
-  param rather than client state, which means every season has its own URL, the
-  first paint is already the right season, and there is no hydration cost for
-  what is really just navigation.
+  These are not five instances of one thing. A sermon is an occasion, a study
+  is a sequence, a Word for Word episode is a question, a paper is a paper, and
+  a Forum and Pulpit essay is dated commentary. Giving all five the same grid
+  would flatten exactly the distinction the Library home spends a whole screen
+  establishing.
 
-  Seasons are named, never numbered, and episode numbers are global to the
-  show. A season lists its episodes by their own ascending number, gaps and
-  all, because the number was minted at production and typeset into the
-  artwork. It is never re-derived from the grouping a piece sits in.
+  What each leads with was taken from what the data actually holds rather than
+  from taste. Every sermon carries a passage and they span six years, so
+  Sermons is a record by year. Every Word for Word title is a question, all 71
+  of them, so the question is the row. Exegetica runs to a median of 51 minutes,
+  so length is stated up front. In the Text is the only channel where sequence
+  matters, and it carries no production numbers, so its sessions are counted
+  positionally and ordered oldest first.
+
+  The masthead is the one shared element, so arriving here feels like walking
+  through the door you picked on the Library wall.
 */
+
+/** What a channel calls one of its pieces, so a count reads like the thing. */
+const UNIT: Record<string, string> = {"sermons": "sermon", "in-the-text": "study", "word-for-word": "question", "exegetica": "paper", "forum-and-pulpit": "essay"}
+
+/** What a channel calls a grouping of them. */
+const SET: Record<string, string> = { 'in-the-text': 'study', 'word-for-word': 'subject' }
 
 type Params = Promise<{ show: string }>
 type Search = Promise<{ [key: string]: string | string[] | undefined }>
@@ -77,49 +91,49 @@ export default async function ShowPage({
   const active = show.seasons.find(s => s.slug === requested) ?? show.seasons[0] ?? null
   const loose = [...show.loose].sort(byNewest)
 
+  /*
+    Every piece in this channel, not just the ones grouped into a season. A
+    channel with seasons keeps them; one without gets a flat list. Both come
+    from the same read.
+  */
+  const mine = (await getPieces({ collection: show.slug, sort: 'newest' })).sort(byNewest)
+
+  const seasons = show.seasons.filter(s => s.episodes.length)
+  const requestedSeason = show.seasons.find(s => s.slug === requested) ?? seasons[0] ?? null
+
+  const noun = UNIT[show.slug] ?? 'piece'
+  const count = `${mine.length} ${mine.length === 1 ? noun : noun + 's'}`
+  const meta = seasons.length
+    ? `${count} across ${seasons.length} ${seasons.length === 1 ? SET[show.slug] ?? 'set' : (SET[show.slug] ?? 'set') + 's'}`
+    : count
+
   return (
-    <div style={{ background: 'var(--awd-black)' }}>
-      <ShowHero show={show} />
+    <div className="-mt-[60px]" style={{ background: 'var(--awd-black)' }}>
+      <Masthead show={show} meta={meta} />
 
-      <section className="mx-auto max-w-[1180px] px-6 py-28 lg:px-8 lg:py-36">
-        {active ? (
-          <>
-            {/* The season menu is a stacking context of its own, so it needs an
-                explicit z-index to open over the episode list below it. */}
-            <ScrollReveal className="relative z-30">
-              <SeasonNav showSlug={show.slug} seasons={show.seasons} activeSlug={active.slug} />
-            </ScrollReveal>
+      {show.slug === 'sermons' ? (
+        <SermonsChannel pieces={mine} />
+      ) : show.slug === 'word-for-word' ? (
+        <WordForWordChannel seasons={seasons} loose={show.loose} />
+      ) : show.slug === 'in-the-text' ? (
+        <InTheTextChannel showSlug={show.slug} seasons={seasons} active={requestedSeason} />
+      ) : show.slug === 'exegetica' ? (
+        <ExegeticaChannel pieces={mine} />
+      ) : show.slug === 'forum-and-pulpit' ? (
+        <ForumAndPulpitChannel pieces={mine} />
+      ) : (
+        /* A channel added later renders as a dated list until it earns a voice. */
+        <ForumAndPulpitChannel pieces={mine} />
+      )}
 
-            <ScrollReveal delay={60} className="relative z-0">
-              <EpisodeList season={active} />
-            </ScrollReveal>
-
-            {loose.length > 0 && (
-              <ScrollReveal className="mt-28 lg:mt-36">
-                <PieceGrid
-                  pieces={loose}
-                  heading="Outside the seasons"
-                  note="Standalone episodes that belong to the show but not to any of its runs."
-                />
-              </ScrollReveal>
-            )}
-          </>
-        ) : loose.length > 0 ? (
-          <ScrollReveal>
-            <PieceGrid pieces={loose} heading="Every piece, newest first" lead />
-          </ScrollReveal>
-        ) : (
-          <p
-            className="text-[1.05rem] leading-relaxed"
-            style={{ fontFamily: BODY, color: 'rgba(238,234,225,0.6)' }}
-          >
-            Nothing is published in this show yet.{' '}
-            <span style={{ fontFamily: HEADING, fontWeight: 600, color: 'var(--awd-gold)' }}>
-              Check back soon.
-            </span>
-          </p>
-        )}
-      </section>
+      {mine.length === 0 && (
+        <p
+          className="mx-auto max-w-[1180px] px-6 py-24 text-[1.02rem] lg:px-8"
+          style={{ fontFamily: HEADING, fontWeight: 400, color: 'rgba(238,234,225,0.6)' }}
+        >
+          Nothing is published here yet.
+        </p>
+      )}
     </div>
   )
 }
