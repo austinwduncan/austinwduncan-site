@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import ScrollReveal from '@/components/scroll-reveal'
 import { getBookCoverage, type BookCount } from '@/components/library/scripture/data'
+import { getCanonCoverage } from '@/lib/library/queries'
 import {
   BONE, GOLD, HEADING, SERIF, STONE, Eyebrow, Heading, Lede, Page, Section, Stat,
 } from '@/components/library/scripture/kit'
@@ -143,11 +144,24 @@ function Testament({
 }
 
 export default async function ScripturePage() {
-  const { books, piecesWithScripture, booksCovered } = await getBookCoverage()
+  const [{ books, piecesWithScripture, booksCovered }, canon] = await Promise.all([
+    getBookCoverage(),
+    getCanonCoverage(),
+  ])
 
   const ot = books.filter(b => b.book.testament === 'OT')
   const nt = books.filter(b => b.book.testament === 'NT')
-  const chapters = books.reduce((a, b) => a + b.book.chapter_count, 0)
+  /*
+    Distinct chapters that actually carry teaching.
+
+    This read `books.reduce((a, b) => a + b.book.chapter_count, 0)`, which sums
+    the length of every book in the canon and therefore always returned 1,189,
+    the size of the Bible. It was labelled "Chapters indexed", so the page
+    claimed the whole canon had been taught. getBookCoverage counts pieces per
+    book and never had chapter data to give, which is how the wrong field got
+    reached for in the first place.
+  */
+  const chaptersTaught = canon.reduce((a, b) => a + b.taught, 0)
 
   return (
     <Page>
@@ -167,7 +181,7 @@ export default async function ScripturePage() {
           >
             <Stat value={piecesWithScripture} label="Pieces in the text" />
             <Stat value={`${booksCovered} of ${books.length}`} label="Books taught" />
-            <Stat value={chapters} label="Chapters indexed" />
+            <Stat value={chaptersTaught} label="Chapters taught" />
           </div>
         </ScrollReveal>
       </Section>
