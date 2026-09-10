@@ -5,7 +5,7 @@ import { lookupWord, initGreekMorph, type ParseEntry } from '@/lib/greek-morph'
 import GreekPopover from '@/components/greek-popover'
 
 // Used in MDX as <GreekWord>πιστεύει</GreekWord>
-// Also registered as <G> shorthand — see lib/mdx-components.tsx
+// Used directly by the Greek tool (app/greek).
 export default function GreekWord({ children }: { children: string }) {
   const [entries, setEntries] = useState<ParseEntry[] | null>(null)
   const [loading, setLoading] = useState(false)

@@ -2,139 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
+/*
+  The last of the MDX readers. Everything Austin has taught now lives in the
+  database (lib/sermons.ts); the only files left under content/ are the
+  standing pages (about.mdx, resources.mdx) and books.json.
+*/
+
 const CONTENT_DIR = path.join(process.cwd(), 'content')
-
-// ─── Frontmatter types ────────────────────────────────────────────────────────
-
-export type SermonFrontmatter = {
-  title: string
-  date: string
-  excerpt: string
-  tags?: string[]
-  youtube?: string
-  image?: string
-  scripture?: string
-  series?: string
-  podcast?: string
-  duration?: string
-  featured?: boolean
-}
-
-// Canonical Bible book list for filtering tags
-export const BIBLE_BOOKS = new Set([
-  'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy',
-  'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings',
-  '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther',
-  'Job', 'Psalms', 'Proverbs', 'Ecclesiastes', 'Song of Solomon',
-  'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel',
-  'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum',
-  'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi',
-  'Matthew', 'Mark', 'Luke', 'John', 'Acts',
-  'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians',
-  'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians',
-  '1 Timothy', '2 Timothy', 'Titus', 'Philemon',
-  'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John',
-  'Jude', 'Revelation',
-])
-
-export function bibleBooksFromTags(tags?: string[]): string[] {
-  return (tags ?? []).filter((t) => BIBLE_BOOKS.has(t))
-}
-
-export function primaryBookFromTags(tags?: string[]): string {
-  return bibleBooksFromTags(tags)[0] ?? 'Sermon'
-}
-
-// Extract the primary Bible book from a scripture reference string.
-// "Mark 2:1–12" → "Mark", "Psalm 37" → "Psalms", "Genesis 22 / Luke 10:27" → "Genesis"
-// Returns null for "Multiple texts…" or unrecognised values.
-export function primaryBookFromScripture(scripture?: string): string | null {
-  if (!scripture) return null
-  const first = scripture.split(' / ')[0].trim()
-  if (/^multiple/i.test(first)) return null
-  for (const book of BIBLE_BOOKS) {
-    if (first === book || first.startsWith(book + ' ') || first.startsWith(book + ':')) {
-      return book
-    }
-  }
-  if (first === 'Psalm' || /^Psalm\s/.test(first)) return 'Psalms'
-  return null
-}
-
-export function formatDate(dateStr?: string): string {
-  if (!dateStr) return ''
-  const [y, m, d] = dateStr.split('-').map(Number)
-  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
-  })
-}
-
-export type TeachingFrontmatter = {
-  title: string
-  date: string
-  excerpt: string
-  tags?: string[]
-  image?: string
-}
-
-export function isPublished(dateStr?: string): boolean {
-  if (!dateStr) return true
-  return new Date(dateStr + 'T18:30:00') <= new Date()
-}
-
-export function getTeachingSlugs(type: 'expositional' | 'topical'): string[] {
-  const dir = path.join(CONTENT_DIR, 'teaching', type)
-  if (!fs.existsSync(dir)) return []
-  const slugs: string[] = []
-  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (item.isDirectory()) {
-      const sub = path.join(dir, item.name)
-      for (const f of fs.readdirSync(sub)) {
-        if (f.endsWith('.mdx')) slugs.push(f.replace(/\.mdx$/, ''))
-      }
-    } else if (item.isFile() && item.name.endsWith('.mdx')) {
-      slugs.push(item.name.replace(/\.mdx$/, ''))
-    }
-  }
-  return slugs
-}
-
-export function getTeachingBySlug<T = Record<string, unknown>>(
-  type: 'expositional' | 'topical',
-  slug: string
-): ContentFile<T> {
-  const dir = path.join(CONTENT_DIR, 'teaching', type)
-  let filePath = path.join(dir, `${slug}.mdx`)
-  if (!fs.existsSync(filePath)) {
-    for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (item.isDirectory()) {
-        const sub = path.join(dir, item.name, `${slug}.mdx`)
-        if (fs.existsSync(sub)) { filePath = sub; break }
-      }
-    }
-  }
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  const { data, content } = matter(raw)
-  return { frontmatter: data as T, content, slug }
-}
-
-export function getAllTeaching<T = Record<string, unknown>>(
-  type: 'expositional' | 'topical'
-): ContentFile<T>[] {
-  return getTeachingSlugs(type).map((slug) => getTeachingBySlug<T>(type, slug))
-}
-
-export type ArticleFrontmatter = {
-  title: string
-  date: string
-  excerpt: string
-  tags?: string[]
-  image?: string
-  category?: string
-  scripture?: string
-}
-
-// ─── Utilities ───────────────────────────────────────────────────────────────
 
 export type ContentFile<T = Record<string, unknown>> = {
   frontmatter: T
@@ -142,75 +16,10 @@ export type ContentFile<T = Record<string, unknown>> = {
   slug: string
 }
 
-export function getSlugs(section: string): string[] {
-  const dir = path.join(CONTENT_DIR, section)
-  if (!fs.existsSync(dir)) return []
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith('.mdx'))
-    .map((f) => f.replace(/\.mdx$/, ''))
-}
-
-export function getBySlug<T = Record<string, unknown>>(
-  section: string,
-  slug: string
-): ContentFile<T> {
-  const filePath = path.join(CONTENT_DIR, section, `${slug}.mdx`)
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  const { data, content } = matter(raw)
-  return { frontmatter: data as T, content, slug }
-}
-
-export function getAll<T = Record<string, unknown>>(section: string): ContentFile<T>[] {
-  return getSlugs(section).map((slug) => getBySlug<T>(section, slug))
-}
-
+/** Read one top-level MDX file under content/ (for example "about"). */
 export function getSingleFile<T = Record<string, unknown>>(name: string): ContentFile<T> {
   const filePath = path.join(CONTENT_DIR, `${name}.mdx`)
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { data, content } = matter(raw)
   return { frontmatter: data as T, content, slug: name }
-}
-
-export function readingTime(content: string): number {
-  const words = content.trim().split(/\s+/).length
-  return Math.max(1, Math.ceil(words / 200))
-}
-
-export function formatReadingTime(minutes: number): string {
-  if (minutes < 60) return `${minutes} min read`
-  const h = Math.floor(minutes / 60)
-  const m = minutes % 60
-  return m > 0 ? `${h}h ${m}m read` : `${h}h read`
-}
-
-export type TocItem = { id: string; level: 2 | 3; text: string }
-
-function headingToId(text: string): string {
-  return text
-    .replace(/[^\w\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .toLowerCase()
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-}
-
-export function extractToc(content: string): TocItem[] {
-  const matches = [...content.matchAll(/^(#{2,3})\s+(.+)$/gm)]
-  return matches.map((m) => {
-    const level = m[1].length as 2 | 3
-    const raw = m[2].replace(/\*\*/g, '').replace(/\*/g, '').replace(/`/g, '').trim()
-    return { id: headingToId(raw), level, text: raw }
-  })
-}
-
-export function sortByDate<T extends { frontmatter: { date?: string } }>(
-  items: T[]
-): T[] {
-  return [...items].sort((a, b) => {
-    const da = a.frontmatter.date ?? ''
-    const db = b.frontmatter.date ?? ''
-    return db.localeCompare(da)
-  })
 }

@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { legacyRedirects } from "./lib/seo";
 
 const securityHeaders = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
@@ -11,43 +10,56 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   turbopack: {},
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
+      { protocol: 'https', hostname: 'img.youtube.com' },
+      { protocol: 'https', hostname: '**.supabase.co' },
     ],
   },
+  // Keep native modules out of the bundler; only the cutout route loads them.
+  serverExternalPackages: ['onnxruntime-node', 'sharp'],
+  // onnxruntime-node dlopens its shared library at runtime, which the tracer
+  // misses. Force the Linux binaries into the cutout function.
+  outputFileTracingIncludes: {
+    '/api/sermons/cutout': ['./node_modules/onnxruntime-node/bin/napi-v3/linux/x64/**'],
+  },
   /*
-    Legacy paths, generated rather than listed.
-
-    content_slug_history holds every path that has ever been published. This
-    reads it at build time and emits a 308 for each row whose recorded path no
-    longer equals the canonical path the data layer produces, so a slug that
-    moves is redirected by the act of recording the move, with nobody
-    hand maintaining a list of 213 entries.
-
-    Static redirects are checked before the filesystem and cost nothing per
-    request, which is why this is here rather than in a proxy. The trade is
-    that the table is read once per build: a slug that moves after a deploy
-    starts redirecting at the next build, not the moment the row lands.
-
-    A failure here must never fail the build. Losing the redirect table for one
-    deploy is recoverable. Losing the deploy is not.
+    Legacy paths. Every URL the site has ever published either still resolves
+    or lands here. Static redirects are checked before the filesystem and cost
+    nothing per request. Permanent unless noted.
   */
   async redirects() {
-    try {
-      const moves = await legacyRedirects()
-      console.log(`[urls] ${moves.length} legacy redirects generated from content_slug_history`)
-      return moves.map(move => ({
-        source: move.from,
-        destination: move.to,
-        permanent: true,
-      }))
-    } catch (error) {
-      console.warn(
-        '[urls] could not read content_slug_history, building with no legacy redirects:',
-        error instanceof Error ? error.message : error,
-      )
-      return []
-    }
+    const go = (source: string, destination: string, permanent = true) => ({ source, destination, permanent })
+    return [
+      go('/browse', '/'),
+      go('/library', '/'),
+      go('/library/browse', '/'),
+      go('/library/in-the-text', '/teaching'),
+      go('/library/sermons', '/sermons'),
+      go('/library/word-for-word', '/word-for-word'),
+      go('/library/exegetica', '/exegetica'),
+      go('/library/forum-and-pulpit', '/forum-and-pulpit'),
+      go('/teaching/expositional', '/teaching'),
+      go('/teaching/topical', '/teaching'),
+      go('/teaching/expositional/:slug', '/teaching/:slug'),
+      go('/teaching/topical/:slug', '/teaching/:slug'),
+      go('/teaching/series/:slug', '/series/:slug'),
+      go('/sermons/scripture-index', '/library/bible'),
+      go('/sermons/bible', '/library/bible'),
+      go('/sermons/bible/:book', '/library/bible?book=:book', false),
+      go('/sermons/search', '/library/search'),
+      go('/sermons/topics/:topic', '/library/topics/:topic'),
+      go('/sermons/series', '/library/series'),
+      go('/sermons/speakers/:s', '/sermons'),
+      go('/topics', '/'),
+      go('/topics/:slug', '/library/topics/:slug'),
+      go('/scripture', '/library/bible'),
+      go('/scripture/:book', '/library/bible?book=:book'),
+      go('/scripture/:book/:chapter', '/library/bible?book=:book'),
+      go('/studio', '/staff'),
+      go('/studio/:path*', '/staff'),
+    ]
   },
   async headers() {
     return [

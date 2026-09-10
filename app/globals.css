@@ -342,3 +342,82 @@
 .shelf-scroller::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Sermon publishing tokens (ported from the Crosswalk site) ─────────────
+   The sermon library, sermon pages and staff builder were ported wholesale and
+   use Crosswalk's token names. Map them onto this site's palette here rather
+   than rewriting a few thousand lines of class names. */
+:root {
+  --cw-primary: #2c302f;        /* graphite */
+  --cw-primary-deep: #171918;   /* soft black */
+  --cw-secondary: #cdb079;      /* antique gold */
+  --cw-secondary-soft: #e0cb9a; /* gold, lifted for dark surfaces */
+  --cw-accent: #6e5a2e;         /* gold that passes AA on light surfaces */
+  --cw-white: #ffffff;
+  --cw-ink: #171918;
+  --cw-header-h: 60px;
+}
+@theme inline {
+  --color-primary: var(--cw-primary);
+  --color-secondary: var(--cw-secondary);
+  --color-accent: var(--cw-accent);
+  --color-primary-deep: var(--cw-primary-deep);
+  --color-secondary-soft: var(--cw-secondary-soft);
+  --color-ink: var(--cw-ink);
+  --font-display: var(--font-montserrat);
+  --font-body: var(--font-montserrat);
+}
+
+.headline {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Anchored headings and :target clear the fixed header with breathing room. */
+:target,
+:where(h1, h2, h3, h4)[id] {
+  scroll-margin-top: calc(var(--cw-header-h) + 1rem);
+}
+
+/* A gentle highlight when you land on an anchored section. */
+
+.passage-body {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.075rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--cw-ink) 88%, transparent);
+}
+.passage-body p {
+  margin-top: 1rem;
+}
+.passage-body p:first-child {
+  margin-top: 0;
+}
+.passage-body .verse-num,
+.passage-body .chapter-num {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.62em;
+  font-weight: 700;
+  color: var(--cw-accent);
+  vertical-align: super;
+  line-height: 0;
+  margin-right: 0.15em;
+}
+.passage-body .woc {
+  color: #9a3b32; /* words of Christ, a muted red that still sits in-brand */
+}
+.passage-body .small-caps {
+  font-variant-caps: small-caps;
+}
+.passage-body h3 {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--cw-ink);
+  margin-top: 1.5rem;
+}
+.passage-body .block-indent {
+  padding-left: 1.25rem;
+}
+

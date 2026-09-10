@@ -10,11 +10,7 @@
     "prepare-data": "node scripts/parse-excel.js && node scripts/fetch-covers.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.98.0",
-    "@portabletext/react": "^6.2.0",
-    "@sanity/block-tools": "^3.70.0",
-    "@sanity/schema": "^5.27.0",
-    "@sanity/vision": "^5.27.0",
+    "@anthropic-ai/sdk": "^0.112.3",
     "@supabase/supabase-js": "^2.112.4",
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/speed-insights": "^2.0.0",
@@ -25,14 +21,14 @@
     "jsdom": "^29.1.1",
     "lucide-react": "^1.14.0",
     "marked": "^18.0.4",
+    "motion": "^13.2.0",
     "next": "16.2.6",
     "next-mdx-remote": "^6.0.0",
-    "next-sanity": "^13.0.4",
     "node-html-markdown": "^2.0.0",
+    "onnxruntime-node": "^1.20.1",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sanity-plugin-markdown": "^8.0.6",
     "shadcn": "^4.7.0",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.6.0",
@@ -46,6 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }

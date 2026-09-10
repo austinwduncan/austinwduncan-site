@@ -111,19 +111,19 @@ function DoorLink({
 */
 const DOORS: { href: string; label: string; note: string }[] = [
   {
-    href: '/scripture',
+    href: '/library/bible',
     label: 'Scripture',
-    note: 'The canon as an index, book by book and chapter by chapter.',
+    note: 'The Scripture Atlas: where the teaching has gone, book by book.',
   },
   {
-    href: '/topics',
-    label: 'Topics',
-    note: 'What the teaching is about, gathered by theme.',
+    href: '/library/series',
+    label: 'Series',
+    note: 'Every series, newest first.',
   },
   {
-    href: '/library/browse',
-    label: 'Browse everything',
-    note: 'Filter by collection, format, depth, topic and passage.',
+    href: '/library/search',
+    label: 'Search everything',
+    note: 'Search by topic, passage, series or title.',
   },
   {
     href: '/sermons',
@@ -207,7 +207,7 @@ export default function NotFound() {
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
-              href="/library"
+              href="/"
               className="inline-flex items-center rounded-[3px] px-6 py-3 uppercase transition-opacity hover:opacity-90"
               style={{
                 background: GOLD,
@@ -256,7 +256,7 @@ export default function NotFound() {
           }}
         >
           Still looking for something specific? The{' '}
-          <Link href="/library/browse" className="underline underline-offset-4" style={{ color: GOLD }}>
+          <Link href="/library/search" className="underline underline-offset-4" style={{ color: GOLD }}>
             full index
           </Link>{' '}
           carries every piece on the site, and{' '}

@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
 /*
-  "In the Text" is a display label only: the routes stay /teaching/... on
-  purpose, so none of the ~220 published URLs move and nothing needs redirecting.
+  One link per category of the library, in the order of lib/categories.ts.
+  "In the Text" is a display label: the route stays /teaching.
 */
 type NavLink = {
   href: string
@@ -18,20 +18,11 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home', exact: true },
-  { href: '/browse', label: 'Browse' },
   { href: '/sermons', label: 'Sermons' },
-  {
-    href: '/teaching',
-    label: 'In the Text',
-    children: [
-      { href: '/teaching/expositional', label: 'Expositional' },
-      { href: '/teaching/topical', label: 'Topical' },
-    ],
-  },
+  { href: '/teaching', label: 'In the Text' },
   { href: '/word-for-word', label: 'Word for Word' },
   { href: '/exegetica', label: 'Exegetica' },
   { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
-  { href: '/library', label: 'Library' },
   { href: '/about', label: 'About' },
 ]
 

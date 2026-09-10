@@ -126,53 +126,68 @@ rather than Crosswalk's white.
 
 ---
 
-## Architecture: The Library
+## Architecture: one library, one category axis
 
-The site is being rebuilt around one idea: **everything Austin has taught lives
-in one collection**, entered through Scripture, topic, format, series, depth,
-search, or one of the branded properties.
+Everything Austin has taught is one collection in the `sermons` table
+(the name is historical; the publishing system was ported file for file from
+the Crosswalk site on 2026-09-07). Each piece has exactly ONE `category`
+(`lib/categories.ts`): sermon, teaching, episode, paper, commentary. The old
+brand names (Sermons, In the Text, Word for Word, Exegetica, Forum & Pulpit)
+survive only as the display labels of those categories.
 
-Word for Word, Exegetica, Forum & Pulpit and In the Text keep their identities
-as **collections**, but they are one dimension among many, not the spine. A
-visitor should never have to know what "Exegetica" means to find an answer.
+Three independent axes sit beside category and must never be collapsed into
+it: **series** (a curated run with a start and an end, `sermon_series`),
+**topics** (many per piece, free text), **scripture** (many per piece, parsed
+into `sermon_scripture_refs` for the Scripture Atlas). Bible books are not
+tags.
 
-### Dimensions are independent
+### URLs
 
-The old `tags` field conflated four things at once (a Bible book, a series, a
-collection and a topic in one array). That is the mistake the schema exists to
-prevent. Format is what a piece **is**; approach is how it **argues**; they do
-not compete.
+- `/` home = animated hero + the library (latest, category row, recent,
+  series, topics, coverage).
+- `/sermons`, `/teaching`, `/word-for-word`, `/exegetica`,
+  `/forum-and-pulpit` category pages; `/{category path}/[slug]` pieces
+  (`pathFor()` builds these, always use it). A piece requested under the
+  wrong category path is permanently redirected.
+- `/series/[slug]`, `/library/series`, `/library/topics/[slug]`,
+  `/library/bible` (Scripture Atlas), `/library/search`.
+- Old URLs (`/browse`, `/library/*` shows, `/teaching/expositional/...`,
+  `/sermons/bible` etc.) are static redirects in `next.config.ts`.
 
-### Data
+### Publishing
 
-**Postgres (Supabase) is the source of truth.** Not MDX, not Sanity.
+- **Staff login**: `/staff` (STAFF_PASSCODE) and `/staff/sermons`
+  (SERMONS_PASSCODE or the staff passcode). HMAC cookie `cw_admin`, 12 hour
+  TTL, gate in `lib/adminSession.ts`. Works from a phone.
+- **Builder**: `/staff/sermons` (`components/SermonsEditor.tsx`). Category
+  select in Basic info, category filter on the list. Paste a YouTube link and
+  "Build from the video" pulls the transcript (Supadata, needs SUPADATA_KEY)
+  and drafts with Claude (`lib/sermonFormat.ts`), or paste a manuscript and
+  press Format. Hero still, focal point, cutout, series and speakers tabs.
+- **API**: `app/api/sermons/*`, `app/api/series`, `app/api/speakers`.
+  Writes use the service role, log to `audit_log`, revalidate pages.
+- **Tables**: `sermons`, `sermon_series`, `sermon_scripture_refs`,
+  `speakers`, `audit_log`; bucket `content-intake` (`sermons/` prefix).
+  Migrations `0011_sermon_publishing.sql`, `0012_sermon_category.sql`,
+  both applied 2026-09-07. Visibility: status published, or scheduled with
+  scheduled_at in the past.
+- **Bodies** are plain text split on blank lines: `## ` section (in the
+  contents), `### ` subhead, a quoted block ending in an ESV citation,
+  a lone image `![alt](src)` optionally wrapped in a link, else a paragraph.
+  `components/SermonParagraph.tsx` renders inline **bold**, *italic*,
+  [links](url), line breaks and "> " quotes.
+- The 213 pieces that were MDX were imported once with
+  `scripts/import-mdx-library.ts` and the MDX removed. Only
+  `content/about.mdx`, `resources.mdx` and `books.json` remain.
+- Crosswalk token names (`text-ink`, `bg-primary-deep`,
+  `text-secondary-soft`, `font-display`) are mapped onto this palette at
+  the bottom of `globals.css`.
 
-- `supabase/migrations/` — numbered SQL, lowercase, idempotent, RLS on with
-  explicit grants to `service_role`. Austin runs these himself.
-- Article bodies will be **Tiptap** documents stored as JSONB, so custom blocks
-  (scripture, original language, key idea, citation) stay queryable.
-- Scripture is stored as structured refs **plus integer bounds**:
-  `book_position * 1_000_000 + chapter * 1_000 + verse`. A passage is a closed
-  interval, so "what touches Luke 15:11-32" is an index-backed range
-  intersection. This is what makes `/scripture/luke/15/11-32` generate itself.
-- `content_slug_history` preserves every legacy URL. ~220 published paths must
-  never 404.
-- **AI never writes taxonomy directly.** The Claude pipeline proposes into
-  `content_suggestions` with a confidence and rationale; Austin accepts or
-  rejects from the admin.
+### Known content gaps
 
-### Scripts
-
-- `scripts/library/transform.mjs` — MDX to normalized records
-- `scripts/library/load.mjs` — records into Postgres, idempotent
-- `scripts/library/verify.mjs` — connection and migration state
-
-### Still to build
-
-Custom admin/editor at a staff route, the enrichment pass, `/explore` with
-faceted URL state, the Scripture explorer, generated topic pages, and search.
-
----
+10 Word for Word episodes are scrape stubs (a heading and the same line as
+the only paragraph) and need real bodies. The Library tables from the earlier
+Postgres rewrite (`content`, `topics`, `formats`, ...) are unused.
 
 ## Tooling notes
 

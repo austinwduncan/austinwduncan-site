@@ -5,7 +5,7 @@ const sections = [
     heading: 'Content',
     links: [
       { href: '/sermons', label: 'Sermons' },
-      { href: '/teaching', label: 'Teaching' },
+      { href: '/teaching', label: 'In the Text' },
       { href: '/word-for-word', label: 'Word for Word' },
       { href: '/exegetica', label: 'Exegetica' },
     ],
@@ -14,6 +14,8 @@ const sections = [
     heading: 'More',
     links: [
       { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
+      { href: '/library/series', label: 'Series' },
+      { href: '/library/bible', label: 'Scripture Atlas' },
       { href: '/resources', label: 'Resources' },
       { href: '/about', label: 'About' },
     ],
