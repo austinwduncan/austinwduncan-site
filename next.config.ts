@@ -32,6 +32,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     const go = (source: string, destination: string, permanent = true) => ({ source, destination, permanent })
     return [
+      // www is an alias of the apex; send it (and everything under it) to the canonical host.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.austinwduncan.com' }],
+        destination: 'https://austinwduncan.com/:path*',
+        permanent: true,
+      },
       go('/browse', '/'),
       go('/library', '/'),
       go('/library/browse', '/'),
