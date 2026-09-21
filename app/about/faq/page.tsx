@@ -66,7 +66,7 @@ export default function FAQPage() {
                 fontWeight: 700,
                 letterSpacing: '-0.02em',
                 lineHeight: 0.95,
-                color: '#F9F6F0',
+                color: '#FFFFFF',
               }}
             >
               Frequently Asked Questions
@@ -86,7 +86,7 @@ export default function FAQPage() {
         }}
       />
 
-      <div style={{ background: '#FAFAF7' }}>
+      <div style={{ background: '#FFFFFF' }}>
         <div className="mx-auto max-w-[780px] px-6 lg:px-8 py-16">
           <div className="space-y-0">
             {faqs.map((faq, i) => (
@@ -116,13 +116,13 @@ export default function FAQPage() {
                   </p>
                 </div>
                 {i < faqs.length - 1 && (
-                  <div className="h-px w-full" style={{ background: '#E2DACE' }} />
+                  <div className="h-px w-full" style={{ background: '#E4E4E7' }} />
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-14 pt-8 border-t" style={{ borderColor: '#E2DACE' }}>
+          <div className="mt-14 pt-8 border-t" style={{ borderColor: '#E4E4E7' }}>
             <Link
               href="/about"
               className="text-[0.8rem] transition-colors hover:text-[#7A5C1E]"

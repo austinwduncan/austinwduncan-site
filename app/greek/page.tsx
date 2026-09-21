@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function GreekToolPage() {
   return (
-    <div style={{ background: '#FAFAF7', minHeight: '100vh' }}>
+    <div style={{ background: '#FFFFFF', minHeight: '100vh' }}>
       <div className="mx-auto max-w-[860px] px-5 py-12 lg:py-16">
 
         {/* Header */}

@@ -4,11 +4,10 @@ import Link from 'next/link'
 import { type LibraryBook } from '@/components/library-browser'
 import { LibraryEssentialGrid, type EssentialBook } from '@/components/library-essential-grid'
 import { LibraryCategoryExpander } from '@/components/library-category-expander'
-import { LibraryReviewSpotlight, type ReviewItem } from '@/components/library-review-spotlight'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
-  title: 'Reading List',
+  title: 'Library',
   description:
     'A curated reading list for biblical study, theology, ministry, and Christian formation.',
 }
@@ -38,7 +37,7 @@ const essentialBooks: EssentialBook[] = (allBooks as LibraryBook[])
     categories: b.categories,
   }))
 
-// Hero display — first 6 essential books
+// Hero display: first 6 essential books
 const heroBooks = essentialBooks.slice(0, 6)
 
 // Category tiles for the featured section
@@ -76,97 +75,6 @@ const allCategories = ALL_CATEGORY_ORDER
   .filter((cat) => allBooks.some((b) => b.categories.includes(cat)))
   .map((cat) => ({ name: cat, count: allBooks.filter((b) => b.categories.includes(cat)).length }))
 
-// Placeholder book reviews — one per major section
-const BOOK_REVIEWS: ReviewItem[] = [
-  {
-    slug: 'the-knowledge-of-the-holy',
-    category: 'Theology',
-    book: 'The Knowledge of the Holy',
-    author: 'A. W. Tozer',
-    cover: '/book-covers/the-knowledge-of-the-holy.webp',
-    pullQuote: 'Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery.',
-    excerpt:
-      'There are few books that have shaped my theology more than this brief, luminous meditation on the character of God. Tozer writes not as a scholar constructing an argument, but as a worshiper beholding a mystery. Every sentence carries weight. I return to it every few years and leave more humbled than when I started.',
-    amazonUrl: 'https://www.amazon.com/dp/0060724579',
-  },
-  {
-    slug: 'the-reason-for-god',
-    category: 'Apologetics',
-    book: 'The Reason for God',
-    author: 'Timothy Keller',
-    cover: '/book-covers/the-reason-for-god.webp',
-    pullQuote: 'Keller takes the skeptic\'s best objections seriously and answers them with intellectual rigor and pastoral warmth.',
-    excerpt:
-      'Keller does what few apologists manage: he takes the skeptic\'s best objections seriously and answers them with intellectual rigor and pastoral warmth. This is the book I hand to every thoughtful unbeliever I know — and to every believer who has stopped asking hard questions.',
-    amazonUrl: 'https://www.amazon.com/dp/1594483493',
-  },
-  {
-    slug: 'mere-christianity',
-    category: 'Classics',
-    book: 'Mere Christianity',
-    author: 'C. S. Lewis',
-    cover: '/book-covers/mere-christianity.webp',
-    pullQuote: 'Lewis writes with a clarity that makes difficult things feel obvious in the best way.',
-    excerpt:
-      'Lewis writes with a clarity that makes difficult things feel obvious in the best way. His moral argument for God\'s existence alone is worth the price of the book. I have read this at least six times and find something new on every pass. It remains one of the most important books in my library.',
-    amazonUrl: 'https://www.amazon.com/dp/0060652926',
-  },
-  {
-    slug: 'how-to-read-the-bible-for-all-its-worth',
-    category: 'Bible Study',
-    book: 'How to Read the Bible for All Its Worth',
-    author: 'Gordon D. Fee & Douglas Stuart',
-    cover: '/book-covers/how-to-read-the-bible-for-all-its-worth.webp',
-    pullQuote: 'If I could require one book for every church member, it might be this one.',
-    excerpt:
-      'If I could require one book for every church member, it might be this one. Fee and Stuart equip ordinary readers to engage Scripture with intelligence and humility — honoring the text\'s genre, history, and original audience — without requiring seminary training to do so.',
-    amazonUrl: 'https://www.amazon.com/dp/0310246040',
-  },
-  {
-    slug: 'gentle-and-lowly',
-    category: 'Christian Living',
-    book: 'Gentle and Lowly',
-    author: 'Dane Ortlund',
-    cover: '/book-covers/gentle-and-lowly.webp',
-    pullQuote: 'I\'ve watched this book quietly change people. Pastors especially need it — perhaps more than anyone.',
-    excerpt:
-      'Ortlund draws from the Puritans and the Gospels to make the case that the deepest truth about Jesus is his tenderness toward sinners and sufferers. I\'ve watched this book quietly change people. Pastors especially need it — perhaps more than anyone.',
-    amazonUrl: 'https://www.amazon.com/dp/1433566257',
-  },
-  {
-    slug: 'the-valley-of-vision',
-    category: 'Prayer',
-    book: 'The Valley of Vision',
-    author: 'Arthur Bennett (ed.)',
-    cover: '/book-covers/the-valley-of-vision.webp',
-    pullQuote: 'These are the most honest, theologically rich prayers I have ever encountered. My copy is worn from daily use.',
-    excerpt:
-      'The Puritan prayers in this collection are the most honest, theologically rich prayers I have ever encountered. They have taught me to pray with more precision and more desperation. My copy is worn from daily use. There is nothing else quite like it.',
-    amazonUrl: 'https://www.amazon.com/dp/0851512283',
-  },
-  {
-    slug: 'biblical-preaching',
-    category: 'Preaching',
-    book: 'Biblical Preaching',
-    author: 'Haddon Robinson',
-    cover: '/book-covers/biblical-preaching.webp',
-    pullQuote: 'Required reading for anyone who stands behind a pulpit.',
-    excerpt:
-      'Robinson\'s exposition of expository preaching formed an entire generation of preachers, and for good reason. The "big idea" method he teaches keeps the text in the driver\'s seat and the preacher where he belongs — as a herald, not a performer. Required reading for anyone who stands behind a pulpit.',
-    amazonUrl: 'https://www.amazon.com/dp/0801049121',
-  },
-  {
-    slug: 'the-cost-of-discipleship',
-    category: 'Discipleship',
-    book: 'The Cost of Discipleship',
-    author: 'Dietrich Bonhoeffer',
-    cover: '/book-covers/the-cost-of-discipleship.webp',
-    pullQuote: 'Bonhoeffer wrote this from a position of costly obedience — and it shows on every page.',
-    excerpt:
-      'Bonhoeffer wrote this from a position of costly obedience, and it shows. His distinction between cheap grace and costly grace remains one of the most important diagnoses of contemporary Christianity. Difficult, searching, and ultimately transformative.',
-    amazonUrl: 'https://www.amazon.com/dp/0684815001',
-  },
-]
 
 export default function LibraryPage() {
   return (
@@ -194,7 +102,7 @@ export default function LibraryPage() {
                   textTransform: 'uppercase',
                   letterSpacing: '-0.02em',
                   lineHeight: 0.95,
-                  color: '#F9F6F0',
+                  color: '#FFFFFF',
                 }}
               >
                 Library
@@ -209,7 +117,7 @@ export default function LibraryPage() {
                   maxWidth: 300,
                 }}
               >
-                Books worth your time — for study, formation, and ministry.
+                Books worth your time, for study, formation, and ministry.
               </p>
               <p
                 className="text-[0.68rem] font-medium tracking-[0.1em] uppercase"
@@ -234,7 +142,7 @@ export default function LibraryPage() {
         }}
       />
 
-      {/* ── Hero — split layout ────────────────────────────────────────────── */}
+      {/* ── Hero: split layout ────────────────────────────────────────────── */}
       <div style={{ background: '#141210' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col lg:flex-row gap-14 lg:gap-16 items-center">
@@ -256,7 +164,7 @@ export default function LibraryPage() {
                   textTransform: 'uppercase',
                   letterSpacing: '-0.02em',
                   lineHeight: 0.95,
-                  color: '#F9F6F0',
+                  color: '#FFFFFF',
                 }}
               >
                 Books that shape
@@ -273,16 +181,16 @@ export default function LibraryPage() {
                 }}
               >
                 {allBooks.length} books curated for biblical study, theology, preaching,
-                and Christian formation — from the essential classics to the most important
+                and Christian formation, from the essential classics to the most important
                 titles being written today.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
-                  href="/reading/browse"
+                  href="/library/browse"
                   className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 transition-all duration-200"
                   style={{
                     background: '#7A5C1E',
-                    color: '#F9F6F0',
+                    color: '#FFFFFF',
                     fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                     fontSize: '1rem',
                     fontWeight: 600,
@@ -297,7 +205,7 @@ export default function LibraryPage() {
                 </Link>
                 <a
                   href="#essential"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border transition-all duration-200 hover:border-[#7A5C1E] hover:text-[#F9F6F0]"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border transition-all duration-200 hover:border-[#7A5C1E] hover:text-[#FFFFFF]"
                   style={{
                     borderColor: 'rgba(255,255,255,0.12)',
                     color: 'rgba(249,246,240,0.45)',
@@ -339,14 +247,14 @@ export default function LibraryPage() {
       </div>
 
       {/* ── Essential Reading ──────────────────────────────────────────────── */}
-      <div id="essential" style={{ background: '#FAFAF7', borderTop: '1px solid #E2DACE', borderBottom: '1px solid #E2DACE' }}>
+      <div id="essential" style={{ background: '#FFFFFF', borderTop: '1px solid #E4E4E7', borderBottom: '1px solid #E4E4E7' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
           <div
             className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
             style={{ color: '#9A9189' }}
           >
             Essential Reading
-            <span className="flex-1 h-px" style={{ background: '#E2DACE' }} />
+            <span className="flex-1 h-px" style={{ background: '#E4E4E7' }} />
             <span style={{ color: '#6E5A2E' }}>Click any book for details &amp; Amazon link</span>
           </div>
 
@@ -355,7 +263,7 @@ export default function LibraryPage() {
 
           <div className="flex justify-end mt-8">
             <Link
-              href="/reading/browse?category=Classics"
+              href="/library/browse?category=Classics"
               className="text-[0.68rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
               style={{ color: '#6E5A2E' }}
             >
@@ -366,14 +274,11 @@ export default function LibraryPage() {
       </div>
 
       {/* ── Browse by Category (featured + expandable all) ─────────────────── */}
-      <div style={{ background: '#F0EDE6' }}>
+      <div style={{ background: '#F4F4F5' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
           <LibraryCategoryExpander featured={featuredCategories} all={allCategories} />
         </div>
       </div>
-
-      {/* ── From the Desk — rotating review spotlight ─────────────────────── */}
-      <LibraryReviewSpotlight reviews={BOOK_REVIEWS} />
 
       {/* ── Explore CTA ───────────────────────────────────────────────────── */}
       <div style={{ background: '#0E0C0A' }}>
@@ -393,7 +298,7 @@ export default function LibraryPage() {
               textTransform: 'uppercase',
               letterSpacing: '-0.02em',
               lineHeight: 0.95,
-              color: '#F9F6F0',
+              color: '#FFFFFF',
             }}
           >
             {allBooks.length} books. Every category.
@@ -408,11 +313,11 @@ export default function LibraryPage() {
               color: 'rgba(249,246,240,0.35)',
             }}
           >
-            Filter by topic, audience, reading level, or recommendation — or just browse.
+            Filter by topic, audience, reading level, or recommendation, or just browse.
           </p>
           <Link
-            href="/reading/browse"
-            className="inline-flex items-center gap-3 px-8 py-4 border transition-all duration-200 hover:bg-[#7A5C1E] hover:border-[#7A5C1E] hover:text-[#F9F6F0]"
+            href="/library/browse"
+            className="inline-flex items-center gap-3 px-8 py-4 border transition-all duration-200 hover:bg-[#7A5C1E] hover:border-[#7A5C1E] hover:text-[#FFFFFF]"
             style={{
               borderColor: '#CDB079',
               color: '#CDB079',
@@ -428,6 +333,10 @@ export default function LibraryPage() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
+          <p className="mt-10 max-w-md text-[0.72rem] leading-relaxed" style={{ color: 'rgba(255,255,255,0.42)' }}>
+            Book links go to Amazon and some are affiliate links, which cost you nothing.{' '}
+            <Link href="/about/disclosure" className="underline underline-offset-2 hover:text-white">Read the disclosure</Link>.
+          </p>
         </div>
       </div>
     </>

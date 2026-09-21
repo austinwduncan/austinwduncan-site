@@ -48,7 +48,7 @@ export function LibraryCategoryExpander({
         {featured.map((cat) => (
           <Link
             key={cat.name}
-            href={`/reading/browse?category=${encodeURIComponent(cat.name)}`}
+            href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
             className="group relative overflow-hidden block"
             style={{ aspectRatio: '4/3' }}
           >
@@ -71,7 +71,7 @@ export function LibraryCategoryExpander({
                 {cat.count} books
               </span>
               <h3
-                className="transition-colors group-hover:text-[#F9F6F0]"
+                className="transition-colors group-hover:text-[#FFFFFF]"
                 style={{
                   fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
@@ -102,9 +102,9 @@ export function LibraryCategoryExpander({
             {all.map((cat) => (
               <Link
                 key={cat.name}
-                href={`/reading/browse?category=${encodeURIComponent(cat.name)}`}
-                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-gold hover:bg-[#FEFCF7]"
-                style={{ borderColor: '#D8D0C4', background: '#F5F2EB' }}
+                href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
+                className="group inline-flex items-center gap-2 px-3.5 py-2 border transition-all duration-200 hover:border-gold hover:bg-[#FFFFFF]"
+                style={{ borderColor: '#D8D0C4', background: '#F4F4F5' }}
               >
                 <span
                   className="text-[0.67rem] font-medium tracking-[0.08em] transition-colors group-hover:text-[#7A5C1E]"

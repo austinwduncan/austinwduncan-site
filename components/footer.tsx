@@ -16,6 +16,7 @@ const sections = [
       { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
       { href: '/library/series', label: 'Series' },
       { href: '/library/bible', label: 'Scripture Atlas' },
+      { href: '/library', label: 'Library' },
       { href: '/resources', label: 'Resources' },
       { href: '/about', label: 'About' },
     ],

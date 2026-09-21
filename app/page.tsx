@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   PALETTE, distributed to the intended weights rather than nominally present:
     ~55% soft black #171918   hero, mosaic, index
     ~20% graphite   #2C302F   mission, recent sermons, closing
-    ~10% warm bone  #EEEAE1   the Start Here funnel, a real light band
+    ~10% warm bone  #FFFFFF   the Start Here funnel, a real light band
     ~8%  gold       #CDB079   headings accents, rules, the primary CTA
     ~5%  accent-2             eyebrow rules, chips, icons, hovers
     ~2%  stone      #AAA79E   metadata
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 const BLACK = '#171918'
 const GRAPHITE = '#2C302F'
 const GOLD = '#CDB079'
-const BONE = '#EEEAE1'
+const BONE = '#FFFFFF'
 const STONE = '#AAA79E'
 
 /* The one place the heading typeface is named. */
@@ -153,7 +153,7 @@ function CornerBracket({
   }
   const colors = {
     gold: 'rgba(205,176,121,0.5)',
-    bone: 'rgba(238,234,225,0.28)',
+    bone: 'rgba(255,255,255,0.28)',
     accent: 'var(--awd-accent-2)',
   }
   return (
@@ -171,9 +171,9 @@ function GlassPill({ children }: { children: React.ReactNode }) {
       className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] backdrop-blur"
       style={{
         fontFamily: HEADING,
-        borderColor: 'rgba(238,234,225,0.18)',
+        borderColor: 'rgba(255,255,255,0.18)',
         background: 'rgba(23,25,24,0.45)',
-        color: 'rgba(238,234,225,0.82)',
+        color: 'rgba(255,255,255,0.82)',
       }}
     >
       {children}
@@ -230,7 +230,7 @@ function Tile({
       </Heading>
       <p
         className="mt-3 text-[0.95rem] leading-relaxed"
-        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.6)' }}
+        style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.6)' }}
       >
         {blurb}
       </p>
@@ -261,7 +261,7 @@ function SectionHead({
               style={{
                 fontFamily: HEADING,
                 borderColor: 'color-mix(in srgb, var(--awd-accent-2) 45%, transparent)',
-                background: 'rgba(238,234,225,0.04)',
+                background: 'rgba(255,255,255,0.04)',
                 color: BONE,
               }}
             >
@@ -276,7 +276,7 @@ function SectionHead({
         <ScrollReveal delay={200}>
           <p
             className="mt-7 max-w-2xl text-[1.02rem] leading-[1.85]"
-            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.66)' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.66)' }}
           >
             {intro}
           </p>
@@ -291,7 +291,7 @@ function IndexRow({ piece, n }: { piece: Piece; n?: number }) {
     <Link
       href={piece.href}
       className="group flex gap-4 border-b py-4 transition-colors"
-      style={{ borderColor: 'rgba(238,234,225,0.10)' }}
+      style={{ borderColor: 'rgba(255,255,255,0.10)' }}
     >
       {n !== undefined && (
         <span className="w-6 shrink-0 pt-1 text-right text-[0.7rem] font-semibold tabular-nums"
@@ -336,6 +336,13 @@ function imageFor(p: Sermon): string | undefined {
     (p.youtubeId ? `https://i.ytimg.com/vi/${p.youtubeId}/hqdefault.jpg` : undefined)
   )
 }
+
+/*
+  Austin's personal pastoral mission statement, shown on the white band
+  under the hero. His words, verbatim. Edit here and nowhere else.
+*/
+const MISSION =
+  'My mission as a pastor is to faithfully preach the Word, shepherd people well, make disciples who make disciples, and develop leaders who can carry the mission of Jesus into the church, their homes, their communities, and wherever God sends them.'
 
 export default async function HomePage() {
   const { pieces, series } = await loadLibrary()
@@ -447,7 +454,7 @@ export default async function HomePage() {
                 {featuredExcerpt && (
                   <ScrollReveal delay={160}>
                     <p className="mt-6 line-clamp-3 max-w-lg text-[1.02rem] leading-relaxed"
-                      style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.78)' }}>
+                      style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.78)' }}>
                       {clean(featuredExcerpt)}
                     </p>
                   </ScrollReveal>
@@ -476,7 +483,7 @@ export default async function HomePage() {
                       className="inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] backdrop-blur transition-colors hover:bg-white/10"
                       style={{
                         fontFamily: HEADING,
-                        borderColor: 'rgba(238,234,225,0.28)',
+                        borderColor: 'rgba(255,255,255,0.28)',
                         background: 'rgba(23,25,24,0.3)',
                         color: BONE,
                       }}
@@ -506,70 +513,68 @@ export default async function HomePage() {
         On bone, gold is 1.73 and steel 3.12, so text is graphite (11.13) and
         the numerals use the darkened gold at 5.53.
       */}
-      <section style={{ background: BONE }} className="relative py-24 lg:py-32">
+      <section style={{ background: BONE }} className="relative py-28 lg:py-40">
         <div className="mx-auto max-w-[1180px] px-6 text-center lg:px-10">
           <ScrollReveal>
-            {/*
-              Height is set inline rather than with a height utility: `h-11`
-              resolved to 560px on this element even though the generated rule
-              is identical to the nav's working `h-8`. Not fully root-caused;
-              an explicit height is deterministic either way.
-            */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/AWDLogoWhite.svg"
               alt=""
               aria-hidden
-              className="mx-auto mb-8 w-auto"
+              className="mx-auto mb-10 w-auto"
               style={{ height: '68px', filter: 'invert(1)', opacity: 0.62 }}
             />
           </ScrollReveal>
 
-          <ScrollReveal delay={80}>
-            <Heading size="md" color={BLACK}>Austin W. Duncan</Heading>
-          </ScrollReveal>
-
-          <ScrollReveal delay={140}>
+          <ScrollReveal delay={70}>
             <p
-              className="mx-auto mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.78rem] font-semibold uppercase tracking-[0.16em]"
-              style={{ fontFamily: HEADING, color: 'rgba(23,25,24,0.62)' }}
+              className="text-[0.7rem] font-semibold uppercase tracking-[0.24em]"
+              style={{ fontFamily: HEADING, color: '#6E5A2E' }}
             >
-              <span>Pastor and Bible teacher</span>
-              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
-              <span>Crosswalk Church</span>
-              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
-              <span>Brentwood, Tennessee</span>
+              My mission
             </p>
           </ScrollReveal>
 
-          <ScrollReveal delay={200}>
-            <dl className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-y-8 sm:grid-cols-4">
-              {[
-                { n: allSermons.length, label: 'Sermons' },
-                { n: allTeaching.length, label: 'Teaching sessions' },
-                { n: allWfw.length, label: 'Questions answered' },
-                { n: allExegetica.length, label: 'Papers' },
-              ].map(stat => (
-                <div key={stat.label} className="px-2">
-                  <dt
-                    className="tabular-nums leading-none"
-                    style={{ fontFamily: HEADING, fontSize: '2.6rem', fontWeight: 700, color: '#6E5A2E' }}
-                  >
-                    {stat.n}
-                  </dt>
-                  <dd
-                    className="mt-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em]"
-                    style={{ fontFamily: HEADING, color: 'rgba(23,25,24,0.55)' }}
-                  >
-                    {stat.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+          {/*
+            The statement is set as reading display: Montserrat at weight 600,
+            sentence case, tight but not negative tracking. Uppercase 700 (the
+            Heading component) turns a full sentence into a wall.
+          */}
+          <ScrollReveal delay={130}>
+            <blockquote
+              className="mx-auto mt-7 max-w-4xl text-balance"
+              style={{
+                fontFamily: HEADING,
+                fontWeight: 600,
+                fontSize: 'clamp(1.35rem, 2.2vw, 2.1rem)',
+                lineHeight: 1.3,
+                letterSpacing: '-0.012em',
+                color: BLACK,
+              }}
+            >
+              {MISSION}
+            </blockquote>
           </ScrollReveal>
 
-          <ScrollReveal delay={260}>
-            <div className="mt-12 flex flex-wrap justify-center gap-3">
+          <ScrollReveal delay={190}>
+            <span aria-hidden className="mx-auto mt-10 block h-px w-16" style={{ background: '#6E5A2E' }} />
+          </ScrollReveal>
+
+          <ScrollReveal delay={230}>
+            <p
+              className="mx-auto mt-8 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.78rem] font-semibold uppercase tracking-[0.16em]"
+              style={{ fontFamily: HEADING, color: 'rgba(23,25,24,0.62)' }}
+            >
+              <span style={{ color: BLACK }}>Austin W. Duncan</span>
+              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
+              <span>Pastor and Bible teacher</span>
+              <span style={{ color: 'var(--awd-accent-2)' }}>&middot;</span>
+              <span>Crosswalk Church, Brentwood, Tennessee</span>
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal delay={280}>
+            <div className="mt-11 flex flex-wrap justify-center gap-3">
               <Link
                 href="/about"
                 className="rounded-full px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.03]"
@@ -577,20 +582,6 @@ export default async function HomePage() {
               >
                 About me
               </Link>
-              <a
-                href="https://crosswalktn.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.14em] transition-colors hover:bg-white"
-                style={{
-                  fontFamily: HEADING,
-                  borderColor: 'color-mix(in srgb, var(--awd-accent-2) 55%, transparent)',
-                  color: GRAPHITE,
-                }}
-              >
-                Crosswalk Church
-                <ArrowRight size={13} className="-rotate-45 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </a>
             </div>
           </ScrollReveal>
         </div>
@@ -636,7 +627,7 @@ export default async function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={150}>
               <p className="mt-8 max-w-lg text-[1.05rem] leading-[1.9]"
-                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.8)' }}>
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.8)' }}>
                 My aim is simple: help you read Scripture carefully and understand
                 what you find, without pretending the hard parts are easy or the
                 easy parts are hard.
@@ -693,7 +684,7 @@ export default async function HomePage() {
                 blurb="What Scripture has to say about what is actually happening right now, written without flinching." />
             </ScrollReveal>
             <ScrollReveal delay={350}>
-              <Tile href="/reading" tag="Books worth your time" title="The Library"
+              <Tile href="/library" tag="Books worth your time" title="The Library"
                 image="/book-covers/knowing-god.webp" count="793"
                 blurb="Every book I recommend, sorted and rated, so you can spend your reading time on the ones that repay it." />
             </ScrollReveal>
@@ -815,7 +806,7 @@ export default async function HomePage() {
           <ScrollReveal>
             <div
               className="relative border p-8 backdrop-blur-md lg:p-12"
-              style={{ borderColor: 'color-mix(in srgb, var(--awd-accent-2) 40%, transparent)', background: 'rgba(238,234,225,0.05)' }}
+              style={{ borderColor: 'color-mix(in srgb, var(--awd-accent-2) 40%, transparent)', background: 'rgba(255,255,255,0.05)' }}
             >
               <CornerBracket position="tl" tone="accent" />
               <CornerBracket position="br" tone="accent" />
@@ -826,7 +817,7 @@ export default async function HomePage() {
                     Pick a series and read it
                   </Heading>
                   <p className="mt-6 text-[1.02rem] leading-[1.85]"
-                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(238,234,225,0.68)' }}>
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(255,255,255,0.68)' }}>
                     A single sermon helps. A book worked through end to end
                     changes how you read everything else.
                   </p>
@@ -834,13 +825,13 @@ export default async function HomePage() {
                 <div className="flex flex-wrap gap-2.5">
                   {[
                     { href: '/teaching', label: 'Browse series' },
-                    { href: '/reading', label: 'Library' },
+                    { href: '/library', label: 'Library' },
                     { href: '/library/bible', label: 'By Scripture' },
                     { href: '/about', label: 'About' },
                   ].map(l => (
                     <Link key={l.href} href={l.href}
                       className="group inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] backdrop-blur transition-colors hover:bg-white/10"
-                      style={{ fontFamily: HEADING, borderColor: 'rgba(238,234,225,0.2)', color: 'rgba(238,234,225,0.85)' }}>
+                      style={{ fontFamily: HEADING, borderColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.85)' }}>
                       {l.label}
                       <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                     </Link>

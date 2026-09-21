@@ -116,7 +116,7 @@ export default function VideoBackground({
       {/* Highlight roll-off: lifts the top the way print does. */}
       <span
         className="absolute inset-0 opacity-50"
-        style={{ background: 'linear-gradient(180deg, rgba(238,234,225,0.06) 0%, transparent 45%)' }}
+        style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 45%)' }}
       />
       {/* Dissolve into the next section. */}
       {fadeTo && (

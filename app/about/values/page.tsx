@@ -113,7 +113,7 @@ export default function ValuesPage() {
                   fontWeight: 700,
                   letterSpacing: '-0.02em',
                   lineHeight: 0.95,
-                  color: '#F9F6F0',
+                  color: '#FFFFFF',
                 }}
               >
                 Austin's Values
@@ -143,7 +143,7 @@ export default function ValuesPage() {
         }}
       />
 
-      <div style={{ background: '#FAFAF7' }}>
+      <div style={{ background: '#FFFFFF' }}>
         <div className="mx-auto max-w-[780px] px-6 lg:px-8 py-16">
           <p
             className="text-[0.97rem] leading-[1.8] mb-14"
@@ -199,13 +199,13 @@ export default function ValuesPage() {
                   </p>
                 </div>
                 {i < values.length - 1 && (
-                  <div className="h-px w-full" style={{ background: '#E2DACE' }} />
+                  <div className="h-px w-full" style={{ background: '#E4E4E7' }} />
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-14 pt-8 border-t" style={{ borderColor: '#E2DACE' }}>
+          <div className="mt-14 pt-8 border-t" style={{ borderColor: '#E4E4E7' }}>
             <Link
               href="/about"
               className="text-[0.8rem] transition-colors hover:text-[#7A5C1E]"

@@ -31,11 +31,11 @@ export default function GreekToolClient() {
           style={{
             fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             background: '#fff',
-            border: '1px solid #E2DACE',
+            border: '1px solid #E4E4E7',
             color: '#1A1714',
           }}
           onFocus={(e) => (e.target.style.borderColor = '#CDB079')}
-          onBlur={(e) => (e.target.style.borderColor = '#E2DACE')}
+          onBlur={(e) => (e.target.style.borderColor = '#E4E4E7')}
         />
         <div className="flex items-center gap-3 mt-2.5">
           <button
@@ -69,7 +69,7 @@ export default function GreekToolClient() {
         className="p-6 lg:p-8 leading-[2.2]"
         style={{
           background: '#fff',
-          border: '1px solid #E2DACE',
+          border: '1px solid #E4E4E7',
           fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
           color: '#1A1714',

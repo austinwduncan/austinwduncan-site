@@ -44,7 +44,7 @@ export function AboutBioHeadshot() {
       <div
         className="pl-4 border-l-2"
         style={{
-          borderColor: '#E2DACE',
+          borderColor: '#E4E4E7',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(14px)',
           transition: 'opacity 0.8s ease-out 0.35s, transform 0.8s ease-out 0.35s',

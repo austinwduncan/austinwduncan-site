@@ -48,7 +48,7 @@ export default function HeroPathCard() {
             <Link
               key={path.href}
               href={path.href}
-              className={`group flex items-start gap-3 px-5 py-4 transition-colors ${isActive ? 'bg-[#fefdf9]' : 'hover:bg-zinc-50'}`}
+              className={`group flex items-start gap-3 px-5 py-4 transition-colors ${isActive ? 'bg-[#FFFFFF]' : 'hover:bg-zinc-50'}`}
               onMouseEnter={() => setActiveIdx(i)}
             >
               {/* Gold active bar */}

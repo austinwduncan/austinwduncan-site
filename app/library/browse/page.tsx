@@ -4,7 +4,7 @@ import LibraryBrowser, { type LibraryBook } from '@/components/library-browser'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
-  title: 'Browse the Library — Austin W. Duncan',
+  title: 'Browse the Library',
   description:
     'Browse and search 800+ recommended books for biblical study, theology, ministry, and Christian formation.',
 }
@@ -64,8 +64,8 @@ export default async function LibraryBrowsePage({
                 style={{ color: '#CDB079' }}
               >
                 <Link
-                  href="/reading"
-                  className="transition-colors hover:text-[#F9F6F0]"
+                  href="/library"
+                  className="transition-colors hover:text-[#FFFFFF]"
                   style={{ color: 'rgba(249,246,240,0.4)' }}
                 >
                   Library
@@ -82,7 +82,7 @@ export default async function LibraryBrowsePage({
                   textTransform: 'uppercase',
                   letterSpacing: '-0.02em',
                   lineHeight: 0.95,
-                  color: '#F9F6F0',
+                  color: '#FFFFFF',
                 }}
               >
                 All Books

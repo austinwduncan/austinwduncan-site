@@ -122,7 +122,7 @@ export default function HomeHero({
             fontWeight: 700,
             letterSpacing: '-0.02em',
             lineHeight: 0.95,
-            color: '#F9F6F0',
+            color: '#FFFFFF',
           }}
         >
           Bible teaching for people who want to read Scripture carefully.

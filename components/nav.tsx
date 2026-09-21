@@ -23,6 +23,7 @@ const navLinks: NavLink[] = [
   { href: '/word-for-word', label: 'Word for Word' },
   { href: '/exegetica', label: 'Exegetica' },
   { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
+  { href: '/library', label: 'Library', exact: true },
   { href: '/about', label: 'About' },
 ]
 

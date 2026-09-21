@@ -193,7 +193,7 @@ function BookCard({
 
   return (
     <article className="group flex h-full flex-col overflow-hidden bg-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
-      {/* Cover + title info — clickable to open modal */}
+      {/* Cover + title info: clickable to open modal */}
       <button
         type="button"
         onClick={() => onClick(book)}
@@ -214,7 +214,7 @@ function BookCard({
           ) : (
             <CoverPlaceholder title={book.title} author={book.author} />
           )}
-          {/* Rec level badge — overlaid on cover so info section stays clean */}
+          {/* Rec level badge: overlaid on cover so info section stays clean */}
           {book.recommendationLevel && (
             <span className="absolute left-2 top-2">
               <RecBadge level={book.recommendationLevel} />
@@ -239,7 +239,7 @@ function BookCard({
         </div>
       </button>
 
-      {/* Amazon CTA — full-width bottom strip */}
+      {/* Amazon CTA: full-width bottom strip */}
       {href ? (
         <a
           href={href}
@@ -304,7 +304,7 @@ function BookModal({
 
         {/* Cover + scrollable details */}
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto sm:flex-row">
-          {/* Cover — fills the left panel at full height */}
+          {/* Cover: fills the left panel at full height */}
           <div className="relative shrink-0 bg-zinc-100 sm:w-[220px] sm:self-stretch">
             {hasImage ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -465,7 +465,7 @@ export default function LibraryBrowser({
     return () => clearTimeout(timer)
   }, [rawQuery])
 
-  // Faceted counts — per-dimension counts based on all other active filters
+  // Faceted counts: per-dimension counts based on all other active filters
   const facetCounts = useMemo(() => {
     const countFor = (
       exclude: keyof Filters,
@@ -524,7 +524,7 @@ export default function LibraryBrowser({
 
   const FilterSidebar = (
     <aside className="w-full lg:w-56 lg:shrink-0">
-      {/* Category — single select list */}
+      {/* Category: single select list */}
       <div className="border-b border-zinc-100 py-4">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-700">
           Category
@@ -687,7 +687,7 @@ export default function LibraryBrowser({
 
       {/* ── Main layout ──────────────────────────────────────────────────── */}
       <div className="flex gap-8 pt-6">
-        {/* Desktop sidebar — sticky with independent scroll */}
+        {/* Desktop sidebar: sticky with independent scroll */}
         <div className="hidden lg:sticky lg:top-[170px] lg:block lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto lg:pr-1">
           {FilterSidebar}
         </div>

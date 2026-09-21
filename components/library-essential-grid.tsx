@@ -88,7 +88,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
                 <span
                   key={cat}
                   className="px-2 py-0.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border"
-                  style={{ borderColor: '#E2DACE', color: '#9A9189' }}
+                  style={{ borderColor: '#E4E4E7', color: '#9A9189' }}
                 >
                   {cat}
                 </span>
@@ -111,7 +111,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
               target="_blank"
               rel="noreferrer sponsored"
               className="flex items-center justify-center gap-2 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-80"
-              style={{ background: '#7A5C1E', color: '#F9F6F0' }}
+              style={{ background: '#7A5C1E', color: '#FFFFFF' }}
             >
               View on Amazon
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -162,7 +162,7 @@ export function LibraryEssentialGrid({ books }: { books: EssentialBook[] }) {
               </div>
               <h3
                 className="mb-1"
-                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.15, color: '#F9F6F0' }}
+                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.15, color: '#FFFFFF' }}
               >
                 {book.title}
               </h3>

@@ -155,7 +155,7 @@
   line-height: 1.72;
   letter-spacing: 0;
   font-weight: 400;
-  background-color: #FAFAF7;
+  background-color: #FFFFFF;
 }
 
 /* Drop cap on the very first paragraph */
@@ -200,7 +200,7 @@
 .article-prose blockquote {
   margin: 2rem 0;
   padding: 1.5rem 1.75rem 1.25rem;
-  background-color: #F6F1E4;
+  background-color: #F4F4F5;
   background-image: repeating-linear-gradient(
     45deg, transparent, transparent 12px,
     rgba(205,176,121,0.04) 12px, rgba(205,176,121,0.04) 13px
@@ -316,7 +316,7 @@
   --awd-black: #171918;      /* soft black   */
   --awd-graphite: #2c302f;   /* graphite     */
   --awd-gold: #cdb079;       /* antique gold */
-  --awd-bone: #eeeae1;       /* warm bone    */
+  --awd-bone: #ffffff;       /* white        */
   --awd-stone: #aaa79e;      /* stone        */
 
   --awd-steel: #748790;      /* muted steel blue */

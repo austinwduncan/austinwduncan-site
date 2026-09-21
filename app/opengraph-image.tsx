@@ -32,7 +32,7 @@ export default function OGImage() {
         >
           <div
             style={{
-              color: '#F9F6F0',
+              color: '#FFFFFF',
               fontSize: 84,
               fontWeight: 700,
               letterSpacing: '-2px',

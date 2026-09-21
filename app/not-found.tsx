@@ -20,7 +20,7 @@ import Link from 'next/link'
 const BLACK = '#171918'
 const GRAPHITE = '#2C302F'
 const GOLD = '#CDB079'
-const BONE = '#EEEAE1'
+const BONE = '#FFFFFF'
 const STONE = '#AAA79E'
 const STEEL = '#748790'
 
@@ -80,7 +80,7 @@ function DoorLink({
     <Link
       href={href}
       className="group block rounded-[3px] border px-5 py-4 transition-colors"
-      style={{ borderColor: 'rgba(238,234,225,0.10)', background: 'rgba(44,48,47,0.35)' }}
+      style={{ borderColor: 'rgba(255,255,255,0.10)', background: 'rgba(44,48,47,0.35)' }}
     >
       <span
         className="block"
@@ -159,7 +159,7 @@ export default function NotFound() {
       <div className="mx-auto max-w-[68rem]">
         <div
           className="relative px-6 py-12 sm:px-10 sm:py-16"
-          style={{ border: '1px solid rgba(238,234,225,0.08)', borderRadius: 3 }}
+          style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: 3 }}
         >
           <Bracket corner="tl" />
           <Bracket corner="tr" />
@@ -188,7 +188,7 @@ export default function NotFound() {
               fontFamily: SERIF,
               fontSize: 'clamp(1.02rem, 1.35vw, 1.2rem)',
               lineHeight: 1.72,
-              color: 'rgba(238,234,225,0.74)',
+              color: 'rgba(255,255,255,0.74)',
             }}
           >
             Every sermon, study, article and paper ever published here still answers at the

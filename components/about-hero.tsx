@@ -72,7 +72,7 @@ export function AboutHero() {
               fontWeight: 700,
               letterSpacing: '-0.02em',
               lineHeight: 0.95,
-              color: '#F9F6F0',
+              color: '#FFFFFF',
             }}
           >
             Austin W<span style={{ color: '#C9984A' }}>.</span> Duncan

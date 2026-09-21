@@ -78,7 +78,7 @@ Dark dominant, roughly 55 / 20 / 10 / 8 / 5 / 2.
 ```
 --awd-black     #171918   soft black   ~55%   primary surface
 --awd-graphite  #2C302F   graphite     ~20%
---awd-bone      #EEEAE1   warm bone    ~10%   light bands, reading
+--awd-bone      #FFFFFF   white        ~10%   light bands, reading
 --awd-gold      #CDB079   antique gold  ~8%   THE signature
 --awd-accent-2            secondary     ~5%   steel #748790 or sage #7F8A78
 --awd-stone     #AAA79E   stone         ~2%   metadata
@@ -93,7 +93,7 @@ clear AA.
 
 | Surface | Rule |
 | :-- | :-- |
-| Warm bone | gold is **1.73** and stone **2.00**. Neither is ever text here. Use `#6E5A2E` (5.53) for the accent clause, graphite (11.13) for body. |
+| White | gold is **1.73** and stone **2.00**. Neither is ever text here. Use `#6E5A2E` (5.53) for the accent clause, graphite (11.13) for body. |
 | Graphite | the secondary accent falls to ~3.6. Large text or non-text only. |
 
 **Open decision:** secondary accent is still steel vs sage.

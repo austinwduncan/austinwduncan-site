@@ -130,7 +130,7 @@ export default function GreekPopover({ word, entries, loading, onClose, anchorEl
               fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '1.7rem',
               fontWeight: 400,
-              color: '#F9F6F0',
+              color: '#FFFFFF',
               lineHeight: 1,
               display: 'block',
             }}
@@ -296,12 +296,12 @@ function EntryPanel({
           </p>
         )}
         {meaningText && (
-          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.92rem', color: '#F9F6F0', lineHeight: 1.6 }}>
+          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.92rem', color: '#FFFFFF', lineHeight: 1.6 }}>
             {meaningText}
           </p>
         )}
         {showAlgoMeaning && (
-          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.02rem', color: '#F9F6F0', fontStyle: 'italic', lineHeight: 1.4 }}>
+          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.02rem', color: '#FFFFFF', fontStyle: 'italic', lineHeight: 1.4 }}>
             &ldquo;{entry.inflected_gloss}&rdquo;
           </p>
         )}

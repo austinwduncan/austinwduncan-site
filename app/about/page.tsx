@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { AboutHero } from '@/components/about-hero'
 import { AboutBioHeadshot } from '@/components/about-bio-headshot'
@@ -24,14 +23,6 @@ const DEGREES = [
   { school: 'Bethel Theological Seminary', degree: 'Master of Divinity',                          focus: 'In progress · St. Paul, Minnesota' },
 ]
 
-const LOGOS = [
-  { src: '/images/Logos/cwc-full-logo-dark-color.png', alt: 'Crosswalk Church' },
-  { src: '/images/Logos/affiliation-symbis.png',       alt: 'SYMBIS Assessment' },
-  { src: '/images/Logos/affiliation-logos.png',        alt: 'Logos Bible Software' },
-  { src: '/images/Logos/affiliate-seekjesus.png',      alt: 'Seek Jesus' },
-  { src: '/images/Logos/affiliation-dailykairos.png',  alt: 'Daily Kairos' },
-]
-
 export default function AboutPage() {
   return (
     <>
@@ -51,7 +42,7 @@ export default function AboutPage() {
       />
 
       {/* ── BIO ───────────────────────────────────────────────────────────── */}
-      <section style={{ background: '#FAFAF7' }}>
+      <section style={{ background: '#FFFFFF' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-[1fr_300px] gap-14 lg:gap-20 items-start">
 
@@ -113,7 +104,7 @@ export default function AboutPage() {
               fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
               fontWeight: 300,
               fontStyle: 'italic',
-              color: '#F9F6F0',
+              color: '#FFFFFF',
             }}
           >
             "It's my desire that while in service to others, my life reflects a total reliance on
@@ -123,7 +114,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── MISSION ───────────────────────────────────────────────────────── */}
-      <section style={{ background: '#FAFAF7' }}>
+      <section style={{ background: '#FFFFFF' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-3">
             <span className="h-px w-8" style={{ background: '#CDB079' }} />
@@ -145,9 +136,9 @@ export default function AboutPage() {
             Four Commitments
           </h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 border-l" style={{ borderColor: '#E2DACE' }}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 border-l" style={{ borderColor: '#E4E4E7' }}>
             {MISSION.map((m) => (
-              <div key={m.n} className="pl-6 pr-4 pb-8 pt-1 border-r" style={{ borderColor: '#E2DACE' }}>
+              <div key={m.n} className="pl-6 pr-4 pb-8 pt-1 border-r" style={{ borderColor: '#E4E4E7' }}>
                 <div className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-4" style={{ color: '#C9984A' }}>
                   {m.n}
                 </div>
@@ -170,7 +161,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── EDUCATION ─────────────────────────────────────────────────────── */}
-      <section style={{ background: '#F0EDE6' }}>
+      <section style={{ background: '#F4F4F5' }}>
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-3">
             <span className="h-px w-8" style={{ background: '#CDB079' }} />
@@ -194,7 +185,7 @@ export default function AboutPage() {
 
           <div className="grid sm:grid-cols-2 gap-px" style={{ background: '#D8D0C4' }}>
             {DEGREES.map((d) => (
-              <div key={d.school} className="px-8 py-7" style={{ background: '#F0EDE6' }}>
+              <div key={d.school} className="px-8 py-7" style={{ background: '#F4F4F5' }}>
                 <p className="text-[0.68rem] font-medium tracking-[0.1em] uppercase mb-2" style={{ color: '#9A9189' }}>
                   {d.school}
                 </p>
@@ -232,7 +223,7 @@ export default function AboutPage() {
               fontWeight: 700,
               letterSpacing: '-0.02em',
               lineHeight: 0.95,
-              color: '#F9F6F0',
+              color: '#FFFFFF',
             }}
           >
             What Austin Believes &amp; How He Serves
@@ -265,7 +256,7 @@ export default function AboutPage() {
                   </div>
                   <h3
                     
-                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.8rem, 2.5vw, 2.4rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#F9F6F0' }}
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.8rem, 2.5vw, 2.4rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#FFFFFF' }}
                   >
                     {card.title}
                   </h3>
@@ -296,39 +287,6 @@ export default function AboutPage() {
               style={{ color: 'rgba(255,255,255,0.22)' }}
             >
               Frequently Asked Questions →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── AFFILIATIONS ──────────────────────────────────────────────────── */}
-      <section style={{ background: '#F5F2EB' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14 lg:py-16">
-          <p
-            className="text-[0.62rem] font-medium tracking-[0.18em] uppercase mb-8 text-center"
-            style={{ color: '#9A9189' }}
-          >
-            Affiliated with
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-10 lg:gap-14">
-            {LOGOS.map((l) => (
-              <Image
-                key={l.src}
-                src={l.src}
-                alt={l.alt}
-                width={140}
-                height={48}
-                className="h-9 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
-              />
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link
-              href="/about/disclosure"
-              className="text-[0.74rem] tracking-[0.06em] transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#B0A898' }}
-            >
-              Affiliation Disclosure →
             </Link>
           </div>
         </div>
