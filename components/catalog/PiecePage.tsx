@@ -10,6 +10,7 @@ import SermonNotes from "@/components/SermonNotes";
 import SermonParagraph from "@/components/SermonParagraph";
 import SermonHeading from "@/components/SermonHeading";
 import SermonScripture from "@/components/SermonScripture";
+import ReadMarker from "@/components/read-marker";
 import { getSermon, parseSermonBody, sermonSections, readingTime } from "@/lib/sermons";
 import { getSeries } from "@/lib/series";
 import { CATEGORIES, pathFor, type Category } from "@/lib/categories";
@@ -92,6 +93,8 @@ export default async function PiecePage({ slug, category }: { slug: string; cate
 
   return (
     <>
+      {/* Writes the bare slug to the read_articles key the Browse hub reads. */}
+      <ReadMarker slug={s.slug} />
       <SermonScripture />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {videoLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoLd) }} />}

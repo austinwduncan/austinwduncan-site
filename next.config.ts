@@ -39,7 +39,6 @@ const nextConfig: NextConfig = {
         destination: 'https://austinwduncan.com/:path*',
         permanent: true,
       },
-      go('/browse', '/'),
       go('/reading', '/library'),
       go('/reading/browse', '/library/browse'),
       go('/library/in-the-text', '/teaching'),

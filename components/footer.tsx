@@ -4,6 +4,7 @@ const sections = [
   {
     heading: 'Content',
     links: [
+      { href: '/browse', label: 'Browse' },
       { href: '/sermons', label: 'Sermons' },
       { href: '/teaching', label: 'In the Text' },
       { href: '/word-for-word', label: 'Word for Word' },

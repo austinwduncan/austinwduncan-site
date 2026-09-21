@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { type LibraryBook } from '@/components/library-browser'
 import { LibraryEssentialGrid, type EssentialBook } from '@/components/library-essential-grid'
-import { LibraryCategoryExpander } from '@/components/library-category-expander'
 import rawBooks from '@/data/books.json'
 
 export const metadata: Metadata = {
@@ -37,30 +35,6 @@ const essentialBooks: EssentialBook[] = (allBooks as LibraryBook[])
     categories: b.categories,
   }))
 
-// Hero display: first 6 essential books
-const heroBooks = essentialBooks.slice(0, 6)
-
-// Category tiles for the featured section
-const CATEGORY_DEFS: { name: string; cover: string }[] = [
-  { name: 'Theology',       cover: '/book-covers/knowing-god.webp' },
-  { name: 'Apologetics',    cover: '/book-covers/another-gospel.webp' },
-  { name: 'Classics',       cover: '/book-covers/mere-christianity.webp' },
-  { name: 'Bible Study',    cover: '/book-covers/how-to-read-the-bible-for-all-its-worth.webp' },
-  { name: 'Christian Living', cover: '/book-covers/gentle-and-lowly.webp' },
-  { name: 'Church History', cover: '/book-covers/the-oxford-dictionary-of-the-christian-church.webp' },
-  { name: 'Hermeneutics',   cover: '/book-covers/how-to-read-the-bible-for-all-its-worth.webp' },
-  { name: 'Prayer',         cover: '/book-covers/the-valley-of-vision.webp' },
-  { name: 'Preaching',      cover: '/book-covers/expository-exultation.webp' },
-  { name: 'Pastoral',       cover: '/book-covers/the-flourishing-pastor.webp' },
-  { name: 'Discipleship',   cover: '/book-covers/the-cost-of-discipleship.webp' },
-  { name: 'Christology',    cover: '/book-covers/the-reason-for-god.webp' },
-]
-
-const featuredCategories = CATEGORY_DEFS.map((def) => ({
-  ...def,
-  count: allBooks.filter((b) => b.categories.includes(def.name)).length,
-})).filter((c) => c.count > 0)
-
 // All available categories for the "View All" section
 const ALL_CATEGORY_ORDER = [
   'Apologetics', 'Archaeology & Biblical History', 'Bible Dictionaries', 'Bible Languages/Tools',
@@ -76,269 +50,202 @@ const allCategories = ALL_CATEGORY_ORDER
   .map((cat) => ({ name: cat, count: allBooks.filter((b) => b.categories.includes(cat)).length }))
 
 
-export default function LibraryPage() {
+/*
+  The shelf: featured covers standing on one black rule, with a category spine
+  between every few books. The spines are real links, so the one decorative
+  device on the page also navigates. Rendered twice for a seamless drift.
+*/
+const shelfSeen = new Set<string>()
+const shelfBooks = allBooks
+  .filter((b) => {
+    if (!b.featured || !b.coverImageUrl || shelfSeen.has(b.title)) return false
+    shelfSeen.add(b.title)
+    return true
+  })
+  .slice(0, 30)
+const spineCategories = allCategories.slice().sort((a, b) => b.count - a.count).slice(0, 6)
+
+type ShelfItem =
+  | { kind: 'book'; title: string; cover: string }
+  | { kind: 'spine'; name: string; count: number; tone: 'ink' | 'gold' }
+
+const shelf: ShelfItem[] = []
+shelfBooks.forEach((b, i) => {
+  shelf.push({ kind: 'book', title: b.title, cover: b.coverImageUrl! })
+  if (i % 5 === 4) {
+    const c = spineCategories[((i + 1) / 5 - 1) % spineCategories.length]
+    if (c) shelf.push({ kind: 'spine', name: c.name, count: c.count, tone: ((i + 1) / 5) % 2 === 0 ? 'gold' : 'ink' })
+  }
+})
+
+const INK = '#171918'
+const GOLD = '#CDB079'
+const GOLD_INK = '#6E5A2E'
+const FACE = 'var(--font-cmg), system-ui, sans-serif'
+
+function Shelf({ hidden = false }: { hidden?: boolean }) {
   return (
-    <>
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
-          <div
-            className="flex items-end justify-between gap-8 pb-10 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
-          >
-            <div>
-              <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#CDB079' }}
-              >
-                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
-                Resources
-              </div>
-              <h1
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 0.95,
-                  color: '#FFFFFF',
-                }}
-              >
-                Library
-              </h1>
-            </div>
-            <div className="text-right pb-0.5 shrink-0">
-              <p
-                className="text-[0.9rem] italic leading-relaxed mb-1 hidden sm:block"
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  color: 'rgba(255,255,255,0.35)',
-                  maxWidth: 300,
-                }}
-              >
-                Books worth your time, for study, formation, and ministry.
-              </p>
-              <p
-                className="text-[0.68rem] font-medium tracking-[0.1em] uppercase"
-                style={{ color: 'rgba(255,255,255,0.18)' }}
-              >
-                {allBooks.length} books
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Amber strip ────────────────────────────────────────────────────── */}
-      <div
-        className="h-[14px] w-full"
-        style={{
-          backgroundColor: '#7A5C1E',
-          backgroundImage: `
-            repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
-            repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
-          `,
-        }}
-      />
-
-      {/* ── Hero: split layout ────────────────────────────────────────────── */}
-      <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20">
-          <div className="flex flex-col lg:flex-row gap-14 lg:gap-16 items-center">
-
-            {/* Left: editorial statement */}
-            <div className="flex-1 min-w-0">
-              <div
-                className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase mb-6"
-                style={{ color: '#7A5C1E' }}
-              >
-                A Reading List Worth Your Time
-              </div>
-              <h2
-                className="mb-6"
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  fontSize: 'clamp(2.4rem, 4.5vw, 4rem)',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 0.95,
-                  color: '#FFFFFF',
-                }}
-              >
-                Books that shape
-                <br />
-                <em style={{ color: '#C9984A', fontStyle: 'normal' }}>faithful minds.</em>
-              </h2>
-              <p
-                className="text-[0.95rem] leading-[1.85] mb-8"
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  fontStyle: 'italic',
-                  color: 'rgba(249,246,240,0.42)',
-                  maxWidth: 420,
-                }}
-              >
-                {allBooks.length} books curated for biblical study, theology, preaching,
-                and Christian formation, from the essential classics to the most important
-                titles being written today.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/library/browse"
-                  className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 transition-all duration-200"
-                  style={{
-                    background: '#7A5C1E',
-                    color: '#FFFFFF',
-                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  Browse the Full Library
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-                <a
-                  href="#essential"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border transition-all duration-200 hover:border-[#7A5C1E] hover:text-[#FFFFFF]"
-                  style={{
-                    borderColor: 'rgba(255,255,255,0.12)',
-                    color: 'rgba(249,246,240,0.45)',
-                    fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  Essential Reading ↓
-                </a>
-              </div>
-            </div>
-
-            {/* Right: book cover collage */}
-            <div className="w-full lg:w-[40%] shrink-0">
-              <div className="grid grid-cols-3 gap-2.5">
-                {heroBooks.map((book) => (
-                  <div
-                    key={book.title}
-                    className="relative overflow-hidden shadow-lg"
-                    style={{ aspectRatio: '2/3' }}
-                  >
-                    <Image
-                      src={book.coverImageUrl}
-                      alt={book.title}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1024px) 13vw, 30vw"
-                      priority
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Essential Reading ──────────────────────────────────────────────── */}
-      <div id="essential" style={{ background: '#FFFFFF', borderTop: '1px solid #E4E4E7', borderBottom: '1px solid #E4E4E7' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
-          <div
-            className="flex items-center gap-2.5 text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-10"
-            style={{ color: '#9A9189' }}
-          >
-            Essential Reading
-            <span className="flex-1 h-px" style={{ background: '#E4E4E7' }} />
-            <span style={{ color: '#6E5A2E' }}>Click any book for details &amp; Amazon link</span>
-          </div>
-
-          {/* Client component: portrait grid with modal + Amazon */}
-          <LibraryEssentialGrid books={essentialBooks} />
-
-          <div className="flex justify-end mt-8">
-            <Link
-              href="/library/browse?category=Classics"
-              className="text-[0.68rem] font-medium tracking-[0.1em] uppercase transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#6E5A2E' }}
-            >
-              View all essential books →
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Browse by Category (featured + expandable all) ─────────────────── */}
-      <div style={{ background: '#F4F4F5' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-14">
-          <LibraryCategoryExpander featured={featuredCategories} all={allCategories} />
-        </div>
-      </div>
-
-      {/* ── Explore CTA ───────────────────────────────────────────────────── */}
-      <div style={{ background: '#0E0C0A' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-16 lg:py-20 flex flex-col items-center text-center">
-          <div
-            className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase mb-4"
-            style={{ color: '#7A5C1E' }}
-          >
-            The Full Library
-          </div>
-          <h2
-            className="mb-4"
-            style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
-              color: '#FFFFFF',
-            }}
-          >
-            {allBooks.length} books. Every category.
-            <br />
-            <em style={{ color: 'rgba(249,246,240,0.35)', fontStyle: 'normal' }}>Search, filter, explore.</em>
-          </h2>
-          <p
-            className="text-[0.88rem] leading-relaxed mb-8 max-w-sm"
-            style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontStyle: 'italic',
-              color: 'rgba(249,246,240,0.35)',
-            }}
-          >
-            Filter by topic, audience, reading level, or recommendation, or just browse.
-          </p>
+    <div className="flex shrink-0 items-end gap-3 pr-3" aria-hidden={hidden || undefined}>
+      {shelf.map((item, i) =>
+        item.kind === 'book' ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={i}
+            src={item.cover}
+            alt={hidden ? '' : item.title}
+            loading={hidden ? 'lazy' : undefined}
+            className="h-[150px] w-auto shrink-0 sm:h-[210px] lg:h-[250px]"
+            
+          />
+        ) : (
           <Link
-            href="/library/browse"
-            className="inline-flex items-center gap-3 px-8 py-4 border transition-all duration-200 hover:bg-[#7A5C1E] hover:border-[#7A5C1E] hover:text-[#FFFFFF]"
+            key={i}
+            href={`/library/browse?category=${encodeURIComponent(item.name)}`}
+            tabIndex={hidden ? -1 : undefined}
+            className="flex h-[170px] w-[44px] shrink-0 items-center justify-between py-3 sm:h-[236px] sm:w-[54px] lg:h-[280px] lg:w-[62px]"
             style={{
-              borderColor: '#CDB079',
-              color: '#CDB079',
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.04em',
+              background: item.tone === 'ink' ? INK : GOLD,
+              color: item.tone === 'ink' ? '#FFFFFF' : INK,
+              writingMode: 'vertical-rl',
+              fontFamily: FACE,
             }}
           >
-            Browse the Full Library
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            <span className="text-[0.95rem] font-bold tracking-[-0.01em] lg:text-[1.1rem]">{item.name}</span>
+            <span className="text-[0.7rem] font-semibold tabular-nums opacity-70">{item.count}</span>
           </Link>
-          <p className="mt-10 max-w-md text-[0.72rem] leading-relaxed" style={{ color: 'rgba(255,255,255,0.42)' }}>
-            Book links go to Amazon and some are affiliate links, which cost you nothing.{' '}
-            <Link href="/about/disclosure" className="underline underline-offset-2 hover:text-white">Read the disclosure</Link>.
+        ),
+      )}
+    </div>
+  )
+}
+
+export default function LibraryPage() {
+  const total = allBooks.length
+  return (
+    <div style={{ background: '#FFFFFF', color: INK, fontFamily: FACE }}>
+      {/* ── The word and the shelf ─────────────────────────────────────────── */}
+      <section className="relative overflow-hidden pt-10 lg:pt-14">
+        <div className="mx-auto flex max-w-[1500px] items-start justify-between gap-6 px-6 lg:px-10">
+          <h1
+            className="select-none"
+            style={{
+              fontFamily: FACE,
+              fontWeight: 800,
+              fontSize: 'clamp(4.6rem, 19.5vw, 23rem)',
+              lineHeight: 0.78,
+              letterSpacing: '-0.06em',
+              marginLeft: '-0.055em',
+              color: INK,
+            }}
+          >
+            Library
+          </h1>
+          <p
+            className="hidden shrink-0 pt-3 text-right tabular-nums sm:block"
+            style={{ fontWeight: 700, fontSize: 'clamp(1.1rem, 2.2vw, 2.2rem)', lineHeight: 1, letterSpacing: '-0.03em' }}
+          >
+            {total}
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(23,25,24,0.55)' }}>
+              books
+            </span>
           </p>
         </div>
-      </div>
-    </>
+
+        {/* covers stand on the rule; the word sits behind their tops */}
+        <div className="relative -mt-[3.2vw] lg:-mt-[2.4vw]">
+          <div className="awd-shelf flex w-max items-end">
+            <Shelf />
+            <Shelf hidden />
+          </div>
+          <div aria-hidden style={{ height: 7, background: INK }} />
+        </div>
+
+        <div className="mx-auto grid max-w-[1500px] gap-8 px-6 py-12 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:px-10 lg:py-16">
+          <p style={{ fontSize: 'clamp(1.25rem, 2vw, 1.9rem)', lineHeight: 1.3, fontWeight: 600, letterSpacing: '-0.015em', maxWidth: '28ch' }}>
+            Every book I recommend, sorted by subject, reader and how strongly I would push it into your hands.
+          </p>
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <Link
+              href="/library/browse"
+              className="rounded-full px-8 py-4 text-[0.85rem] font-bold transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ background: INK, color: '#FFFFFF', outlineColor: INK }}
+            >
+              Browse all {total}
+            </Link>
+            <a
+              href="#essential"
+              className="rounded-full border-2 px-8 py-4 text-[0.85rem] font-bold transition-colors duration-200 hover:bg-[#171918] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ borderColor: INK, outlineColor: INK }}
+            >
+              Start with the essentials
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Essentials ─────────────────────────────────────────────────────── */}
+      <section id="essential" className="scroll-mt-20" style={{ background: '#F4F4F5' }}>
+        <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
+          <div className="mb-12 grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+            <h2 style={{ fontWeight: 800, fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.045em' }}>
+              Start here
+            </h2>
+            <p className="max-w-[44ch] text-[1rem] leading-relaxed lg:justify-self-end" style={{ color: 'rgba(23,25,24,0.7)' }}>
+              The books I mark essential. Open any cover for why it is here and who it is for.
+            </p>
+          </div>
+          <LibraryEssentialGrid books={essentialBooks} />
+        </div>
+      </section>
+
+      {/* ── The index ──────────────────────────────────────────────────────── */}
+      <section>
+        <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
+          <h2 className="mb-10" style={{ fontWeight: 800, fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.045em' }}>
+            By subject
+          </h2>
+          <ul className="gap-x-12 sm:columns-2 lg:columns-3" style={{ borderTop: `3px solid ${INK}` }}>
+            {allCategories.map((cat) => (
+              <li key={cat.name} className="break-inside-avoid" style={{ borderBottom: '1px solid rgba(23,25,24,0.16)' }}>
+                <Link
+                  href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
+                  className="group flex items-baseline justify-between gap-4 px-2 py-3 transition-colors duration-150 hover:bg-[#171918] hover:text-white focus-visible:bg-[#171918] focus-visible:text-white focus-visible:outline-none"
+                >
+                  <span className="text-[1.15rem] font-semibold tracking-[-0.015em] lg:text-[1.3rem]">{cat.name}</span>
+                  <span className="text-[0.9rem] font-bold tabular-nums group-hover:text-[#CDB079] group-focus-visible:text-[#CDB079]" style={{ color: GOLD_INK }}>
+                    {cat.count}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── Closing block ──────────────────────────────────────────────────── */}
+      <section style={{ background: INK, color: '#FFFFFF' }}>
+        <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-20 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:px-10 lg:py-28">
+          <h2 style={{ fontWeight: 800, fontSize: 'clamp(2.6rem, 8vw, 8rem)', lineHeight: 0.86, letterSpacing: '-0.05em' }}>
+            All {total},<br />searchable.
+          </h2>
+          <div className="lg:justify-self-end">
+            <p className="max-w-[40ch] text-[1rem] leading-relaxed" style={{ color: 'rgba(255,255,255,0.72)' }}>
+              Filter by subject, audience, reading level or how strongly I recommend it.
+            </p>
+            <Link
+              href="/library/browse"
+              className="mt-7 inline-block rounded-full px-8 py-4 text-[0.85rem] font-bold transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ background: GOLD, color: INK, outlineColor: GOLD }}
+            >
+              Browse the library
+            </Link>
+            <p className="mt-8 max-w-[44ch] text-[0.75rem] leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Book links go to Amazon and some are affiliate links, which cost you nothing.{' '}
+              <Link href="/about/disclosure" className="underline underline-offset-2 hover:text-white">Read the disclosure</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

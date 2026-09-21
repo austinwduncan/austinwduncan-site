@@ -151,7 +151,8 @@ tags.
   wrong category path is permanently redirected.
 - `/series/[slug]`, `/library/series`, `/library/topics/[slug]`,
   `/library/bible` (Scripture Atlas), `/library/search`.
-- Old URLs (`/browse`, `/library/*` shows, `/teaching/expositional/...`,
+- `/browse` is the main hub for every article (billboard, channel rail, read state). `/library` is the books page.
+- Old URLs (`/library/*` shows, `/teaching/expositional/...`,
   `/sermons/bible` etc.) are static redirects in `next.config.ts`.
 
 ### Publishing

@@ -652,6 +652,16 @@ function rowToSermon(r: Row): Sermon {
 // Embed the linked series so the page can fall back to series artwork.
 const SELECT_FULL = "*, sermon_series(title,slug,artwork_url,background_url)";
 
+/*
+  List reads never select body. Bodies are about 95% of the table (8.7 MB per
+  full read against 380 KB without), and every list page revalidates on a
+  timer, so selecting them burns database egress and has hit statement
+  timeouts. Only getSermon (one piece) reads the body. Never select("*") here.
+*/
+const LIST_COLS =
+  "id,slug,title,series,speaker,passage,date,youtube_id,canonical_url,summary,published,sort_order,created_at,updated_at,youtube_id_full,subtitle,description,speakers,scripture,topics,document_url,document_name,web_link_1_url,web_link_1_label,web_link_2_url,web_link_2_label,series_id,artwork_url,status,scheduled_at,hero_still_url,hero_cutout_url,hero_focal_x,hero_focal_y,week,hero_still_candidates,hero_target_x,hero_target_y,hero_zoom,category";
+const SELECT_LIST = `${LIST_COLS}, sermon_series(title,slug,artwork_url,background_url)`;
+
 // Visible = published, or scheduled whose time has passed (no cron needed).
 function visibleOr(): string {
   const now = new Date().toISOString().replace(/\.\d+Z$/, "Z");
@@ -702,12 +712,12 @@ export async function getPublishedSermons(): Promise<Sermon[]> {
     try {
       const withStatus = await db
         .from("sermons")
-        .select(SELECT_FULL)
+        .select(SELECT_LIST)
         .or(visibleOr())
         .order("date", { ascending: false })
         .order("sort_order");
       if (!withStatus.error) {
-        rows = (withStatus.data as Row[] | null)?.map(rowToSermon) ?? [];
+        rows = (withStatus.data as unknown as Row[] | null)?.map(rowToSermon) ?? [];
       } else {
         const legacy = await db
           .from("sermons")

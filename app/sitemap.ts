@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dated: { path: string; priority: number; changeFrequency: Frequency }[] = [
     { path: '/', priority: 1.0, changeFrequency: 'weekly' },
     ...CATEGORY_ORDER.map(key => ({ path: `/${CATEGORIES[key].path}`, priority: 0.8, changeFrequency: 'weekly' as Frequency })),
+    { path: '/browse', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/library/bible', priority: 0.5, changeFrequency: 'weekly' },
     { path: '/library/series', priority: 0.5, changeFrequency: 'weekly' },
     { path: '/library/search', priority: 0.3, changeFrequency: 'weekly' },

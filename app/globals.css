@@ -421,3 +421,10 @@ p {
   padding-left: 1.25rem;
 }
 
+
+/* Library shelf: one slow drift, the only unprompted motion on the page.
+   Pauses under the pointer, and never runs for reduced motion. */
+@keyframes awd-shelf { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.awd-shelf { animation: awd-shelf 110s linear infinite; }
+.awd-shelf:hover, .awd-shelf:focus-within { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .awd-shelf { animation: none; } }

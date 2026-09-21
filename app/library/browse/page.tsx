@@ -50,82 +50,40 @@ export default async function LibraryBrowsePage({
   const resolvedParams = await searchParams
   const initialCategory = resolvedParams?.category
   return (
-    <>
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
-          <div
-            className="flex items-end justify-between gap-8 pb-10 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+    <div style={{ background: '#FFFFFF', color: '#171918', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>
+      {/* ── Header: the same voice as the Library landing ─────────────────── */}
+      <div className="mx-auto max-w-[1500px] px-6 pt-10 lg:px-10 lg:pt-14">
+        <p className="text-[0.9rem] font-semibold">
+          <Link href="/library" className="underline decoration-2 underline-offset-4 hover:no-underline">
+            Library
+          </Link>
+          <span className="px-2" style={{ color: 'rgba(23,25,24,0.4)' }}>/</span>
+          <span style={{ color: 'rgba(23,25,24,0.6)' }}>{initialCategory ?? 'All books'}</span>
+        </p>
+        <div className="mt-5 flex items-end justify-between gap-8 pb-8" style={{ borderBottom: '7px solid #171918' }}>
+          <h1
+            style={{
+              fontWeight: 800,
+              fontSize: 'clamp(3rem, 10vw, 10rem)',
+              lineHeight: 0.82,
+              letterSpacing: '-0.055em',
+              marginLeft: '-0.05em',
+            }}
           >
-            <div>
-              <div
-                className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-                style={{ color: '#CDB079' }}
-              >
-                <Link
-                  href="/library"
-                  className="transition-colors hover:text-[#FFFFFF]"
-                  style={{ color: 'rgba(249,246,240,0.4)' }}
-                >
-                  Library
-                </Link>
-                <span style={{ color: 'rgba(255,255,255,0.2)' }}>→</span>
-                <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
-                Browse
-              </div>
-              <h1
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 0.95,
-                  color: '#FFFFFF',
-                }}
-              >
-                All Books
-              </h1>
-            </div>
-            <div className="text-right pb-0.5 shrink-0">
-              <p
-                className="text-[0.9rem] italic leading-relaxed mb-1 hidden sm:block"
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  color: 'rgba(255,255,255,0.35)',
-                  maxWidth: 300,
-                }}
-              >
-                Search, filter, and browse the full library.
-              </p>
-              <p
-                className="text-[0.68rem] font-medium tracking-[0.1em] uppercase"
-                style={{ color: 'rgba(255,255,255,0.18)' }}
-              >
-                {books.length} books · {availableCategories.length} categories
-              </p>
-            </div>
-          </div>
+            {initialCategory ?? 'All books'}
+          </h1>
+          <p className="hidden shrink-0 pb-1 text-right tabular-nums sm:block" style={{ fontWeight: 700, fontSize: 'clamp(1.1rem, 2vw, 2rem)', lineHeight: 1, letterSpacing: '-0.03em' }}>
+            {books.length}
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(23,25,24,0.55)' }}>
+              books in {availableCategories.length} subjects
+            </span>
+          </p>
         </div>
       </div>
 
-      {/* ── Amber strip ────────────────────────────────────────────────────── */}
-      <div
-        className="h-[14px] w-full"
-        style={{
-          backgroundColor: '#7A5C1E',
-          backgroundImage: `
-            repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
-            repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
-          `,
-        }}
-      />
-
       {/* ── Library browser ───────────────────────────────────────────────── */}
-      <section className="pb-16 pt-0">
-        <div className="h-[3px] w-full" style={{ backgroundColor: '#7A5C1E' }} />
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section className="pb-20 pt-2">
+        <div className="mx-auto max-w-[1500px] px-6 lg:px-10">
           <LibraryBrowser
             books={books}
             categories={availableCategories}
@@ -137,6 +95,6 @@ export default async function LibraryBrowsePage({
           />
         </div>
       </section>
-    </>
+    </div>
   )
 }

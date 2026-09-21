@@ -18,6 +18,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home', exact: true },
+  { href: '/browse', label: 'Browse' },
   { href: '/sermons', label: 'Sermons' },
   { href: '/teaching', label: 'In the Text' },
   { href: '/word-for-word', label: 'Word for Word' },
@@ -28,6 +29,7 @@ const navLinks: NavLink[] = [
 ]
 
 function isActive(pathname: string, href: string, exact = false) {
+  if (href === '/library') return pathname === '/library' || pathname.startsWith('/library/browse')
   if (exact) return pathname === href
   return pathname === href || pathname.startsWith(href + '/')
 }
