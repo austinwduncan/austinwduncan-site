@@ -32,6 +32,39 @@ const MISSION = [
   { n: '04', title: 'Encourage Believers',  body: 'Toward faithful and wholehearted action.',    ref: 'Eph. 6:7' },
 ]
 
+/*
+  Where Austin has served, newest first. Facts as he gave them on 2026-10-01
+  ("about nine years on staff, a little over five as a pastor" is as of that
+  date and will need updating). Do not add duties, dates or places he did not
+  supply.
+*/
+const EXPERIENCE = [
+  {
+    when: '2021 to present',
+    role: 'Associate Pastor',
+    where: 'Crosswalk Church, Brentwood, Tennessee',
+    note: 'Preaching, teaching, and helping people know God’s Word, grow in their faith, and share the gospel with others.',
+  },
+  {
+    when: '2018 to 2021',
+    role: 'Communications Director',
+    where: 'Crosswalk Church, Brentwood, Tennessee',
+    note: '',
+  },
+  {
+    when: 'About six months',
+    role: 'Intern and Graphic Designer',
+    where: 'Central Church',
+    note: 'About three months in each role.',
+  },
+  {
+    when: '2013 to 2018',
+    role: 'Volunteer',
+    where: 'Hillside Christian Church, Lubbock, Texas',
+    note: 'Served wherever there was a need while discerning a call to ministry: children’s ministry, youth ministry, the worship team, the tech team, graphics, lighting, and set up and tear down.',
+  },
+]
+
 /* The four paragraphs below are Austin's own wording (2026-10-01). Do not edit them. */
 const DEGREES = [
   {
@@ -93,6 +126,10 @@ export default function AboutPage() {
                 <p>
                   Austin, alongside his wife Cassy, resides in Middle Tennessee. Together they share
                   a life enriched by faith, creativity, and a deep commitment to community.
+                </p>
+                <p>
+                  He has served on church staffs for about nine years, a little over five of them
+                  as a pastor.
                 </p>
                 <p>
                   With a heart firmly set on making a meaningful impact, Austin dedicates himself to
@@ -167,6 +204,49 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section style={{ background: PRIMARY_DEEP }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
+          <Eyebrow dark>Experience</Eyebrow>
+          <h2 className="mt-6 max-w-[760px]" style={display(H2_SIZE, WHITE)}>
+            Where Austin has served
+          </h2>
+          <p
+            className="mt-6 mb-12 max-w-[640px] text-[1.05rem] leading-[1.8]"
+            style={{ ...bodyStyle, color: 'rgba(255,255,255,0.78)' }}
+          >
+            About nine years on church staffs, a little over five of them as a pastor, after five
+            years of volunteering in nearly every part of a church.
+          </p>
+
+          <ol style={{ borderTop: '2px solid rgba(255,255,255,0.5)' }}>
+            {EXPERIENCE.map((e) => (
+              <li
+                key={e.role + e.where}
+                className="grid gap-3 py-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,9fr)] lg:gap-12"
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.14)' }}
+              >
+                <p style={display('1.5rem', SOFT_BLUE_LIGHT)}>{e.when}</p>
+                <div>
+                  <h3 style={display(H3_SIZE, WHITE)}>{e.role}</h3>
+                  <p className="mt-2 text-[0.95rem] font-semibold" style={{ ...bodyStyle, color: SOFT_BLUE_LIGHT }}>
+                    {e.where}
+                  </p>
+                  {e.note && (
+                    <p
+                      className="mt-3 max-w-[62ch] text-[1rem] leading-[1.8]"
+                      style={{ ...bodyStyle, color: 'rgba(255,255,255,0.78)' }}
+                    >
+                      {e.note}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
