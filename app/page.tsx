@@ -6,7 +6,6 @@ import { getPublishedSeries, type Series } from '@/lib/series'
 import { pathFor } from '@/lib/categories'
 import ScrollReveal from '@/components/scroll-reveal'
 import VideoBackground from '@/components/video-background'
-import FramedImage from '@/components/sermons/FramedImage'
 
 export const revalidate = 60
 
@@ -71,17 +70,6 @@ function clean(text?: string): string {
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     .replace(/\\([_*[\]])/g, '$1')
     .trim()
-}
-
-type Piece = {
-  section: string
-  title: string
-  href: string
-  date: string
-  raw: string
-  image?: string
-  excerpt?: string
-  frame?: { fx?: number; fy?: number; tx?: number; ty?: number; zoom?: number }
 }
 
 /*
@@ -293,32 +281,6 @@ function SectionHead({
   )
 }
 
-function IndexRow({ piece, n }: { piece: Piece; n?: number }) {
-  return (
-    <Link
-      href={piece.href}
-      className="group flex gap-4 border-b py-4 transition-colors"
-      style={{ borderColor: 'rgba(255,255,255,0.12)' }}
-    >
-      {n !== undefined && (
-        <span
-          className="w-7 shrink-0 text-right tabular-nums"
-          style={{ fontFamily: DISPLAY, fontSize: '1.35rem', lineHeight: 1.15, letterSpacing: '0.02em', color: SOFT }}
-        >
-          {n}
-        </span>
-      )}
-      <span className="min-w-0 flex-1">
-        <span className="block text-[0.98rem] leading-snug text-white transition-colors group-hover:text-[var(--awd-stone)]"
-          style={{ fontFamily: SANS }}>
-          {piece.title}
-        </span>
-        <span className="mt-1 block text-[0.72rem]" style={{ color: SOFT }}>{piece.date}</span>
-      </span>
-    </Link>
-  )
-}
-
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -374,18 +336,7 @@ export default async function HomePage() {
   const featured = allSermons[0] ?? null
   const featuredExcerpt = featured ? featured.summary || featured.description : undefined
 
-  const toPiece = (a: Sermon, section: string): Piece => ({
-    section, title: a.title, href: pathFor(a),
-    date: a.date ? fmt(a.date) : '', raw: a.date ?? '',
-    image: imageFor(a), excerpt: a.summary || a.description,
-    // a still chosen in the builder carries its framing with it
-    frame: a.heroStillUrl
-      ? { fx: a.heroFocalX, fy: a.heroFocalY, tx: a.heroTargetX, ty: a.heroTargetY, zoom: a.heroZoom }
-      : undefined,
-  })
 
-  const recentSermons = allSermons.slice(1, 4).map(a => toPiece(a, 'Sermon'))
-  const wfwIndex = allWfw.slice(0, 15).map(a => toPiece(a, 'Word for Word'))
 
   const art = {
     teaching: teachingSeries.find(s => s.artworkUrl)?.artworkUrl ?? (allTeaching[0] ? imageFor(allTeaching[0]) : undefined),
@@ -748,125 +699,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/*
-        ── Photographic breather ───────────────────────────────────────────────
-        A full-bleed band between two dense sections. Crosswalk uses imagery
-        this way to let the page breathe; the only text is a single line, so
-        the photograph carries it.
-      */}
-      <section className="relative overflow-hidden" style={{ background: BLACK }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/home/hand-raised.jpg"
-          alt=""
-          aria-hidden
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: '50% 38%' }}
-        />
-        <span aria-hidden className="absolute inset-0" style={{ background: 'rgba(28,36,39,0.7)' }} />
-        <span
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(0deg,#1C2427 0%,transparent 45%,transparent 55%,#1C2427 100%)' }}
-        />
-        <CornerBracket position="tl" tone="accent" />
-        <CornerBracket position="br" tone="accent" />
-        <div className="relative mx-auto max-w-[1180px] px-6 py-32 text-center lg:px-10 lg:py-44">
-          <ScrollReveal>
-            <p
-              className="mx-auto max-w-2xl text-[1.35rem] leading-[1.6] sm:text-[1.6rem]"
-              style={{ fontFamily: SANS, fontStyle: 'italic', color: BONE }}
-            >
-              &ldquo;So faith comes from hearing, and hearing through the word of Christ.&rdquo;
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={90}>
-            <p
-              className="mt-7 text-[0.78rem] font-semibold uppercase tracking-[0.28em]"
-              style={{ fontFamily: SANS, color: SOFT }}
-            >
-              Romans 10:17
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── Recent sermons (white band) ────────────────────────────────────── */}
-      {recentSermons.length > 0 && (
-        <section style={{ background: BONE }} className="py-28 lg:py-40">
-          <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
-            <SectionHead on="light" eyebrow="Recent sermons" title="More from" accent="the pulpit."
-              href="/sermons" linkLabel="All sermons" count={allSermons.length} />
-            <div className="grid gap-x-8 gap-y-12 sm:grid-cols-3">
-              {recentSermons.map((piece, i) => (
-                <ScrollReveal key={piece.href} delay={i * 80}>
-                  <Link href={piece.href} className="group block">
-                    <div className="relative overflow-hidden" style={{ aspectRatio: '16/9', background: DEEP }}>
-                      {piece.image && piece.frame ? (
-                        <FramedImage
-                          src={piece.image}
-                          focalX={piece.frame.fx}
-                          focalY={piece.frame.fy}
-                          targetX={piece.frame.tx}
-                          targetY={piece.frame.ty}
-                          zoom={piece.frame.zoom}
-                          className="absolute inset-0 grayscale transition-all duration-[900ms] ease-out group-hover:grayscale-0"
-                        />
-                      ) : piece.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={piece.image} alt="" loading="lazy"
-                          className="h-full w-full object-cover grayscale transition-all duration-[900ms] ease-out group-hover:grayscale-0" />
-                      ) : (
-                        // No artwork: the title stands in, white Bebas on primary deep.
-                        <span
-                          aria-hidden
-                          className="absolute inset-0 flex items-center justify-center p-6 text-center uppercase text-balance"
-                          style={{
-                            fontFamily: DISPLAY,
-                            fontWeight: 400,
-                            fontSize: 'clamp(1.5rem, 2.4vw, 2.1rem)',
-                            lineHeight: 0.95,
-                            letterSpacing: '0.02em',
-                            color: BONE,
-                          }}
-                        >
-                          <span className="line-clamp-4">{piece.title}</span>
-                        </span>
-                      )}
-                    </div>
-                    <Heading as="h3" size="sm" color={BLACK} className="mt-5">
-                      {piece.title}
-                    </Heading>
-                    <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em]"
-                      style={{ fontFamily: SANS, color: ACCENT }}>
-                      {piece.date}
-                    </p>
-                  </Link>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── Word for Word index ────────────────────────────────────────────── */}
-      {wfwIndex.length > 0 && (
-        <section style={{ background: DEEP }} className="py-28 lg:py-36">
-          <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
-            <SectionHead eyebrow="Word for Word" title="You have probably wondered"
-              accent="some of these." href="/word-for-word" linkLabel="All questions" count={allWfw.length} />
-            <div className="grid gap-x-14 md:grid-cols-2 lg:grid-cols-3">
-              {wfwIndex.map((piece, i) => (
-                <ScrollReveal key={piece.href} delay={(i % 3) * 60}>
-                  <IndexRow piece={piece} n={i + 1} />
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* ── Closing ────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: GRAPHITE }}>
