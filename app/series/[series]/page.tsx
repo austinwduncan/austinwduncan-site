@@ -1,133 +1,230 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import SermonCard from "@/components/watch/SermonCard";
-import { getPublishedSermons } from "@/lib/sermons";
-import { getSeries } from "@/lib/series";
+import { getPublishedSermons, type Sermon } from "@/lib/sermons";
+import { getPublishedSeries, getSeries } from "@/lib/series";
 import { sermonsInSeries } from "@/lib/browse";
 import { pathFor } from "@/lib/categories";
-import { optimizedImg } from "@/lib/img";
+import { getSeriesBySlug } from "@/data/teaching-series";
+import { PageHeader, PillLink, pageStyle, wrap, h2Style, INK, GOLD_INK, MIST } from "@/components/bright/PageHeader";
 
 export const revalidate = 600;
-
-const display = "font-[family-name:var(--font-display)]";
-
-function d(iso?: string): Date | null {
-  if (!iso) return null;
-  const x = new Date(iso + "T12:00:00Z");
-  return Number.isNaN(x.getTime()) ? null : x;
-}
-function fmtRange(startsOn?: string, endsOn?: string): string | null {
-  const s = d(startsOn);
-  const e = d(endsOn);
-  const opt: Intl.DateTimeFormatOptions = { timeZone: "UTC", month: "short", day: "numeric" };
-  const yr: Intl.DateTimeFormatOptions = { ...opt, year: "numeric" };
-  if (s && e) {
-    const sameYear = s.getUTCFullYear() === e.getUTCFullYear();
-    return `${new Intl.DateTimeFormat("en-US", sameYear ? opt : yr).format(s)} to ${new Intl.DateTimeFormat("en-US", yr).format(e)}`;
-  }
-  const one = s ?? e;
-  return one ? new Intl.DateTimeFormat("en-US", yr).format(one) : null;
-}
-
-// Cards keep a fixed width (the 4-up size). Split the series into centered rows
-// of at most four, as evenly as possible with the fuller rows first, so the last
-// row is never a lonely card: five becomes 3 + 2, ten becomes 4 + 3 + 3, etc.
-function balancedRows(n: number): number[] {
-  if (n <= 0) return [];
-  const rows = Math.ceil(n / 4);
-  const base = Math.floor(n / rows);
-  const extra = n % rows;
-  return Array.from({ length: rows }, (_, i) => base + (i < extra ? 1 : 0));
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ series: string }> }): Promise<Metadata> {
   const { series } = await params;
   const se = await getSeries(series);
   if (!se) return {};
   return {
-    title: `${se.title} series`,
-    description: se.description || `The ${se.title} series from Austin W. Duncan.`,
+    title: se.title,
+    description: se.description || se.subtitle || `The ${se.title} series by Austin W. Duncan.`,
     ...(se.artworkUrl ? { openGraph: { images: [se.artworkUrl] } } : {}),
   };
 }
 
+/** Sessions in reading order: by week when set, then by date. */
+function inOrder(items: Sermon[]): Sermon[] {
+  return [...items].sort((a, b) => {
+    const wa = a.week ?? Number.MAX_SAFE_INTEGER;
+    const wb = b.week ?? Number.MAX_SAFE_INTEGER;
+    if (wa !== wb) return wa - wb;
+    return (a.date ?? "").localeCompare(b.date ?? "");
+  });
+}
+
+function SessionRow({ s, n }: { s: Sermon; n: number }) {
+  return (
+    <li style={{ borderBottom: "1px solid rgba(23,25,24,0.16)" }}>
+      <Link
+        href={pathFor(s)}
+        className="group grid grid-cols-[2.6rem_1fr] items-baseline gap-4 px-2 py-4 transition-colors duration-150 hover:bg-[#171918] hover:text-white focus-visible:bg-[#171918] focus-visible:text-white focus-visible:outline-none sm:grid-cols-[3.4rem_1fr_auto] sm:gap-6"
+      >
+        <span
+          className="tabular-nums group-hover:text-[#CDB079] group-focus-visible:text-[#CDB079]"
+          style={{ fontWeight: 800, fontSize: "1.5rem", letterSpacing: "-0.04em", color: GOLD_INK }}
+        >
+          {n}
+        </span>
+        <span>
+          <span className="block text-[1.15rem] font-semibold leading-snug tracking-[-0.015em] lg:text-[1.3rem]">{s.title}</span>
+          {(s.summary || s.description) && (
+            <span className="mt-1 line-clamp-2 block max-w-[70ch] text-[0.95rem] leading-relaxed opacity-70">
+              {s.summary || s.description}
+            </span>
+          )}
+        </span>
+        {s.passage && <span className="hidden text-right text-[0.9rem] font-semibold opacity-70 sm:block">{s.passage}</span>}
+      </Link>
+    </li>
+  );
+}
+
 export default async function SeriesPage({ params }: { params: Promise<{ series: string }> }) {
   const { series } = await params;
-  const [se, sermons] = await Promise.all([getSeries(series), getPublishedSermons()]);
+  const [se, pieces, allSeries] = await Promise.all([getSeries(series), getPublishedSermons(), getPublishedSeries()]);
   if (!se) notFound();
-  const items = sermonsInSeries(sermons, se);
-  // A single-piece "series" is really just that piece, so go straight to it.
-  if (items.length === 1) redirect(pathFor(items[0]));
-  const banner = optimizedImg(se.bannerUrl ?? se.artworkUrl, 1920);
+
+  const sessions = inOrder(sermonsInSeries(pieces, se));
+  const guide = getSeriesBySlug(se.slug);
+  const first = sessions[0];
+  const why = guide?.whyStudy || se.description;
+
+  // Group sessions under the guide's roadmap parts when it has one. A part
+  // names its sessions by number, which is the session's week.
+  const byNumber = new Map<number, Sermon>();
+  sessions.forEach((s, i) => byNumber.set(s.week ?? i + 1, s));
+  const parts = (guide?.roadmap ?? [])
+    .map((p) => ({ ...p, items: p.sessions.map((n) => ({ n, s: byNumber.get(n) })).filter((x): x is { n: number; s: Sermon } => Boolean(x.s)) }))
+    .filter((p) => p.items.length > 0);
+  const grouped = new Set(parts.flatMap((p) => p.items.map((x) => x.s.slug)));
+  const ungrouped = sessions.filter((s) => !grouped.has(s.slug));
+
+  const related = (guide?.relatedSeries ?? [])
+    .map((slug) => allSeries.find((x) => x.slug === slug))
+    .filter((x): x is NonNullable<typeof x> => Boolean(x));
+  const others = related.length > 0 ? related : allSeries.filter((x) => x.slug !== se.slug && sermonsInSeries(pieces, x).length > 0).slice(0, 3);
 
   return (
-    <>
-      <div className="flex-1 bg-[#0a0e10]">
-        {/* Wide banner. The artwork/banner carries the series title, so no big
-            overlaid heading. A meta bar hovers between the banner and the grid. */}
-        <h1 className="sr-only">{se.title}</h1>
-        <section className="relative">
-          <div className="relative w-full overflow-hidden bg-primary-deep pt-16 lg:pt-[4.5rem]">
-            <div className="relative aspect-[16/7] w-full sm:aspect-[1600/440]">
-              {banner ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={banner} alt={se.title} className="absolute inset-0 h-full w-full object-cover" />
-              ) : (
-                <div className="absolute inset-0 grid place-items-center px-6 text-center">
-                  <span className={`${display} text-3xl uppercase tracking-wide text-white/80 sm:text-5xl`}>{se.title}</span>
-                </div>
-              )}
-              <span aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(0deg,rgba(10,14,16,.72),transparent 42%)" }} />
-            </div>
-            <Link
-              href="/library/series"
-              className="absolute left-6 top-[4.75rem] text-xs font-semibold uppercase tracking-[0.25em] text-white/85 transition-colors hover:text-white lg:left-10 lg:top-[5.5rem] [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]"
-            >
-              &larr; All series
-            </Link>
-          </div>
+    <div style={pageStyle}>
+      <PageHeader
+        title={se.title}
+        size="lg"
+        count={sessions.length}
+        countLabel={guide?.status === "Ongoing" ? "sessions so far" : "sessions"}
+        crumbs={[{ href: "/series", label: "Series" }, { label: se.title }]}
+      />
 
-          {/* hovering meta bar */}
-          <div className="relative z-10 -mt-7 flex justify-center px-6">
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-full border border-white/10 bg-[#121a1e] px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-white/85 shadow-[0_16px_44px_rgba(0,0,0,.55)]">
-              {fmtRange(se.startsOn, se.endsOn) && <span>{fmtRange(se.startsOn, se.endsOn)}</span>}
-              {fmtRange(se.startsOn, se.endsOn) && <span aria-hidden className="text-white/25">·</span>}
-              <span className="text-secondary-soft">{items.length} {items.length === 1 ? "message" : "messages"}</span>
-            </div>
-          </div>
-        </section>
-
-        <div className="px-6 pb-16 pt-8 lg:px-10">
-          {se.description && (
-            <p className="mx-auto mb-9 max-w-2xl text-center text-[1.02rem] leading-relaxed text-white/70">{se.description}</p>
+      {/* ── What this series is ────────────────────────────────────────────── */}
+      <section className={`${wrap} grid gap-10 py-12 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-16 lg:py-16`}>
+        <div>
+          {se.subtitle && (
+            <p className="text-balance" style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.4rem)", lineHeight: 1.18, fontWeight: 700, letterSpacing: "-0.025em" }}>
+              {se.subtitle}
+            </p>
           )}
-          {items.length > 0 ? (
-            <div className="mx-auto flex max-w-6xl flex-col gap-9">
-              {(() => {
-                let start = 0;
-                return balancedRows(items.length).map((size, r) => {
-                  const from = start;
-                  const slice = items.slice(from, from + size);
-                  start += size;
-                  return (
-                    <div key={r} className="flex flex-wrap justify-center gap-x-5 gap-y-9">
-                      {slice.map((s, i) => (
-                        <div key={s.slug} className="w-full sm:w-[calc((100%_-_1.25rem)/2)] lg:w-[calc((100%_-_3.75rem)/4)]">
-                          <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-secondary-soft">Week {s.week ?? from + i + 1}</p>
-                          <SermonCard sermon={s} hideSeries />
-                        </div>
-                      ))}
-                    </div>
-                  );
-                });
-              })()}
+          {why && (
+            <p className="mt-6 max-w-[60ch] text-[1.08rem] leading-[1.75]" style={{ color: "rgba(23,25,24,0.8)" }}>
+              {why}
+            </p>
+          )}
+          {first && (
+            <div className="mt-9 flex flex-wrap gap-3">
+              <PillLink href={pathFor(first)}>Start with session 1</PillLink>
+              <PillLink href="#sessions" tone="outline">See all {sessions.length}</PillLink>
             </div>
-          ) : (
-            <p className="text-white/55">Nothing published in this series yet.</p>
           )}
         </div>
-      </div>
-    </>
+        {se.artworkUrl && (
+          <div className="overflow-hidden" style={{ background: MIST }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={se.artworkUrl} alt="" className="aspect-video w-full object-cover" />
+          </div>
+        )}
+      </section>
+
+      {/* ── Who it is for, what you take away ──────────────────────────────── */}
+      {guide && (guide.bestFor.length > 0 || guide.outcomes.length > 0) && (
+        <section style={{ background: MIST }}>
+          <div className={`${wrap} grid gap-12 py-16 lg:grid-cols-2 lg:gap-16 lg:py-20`}>
+            {guide.bestFor.length > 0 && (
+              <div>
+                <h2 style={h2Style}>Who it is for</h2>
+                <ul className="mt-8" style={{ borderTop: `3px solid ${INK}` }}>
+                  {guide.bestFor.map((t) => (
+                    <li key={t} className="py-4 text-[1.08rem] leading-snug" style={{ borderBottom: "1px solid rgba(23,25,24,0.16)" }}>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {guide.outcomes.length > 0 && (
+              <div>
+                <h2 style={h2Style}>What you will take away</h2>
+                <ul className="mt-8" style={{ borderTop: `3px solid ${INK}` }}>
+                  {guide.outcomes.map((t) => (
+                    <li key={t} className="py-4 text-[1.08rem] leading-snug" style={{ borderBottom: "1px solid rgba(23,25,24,0.16)" }}>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── The sessions, in order ─────────────────────────────────────────── */}
+      <section id="sessions" className="scroll-mt-20">
+        <div className={`${wrap} py-16 lg:py-24`}>
+          <h2 style={h2Style}>The sessions</h2>
+
+          {parts.map((p) => (
+            <div key={p.title} className="mt-12 grid gap-5 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-14">
+              <div className="lg:sticky lg:top-24 lg:self-start">
+                <h3 className="text-balance" style={{ fontWeight: 800, fontSize: "clamp(1.4rem, 2.2vw, 2rem)", lineHeight: 1.05, letterSpacing: "-0.03em" }}>
+                  {p.title}
+                </h3>
+                <p className="mt-3 max-w-[40ch] text-[0.98rem] leading-relaxed" style={{ color: "rgba(23,25,24,0.7)" }}>
+                  {p.description}
+                </p>
+              </div>
+              <ol style={{ borderTop: `3px solid ${INK}` }}>
+                {p.items.map(({ n, s }) => (
+                  <SessionRow key={s.slug} s={s} n={n} />
+                ))}
+              </ol>
+            </div>
+          ))}
+
+          {ungrouped.length > 0 && (
+            <ol className="mt-12" style={{ borderTop: `3px solid ${INK}` }}>
+              {ungrouped.map((s) => (
+                <SessionRow key={s.slug} s={s} n={s.week ?? sessions.indexOf(s) + 1} />
+              ))}
+            </ol>
+          )}
+        </div>
+      </section>
+
+      {/* ── How to use it ──────────────────────────────────────────────────── */}
+      {guide && guide.howToUse.length > 0 && (
+        <section style={{ background: MIST }}>
+          <div className={`${wrap} grid gap-8 py-16 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-14 lg:py-20`}>
+            <h2 style={h2Style}>How to use it</h2>
+            <ul style={{ borderTop: `3px solid ${INK}` }}>
+              {guide.howToUse.map((t) => (
+                <li key={t} className="py-4 text-[1.08rem] leading-snug" style={{ borderBottom: "1px solid rgba(23,25,24,0.16)" }}>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* ── Where to go next ───────────────────────────────────────────────── */}
+      {others.length > 0 && (
+        <section style={{ background: INK, color: "#FFFFFF" }}>
+          <div className={`${wrap} py-16 lg:py-24`}>
+            <h2 style={h2Style}>Read next</h2>
+            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((o) => (
+                <li key={o.slug}>
+                  <Link href={`/series/${o.slug}`} className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" style={{ outlineColor: "#CDB079" }}>
+                    {o.artworkUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={o.artworkUrl} alt="" loading="lazy" className="aspect-video w-full object-cover" />
+                    )}
+                    <span className="mt-4 block text-[1.4rem] font-bold leading-tight tracking-[-0.02em] group-hover:text-[#CDB079]">{o.title}</span>
+                    {o.subtitle && <span className="mt-2 block text-[0.95rem] leading-snug text-white/65">{o.subtitle}</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-12"><PillLink href="/series" tone="gold">All series</PillLink></div>
+          </div>
+        </section>
+      )}
+    </div>
   );
 }

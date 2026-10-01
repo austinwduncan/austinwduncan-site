@@ -58,7 +58,7 @@ export default async function PiecePage({ slug, category }: { slug: string; cate
   const seriesLabel = s.seriesTitle ?? s.series;
   // Hero backdrop: a still from the video (its thumbnail), falling back to artwork.
   const heroBackdrop = optimizedImg(
-    s.youtubeId ? `https://i.ytimg.com/vi/${s.youtubeId}/maxresdefault.jpg` : s.artworkUrl ?? s.seriesArtworkUrl,
+    s.artworkUrl ?? s.heroStillUrl ?? s.seriesArtworkUrl ?? (s.youtubeId ? `https://i.ytimg.com/vi/${s.youtubeId}/maxresdefault.jpg` : undefined),
     1200,
   );
   const hasArticle = blocks.some((b) => b.type !== "heading");

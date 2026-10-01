@@ -2,24 +2,23 @@ import Link from 'next/link'
 
 const sections = [
   {
-    heading: 'Content',
+    heading: 'Start here',
     links: [
-      { href: '/browse', label: 'Browse' },
       { href: '/sermons', label: 'Sermons' },
-      { href: '/teaching', label: 'In the Text' },
-      { href: '/word-for-word', label: 'Word for Word' },
-      { href: '/exegetica', label: 'Exegetica' },
+      { href: '/series', label: 'Series' },
+      { href: '/about', label: 'About' },
+      { href: '/library/bible', label: 'Browse by Scripture' },
     ],
   },
   {
-    heading: 'More',
+    heading: 'More writing',
     links: [
+      { href: '/browse', label: 'Browse everything' },
+      { href: '/word-for-word', label: 'Word for Word' },
+      { href: '/exegetica', label: 'Exegetica' },
       { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
-      { href: '/library/series', label: 'Series' },
-      { href: '/library/bible', label: 'Scripture Atlas' },
-      { href: '/library', label: 'Library' },
+      { href: '/library', label: 'Book library' },
       { href: '/resources', label: 'Resources' },
-      { href: '/about', label: 'About' },
     ],
   },
 ]

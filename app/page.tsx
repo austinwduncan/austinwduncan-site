@@ -333,7 +333,7 @@ function imageFor(p: Sermon): string | undefined {
     p.heroStillUrl ??
     p.artworkUrl ??
     p.seriesArtworkUrl ??
-    (p.youtubeId ? `https://i.ytimg.com/vi/${p.youtubeId}/hqdefault.jpg` : undefined)
+    undefined
   )
 }
 
@@ -664,7 +664,7 @@ export default async function HomePage() {
                 blurb="What I preached at Crosswalk, written out in full so you can read it instead of hunting for a timestamp." />
             </ScrollReveal>
             <ScrollReveal delay={70}>
-              <Tile href="/teaching" tag="Verse by verse" title="Teaching Series" image={art.teaching}
+              <Tile href="/series" tag="Verse by verse" title="Teaching Series" image={art.teaching}
                 count={`${teachingSeries.length}`}
                 blurb="Book studies and biblical theology built to be worked through in order, from Hebrews to the Minor Prophets." />
             </ScrollReveal>
@@ -824,7 +824,7 @@ export default async function HomePage() {
                 </div>
                 <div className="flex flex-wrap gap-2.5">
                   {[
-                    { href: '/teaching', label: 'Browse series' },
+                    { href: '/series', label: 'Browse series' },
                     { href: '/library', label: 'Library' },
                     { href: '/library/bible', label: 'By Scripture' },
                     { href: '/about', label: 'About' },

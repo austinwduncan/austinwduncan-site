@@ -61,8 +61,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['Jesus as better', 'Priesthood', 'Sacrifice', 'Perseverance', 'Faith', 'Covenant'],
     whyStudy:
-      "Hebrews was written to tired believers who were tempted to drift backward. This series walks through the book's argument, showing how Jesus is the final priest, sacrifice, mediator, and word from God — and why that makes holding fast worth it.",
-    excerpt: "Jesus is better. Better than angels, priests, and sacrifices — and Hebrews shows you exactly why.",
+      "Hebrews was written to tired believers who were tempted to drift backward. This series walks through the book's argument, showing how Jesus is the final priest, sacrifice, mediator, and word from God, and why that makes holding fast worth it.",
+    excerpt: "Jesus is better. Better than angels, priests, and sacrifices, and Hebrews shows you exactly why.",
     outcomes: [
       'See how the Old Testament points to Christ',
       'Understand Jesus as the final priest and sacrifice',
@@ -71,12 +71,12 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     roadmap: [
       {
         title: 'The Son Who Speaks',
-        description: 'Hebrews opens by establishing who Jesus is — superior to angels, greater than Moses, and the final word from God.',
+        description: 'Hebrews opens by establishing who Jesus is, superior to angels, greater than Moses, and the final word from God.',
         sessions: [1, 2, 3],
       },
       {
         title: 'The Priest Who Represents Us',
-        description: 'Jesus is not only the sacrifice. He is the priest who brings us near — better than Aaron, holding an eternal office.',
+        description: 'Jesus is not only the sacrifice. He is the priest who brings us near, better than Aaron, holding an eternal office.',
         sessions: [4, 5, 6, 7],
       },
       {
@@ -86,15 +86,15 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
       {
         title: 'The Faith That Endures',
-        description: "The hall of faith and the call to run with endurance — grounded in what Christ has already accomplished.",
+        description: "The hall of faith and the call to run with endurance, grounded in what Christ has already accomplished.",
         sessions: [11, 12, 13],
       },
     ],
     howToUse: [
       'Work through one session at a time, then read that chapter of Hebrews',
-      "Pay attention to the author's 'Therefore' transitions — they carry the whole argument",
+      "Pay attention to the author's 'Therefore' transitions. They carry the whole argument",
       "Don't rush the warning passages: sit with them rather than explaining them away",
-      'After finishing, re-read Hebrews 12:1–3 as a summary of the whole book',
+      'After finishing, re-read Hebrews 12:1-3 as a summary of the whole book',
     ],
     relatedSeries: ['the-covenant', 'words-that-change-everything'],
     recommendedBooks: [],
@@ -125,7 +125,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['Faithfulness', 'Exile', 'God\'s sovereignty', 'Kingdoms', 'Courage', 'Apocalyptic vision'],
     whyStudy:
-      "Daniel was written for people living under an empire that did not share their convictions. This series walks through all twelve chapters — showing how to hold faith under pressure, and why the rise and fall of kingdoms is never the last word.",
+      "Daniel was written for people living under an empire that did not share their convictions. This series walks through all twelve chapters, showing how to hold faith under pressure, and why the rise and fall of kingdoms is never the last word.",
     excerpt: "Faithfulness under pressure, God's sovereignty over kingdoms, and courage in exile.",
     outcomes: [
       'Understand faithfulness in cultural and spiritual exile',
@@ -135,12 +135,12 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     roadmap: [
       {
         title: 'Faithfulness in Babylon',
-        description: 'The opening stories: Daniel and his friends face the pressure to conform — and refuse.',
+        description: 'The opening stories: Daniel and his friends face the pressure to conform, and refuse.',
         sessions: [1, 2, 3],
       },
       {
         title: 'Kings and Kingdoms',
-        description: "From Nebuchadnezzar's dream to Belshazzar's feast — God's sovereignty over arrogant rulers.",
+        description: "From Nebuchadnezzar's dream to Belshazzar's feast: God's sovereignty over arrogant rulers.",
         sessions: [4, 5, 6],
       },
       {
@@ -156,8 +156,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     howToUse: [
       'Read each chapter of Daniel before watching or reading the session',
-      'Note where Daniel and his friends choose faithfulness over comfort — the pattern repeats',
-      'The second half (chs. 7–12) is harder — lean in rather than skipping it',
+      'Note where Daniel and his friends choose faithfulness over comfort. The pattern repeats',
+      'The second half (chapters 7 to 12) is harder. Lean in rather than skipping it',
       'Use the roadmap to track how the visions build on each other',
     ],
     relatedSeries: ['minor-prophets', 'the-covenant'],
@@ -189,8 +189,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['Covenant faithfulness', 'God\'s justice', 'Redemption', 'The Day of the Lord', 'Love', 'Return'],
     whyStudy:
-      "These twelve books are called 'minor' only because of their length — not their importance. Each prophet speaks into a real historical moment with God's word about unfaithfulness, judgment, and the hope of return. Together, they form one of the richest portraits of God's character in Scripture.",
-    excerpt: "Thirteen studies through all twelve Minor Prophets — God's justice and love in vivid detail.",
+      "These twelve books are called 'minor' only because of their length, not their importance. Each prophet speaks into a real historical moment with God's word about unfaithfulness, judgment, and the hope of return. Together, they form one of the richest portraits of God's character in Scripture.",
+    excerpt: "Thirteen studies through all twelve Minor Prophets: God's justice and love in vivid detail.",
     outcomes: [
       'Understand each prophet in their historical context',
       'Recognize recurring themes of judgment and restoration',
@@ -209,7 +209,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
       {
         title: 'Mercy in the Midst of Judgment',
-        description: "Jonah, Micah, Nahum, and Habakkuk: God's justice is never without compassion — or questions.",
+        description: "Jonah, Micah, Nahum, and Habakkuk: God's justice is never without compassion, or questions.",
         sessions: [6, 7, 8, 9],
       },
       {
@@ -220,7 +220,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     howToUse: [
       'Keep a Bible open to the prophet you\'re studying',
-      'Each session is relatively self-contained — you can start with any prophet',
+      'Each session is relatively self contained. You can start with any prophet',
       'Look for the recurring pattern: unfaithfulness → warning → judgment → restoration',
       "Read each prophet's historical footnote (in your Bible's introduction) before the session if possible",
     ],
@@ -253,8 +253,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['Promise', 'Noah', 'Abraham', 'Moses', 'David', 'New Covenant', 'Christ'],
     whyStudy:
-      "Covenant is the Bible's primary organizing structure. Understanding how God makes and keeps covenants — from Noah to Abraham to Moses to David to Christ — makes the whole story of Scripture click into place in a way that nothing else quite does.",
-    excerpt: "Twelve studies through God's covenants — from Noah to Christ — showing how Scripture tells one unfolding story.",
+      "Covenant is the Bible's primary organizing structure. Understanding how God makes and keeps covenants, from Noah to Abraham to Moses to David to Christ, makes the whole story of Scripture click into place in a way that nothing else quite does.",
+    excerpt: "Twelve studies through God's covenants, from Noah to Christ, showing how Scripture tells one unfolding story.",
     outcomes: [
       'Trace covenant from creation to Christ',
       'Understand how promise and fulfillment work across both Testaments',
@@ -263,7 +263,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     roadmap: [
       {
         title: 'What Covenant Means',
-        description: 'The concept of covenant — what it is, why it matters, and how it works.',
+        description: 'The concept of covenant: what it is, why it matters, and how it works.',
         sessions: [1, 2],
       },
       {
@@ -273,7 +273,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
       {
         title: 'Covenant Fulfilled in Christ',
-        description: 'The New Covenant arrives — how Jesus fulfills and transforms everything that came before.',
+        description: 'The New Covenant arrives: how Jesus fulfills and transforms everything that came before.',
         sessions: [9, 10],
       },
       {
@@ -283,10 +283,10 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
     ],
     howToUse: [
-      'Start at Session 1 — the series builds sequentially',
+      'Start at Session 1. The series builds sequentially',
       'Look for the repeated elements in each covenant: parties, promises, conditions, signs',
       'As you go, keep asking: how does this covenant change or build on what came before?',
-      'By the end, read Hebrews 8–10 alongside your notes for a New Testament summary',
+      'By the end, read Hebrews 8 to 10 alongside your notes for a New Testament summary',
     ],
     relatedSeries: ['hebrews', 'old-laws-new-life'],
     recommendedBooks: [],
@@ -302,7 +302,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     seriesTag: 'Old Laws for a New Life',
     type: 'topical',
     title: 'Old Laws for a New Life',
-    subtitle: 'What the Ten Commandments still demand — and promise — for Christians.',
+    subtitle: 'What the Ten Commandments still demand, and promise, for Christians.',
     primaryLane: 'Biblical Theology',
     filterTags: ['Old Testament', 'Law', 'Ethics', 'Christian Living', 'Beginner-Friendly'],
     intents: ['christian-life', 'old-testament'],
@@ -317,8 +317,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['The Ten Commandments', 'Law and grace', 'Old Testament ethics', 'Christian living', 'Exodus'],
     whyStudy:
-      "The Ten Commandments aren't a checklist for earning God's favor — they're a window into God's character and a guide for human flourishing that still speaks. This series works through each commandment asking: what did it mean then, and what does it demand now?",
-    excerpt: "Ten studies through the Ten Commandments — showing how ancient law shapes Christian living.",
+      "The Ten Commandments are a window into God's character and a guide for human flourishing that still speaks. This series works through each commandment asking: what did it mean then, and what does it demand now?",
+    excerpt: "Ten studies through the Ten Commandments, showing how ancient law shapes Christian living.",
     outcomes: [
       'Understand the commandments in their biblical and historical context',
       'Avoid both legalism and easy dismissal of Old Testament law',
@@ -327,12 +327,12 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     roadmap: [
       {
         title: 'Who We Worship',
-        description: 'The first four commandments concern God — who he is, what he demands, and why it matters.',
+        description: 'The first four commandments concern God: who he is, what he demands, and why it matters.',
         sessions: [1, 2, 3, 4],
       },
       {
         title: 'How We Live Together',
-        description: 'The final six commandments concern neighbors — the ethics of life in community under God.',
+        description: 'The final six commandments concern neighbors: the ethics of life in community under God.',
         sessions: [5, 6, 7, 8, 9, 10],
       },
     ],
@@ -340,7 +340,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       'The series follows the Ten Commandments in order, one per session',
       'Read Exodus 20 and Deuteronomy 5 before Session 1 to see the original context',
       'Ask both: what did this command mean in Israel, and what does it mean for Christians?',
-      'The first four and the last six commandments have a different focus — notice the shift',
+      'The first four and the last six commandments have a different focus. Notice the shift',
     ],
     relatedSeries: ['the-covenant', 'words-that-change-everything'],
     recommendedBooks: [],
@@ -372,8 +372,8 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
     ],
     themes: ['Biblical Greek', 'Biblical Hebrew', 'Translation', 'Word study', 'Meaning', 'Scripture'],
     whyStudy:
-      "Original language study doesn't require a seminary degree — it requires curiosity and the right tools. Each session in this series takes one key biblical word and shows you what it actually means, how it's been translated, and why that changes the way you read familiar passages.",
-    excerpt: "A word-by-word tour of key biblical terms — no seminary required, just curiosity.",
+      "Original language study takes curiosity and the right tools. A seminary degree is optional. Each session in this series takes one key biblical word and shows you what it actually means, how it's been translated, and why that changes the way you read familiar passages.",
+    excerpt: "A word-by-word tour of key biblical terms. No seminary required, just curiosity.",
     outcomes: [
       'Understand key biblical words with more precision',
       'See how translation choices shape what we think a passage means',
@@ -387,7 +387,7 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
       {
         title: 'Words That Shape Our Identity',
-        description: 'Terms that define who we are — as sinners, as the redeemed, as people in community.',
+        description: 'Terms that define who we are: as sinners, as the redeemed, as people in community.',
         sessions: [4, 5, 6],
       },
       {
@@ -402,10 +402,10 @@ export const TEACHING_SERIES: SeriesMetadata[] = [
       },
     ],
     howToUse: [
-      'Each session focuses on a single word — no prior knowledge required',
+      'Each session focuses on a single word. No prior knowledge required',
       'Use a free tool like Blue Letter Bible alongside the sessions if you want to dig further',
       'Take notes on how each word changes your reading of a familiar passage',
-      'Sessions are largely independent — start anywhere that interests you',
+      'Sessions are largely independent. Start anywhere that interests you',
     ],
     relatedSeries: ['the-covenant', 'hebrews'],
     recommendedBooks: [],

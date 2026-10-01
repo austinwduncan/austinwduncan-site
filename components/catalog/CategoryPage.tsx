@@ -42,7 +42,7 @@ export default async function CategoryPage({ category }: { category: Category })
 
       <div className="pb-16">
         {series.length > 0 && (
-          <Row title="Series" href="/library/series" seeAll="See all series">
+          <Row title="Series" href="/series" seeAll="See all series">
             {series.map((se, i) => {
               const inSeries = sermonsInSeries(pieces, se);
               return (

@@ -116,7 +116,7 @@ const DOORS: { href: string; label: string; note: string }[] = [
     note: 'The Scripture Atlas: where the teaching has gone, book by book.',
   },
   {
-    href: '/library/series',
+    href: '/series',
     label: 'Series',
     note: 'Every series, newest first.',
   },

@@ -16,15 +16,15 @@ type NavLink = {
   children?: { href: string; label: string }[]
 }
 
+/*
+  Four doors. A first time visitor wants to know who this is, hear him preach,
+  and see how he teaches through a book. Everything else (Word for Word,
+  Exegetica, Forum & Pulpit, the book Library, Browse) lives in the footer.
+*/
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home', exact: true },
-  { href: '/browse', label: 'Browse' },
   { href: '/sermons', label: 'Sermons' },
-  { href: '/teaching', label: 'In the Text' },
-  { href: '/word-for-word', label: 'Word for Word' },
-  { href: '/exegetica', label: 'Exegetica' },
-  { href: '/forum-and-pulpit', label: 'Forum & Pulpit' },
-  { href: '/library', label: 'Library', exact: true },
+  { href: '/series', label: 'Series' },
   { href: '/about', label: 'About' },
 ]
 
