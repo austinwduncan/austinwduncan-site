@@ -1,4 +1,6 @@
 import type { Sermon } from "@/lib/sermons";
+import FramedImage from "@/components/sermons/FramedImage";
+import { optimizedImg } from "@/lib/img";
 
 /*
   A piece's picture, or a typographic tile when it has none.
@@ -11,7 +13,7 @@ import type { Sermon } from "@/lib/sermons";
 const DISPLAY = "var(--font-bebas), var(--font-cmg), sans-serif";
 
 export function artFor(s: Pick<Sermon, "heroStillUrl" | "artworkUrl" | "seriesArtworkUrl">): string | undefined {
-  return s.artworkUrl ?? s.heroStillUrl ?? s.seriesArtworkUrl ?? undefined;
+  return s.heroStillUrl ?? s.artworkUrl ?? s.seriesArtworkUrl ?? undefined;
 }
 
 export function Poster({
@@ -20,11 +22,32 @@ export function Poster({
   size = "sm",
   lazy = true,
 }: {
-  piece: Pick<Sermon, "title" | "passage" | "heroStillUrl" | "artworkUrl" | "seriesArtworkUrl">;
+  piece: Pick<Sermon, "title" | "passage" | "heroStillUrl" | "artworkUrl" | "seriesArtworkUrl"> &
+    Partial<Pick<Sermon, "heroFocalX" | "heroFocalY" | "heroTargetX" | "heroTargetY" | "heroZoom">>;
   className?: string;
   size?: "sm" | "lg";
   lazy?: boolean;
 }) {
+  /*
+    The still chosen in the builder comes first, framed exactly as it was
+    edited there: focal point on the face, target position and zoom. Artwork
+    is the fallback and is shown whole.
+  */
+  if (piece.heroStillUrl) {
+    return (
+      <span className={`relative block aspect-video w-full overflow-hidden ${className}`} style={{ background: "#262D31" }}>
+        <FramedImage
+          src={optimizedImg(piece.heroStillUrl, size === "lg" ? 1200 : 640)}
+          focalX={piece.heroFocalX ?? undefined}
+          focalY={piece.heroFocalY ?? undefined}
+          targetX={piece.heroTargetX ?? undefined}
+          targetY={piece.heroTargetY ?? undefined}
+          zoom={piece.heroZoom ?? undefined}
+          className="absolute inset-0"
+        />
+      </span>
+    );
+  }
   const src = artFor(piece);
   if (src) {
     return (

@@ -64,6 +64,9 @@ export async function POST(req: Request) {
   if (res.error) return NextResponse.json({ error: res.error.message }, { status: 400 });
   await recordAudit("staff", `Saved series "${title}"`);
   revalidatePath("/staff/sermons");
+  // Lists, home and series pages show this piece too; refresh them all now
+  // so an edit in the builder appears everywhere without waiting on a timer.
+  revalidatePath("/", "layout");
   revalidatePath("/sermons");
   return NextResponse.json(res.data);
 }

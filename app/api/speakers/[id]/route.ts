@@ -53,5 +53,6 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext<"/api/speakers
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   await recordAudit("sermons", `Deleted speaker ${id}`);
   revalidatePath("/sermons");
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }

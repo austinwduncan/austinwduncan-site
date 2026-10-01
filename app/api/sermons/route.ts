@@ -128,6 +128,9 @@ export async function POST(req: Request) {
   await recordAudit("staff", `Saved sermon "${title}"`);
   revalidatePath(`/sermons/${slug}`);
   revalidatePath("/staff/sermons");
+  // Lists, home and series pages show this piece too; refresh them all now
+  // so an edit in the builder appears everywhere without waiting on a timer.
+  revalidatePath("/", "layout");
   return NextResponse.json(res.data);
 }
 
@@ -145,5 +148,8 @@ export async function DELETE(req: Request) {
   await recordAudit("staff", `Deleted sermon ${data?.slug ?? id}`);
   if (data?.slug) revalidatePath(`/sermons/${data.slug}`);
   revalidatePath("/staff/sermons");
+  // Lists, home and series pages show this piece too; refresh them all now
+  // so an edit in the builder appears everywhere without waiting on a timer.
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }

@@ -6,6 +6,7 @@ import { getPublishedSeries, type Series } from '@/lib/series'
 import { pathFor } from '@/lib/categories'
 import ScrollReveal from '@/components/scroll-reveal'
 import VideoBackground from '@/components/video-background'
+import FramedImage from '@/components/sermons/FramedImage'
 
 export const revalidate = 60
 
@@ -80,6 +81,7 @@ type Piece = {
   raw: string
   image?: string
   excerpt?: string
+  frame?: { fx?: number; fy?: number; tx?: number; ty?: number; zoom?: number }
 }
 
 /*
@@ -376,6 +378,10 @@ export default async function HomePage() {
     section, title: a.title, href: pathFor(a),
     date: a.date ? fmt(a.date) : '', raw: a.date ?? '',
     image: imageFor(a), excerpt: a.summary || a.description,
+    // a still chosen in the builder carries its framing with it
+    frame: a.heroStillUrl
+      ? { fx: a.heroFocalX, fy: a.heroFocalY, tx: a.heroTargetX, ty: a.heroTargetY, zoom: a.heroZoom }
+      : undefined,
   })
 
   const recentSermons = allSermons.slice(1, 4).map(a => toPiece(a, 'Sermon'))
@@ -798,7 +804,17 @@ export default async function HomePage() {
                 <ScrollReveal key={piece.href} delay={i * 80}>
                   <Link href={piece.href} className="group block">
                     <div className="relative overflow-hidden" style={{ aspectRatio: '16/9', background: DEEP }}>
-                      {piece.image ? (
+                      {piece.image && piece.frame ? (
+                        <FramedImage
+                          src={piece.image}
+                          focalX={piece.frame.fx}
+                          focalY={piece.frame.fy}
+                          targetX={piece.frame.tx}
+                          targetY={piece.frame.ty}
+                          zoom={piece.frame.zoom}
+                          className="absolute inset-0 grayscale transition-all duration-[900ms] ease-out group-hover:grayscale-0"
+                        />
+                      ) : piece.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={piece.image} alt="" loading="lazy"
                           className="h-full w-full object-cover grayscale transition-all duration-[900ms] ease-out group-hover:grayscale-0" />

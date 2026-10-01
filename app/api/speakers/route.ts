@@ -47,5 +47,6 @@ export async function POST(req: Request) {
   await recordAudit("sermons", `Added speaker ${name}`);
   revalidatePath("/sermons");
   revalidatePath(`/sermons/speakers/${slug}`);
+  revalidatePath("/", "layout");
   return NextResponse.json(data);
 }
