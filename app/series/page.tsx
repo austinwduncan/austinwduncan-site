@@ -3,9 +3,9 @@ import Link from "next/link";
 import { getPublishedSermons, type Sermon } from "@/lib/sermons";
 import { getPublishedSeries, type Series } from "@/lib/series";
 import { sermonsInSeries } from "@/lib/browse";
-import { CATEGORIES, pathFor, type Category } from "@/lib/categories";
+import { CATEGORIES, type Category } from "@/lib/categories";
 import { Poster } from "@/components/bright/Poster";
-import { PageHeader, PillLink, pageStyle, wrap, h2Style, INK, GOLD_INK, MIST, DISPLAY } from "@/components/bright/PageHeader";
+import { PageHeader, pageStyle, wrap, h2Style, INK, GOLD_INK, MIST, DISPLAY, T3 } from "@/components/bright/PageHeader";
 
 export const revalidate = 600;
 
@@ -22,14 +22,6 @@ async function load(): Promise<{ series: Series[]; pieces: Sermon[] }> {
     console.warn("[series] could not load", e);
     return { series: [], pieces: [] };
   }
-}
-
-function fmt(iso?: string): string {
-  if (!iso) return "";
-  const d = new Date(iso + "T12:00:00Z");
-  return Number.isNaN(d.getTime())
-    ? ""
-    : new Intl.DateTimeFormat("en-US", { timeZone: "UTC", month: "short", day: "numeric", year: "numeric" }).format(d);
 }
 
 /*
@@ -62,62 +54,55 @@ export default async function SeriesIndexPage() {
       return b.firstDate.localeCompare(a.firstDate);
     });
 
+  const kinds = KINDS.map((k) => ({ ...k, info: CATEGORIES[k.category], count: pieces.filter((p) => p.category === k.category).length })).filter(
+    (k) => k.count > 0,
+  );
+
   return (
     <div style={pageStyle}>
       <PageHeader title="Series" />
 
-      <div className={`${wrap} flex flex-wrap gap-3 py-8 lg:py-10`}>
-        <PillLink href="#teaching-series">Teaching series</PillLink>
-        {KINDS.map((k) => (
-          <PillLink key={k.id} href={`#${k.id}`} tone="outline">
-            {CATEGORIES[k.category].label}
-          </PillLink>
-        ))}
-      </div>
-
-      {/* ── Teaching series ────────────────────────────────────────────────── */}
+      {/* ── Teaching series: a grid, newest first ──────────────────────────── */}
       <section id="teaching-series" className="scroll-mt-20">
-        <div className={`${wrap} pb-6`}>
+        <div className={`${wrap} pb-8 pt-10 lg:pt-12`}>
           <h2 style={h2Style}>Teaching series</h2>
-          <p className="mt-4 max-w-[54ch] text-[1.08rem] leading-relaxed" style={{ color: "rgba(28,36,39,0.75)" }}>
+          <p className="mt-3 max-w-[54ch] text-[1.05rem] leading-relaxed" style={{ color: "rgba(28,36,39,0.75)" }}>
             Each one works through a book of the Bible or a single theme, one session at a time, in writing.
           </p>
         </div>
-        <ul className={`${wrap} pb-16 lg:pb-24`}>
+        <ul className={`${wrap} grid gap-x-8 gap-y-12 pb-16 sm:grid-cols-2 lg:grid-cols-3 lg:pb-24`}>
           {teaching.map(({ se, count, open }) => (
-            <li key={se.slug} style={{ borderTop: `3px solid ${INK}` }}>
+            <li key={se.slug}>
               <Link
                 href={`/series/${se.slug}`}
-                className="group grid gap-6 py-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-14 lg:py-10"
+                className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
                 style={{ outlineColor: INK }}
               >
-                <span className="block overflow-hidden" style={{ background: MIST }}>
+                <span className="relative block overflow-hidden" style={{ background: MIST }}>
                   <Poster
                     piece={{ title: se.title, passage: "", artworkUrl: se.artworkUrl, heroStillUrl: undefined, seriesArtworkUrl: undefined }}
                     size="lg"
                     className="transition-transform duration-500 group-hover:scale-[1.02]"
                   />
-                </span>
-                <span className="block">
                   {open && (
-                    <span className="mb-3 inline-block rounded-full px-3 py-1 text-[0.78rem] font-semibold" style={{ background: MIST, color: GOLD_INK }}>
+                    <span className="absolute left-3 top-3 rounded-full px-3 py-1 text-[0.75rem] font-semibold" style={{ background: "#FFFFFF", color: GOLD_INK }}>
                       Still being written
                     </span>
                   )}
-                  <span
-                    className="block text-balance group-hover:underline group-hover:decoration-4 group-hover:underline-offset-8"
-                    style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(2.6rem, 5.6vw, 5.2rem)", lineHeight: 0.9, letterSpacing: "0.01em" }}
-                  >
-                    {se.title}
+                </span>
+                <span
+                  className="mt-4 block text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4"
+                  style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: T3, lineHeight: 1, letterSpacing: "0.01em" }}
+                >
+                  {se.title}
+                </span>
+                {se.subtitle && (
+                  <span className="mt-2 block text-[0.98rem] leading-snug" style={{ color: "rgba(28,36,39,0.72)" }}>
+                    {se.subtitle}
                   </span>
-                  {se.subtitle && (
-                    <span className="mt-4 block max-w-[46ch] text-[1.1rem] leading-snug" style={{ color: "rgba(28,36,39,0.75)" }}>
-                      {se.subtitle}
-                    </span>
-                  )}
-                  <span className="mt-5 block text-[0.9rem] font-semibold">
-                    {count > 0 ? `${count} sessions` : "First session on the way"}
-                  </span>
+                )}
+                <span className="mt-3 block text-[0.85rem] font-semibold" style={{ color: GOLD_INK }}>
+                  {count > 0 ? `${count} sessions` : "First session on the way"}
                 </span>
               </Link>
             </li>
@@ -125,40 +110,33 @@ export default async function SeriesIndexPage() {
         </ul>
       </section>
 
-      {/* ── Word for Word, Forum & Pulpit, Exegetica ───────────────────────── */}
-      {KINDS.map((k, i) => {
-        const info = CATEGORIES[k.category];
-        const list = pieces.filter((p) => p.category === k.category);
-        if (list.length === 0) return null;
-        return (
-          <section key={k.id} id={k.id} className="scroll-mt-20" style={{ background: i % 2 === 0 ? MIST : "#FFFFFF" }}>
-            <div className={`${wrap} grid gap-10 py-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-14 lg:py-24`}>
-              <div>
-                <h2 style={h2Style}>{info.label}</h2>
-                <p className="mt-4 max-w-[40ch] text-[1.08rem] leading-relaxed" style={{ color: "rgba(28,36,39,0.75)" }}>
-                  {info.blurb}
-                </p>
-                <div className="mt-8">
-                  <PillLink href={`/${info.path}`}>See all {list.length}</PillLink>
-                </div>
-              </div>
-              <ul style={{ borderTop: `3px solid ${INK}` }}>
-                {list.slice(0, 5).map((p) => (
-                  <li key={p.slug} style={{ borderBottom: "1px solid rgba(28,36,39,0.16)" }}>
-                    <Link
-                      href={pathFor(p)}
-                      className="group flex items-baseline justify-between gap-6 px-2 py-4 transition-colors duration-150 hover:bg-[#1C2427] hover:text-white focus-visible:bg-[#1C2427] focus-visible:text-white focus-visible:outline-none"
-                    >
-                      <span className="text-[1.1rem] font-semibold leading-snug tracking-[-0.015em] lg:text-[1.2rem]">{p.title}</span>
-                      <span className="hidden shrink-0 text-[0.85rem] tabular-nums opacity-60 sm:block">{fmt(p.date)}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        );
-      })}
+      {/* ── The other three kinds of writing ───────────────────────────────── */}
+      {kinds.length > 0 && (
+        <section style={{ background: MIST }}>
+          <div className={`${wrap} py-16 lg:py-20`}>
+            <h2 style={h2Style}>More to read</h2>
+            <ul className="mt-8 grid gap-6 lg:grid-cols-3">
+              {kinds.map((k) => (
+                <li key={k.id} id={k.id} className="scroll-mt-20">
+                  <Link
+                    href={`/${k.info.path}`}
+                    className="group flex h-full flex-col bg-white p-7 transition-colors duration-150 hover:bg-[#1C2427] hover:text-white focus-visible:bg-[#1C2427] focus-visible:text-white focus-visible:outline-none"
+                    style={{ borderTop: `3px solid ${INK}` }}
+                  >
+                    <span style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: T3, lineHeight: 1, letterSpacing: "0.01em" }}>
+                      {k.info.label}
+                    </span>
+                    <span className="mt-3 block flex-1 text-[0.98rem] leading-relaxed opacity-75">{k.info.blurb}</span>
+                    <span className="mt-6 block text-[0.85rem] font-semibold group-hover:text-[#9DB4C8] group-focus-visible:text-[#9DB4C8]" style={{ color: GOLD_INK }}>
+                      {k.count} {k.info.nouns}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

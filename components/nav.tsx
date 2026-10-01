@@ -81,9 +81,6 @@ export default function Nav() {
               alt="Austin W. Duncan"
               className="h-8 w-auto"
             />
-            <span className="text-white font-semibold text-[15px] tracking-tight">
-              Austin W. Duncan
-            </span>
           </Link>
 
           {/* Desktop nav */}

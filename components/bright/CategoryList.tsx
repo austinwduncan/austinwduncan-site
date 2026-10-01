@@ -67,7 +67,7 @@ export default async function CategoryList({
             <p className="text-[0.9rem] font-semibold" style={{ color: GOLD_INK }}>
               Most recent, {fmt(latest.date)}
             </p>
-            <h2 className="mt-3 text-balance" style={{ ...h2Style, fontSize: "clamp(2rem, 4vw, 3.6rem)" }}>
+            <h2 className="mt-3 text-balance" style={{ ...h2Style, fontSize: "clamp(1.9rem, 3vw, 2.6rem)" }}>
               <Link href={pathFor(latest)} className="hover:underline hover:decoration-4 hover:underline-offset-8">
                 {latest.title}
               </Link>
@@ -95,7 +95,7 @@ export default async function CategoryList({
                 <div key={year} className="grid gap-4 lg:grid-cols-[11rem_1fr] lg:gap-10">
                   <p
                     className="tabular-nums lg:sticky lg:top-24 lg:self-start"
-                    style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(2.48rem, 4.96vw, 4.46rem)", lineHeight: 0.9, letterSpacing: "0.01em" }}
+                    style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(1.9rem, 3vw, 2.6rem)", lineHeight: 0.9, letterSpacing: "0.01em" }}
                   >
                     {year}
                   </p>

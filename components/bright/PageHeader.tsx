@@ -16,9 +16,17 @@ export const DISPLAY = "var(--font-bebas), var(--font-cmg), sans-serif";
 export const pageStyle = { background: "#FFFFFF", color: INK, fontFamily: FACE } as const;
 export const wrap = "mx-auto max-w-[1500px] px-6 lg:px-10";
 
+/*
+  The type scale. Bebas is condensed, but it is still a heading, not a poster:
+  page titles top out near 4.25rem. Austin rejected anything larger as comical.
+*/
+export const T1 = "clamp(2.75rem, 5vw, 4.25rem)";
+export const T2 = "clamp(2rem, 3.2vw, 2.75rem)";
+export const T3 = "clamp(1.5rem, 2.1vw, 1.9rem)";
+
 export const h2Style = {
   fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
-  fontSize: "clamp(2.48rem, 5.7vw, 5.21rem)",
+  fontSize: "clamp(2rem, 3.2vw, 2.75rem)",
   lineHeight: 0.92,
   letterSpacing: "0.01em",
 } as const;
@@ -55,13 +63,13 @@ export function PageHeader({
           ))}
         </p>
       )}
-      <div className="flex items-end justify-between gap-8 pb-8" style={{ borderBottom: `7px solid ${INK}` }}>
+      <div className="flex items-end justify-between gap-8 pb-6" style={{ borderBottom: `4px solid ${INK}` }}>
         <h1
           className="text-balance"
           style={{
             fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
-            fontSize: size === "xl" ? "clamp(5.21rem, 21.08vw, 23.56rem)" : "clamp(3.22rem, 9.18vw, 9.18rem)",
-            lineHeight: size === "xl" ? 0.8 : 0.9,
+            fontSize: size === "xl" ? "clamp(2.75rem, 5vw, 4.25rem)" : "clamp(2.4rem, 4.4vw, 3.75rem)",
+            lineHeight: 0.95,
             letterSpacing: size === "xl" ? "-0.06em" : "-0.05em",
           }}
         >
@@ -70,11 +78,11 @@ export function PageHeader({
         {count != null && (
           <p
             className="hidden shrink-0 pb-1 text-right tabular-nums sm:block"
-            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: "clamp(1.36rem, 2.73vw, 2.73rem)", lineHeight: 1, letterSpacing: "0.01em" }}
+            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: "clamp(1.4rem, 2vw, 1.9rem)", lineHeight: 1, letterSpacing: "0.01em" }}
           >
             {count}
             {countLabel && (
-              <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: "rgba(28,36,39,0.55)" }}>
+              <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: "rgba(28,36,39,0.6)", fontFamily: FACE, textTransform: "none" }}>
                 {countLabel}
               </span>
             )}

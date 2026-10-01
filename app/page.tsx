@@ -106,10 +106,10 @@ function Heading({
   className?: string
 }) {
   const sizes = {
-    sm: 'clamp(1.6rem, 2.3vw, 2.05rem)',
-    md: 'clamp(2.75rem, 4.8vw, 4.1rem)',
-    lg: 'clamp(3.1rem, 5.8vw, 4.9rem)',
-    xl: 'clamp(3.1rem, 6.2vw, 5.4rem)',
+    sm: 'clamp(1.35rem, 1.8vw, 1.6rem)',
+    md: 'clamp(2rem, 3.2vw, 2.75rem)',
+    lg: 'clamp(2.25rem, 3.8vw, 3.25rem)',
+    xl: 'clamp(2.6rem, 4.6vw, 4rem)',
   }
   return (
     <Tag

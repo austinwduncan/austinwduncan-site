@@ -30,9 +30,9 @@ export function display(fontSize: string, color: string): CSSProperties {
   }
 }
 
-export const H1_SIZE = 'clamp(3.2rem, 6.5vw, 5.4rem)'
-export const H2_SIZE = 'clamp(2.6rem, 4.4vw, 3.6rem)'
-export const H3_SIZE = 'clamp(2rem, 3vw, 2.5rem)'
+export const H1_SIZE = 'clamp(2.6rem, 4.6vw, 4rem)'
+export const H2_SIZE = 'clamp(2rem, 3.2vw, 2.75rem)'
+export const H3_SIZE = 'clamp(1.5rem, 2.1vw, 1.9rem)'
 
 export function Eyebrow({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
   return (

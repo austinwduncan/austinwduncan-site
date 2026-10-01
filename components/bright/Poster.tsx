@@ -42,7 +42,7 @@ export function Poster({
         className="line-clamp-3 text-balance"
         style={{
           fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
-          fontSize: size === "lg" ? "clamp(1.98rem, 5.21vw, 4.71rem)" : "clamp(0.77rem, 1.3vw, 1.18rem)",
+          fontSize: size === "lg" ? "clamp(1.5rem, 3vw, 2.6rem)" : "clamp(0.7rem, 1.1vw, 1rem)",
           lineHeight: 0.95,
           letterSpacing: "0.01em",
         }}

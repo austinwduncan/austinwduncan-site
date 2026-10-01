@@ -62,20 +62,20 @@ export default async function LibraryBrowsePage({
           <span className="px-2" style={{ color: 'rgba(28,36,39,0.4)' }}>/</span>
           <span style={{ color: 'rgba(28,36,39,0.6)' }}>{initialCategory ?? 'All books'}</span>
         </p>
-        <div className="mt-5 flex items-end justify-between gap-8 pb-8" style={{ borderBottom: '7px solid #1C2427' }}>
+        <div className="mt-5 flex items-end justify-between gap-8 pb-8" style={{ borderBottom: '4px solid #1C2427' }}>
           <h1
             style={{
               fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase',
-              fontSize: 'clamp(3.72rem, 12.4vw, 12.4rem)',
+              fontSize: 'clamp(2.75rem, 5vw, 4.25rem)',
               lineHeight: 0.86,
               letterSpacing: '0.01em',
             }}
           >
             {initialCategory ?? 'All books'}
           </h1>
-          <p className="hidden shrink-0 pb-1 text-right tabular-nums sm:block" style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.36rem, 2.48vw, 2.48rem)', lineHeight: 1, letterSpacing: '0.01em' }}>
+          <p className="hidden shrink-0 pb-1 text-right tabular-nums sm:block" style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.4rem, 2vw, 1.9rem)', lineHeight: 1, letterSpacing: '0.01em' }}>
             {books.length}
-            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.55)' }}>
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.6)', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>
               books in {availableCategories.length} subjects
             </span>
           </p>

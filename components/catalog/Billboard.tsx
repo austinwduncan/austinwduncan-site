@@ -52,7 +52,7 @@ export default function Billboard({ piece, label }: { piece: Sermon; label?: str
           {(piece.seriesTitle ?? piece.series) && (
             <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-white/70">{piece.seriesTitle ?? piece.series}</p>
           )}
-          <h2 className={`${display} mt-1 max-w-3xl text-balance text-[clamp(2.75rem,7vw,6rem)] uppercase leading-[0.9] tracking-tight text-white`}>
+          <h2 className={`${display} mt-1 max-w-3xl text-balance text-[clamp(2.25rem,4.6vw,3.75rem)] uppercase leading-[0.95] tracking-tight text-white`}>
             {piece.title}
           </h2>
           {piece.summary && <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-white/80">{piece.summary}</p>}

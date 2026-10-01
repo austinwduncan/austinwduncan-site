@@ -32,34 +32,35 @@ const MISSION = [
   { n: '04', title: 'Encourage Believers',  body: 'Toward faithful and wholehearted action.',    ref: 'Eph. 6:7' },
 ]
 
+/* The four paragraphs below are Austin's own wording (2026-10-01). Do not edit them. */
 const DEGREES = [
   {
-    school: 'Texas Tech University',
-    degree: 'Bachelor of Fine Arts in Studio Art',
-    focus: 'Digital Printmaking and Photography',
+    school: "Texas Tech University",
+    degree: "Bachelor of Fine Arts in Studio Art",
+    focus: "Digital Printmaking and Photography",
     serves:
-      'Art school taught me to look at something for a long time before deciding what it is. Printmaking and photography both reward patience, and they taught me to make things with care and to keep revising after the first draft. I try to read a passage of Scripture with that same slow attention, and I prepare a sermon the way I learned to make a print, one careful pass after another.',
+      "Austin’s formation as a pastor began, in part, in the studio. Studying printmaking and photography cultivated habits of close observation, patience, and thoughtful revision. Those habits continue to shape how he approaches Scripture and prepares to preach, giving a passage time to challenge his first impressions and taking care with the words he uses to help others understand it.",
   },
   {
-    school: 'The Art Institute of Dallas',
-    degree: 'Master of Arts in Design and Media Management',
-    focus: '',
+    school: "The Art Institute of Dallas",
+    degree: "Master of Arts in Design and Media Management",
+    focus: "",
     serves:
-      'This program was about getting an idea across clearly and about leading the creative people who do that work. A church communicates all week long, from the pulpit, on a screen, in an email, and on a sign in the hallway, and people are helped when all of it is clear and says the same thing. It also taught me how to give direction and feedback to artists and volunteers in a way that honors their work.',
+      "Austin’s study of design and media management shaped the way he thinks about communication and the people behind it. In ministry, clarity is a way of caring for people: helping them understand, participate, and find their place. This training also informs how he leads creative teams and volunteers, offering direction while making room for the experience and imagination others bring.",
   },
   {
-    school: 'Villanova University',
-    degree: 'Advanced Master’s Certification',
-    focus: 'Strategic Project Management',
+    school: "Villanova University",
+    degree: "Advanced Master’s Certification",
+    focus: "Strategic Project Management",
     serves:
-      'Project management is the practical work of turning a good intention into a plan with owners, dates, and a budget. A church runs on time that people volunteer and money that people give, and I want to handle both with care. This training helps me set a clear goal with a staff or ministry team, keep track of what was promised, and see the work through to the end.',
+      "Austin’s training in strategic project management gives practical shape to his sense of stewardship. Ministry depends on people who offer their time, trust, and resources, and honoring those gifts takes preparation and consistent attention. He brings that conviction to planning with ministry teams, setting shared priorities, and helping people understand how their contributions fit into the work they are doing together.",
   },
   {
-    school: 'Bethel Theological Seminary',
-    degree: 'Master of Divinity',
-    focus: 'In progress · St. Paul, Minnesota',
+    school: "Bethel Theological Seminary",
+    degree: "Master of Divinity",
+    focus: "In progress · St. Paul, Minnesota",
     serves:
-      'This is my formal training for pastoral ministry: Scripture, theology, the biblical languages, and pastoral care. I am still in the program, and what I am learning goes into my preaching and teaching as I go. Studying under teachers and alongside other students keeps me accountable for how I handle the text, and it reminds me how much I still have to learn.',
+      "Austin’s ongoing studies at Bethel Seminary deepen the biblical and theological foundations of his ministry. Coursework in Scripture, theology, biblical languages, and pastoral care informs his preaching and teaching as he learns. Studying with faculty and fellow students also keeps him in the posture of a learner, open to correction, attentive to difficult questions, and accountable for the way he interprets and teaches Scripture.",
   },
 ]
 
@@ -147,8 +148,8 @@ export default function AboutPage() {
           >
             {MISSION.map((m) => (
               <div key={m.n} className="flex flex-col p-7 lg:p-8" style={{ background: WHITE }}>
-                <div style={display('2rem', SOFT_BLUE)}>{m.n}</div>
-                <h3 className="mt-5" style={display('1.9rem', INK)}>
+                <div style={display('1.5rem', SOFT_BLUE)}>{m.n}</div>
+                <h3 className="mt-5" style={display('1.5rem', INK)}>
                   {m.title}
                 </h3>
                 <p
@@ -174,14 +175,13 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
           <Eyebrow>Training</Eyebrow>
           <h2 className="mt-6 max-w-[760px]" style={display(H2_SIZE, INK)}>
-            What I studied, and why it matters in a church
+            What Austin studied, and why it matters in a church
           </h2>
           <p
             className="mt-6 mb-14 max-w-[640px] text-[1.05rem] leading-[1.8]"
             style={{ ...bodyStyle, color: PRIMARY }}
           >
-            I studied art, design, and project management, and I am now in seminary. Each one
-            shapes how I serve a church.
+            Art, design, project management, and now seminary. Each one shapes how he serves a church.
           </p>
 
           <div className="space-y-4">
@@ -193,7 +193,7 @@ export default function AboutPage() {
               >
                 <div>
                   <div className="flex items-baseline gap-4">
-                    <span style={display('2rem', SOFT_BLUE)}>{String(i + 1).padStart(2, '0')}</span>
+                    <span style={display('1.5rem', SOFT_BLUE)}>{String(i + 1).padStart(2, '0')}</span>
                     <p
                       className="text-[0.72rem] font-semibold tracking-[0.16em] uppercase"
                       style={{ ...bodyStyle, color: ACCENT }}
@@ -255,7 +255,7 @@ export default function AboutPage() {
                   >
                     {card.tag}
                   </div>
-                  <h3 style={display('clamp(2.4rem, 3.4vw, 3.1rem)', WHITE)}>{card.title}</h3>
+                  <h3 style={display('clamp(1.7rem, 2.4vw, 2.1rem)', WHITE)}>{card.title}</h3>
                   <p
                     className="mt-4 text-[0.95rem] leading-relaxed"
                     style={{ ...bodyStyle, color: 'rgba(255,255,255,0.78)' }}

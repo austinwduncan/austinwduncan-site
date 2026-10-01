@@ -32,8 +32,10 @@ Changed 2026-10-01 at Austin's request, to match the Crosswalk site. Every
 heading and big numeral is **Bebas Neue** (`--font-bebas`, exposed as
 `--font-display` and as `DISPLAY` in `components/bright/PageHeader.tsx`).
 Bebas is caps only with one weight: weight 400, letter spacing about 0.01em,
-line height about 0.9, and sized roughly 1.25x what Montserrat needed because
-it is narrow. Body, ledes, labels, pills and buttons are **Montserrat**
+line height about 0.95. Keep it modest: the scale lives in
+`components/bright/PageHeader.tsx` (T1 page title tops out near 4.25rem, T2
+section 2.75rem, T3 card 1.9rem). Austin rejected larger headings as "comically
+large". Never set poster sized type. Body, ledes, labels, pills and buttons are **Montserrat**
 (`--font-cmg`, "CMG Sans"). No serif anywhere.
 
 ### 2. No em dashes or en dashes. Anywhere.

@@ -68,10 +68,10 @@ export function AboutHero() {
             className="aw-name leading-none mb-5 whitespace-nowrap uppercase"
             style={{
               fontFamily: 'var(--font-bebas), var(--font-cmg), sans-serif',
-              fontSize: 'clamp(3.4rem, 8vw, 7rem)',
+              fontSize: 'clamp(2.6rem, 5vw, 4.25rem)',
               fontWeight: 400,
               letterSpacing: '0.01em',
-              lineHeight: 0.88,
+              lineHeight: 0.95,
               color: '#FFFFFF',
             }}
           >

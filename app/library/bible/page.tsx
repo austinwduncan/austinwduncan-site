@@ -35,7 +35,7 @@ export default async function BiblePage({ searchParams }: { searchParams: Promis
       <section className="px-6 pb-16 pt-28 lg:px-10 lg:pt-32">
         <Link href="/" className={`${kicker} transition-colors hover:text-white`}>&larr; The library</Link>
         <p className={`mt-6 ${kicker}`}>Browse the Bible</p>
-        <h1 className={`${display} mt-1 text-[clamp(2.5rem,7vw,5.5rem)] uppercase leading-none tracking-tight text-white`}>Scripture Atlas</h1>
+        <h1 className={`${display} mt-1 text-[clamp(2.25rem,4.6vw,3.75rem)] uppercase leading-none tracking-tight text-white`}>Scripture Atlas</h1>
         <p className="mt-3 max-w-xl text-white/60">
           {cov.length > 0 ? (
             <>Austin has taught in <span className="font-semibold text-white">{cov.length}</span> of 66 books. Pick one to see its coverage and pieces.</>

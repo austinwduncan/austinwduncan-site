@@ -33,7 +33,7 @@ export default async function CategoryPage({ category }: { category: Category })
     <div className="flex-1 bg-[#0a0e10]">
       <section className="px-6 pb-10 pt-28 lg:px-10 lg:pt-32">
         <p className={kicker}>The library</p>
-        <h1 className={`${display} mt-1 text-[clamp(2.5rem,7vw,5.5rem)] uppercase leading-none tracking-tight text-white`}>{c.label}</h1>
+        <h1 className={`${display} mt-1 text-[clamp(2.25rem,4.6vw,3.75rem)] uppercase leading-none tracking-tight text-white`}>{c.label}</h1>
         <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-white/65">{c.blurb}</p>
         <p className="mt-3 text-sm text-white/45">
           {n} {n === 1 ? c.noun : c.nouns}

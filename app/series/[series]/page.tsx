@@ -40,7 +40,7 @@ function SessionRow({ s, n }: { s: Sermon; n: number }) {
       >
         <span
           className="tabular-nums group-hover:text-[#7B9BB5] group-focus-visible:text-[#7B9BB5]"
-          style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "1.95rem", letterSpacing: "0.01em", color: GOLD_INK }}
+          style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "1.5rem", letterSpacing: "0.01em", color: GOLD_INK }}
         >
           {n}
         </span>
@@ -173,7 +173,7 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
           {parts.map((p) => (
             <div key={p.title} className="mt-12 grid gap-5 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-14">
               <div className="lg:sticky lg:top-24 lg:self-start">
-                <h3 className="text-balance" style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(1.74rem, 2.73vw, 2.48rem)", lineHeight: 1.05, letterSpacing: "0.01em" }}>
+                <h3 className="text-balance" style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(1.5rem, 2.1vw, 1.9rem)", lineHeight: 1.05, letterSpacing: "0.01em" }}>
                   {p.title}
                 </h3>
                 <p className="mt-3 max-w-[40ch] text-[0.98rem] leading-relaxed" style={{ color: "rgba(28,36,39,0.7)" }}>

@@ -131,7 +131,7 @@ export default function LibraryPage() {
             className="select-none"
             style={{
               fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase',
-              fontSize: 'clamp(5.7rem, 24.18vw, 28.52rem)',
+              fontSize: 'clamp(3rem, 6.5vw, 5.5rem)',
               lineHeight: 0.86,
               letterSpacing: '0.01em',
               color: INK,
@@ -141,22 +141,22 @@ export default function LibraryPage() {
           </h1>
           <p
             className="hidden shrink-0 pt-3 text-right tabular-nums sm:block"
-            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.36rem, 2.73vw, 2.73rem)', lineHeight: 1, letterSpacing: '0.01em' }}
+            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.4rem, 2vw, 1.9rem)', lineHeight: 1, letterSpacing: '0.01em' }}
           >
             {total}
-            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.55)' }}>
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.6)', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>
               books
             </span>
           </p>
         </div>
 
-        {/* covers stand on the rule; the word sits behind their tops */}
-        <div className="relative -mt-[3.2vw] lg:-mt-[2.4vw]">
+        {/* covers stand on the rule */}
+        <div className="relative mt-8 lg:mt-10">
           <div className="awd-shelf flex w-max items-end">
             <Shelf />
             <Shelf hidden />
           </div>
-          <div aria-hidden style={{ height: 7, background: INK }} />
+          <div aria-hidden style={{ height: 4, background: INK }} />
         </div>
 
         <div className="mx-auto grid max-w-[1500px] gap-8 px-6 py-12 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:px-10 lg:py-16">
@@ -186,7 +186,7 @@ export default function LibraryPage() {
       <section id="essential" className="scroll-mt-20" style={{ background: '#F4F4F5' }}>
         <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
           <div className="mb-12 grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-end">
-            <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2.98rem, 7.44vw, 6.82rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
+            <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2rem, 3.2vw, 2.75rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
               Start here
             </h2>
             <p className="max-w-[44ch] text-[1rem] leading-relaxed lg:justify-self-end" style={{ color: 'rgba(28,36,39,0.7)' }}>
@@ -200,7 +200,7 @@ export default function LibraryPage() {
       {/* ── The index ──────────────────────────────────────────────────────── */}
       <section>
         <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
-          <h2 className="mb-10" style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2.98rem, 7.44vw, 6.82rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
+          <h2 className="mb-10" style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2rem, 3.2vw, 2.75rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
             By subject
           </h2>
           <ul className="gap-x-12 sm:columns-2 lg:columns-3" style={{ borderTop: `3px solid ${INK}` }}>
@@ -224,7 +224,7 @@ export default function LibraryPage() {
       {/* ── Closing block ──────────────────────────────────────────────────── */}
       <section style={{ background: INK, color: '#FFFFFF' }}>
         <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-20 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:px-10 lg:py-28">
-          <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(3.22rem, 9.92vw, 9.92rem)', lineHeight: 0.86, letterSpacing: '0.01em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2.25rem, 4.2vw, 3.5rem)', lineHeight: 0.86, letterSpacing: '0.01em' }}>
             All {total},<br />searchable.
           </h2>
           <div className="lg:justify-self-end">

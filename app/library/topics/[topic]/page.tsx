@@ -31,7 +31,7 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
       <section className="px-6 pb-14 pt-28 lg:px-10 lg:pt-32">
         <Link href="/" className={`${kicker} transition-colors hover:text-white`}>&larr; The library</Link>
         <p className={`mt-6 ${kicker}`}>Topic</p>
-        <h1 className={`${display} mt-1 text-[clamp(2.25rem,6vw,4.5rem)] uppercase capitalize leading-none tracking-wide text-white`}>{label}</h1>
+        <h1 className={`${display} mt-1 text-[clamp(2.25rem,4.6vw,3.75rem)] uppercase capitalize leading-none tracking-wide text-white`}>{label}</h1>
         <p className="mt-2 text-sm text-white/55">{items.length} {items.length === 1 ? "piece" : "pieces"}</p>
         <div className="mt-10">
           <SermonGrid sermons={items.map(toCardPiece)} />
