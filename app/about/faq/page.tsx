@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { BODY_FONT, BackToAbout, H3_SIZE, INK, PRIMARY, RULE, SubpageHeader, WHITE, display } from '../ui'
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions — Austin W. Duncan',
+  title: 'Frequently Asked Questions',
   description: 'Common questions about Austin W. Duncan and his ministry.',
 }
 
@@ -45,94 +45,34 @@ const faqs: FAQ[] = [
 export default function FAQPage() {
   return (
     <>
-      <div style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-14">
-          <div
-            className="pb-10 border-b"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}
-          >
-            <div
-              className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] uppercase mb-3"
-              style={{ color: '#CDB079' }}
-            >
-              <span className="inline-block h-px w-[18px]" style={{ background: '#CDB079' }} />
-              About
-            </div>
-            <h1
-              className="uppercase"
-              style={{
-                fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                fontSize: 'clamp(2.2rem, 3.5vw, 3rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.02em',
-                lineHeight: 0.95,
-                color: '#FFFFFF',
-              }}
-            >
-              Frequently Asked Questions
-            </h1>
-          </div>
-        </div>
-      </div>
+      <SubpageHeader title="Frequently Asked Questions" />
 
-      <div
-        className="h-[14px] w-full"
-        style={{
-          backgroundColor: '#7A5C1E',
-          backgroundImage: `
-            repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
-            repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
-          `,
-        }}
-      />
-
-      <div style={{ background: '#FFFFFF' }}>
-        <div className="mx-auto max-w-[780px] px-6 lg:px-8 py-16">
+      <section style={{ background: WHITE }}>
+        <div className="mx-auto max-w-[780px] px-6 lg:px-8 py-20 lg:py-28">
           <div className="space-y-0">
             {faqs.map((faq, i) => (
               <div key={i}>
-                <div className="py-9">
-                  <h2
-                    className="mb-4 uppercase"
-                    style={{
-                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                      fontSize: '1.3rem',
-                      fontWeight: 700,
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1.15,
-                      color: '#1A1714',
-                    }}
-                  >
+                <div className="py-10 lg:py-12">
+                  <h2 className="mb-4" style={display(H3_SIZE, INK)}>
                     {faq.question}
                   </h2>
                   <p
-                    className="text-[0.95rem] leading-relaxed"
-                    style={{
-                      fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                      color: '#5A544C',
-                    }}
+                    className="text-[1rem] leading-[1.8]"
+                    style={{ fontFamily: BODY_FONT, color: PRIMARY }}
                   >
                     {faq.answer}
                   </p>
                 </div>
                 {i < faqs.length - 1 && (
-                  <div className="h-px w-full" style={{ background: '#E4E4E7' }} />
+                  <div className="h-px w-full" style={{ background: RULE }} />
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-14 pt-8 border-t" style={{ borderColor: '#E4E4E7' }}>
-            <Link
-              href="/about"
-              className="text-[0.8rem] transition-colors hover:text-[#7A5C1E]"
-              style={{ color: '#9A9189' }}
-            >
-              ← Back to About
-            </Link>
-          </div>
+          <BackToAbout />
         </div>
-      </div>
+      </section>
     </>
   )
 }

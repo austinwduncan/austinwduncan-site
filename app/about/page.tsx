@@ -2,10 +2,26 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AboutHero } from '@/components/about-hero'
 import { AboutBioHeadshot } from '@/components/about-bio-headshot'
+import {
+  ACCENT,
+  BODY_FONT,
+  Eyebrow,
+  H2_SIZE,
+  H3_SIZE,
+  INK,
+  LIGHT_GRAY,
+  PRIMARY,
+  PRIMARY_DEEP,
+  RULE,
+  SOFT_BLUE,
+  SOFT_BLUE_LIGHT,
+  WHITE,
+  display,
+} from './ui'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Pastor, teacher, and student of Holy Scripture — Austin W. Duncan.',
+  description: 'Pastor, teacher, and student of Holy Scripture.',
 }
 
 
@@ -17,50 +33,60 @@ const MISSION = [
 ]
 
 const DEGREES = [
-  { school: 'Texas Tech University',      degree: 'Bachelor of Fine Arts in Studio Art',          focus: 'Digital Printmaking & Photography' },
-  { school: 'The Art Institute of Dallas', degree: 'Master of Arts in Design & Media Management', focus: '' },
-  { school: 'Villanova University',        degree: 'Advanced Master’s Certification',         focus: 'Strategic Project Management' },
-  { school: 'Bethel Theological Seminary', degree: 'Master of Divinity',                          focus: 'In progress · St. Paul, Minnesota' },
+  {
+    school: 'Texas Tech University',
+    degree: 'Bachelor of Fine Arts in Studio Art',
+    focus: 'Digital Printmaking and Photography',
+    serves:
+      'Art school taught me to look at something for a long time before deciding what it is. Printmaking and photography both reward patience, and they taught me to make things with care and to keep revising after the first draft. I try to read a passage of Scripture with that same slow attention, and I prepare a sermon the way I learned to make a print, one careful pass after another.',
+  },
+  {
+    school: 'The Art Institute of Dallas',
+    degree: 'Master of Arts in Design and Media Management',
+    focus: '',
+    serves:
+      'This program was about getting an idea across clearly and about leading the creative people who do that work. A church communicates all week long, from the pulpit, on a screen, in an email, and on a sign in the hallway, and people are helped when all of it is clear and says the same thing. It also taught me how to give direction and feedback to artists and volunteers in a way that honors their work.',
+  },
+  {
+    school: 'Villanova University',
+    degree: 'Advanced Master’s Certification',
+    focus: 'Strategic Project Management',
+    serves:
+      'Project management is the practical work of turning a good intention into a plan with owners, dates, and a budget. A church runs on time that people volunteer and money that people give, and I want to handle both with care. This training helps me set a clear goal with a staff or ministry team, keep track of what was promised, and see the work through to the end.',
+  },
+  {
+    school: 'Bethel Theological Seminary',
+    degree: 'Master of Divinity',
+    focus: 'In progress · St. Paul, Minnesota',
+    serves:
+      'This is my formal training for pastoral ministry: Scripture, theology, the biblical languages, and pastoral care. I am still in the program, and what I am learning goes into my preaching and teaching as I go. Studying under teachers and alongside other students keeps me accountable for how I handle the text, and it reminds me how much I still have to learn.',
+  },
 ]
+
+const QUOTE =
+  'It’s my desire that while in service to others, my life reflects a total reliance on God, so that others may find hope in Him.'
+
+const bodyStyle = { fontFamily: BODY_FONT }
 
 export default function AboutPage() {
   return (
     <>
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+      {/* HERO */}
       <AboutHero />
 
-      {/* ── AMBER STRIP ───────────────────────────────────────────────────── */}
-      <div
-        className="h-[14px] w-full"
-        style={{
-          backgroundColor: '#7A5C1E',
-          backgroundImage: `
-            repeating-linear-gradient(60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px),
-            repeating-linear-gradient(-60deg, transparent, transparent 6px, rgba(255,255,255,0.07) 6px, rgba(255,255,255,0.07) 7px)
-          `,
-        }}
-      />
-
-      {/* ── BIO ───────────────────────────────────────────────────────────── */}
-      <section style={{ background: '#FFFFFF' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-28">
+      {/* BIO */}
+      <section style={{ background: WHITE }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
           <div className="grid lg:grid-cols-[1fr_300px] gap-14 lg:gap-20 items-start">
-
-            {/* Text */}
             <div>
-              <div className="flex items-center gap-3 mb-10">
-                <span className="h-px w-8" style={{ background: '#CDB079' }} />
-                <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
-                  Biography
-                </span>
-              </div>
+              <Eyebrow>Biography</Eyebrow>
 
               <div
-                className="space-y-6 text-[1rem] leading-[1.9]"
-                style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#1A1714' }}
+                className="mt-10 space-y-6 text-[1rem] leading-[1.9]"
+                style={{ ...bodyStyle, color: PRIMARY }}
               >
-                <p className="text-[1.1rem] leading-[1.85]" style={{ color: '#2A2420' }}>
-                  Austin is the Associate Pastor of Crosswalk Church in Brentwood, TN — a church
+                <p className="text-[1.15rem] leading-[1.8]" style={{ color: INK }}>
+                  Austin is the Associate Pastor of Crosswalk Church in Brentwood, TN, a church
                   dedicated to helping others find hope in Jesus Christ.
                 </p>
                 <p>
@@ -69,89 +95,72 @@ export default function AboutPage() {
                 </p>
                 <p>
                   With a heart firmly set on making a meaningful impact, Austin dedicates himself to
-                  multiple facets of outreach and ministry — reaching the lost, caring for those
-                  reached, equipping others for ministry, and encouraging believers to faithful action.
+                  multiple facets of outreach and ministry: reaching the lost, caring for those
+                  reached, equipping others for ministry, and encouraging believers to faithful
+                  action.
                 </p>
               </div>
 
               <blockquote
-                className="mt-10 pl-5 text-[0.97rem] leading-[1.85] italic"
-                style={{
-                  fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-                  color: '#5A544C',
-                  borderLeft: '2.5px solid #CDB079',
-                }}
+                className="mt-10 pl-5 text-[1rem] leading-[1.85] italic"
+                style={{ ...bodyStyle, color: PRIMARY, borderLeft: `2px solid ${SOFT_BLUE}` }}
               >
-                "It's my desire that while in service to others, my life reflects a total reliance
-                on God — so that others may find hope in Him."
+                &ldquo;{QUOTE}&rdquo;
               </blockquote>
             </div>
 
-            {/* Right column — interactive portrait */}
+            {/* Right column: portrait */}
             <AboutBioHeadshot />
           </div>
         </div>
       </section>
 
-      {/* ── QUOTE ─────────────────────────────────────────────────────────── */}
-      <section style={{ background: '#0E0C0A' }}>
-        <div className="mx-auto max-w-[900px] px-8 py-24 lg:py-32 text-center">
-          <div className="mb-8 inline-block h-px w-12" style={{ background: '#7A5C1E' }} />
+      {/* QUOTE */}
+      <section style={{ background: PRIMARY_DEEP }}>
+        <div className="mx-auto max-w-[900px] px-8 py-24 lg:py-36 text-center">
+          <div className="mb-10 inline-block h-px w-12" style={{ background: SOFT_BLUE }} />
           <blockquote
-            className="leading-[1.2]"
             style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
+              fontFamily: BODY_FONT,
+              fontSize: 'clamp(1.6rem, 3.2vw, 2.6rem)',
               fontWeight: 300,
-              fontStyle: 'italic',
-              color: '#FFFFFF',
+              lineHeight: 1.35,
+              color: WHITE,
             }}
           >
-            "It's my desire that while in service to others, my life reflects a total reliance on
-            God — so that others may find hope in Him."
+            &ldquo;{QUOTE}&rdquo;
           </blockquote>
         </div>
       </section>
 
-      {/* ── MISSION ───────────────────────────────────────────────────────── */}
-      <section style={{ background: '#FFFFFF' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8" style={{ background: '#CDB079' }} />
-            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
-              Mission
-            </span>
-          </div>
-          <h2
-            className="mb-12 uppercase"
-            style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
-              color: '#1A1714',
-            }}
-          >
+      {/* MISSION */}
+      <section style={{ background: WHITE }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
+          <Eyebrow>Mission</Eyebrow>
+          <h2 className="mt-6 mb-14" style={display(H2_SIZE, INK)}>
             Four Commitments
           </h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 border-l" style={{ borderColor: '#E4E4E7' }}>
+          <div
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden border"
+            style={{ background: RULE, borderColor: RULE }}
+          >
             {MISSION.map((m) => (
-              <div key={m.n} className="pl-6 pr-4 pb-8 pt-1 border-r" style={{ borderColor: '#E4E4E7' }}>
-                <div className="text-[0.6rem] font-medium tracking-[0.14em] uppercase mb-4" style={{ color: '#C9984A' }}>
-                  {m.n}
-                </div>
-                <div
-                  className="mb-2"
-                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
-                >
+              <div key={m.n} className="flex flex-col p-7 lg:p-8" style={{ background: WHITE }}>
+                <div style={display('2rem', SOFT_BLUE)}>{m.n}</div>
+                <h3 className="mt-5" style={display('1.9rem', INK)}>
                   {m.title}
-                </div>
-                <p className="text-[0.84rem] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}>
+                </h3>
+                <p
+                  className="mt-3 flex-1 text-[0.95rem] leading-relaxed"
+                  style={{ ...bodyStyle, color: PRIMARY }}
+                >
                   {m.body}
                 </p>
-                <p className="text-[0.68rem] italic" style={{ color: '#6E5A2E' }}>
+                <p
+                  className="mt-6 text-[0.72rem] font-semibold tracking-[0.14em] uppercase"
+                  style={{ ...bodyStyle, color: ACCENT }}
+                >
                   {m.ref}
                 </p>
               </div>
@@ -160,72 +169,61 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── EDUCATION ─────────────────────────────────────────────────────── */}
-      <section style={{ background: '#F4F4F5' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8" style={{ background: '#CDB079' }} />
-            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#6E5A2E' }}>
-              Education
-            </span>
-          </div>
-          <h2
-            className="mb-12 uppercase"
-            style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
-              color: '#1A1714',
-            }}
-          >
-            Academic Background
+      {/* EDUCATION */}
+      <section style={{ background: LIGHT_GRAY }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
+          <Eyebrow>Training</Eyebrow>
+          <h2 className="mt-6 max-w-[760px]" style={display(H2_SIZE, INK)}>
+            What I studied, and why it matters in a church
           </h2>
+          <p
+            className="mt-6 mb-14 max-w-[640px] text-[1.05rem] leading-[1.8]"
+            style={{ ...bodyStyle, color: PRIMARY }}
+          >
+            I studied art, design, and project management, and I am now in seminary. Each one
+            shapes how I serve a church.
+          </p>
 
-          <div className="grid sm:grid-cols-2 gap-px" style={{ background: '#D8D0C4' }}>
-            {DEGREES.map((d) => (
-              <div key={d.school} className="px-8 py-7" style={{ background: '#F4F4F5' }}>
-                <p className="text-[0.68rem] font-medium tracking-[0.1em] uppercase mb-2" style={{ color: '#9A9189' }}>
-                  {d.school}
+          <div className="space-y-4">
+            {DEGREES.map((d, i) => (
+              <article
+                key={d.school}
+                className="grid gap-6 border p-7 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:p-10"
+                style={{ background: WHITE, borderColor: RULE }}
+              >
+                <div>
+                  <div className="flex items-baseline gap-4">
+                    <span style={display('2rem', SOFT_BLUE)}>{String(i + 1).padStart(2, '0')}</span>
+                    <p
+                      className="text-[0.72rem] font-semibold tracking-[0.16em] uppercase"
+                      style={{ ...bodyStyle, color: ACCENT }}
+                    >
+                      {d.school}
+                    </p>
+                  </div>
+                  <h3 className="mt-4" style={display(H3_SIZE, INK)}>
+                    {d.degree}
+                  </h3>
+                  {d.focus && (
+                    <p className="mt-3 text-[0.9rem] leading-relaxed" style={{ ...bodyStyle, color: PRIMARY }}>
+                      {d.focus}
+                    </p>
+                  )}
+                </div>
+                <p className="text-[1rem] leading-[1.8]" style={{ ...bodyStyle, color: INK }}>
+                  {d.serves}
                 </p>
-                <p
-                  className="mb-1 uppercase"
-                  style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
-                >
-                  {d.degree}
-                </p>
-                {d.focus && (
-                  <p className="text-[0.82rem] italic" style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#7A6F65' }}>
-                    {d.focus}
-                  </p>
-                )}
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── BELIEFS + VALUES ──────────────────────────────────────────────── */}
-      <section style={{ background: '#141210' }}>
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-20 lg:py-24">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8" style={{ background: '#7A5C1E' }} />
-            <span className="text-[0.63rem] font-medium tracking-[0.18em] uppercase" style={{ color: '#7A5C1E' }}>
-              Doctrine &amp; Practice
-            </span>
-          </div>
-          <h2
-            className="mb-12 uppercase"
-            style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
-              color: '#FFFFFF',
-            }}
-          >
+      {/* BELIEFS + VALUES */}
+      <section style={{ background: PRIMARY_DEEP }}>
+        <div className="mx-auto max-w-[1100px] px-6 lg:px-8 py-24 lg:py-32">
+          <Eyebrow dark>Doctrine &amp; Practice</Eyebrow>
+          <h2 className="mt-6 mb-14 max-w-[760px]" style={display(H2_SIZE, WHITE)}>
             What Austin Believes &amp; How He Serves
           </h2>
 
@@ -234,42 +232,40 @@ export default function AboutPage() {
               {
                 href: '/about/beliefs',
                 tag: 'Statement of Faith',
-                title: "Austin's Beliefs",
+                title: 'Austin’s Beliefs',
                 desc: 'A full statement of faith across Scripture, God, Christ, the Spirit, salvation, the church, and last things.',
               },
               {
                 href: '/about/values',
                 tag: 'Ministry Values',
-                title: "Austin's Values",
+                title: 'Austin’s Values',
                 desc: 'Eight commitments that shape the way Austin approaches preaching, leadership, and pastoral care.',
               },
             ].map((card) => (
               <Link
                 key={card.href}
                 href={card.href}
-                className="group flex flex-col justify-between p-8 lg:p-10 border transition-colors duration-200 hover:border-[#CDB079]"
-                style={{ borderColor: 'rgba(255,255,255,0.07)', background: '#1A1714', minHeight: 200 }}
+                className="group flex flex-col justify-between p-8 lg:p-10 border transition-colors duration-300 hover:border-[#7B9BB5] hover:bg-[#3D484C]"
+                style={{ borderColor: 'rgba(255,255,255,0.14)', minHeight: 240 }}
               >
                 <div>
-                  <div className="text-[0.6rem] font-medium tracking-[0.18em] uppercase mb-5" style={{ color: '#7A5C1E' }}>
+                  <div
+                    className="text-[0.72rem] font-semibold tracking-[0.18em] uppercase mb-5"
+                    style={{ ...bodyStyle, color: SOFT_BLUE_LIGHT }}
+                  >
                     {card.tag}
                   </div>
-                  <h3
-                    
-                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: 'clamp(1.8rem, 2.5vw, 2.4rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 0.95, color: '#FFFFFF' }}
-                  >
-                    {card.title}
-                  </h3>
+                  <h3 style={display('clamp(2.4rem, 3.4vw, 3.1rem)', WHITE)}>{card.title}</h3>
                   <p
-                    className="mt-3 text-[0.87rem] leading-relaxed"
-                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: 'rgba(249,246,240,0.38)' }}
+                    className="mt-4 text-[0.95rem] leading-relaxed"
+                    style={{ ...bodyStyle, color: 'rgba(255,255,255,0.78)' }}
                   >
                     {card.desc}
                   </p>
                 </div>
                 <div
-                  className="mt-8 flex items-center gap-2 text-[0.75rem] tracking-[0.06em] transition-colors group-hover:text-[#C9984A]"
-                  style={{ color: '#7A5C1E' }}
+                  className="mt-8 flex items-center gap-2 text-[0.78rem] font-semibold tracking-[0.14em] uppercase"
+                  style={{ ...bodyStyle, color: SOFT_BLUE_LIGHT }}
                 >
                   Read
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -280,11 +276,11 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-10 text-center">
             <Link
               href="/about/faq"
-              className="text-[0.78rem] tracking-[0.06em] transition-colors hover:text-[#CDB079]"
-              style={{ color: 'rgba(255,255,255,0.22)' }}
+              className="text-[0.85rem] font-medium tracking-[0.04em] transition-colors hover:text-white"
+              style={{ ...bodyStyle, color: SOFT_BLUE_LIGHT }}
             >
               Frequently Asked Questions →
             </Link>

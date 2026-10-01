@@ -32,9 +32,9 @@ export default function GreekToolClient() {
             fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             background: '#fff',
             border: '1px solid #E4E4E7',
-            color: '#1A1714',
+            color: '#262D31',
           }}
-          onFocus={(e) => (e.target.style.borderColor = '#CDB079')}
+          onFocus={(e) => (e.target.style.borderColor = '#7B9BB5')}
           onBlur={(e) => (e.target.style.borderColor = '#E4E4E7')}
         />
         <div className="flex items-center gap-3 mt-2.5">
@@ -42,14 +42,14 @@ export default function GreekToolClient() {
             onClick={() => { if (input.trim()) setSubmitted(input.trim()) }}
             disabled={!input.trim()}
             className="px-5 py-2 text-[0.72rem] font-bold tracking-[0.1em] uppercase text-white transition-opacity disabled:opacity-40"
-            style={{ background: '#7A5C1E' }}
+            style={{ background: '#4F6B84' }}
           >
             Parse Text
           </button>
           <button
             onClick={() => { setInput(''); setSubmitted(PLACEHOLDER) }}
-            className="text-[0.72rem] font-medium tracking-[0.08em] uppercase transition-colors hover:text-[#6E5A2E]"
-            style={{ color: '#9A9189' }}
+            className="text-[0.72rem] font-medium tracking-[0.08em] uppercase transition-colors hover:text-[#4F6B84]"
+            style={{ color: '#8A949A' }}
           >
             Reset
           </button>
@@ -72,7 +72,7 @@ export default function GreekToolClient() {
           border: '1px solid #E4E4E7',
           fontFamily: 'var(--font-cmg), system-ui, sans-serif',
           fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-          color: '#1A1714',
+          color: '#262D31',
         }}
       >
         {segments.map((seg, i) =>

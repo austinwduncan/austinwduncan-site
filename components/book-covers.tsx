@@ -49,7 +49,7 @@ export default function BookCovers({ books }: { books: Book[] }) {
                 style={{
                   transform: 'translateX(-50%)',
                   background: 'rgba(9,9,11,0.95)',
-                  border: '1px solid rgba(205,176,121,0.3)',
+                  border: '1px solid rgba(123,155,181,0.3)',
                 }}
               >
                 <p className="text-[12px] font-semibold text-white leading-snug line-clamp-2">{book.title}</p>

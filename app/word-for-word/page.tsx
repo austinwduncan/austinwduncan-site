@@ -1,8 +1,13 @@
-import CategoryPage, { categoryMetadata } from "@/components/catalog/CategoryPage";
+import type { Metadata } from "next";
+import CategoryList from "@/components/bright/CategoryList";
 
 export const revalidate = 600;
-export const metadata = categoryMetadata("episode");
+
+export const metadata: Metadata = {
+  title: "Word for Word",
+  description: "Short answers to real questions about the Bible, theology and the Christian life.",
+};
 
 export default function Page() {
-  return <CategoryPage category="episode" />;
+  return <CategoryList category="episode" title="Word for Word" countLabel="questions answered" />;
 }

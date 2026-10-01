@@ -26,80 +26,69 @@ If a change makes the page feel like a magazine or a blog, it is wrong.
 
 ## Hard rules
 
-These were each learned the expensive way. Breaking them is a regression.
+### 1. Type: Bebas Neue for headings, Montserrat for everything else
 
-### 1. There is no serif anywhere
-
-Every word on this site is **CMG Sans**, which is Montserrat (see below), via
-`--font-cmg`. Headings, body copy, article prose, metadata, all of it. Source
-Serif is no longer loaded and Cormorant is gone. This is not a preference to be
-re-litigated.
-
-Reading text needs different settings from display text: weight 400, leading
-near 1.72, and **letter-spacing 0**. The negative tracking display sizes need
-makes a paragraph cramped.
-
-`app/page.tsx` routes every heading through a single `Heading` component and
-names the typeface in exactly one constant, so it cannot drift. Do the same in
-new work rather than hand-rolling headings.
-
-> **CMG Sans is Montserrat.** The church's licensed "CMG Sans" woff2 files are
-> Montserrat with a renamed name table (designer Julieta Ulanovsky, SIL Open
-> Font License), confirmed by reading the font's name records. We load real
-> Montserrat from Google Fonts to get the full variable weight axis instead of
-> four static cuts. Montserrat is wide and geometric: at display sizes it needs
-> `tracking-[-0.02em]`, leading near 0.95, and weight 700 uppercase.
+Changed 2026-10-01 at Austin's request, to match the Crosswalk site. Every
+heading and big numeral is **Bebas Neue** (`--font-bebas`, exposed as
+`--font-display` and as `DISPLAY` in `components/bright/PageHeader.tsx`).
+Bebas is caps only with one weight: weight 400, letter spacing about 0.01em,
+line height about 0.9, and sized roughly 1.25x what Montserrat needed because
+it is narrow. Body, ledes, labels, pills and buttons are **Montserrat**
+(`--font-cmg`, "CMG Sans"). No serif anywhere.
 
 ### 2. No em dashes or en dashes. Anywhere.
 
-Same rule as the Crosswalk site. Applies to all copy, comments, docs and
-commit messages. Rewrite the sentence instead.
-
-Currently clean: `app/page.tsx`, `app/browse/`, nav, footer, metadata.
-Still dirty: MDX article bodies (~9,000) and `data/teaching-series.ts` (33).
+Applies to all copy, comments, docs and commit messages. Rewrite the sentence.
+Also never write "it is not X, it is Y"; rewrite that too.
 
 ### 3. Branding is Austin's call, never a reason to stall
 
-He owns the logos, the names and the visual identity, and he edits them as he
-sees fit. Raise a concern once if there is one, then build what was asked. Do
-not hold work back waiting on a branding decision.
+Raise a concern once if there is one, then build what was asked.
 
 ### 4. Swapping an asset is not permission to restyle
 
-When asked to change a photo or video, change the `src` and the framing. Do
-not move the layout around it. This has been asked for explicitly.
+When asked to change a photo or video, change the `src` and the framing.
+
+### 5. Never use a raw YouTube livestream frame as a fallback picture
+
+It shows whatever was on screen (announcements, other people). Pieces without
+artwork get the typographic tile in `components/bright/Poster.tsx`.
+
+### 6. Never reword the mission statement
+
+`MISSION` in `app/page.tsx` is Austin's own sentence.
 
 ---
 
-## Palette
-
-Dark dominant, roughly 55 / 20 / 10 / 8 / 5 / 2.
+## Palette: the Crosswalk palette (adopted 2026-10-01)
 
 ```
---awd-black     #171918   soft black   ~55%   primary surface
---awd-graphite  #2C302F   graphite     ~20%
---awd-bone      #FFFFFF   white        ~10%   light bands, reading
---awd-gold      #CDB079   antique gold  ~8%   THE signature
---awd-accent-2            secondary     ~5%   steel #748790 or sage #7F8A78
---awd-stone     #AAA79E   stone         ~2%   metadata
+ink            #1C2427   darkest ground, text on white
+primary        #3D484C   muted teal gray
+primary deep   #262D31   dark sections
+secondary      #7B9BB5   soft blue: large type, rules, fills, buttons
+secondary soft #9DB4C8   text and accents on dark
+accent         #4F6B84   small text and links on white (AA)
+white          #FFFFFF   light bands (never cream)
+mist           #F4F4F5   alternating light band
 ```
 
-**Gold is never a large field.** It is type, rules, brackets, and one button.
+The old `--awd-*` and `--cw-*` variable names still exist and now carry these
+values. There is no gold, no cream, no brown anywhere. `#7B9BB5` fails AA for
+small text on white: use `#4F6B84` there.
 
-### Measured contrast, non-negotiable
+---
 
-On `#171918`: gold 8.48, bone 14.72, stone 7.34, sage 4.89, steel 4.72. All
-clear AA.
+## Audience right now
 
-| Surface | Rule |
-| :-- | :-- |
-| White | gold is **1.73** and stone **2.00**. Neither is ever text here. Use `#6E5A2E` (5.53) for the accent clause, graphite (11.13) for body. |
-| Graphite | the secondary accent falls to ~3.6. Large text or non-text only. |
-
-**Open decision:** secondary accent is still steel vs sage.
-`components/accent-toggle.tsx` is a temporary chip that flips `data-accent` on
-`<html>`. Once chosen, hard-code `--awd-accent-2` in `globals.css` and delete
-the toggle.
+Austin is interviewing for a senior pastor position. Judge every public page
+by what a search committee member sees first. The nav is four items (Home,
+Sermons, Series, About); everything else lives in the footer. Sermons, Word
+for Word, Forum & Pulpit and Exegetica share one bright list page
+(`components/bright/CategoryList.tsx`). `/series` groups Teaching series
+(newest first; a series with no "Ends on" date is labelled still being
+written), Word for Word, Forum & Pulpit and Exegetica. Each teaching series has
+a guide page fed by `data/teaching-series.ts`.
 
 ---
 

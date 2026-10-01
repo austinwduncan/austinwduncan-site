@@ -17,12 +17,12 @@ import Link from 'next/link'
   no em dashes or en dashes anywhere, comments included.
 */
 
-const BLACK = '#171918'
-const GRAPHITE = '#2C302F'
-const GOLD = '#CDB079'
+const BLACK = '#1C2427'
+const GRAPHITE = '#3D484C'
+const GOLD = '#7B9BB5'
 const BONE = '#FFFFFF'
 const STONE = '#AAA79E'
-const STEEL = '#748790'
+const STEEL = '#9DB4C8'
 
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 const SERIF = 'var(--font-cmg), system-ui, sans-serif'
@@ -80,7 +80,7 @@ function DoorLink({
     <Link
       href={href}
       className="group block rounded-[3px] border px-5 py-4 transition-colors"
-      style={{ borderColor: 'rgba(255,255,255,0.10)', background: 'rgba(44,48,47,0.35)' }}
+      style={{ borderColor: 'rgba(255,255,255,0.10)', background: 'rgba(61,72,76,0.35)' }}
     >
       <span
         className="block"
@@ -90,7 +90,7 @@ function DoorLink({
       </span>
       <span
         className="mt-1 block"
-        style={{ fontFamily: SERIF, fontSize: '0.9rem', lineHeight: 1.6, color: 'rgba(170,167,158,0.9)' }}
+        style={{ fontFamily: SERIF, fontSize: '0.9rem', lineHeight: 1.6, color: 'rgba(157,180,200,0.9)' }}
       >
         {note}
       </span>

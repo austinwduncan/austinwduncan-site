@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
-export const alt = 'Austin W. Duncan — Pastor, Teacher, Theologian'
+export const alt = 'Austin W. Duncan, pastor and Bible teacher'
 
 export default function OGImage() {
   return new ImageResponse(
@@ -13,11 +13,11 @@ export default function OGImage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#141210',
+          backgroundColor: '#262D31',
         }}
       >
         {/* Amber top bar */}
-        <div style={{ width: '100%', height: 8, backgroundColor: '#CDB079', flexShrink: 0 }} />
+        <div style={{ width: '100%', height: 8, backgroundColor: '#7B9BB5', flexShrink: 0 }} />
 
         {/* Center content */}
         <div
@@ -44,11 +44,11 @@ export default function OGImage() {
             Austin W. Duncan
           </div>
 
-          <div style={{ width: 72, height: 2, backgroundColor: '#CDB079', marginBottom: 32 }} />
+          <div style={{ width: 72, height: 2, backgroundColor: '#7B9BB5', marginBottom: 32 }} />
 
           <div
             style={{
-              color: 'rgba(205,176,121,0.85)',
+              color: 'rgba(123,155,181,0.85)',
               fontSize: 22,
               letterSpacing: '7px',
               textTransform: 'uppercase',

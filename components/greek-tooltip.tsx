@@ -62,8 +62,8 @@ export default function GreekWord({ children }: { children: string }) {
         onClick={handleClick}
         className="cursor-pointer border-b border-dotted transition-colors duration-150 not-italic"
         style={{
-          borderColor: open ? '#CDB079' : 'rgba(205,176,121,0.5)',
-          color: open ? '#6E5A2E' : 'inherit',
+          borderColor: open ? '#7B9BB5' : 'rgba(123,155,181,0.5)',
+          color: open ? '#4F6B84' : 'inherit',
         }}
       >
         {children}

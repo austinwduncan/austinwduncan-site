@@ -56,7 +56,7 @@ export default function HeroPathCard() {
                 className="flex-shrink-0 w-0.5 rounded-full mt-0.5 transition-all duration-200"
                 style={{
                   height: isActive ? 36 : 16,
-                  backgroundColor: isActive ? '#cdb079' : '#e4e4e7',
+                  backgroundColor: isActive ? '#7B9BB5' : '#e4e4e7',
                 }}
               />
               <div className="flex-1 min-w-0">
@@ -80,7 +80,7 @@ export default function HeroPathCard() {
               </div>
               <div
                 className="flex-shrink-0 flex items-center gap-1 text-[10px] font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-colors pt-0.5"
-                style={{ color: isActive ? '#cdb079' : '#ccc' }}
+                style={{ color: isActive ? '#7B9BB5' : '#ccc' }}
               >
                 {path.section} <ArrowRight size={9} />
               </div>

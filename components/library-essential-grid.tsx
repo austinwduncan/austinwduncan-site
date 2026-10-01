@@ -76,11 +76,11 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
           )}
           <h2
             className="mb-1"
-            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.4rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.15, color: '#1A1714' }}
+            style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '1.4rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.15, color: '#262D31' }}
           >
             {book.title}
           </h2>
-          <p className="text-[0.78rem] mb-4" style={{ color: '#7A6F65' }}>{book.author}</p>
+          <p className="text-[0.78rem] mb-4" style={{ color: '#6B757B' }}>{book.author}</p>
 
           {book.categories && book.categories.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-4">
@@ -88,7 +88,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
                 <span
                   key={cat}
                   className="px-2 py-0.5 text-[0.58rem] font-medium tracking-[0.08em] uppercase border"
-                  style={{ borderColor: '#E4E4E7', color: '#9A9189' }}
+                  style={{ borderColor: '#E4E4E7', color: '#8A949A' }}
                 >
                   {cat}
                 </span>
@@ -99,7 +99,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
           {book.shortRecommendation && (
             <p
               className="text-[0.88rem] leading-[1.75] mb-6 flex-1"
-              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#5A544C' }}
+              style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', color: '#4B555B' }}
             >
               {book.shortRecommendation}
             </p>
@@ -111,7 +111,7 @@ function Modal({ book, onClose }: { book: EssentialBook; onClose: () => void }) 
               target="_blank"
               rel="noreferrer sponsored"
               className="flex items-center justify-center gap-2 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-80"
-              style={{ background: '#7A5C1E', color: '#FFFFFF' }}
+              style={{ background: '#4F6B84', color: '#FFFFFF' }}
             >
               View on Amazon
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -151,12 +151,12 @@ export function LibraryEssentialGrid({ books }: { books: EssentialBook[] }) {
             <div
               className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
-                background: 'linear-gradient(to top, rgba(14,12,10,0.97) 0%, rgba(14,12,10,0.88) 45%, rgba(14,12,10,0.3) 100%)',
+                background: 'linear-gradient(to top, rgba(38,45,49,0.97) 0%, rgba(38,45,49,0.88) 45%, rgba(38,45,49,0.3) 100%)',
               }}
             >
               <div
                 className="text-[0.48rem] font-bold tracking-[0.18em] uppercase mb-1"
-                style={{ color: '#CDB079' }}
+                style={{ color: '#7B9BB5' }}
               >
                 {book.recommendationLevel ?? 'Essential'}
               </div>
@@ -168,7 +168,7 @@ export function LibraryEssentialGrid({ books }: { books: EssentialBook[] }) {
               </h3>
               <span
                 className="text-[0.55rem] font-medium tracking-[0.08em] uppercase mt-1.5"
-                style={{ color: '#CDB079' }}
+                style={{ color: '#7B9BB5' }}
               >
                 Click for details →
               </span>

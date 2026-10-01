@@ -58,7 +58,7 @@ const availableCategories = categoryOrder.filter((category) =>
 
 // Same art-deco diamond pattern used by the homepage hero
 const DECO_PATTERN =
-  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23cdb079' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%23cdb079' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%23cdb079'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%23cdb079'/%3E%3C/svg%3E"
+  "data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%237b9bb5' stroke-width='0.9'/%3E%3Cpath d='M30 13L47 30L30 47L13 30Z' fill='none' stroke='%237b9bb5' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='0' r='1.8' fill='%237b9bb5'/%3E%3Ccircle cx='60' cy='30' r='1.8' fill='%237b9bb5'/%3E%3Ccircle cx='30' cy='60' r='1.8' fill='%237b9bb5'/%3E%3Ccircle cx='0' cy='30' r='1.8' fill='%237b9bb5'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%237b9bb5'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%237b9bb5'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%237b9bb5'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%237b9bb5'/%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%237b9bb5'/%3E%3C/svg%3E"
 
 export default function ResourcesPage() {
   return (
@@ -78,7 +78,7 @@ export default function ResourcesPage() {
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at 20% 60%, rgba(205,176,121,0.07) 0%, transparent 60%)',
+            background: 'radial-gradient(ellipse at 20% 60%, rgba(123,155,181,0.07) 0%, transparent 60%)',
           }}
         />
 
@@ -86,7 +86,7 @@ export default function ResourcesPage() {
           <div>
             <span
               className="text-[10px] font-semibold uppercase tracking-[0.2em]"
-              style={{ color: '#cdb079' }}
+              style={{ color: '#7B9BB5' }}
             >
               Resources
             </span>
@@ -122,7 +122,7 @@ export default function ResourcesPage() {
       {/* ── Books grid ──────────────────────────────────────────────────── */}
       <section className="pb-16 pt-0">
         {/* Gold accent divider */}
-        <div className="h-[3px] w-full" style={{ backgroundColor: '#cdb079' }} />
+        <div className="h-[3px] w-full" style={{ backgroundColor: '#7B9BB5' }} />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <ResourcesBooks books={typedBooks} categories={availableCategories} />
         </div>

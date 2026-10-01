@@ -1,8 +1,6 @@
-import CategoryPage, { categoryMetadata } from "@/components/catalog/CategoryPage";
+import { redirect } from "next/navigation";
 
-export const revalidate = 600;
-export const metadata = categoryMetadata("teaching");
-
+// Teaching sessions are read through their series, so the list lives at /series.
 export default function Page() {
-  return <CategoryPage category="teaching" />;
+  redirect("/series");
 }

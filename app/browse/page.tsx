@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   read_articles key from the shared piece page, so the ticks are real.
 */
 
-const BLACK = '#171918'
+const BLACK = '#1C2427'
 
 function fmt(dateStr: string): string {
   const [y, m, d] = dateStr.split('-').map(Number)

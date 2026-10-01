@@ -371,7 +371,7 @@ export default function SermonHero({
           {seriesLabel && (
             <p className={`${display} mb-3 text-sm uppercase tracking-[0.28em] text-secondary-soft`}>{seriesLabel}</p>
           )}
-          <h1 className={`${display} text-balance text-[clamp(2.25rem,5.2vw,5.25rem)] uppercase leading-[0.92] tracking-tight text-white drop-shadow-[0_8px_36px_rgba(0,0,0,0.35)]`}>
+          <h1 className={`${display} text-balance text-[clamp(3rem,8vw,7.5rem)] uppercase leading-[0.86] tracking-tight text-white drop-shadow-[0_8px_36px_rgba(0,0,0,0.35)]`}>
             {title}
           </h1>
           {lede && (

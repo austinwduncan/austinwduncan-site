@@ -78,10 +78,11 @@ shelfBooks.forEach((b, i) => {
   }
 })
 
-const INK = '#171918'
-const GOLD = '#CDB079'
-const GOLD_INK = '#6E5A2E'
+const INK = '#1C2427'
+const GOLD = '#7B9BB5'
+const GOLD_INK = '#4F6B84'
 const FACE = 'var(--font-cmg), system-ui, sans-serif'
+const DISPLAY = 'var(--font-bebas), var(--font-cmg), sans-serif'
 
 function Shelf({ hidden = false }: { hidden?: boolean }) {
   return (
@@ -129,12 +130,10 @@ export default function LibraryPage() {
           <h1
             className="select-none"
             style={{
-              fontFamily: FACE,
-              fontWeight: 800,
-              fontSize: 'clamp(4.6rem, 19.5vw, 23rem)',
-              lineHeight: 0.78,
-              letterSpacing: '-0.06em',
-              marginLeft: '-0.055em',
+              fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase',
+              fontSize: 'clamp(5.7rem, 24.18vw, 28.52rem)',
+              lineHeight: 0.86,
+              letterSpacing: '0.01em',
               color: INK,
             }}
           >
@@ -142,10 +141,10 @@ export default function LibraryPage() {
           </h1>
           <p
             className="hidden shrink-0 pt-3 text-right tabular-nums sm:block"
-            style={{ fontWeight: 700, fontSize: 'clamp(1.1rem, 2.2vw, 2.2rem)', lineHeight: 1, letterSpacing: '-0.03em' }}
+            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.36rem, 2.73vw, 2.73rem)', lineHeight: 1, letterSpacing: '0.01em' }}
           >
             {total}
-            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(23,25,24,0.55)' }}>
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.55)' }}>
               books
             </span>
           </p>
@@ -174,7 +173,7 @@ export default function LibraryPage() {
             </Link>
             <a
               href="#essential"
-              className="rounded-full border-2 px-8 py-4 text-[0.85rem] font-bold transition-colors duration-200 hover:bg-[#171918] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="rounded-full border-2 px-8 py-4 text-[0.85rem] font-bold transition-colors duration-200 hover:bg-[#1C2427] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               style={{ borderColor: INK, outlineColor: INK }}
             >
               Start with the essentials
@@ -187,10 +186,10 @@ export default function LibraryPage() {
       <section id="essential" className="scroll-mt-20" style={{ background: '#F4F4F5' }}>
         <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
           <div className="mb-12 grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-end">
-            <h2 style={{ fontWeight: 800, fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.045em' }}>
+            <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2.98rem, 7.44vw, 6.82rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
               Start here
             </h2>
-            <p className="max-w-[44ch] text-[1rem] leading-relaxed lg:justify-self-end" style={{ color: 'rgba(23,25,24,0.7)' }}>
+            <p className="max-w-[44ch] text-[1rem] leading-relaxed lg:justify-self-end" style={{ color: 'rgba(28,36,39,0.7)' }}>
               The books I mark essential. Open any cover for why it is here and who it is for.
             </p>
           </div>
@@ -201,18 +200,18 @@ export default function LibraryPage() {
       {/* ── The index ──────────────────────────────────────────────────────── */}
       <section>
         <div className="mx-auto max-w-[1500px] px-6 py-20 lg:px-10 lg:py-28">
-          <h2 className="mb-10" style={{ fontWeight: 800, fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', lineHeight: 0.9, letterSpacing: '-0.045em' }}>
+          <h2 className="mb-10" style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(2.98rem, 7.44vw, 6.82rem)', lineHeight: 0.9, letterSpacing: '0.01em' }}>
             By subject
           </h2>
           <ul className="gap-x-12 sm:columns-2 lg:columns-3" style={{ borderTop: `3px solid ${INK}` }}>
             {allCategories.map((cat) => (
-              <li key={cat.name} className="break-inside-avoid" style={{ borderBottom: '1px solid rgba(23,25,24,0.16)' }}>
+              <li key={cat.name} className="break-inside-avoid" style={{ borderBottom: '1px solid rgba(28,36,39,0.16)' }}>
                 <Link
                   href={`/library/browse?category=${encodeURIComponent(cat.name)}`}
-                  className="group flex items-baseline justify-between gap-4 px-2 py-3 transition-colors duration-150 hover:bg-[#171918] hover:text-white focus-visible:bg-[#171918] focus-visible:text-white focus-visible:outline-none"
+                  className="group flex items-baseline justify-between gap-4 px-2 py-3 transition-colors duration-150 hover:bg-[#1C2427] hover:text-white focus-visible:bg-[#1C2427] focus-visible:text-white focus-visible:outline-none"
                 >
                   <span className="text-[1.15rem] font-semibold tracking-[-0.015em] lg:text-[1.3rem]">{cat.name}</span>
-                  <span className="text-[0.9rem] font-bold tabular-nums group-hover:text-[#CDB079] group-focus-visible:text-[#CDB079]" style={{ color: GOLD_INK }}>
+                  <span className="text-[0.9rem] font-bold tabular-nums group-hover:text-[#7B9BB5] group-focus-visible:text-[#7B9BB5]" style={{ color: GOLD_INK }}>
                     {cat.count}
                   </span>
                 </Link>
@@ -225,7 +224,7 @@ export default function LibraryPage() {
       {/* ── Closing block ──────────────────────────────────────────────────── */}
       <section style={{ background: INK, color: '#FFFFFF' }}>
         <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-20 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:px-10 lg:py-28">
-          <h2 style={{ fontWeight: 800, fontSize: 'clamp(2.6rem, 8vw, 8rem)', lineHeight: 0.86, letterSpacing: '-0.05em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase', fontSize: 'clamp(3.22rem, 9.92vw, 9.92rem)', lineHeight: 0.86, letterSpacing: '0.01em' }}>
             All {total},<br />searchable.
           </h2>
           <div className="lg:justify-self-end">

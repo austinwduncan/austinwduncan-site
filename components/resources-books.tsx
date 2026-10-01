@@ -29,7 +29,7 @@ function CoverPlaceholder({ title, author }: { title: string; author: string }) 
   return (
     <div
       className="flex h-full flex-col items-center justify-center gap-3 p-5 text-center"
-      style={{ backgroundColor: '#cdb079' }}
+      style={{ backgroundColor: '#7B9BB5' }}
     >
       {/* Small diamond ornament */}
       <svg width="22" height="22" viewBox="0 0 60 60" className="shrink-0 opacity-40">
@@ -84,7 +84,7 @@ function BookCard({ book }: { book: ResourceBook }) {
             </h3>
             <p className="line-clamp-1 text-[11px] text-zinc-500">{book.author}</p>
           </div>
-          <p className="shrink-0 text-[11px] font-semibold" style={{ color: '#cdb079' }}>
+          <p className="shrink-0 text-[11px] font-semibold" style={{ color: '#7B9BB5' }}>
             Amazon →
           </p>
         </div>
@@ -150,7 +150,7 @@ export default function ResourcesBooks({ books, categories }: Props) {
                       ? 'border-transparent text-white'
                       : 'border-zinc-200 bg-transparent text-zinc-600 hover:border-zinc-400 hover:text-zinc-900',
                   ].join(' ')}
-                  style={active ? { backgroundColor: '#cdb079', borderColor: '#cdb079' } : {}}
+                  style={active ? { backgroundColor: '#7B9BB5', borderColor: '#7B9BB5' } : {}}
                 >
                   {cat}
                 </button>
@@ -191,7 +191,7 @@ export default function ResourcesBooks({ books, categories }: Props) {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="mb-5 h-[2px] w-8" style={{ backgroundColor: '#cdb079' }} />
+          <div className="mb-5 h-[2px] w-8" style={{ backgroundColor: '#7B9BB5' }} />
           <p className="text-[15px] font-semibold text-zinc-900">No books found</p>
           <p className="mt-2 text-[13px] leading-relaxed text-zinc-400">
             Try adjusting your search or selecting a different category.
@@ -203,7 +203,7 @@ export default function ResourcesBooks({ books, categories }: Props) {
               setQuery('')
             }}
             className="mt-6 text-[12px] font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-60"
-            style={{ color: '#cdb079' }}
+            style={{ color: '#7B9BB5' }}
           >
             Clear filters
           </button>

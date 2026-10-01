@@ -69,7 +69,7 @@ export default function ChannelCard({
                 <span
                   aria-hidden
                   className="absolute inset-x-0 bottom-0 translate-y-2 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                  style={{ background: 'linear-gradient(0deg, rgba(23,25,24,0.96) 30%, transparent 100%)' }}
+                  style={{ background: 'linear-gradient(0deg, rgba(28,36,39,0.96) 30%, transparent 100%)' }}
                 >
                   {item.blurb && (
                     <span
@@ -81,7 +81,7 @@ export default function ChannelCard({
                   )}
                   <span
                     className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em]"
-                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', background: '#CDB079', color: '#171918' }}
+                    style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', background: '#7B9BB5', color: '#1C2427' }}
                   >
                     {read ? 'Read again' : 'Read'}
                     <ArrowRight size={11} />
@@ -94,7 +94,7 @@ export default function ChannelCard({
                     style={{
                       fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                       borderColor: 'color-mix(in srgb, var(--awd-accent-2) 55%, transparent)',
-                      background: 'rgba(23,25,24,0.55)',
+                      background: 'rgba(28,36,39,0.55)',
                       color: 'var(--awd-accent-2)',
                     }}
                   >
@@ -106,7 +106,7 @@ export default function ChannelCard({
                 {read && (
                   <span
                     className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-sm"
-                    style={{ background: 'rgba(23,25,24,0.7)', color: '#CDB079' }}
+                    style={{ background: 'rgba(28,36,39,0.7)', color: '#7B9BB5' }}
                     title="You have read this"
                   >
                     <Check size={13} strokeWidth={3} />

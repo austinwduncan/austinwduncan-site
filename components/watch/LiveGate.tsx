@@ -73,7 +73,7 @@ export default function LiveGate({ children }: { children: React.ReactNode }) {
             <span className="inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/15 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-red-300">
               <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" /> Live now
             </span>
-            <h1 className={`${display} mt-4 max-w-3xl text-balance text-[clamp(2.25rem,5vw,4.75rem)] uppercase leading-[0.94] tracking-tight text-white`}>
+            <h1 className={`${display} mt-4 max-w-3xl text-balance text-[clamp(2.75rem,7vw,6rem)] uppercase leading-[0.9] tracking-tight text-white`}>
               We&rsquo;re live
             </h1>
             <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-white/80">

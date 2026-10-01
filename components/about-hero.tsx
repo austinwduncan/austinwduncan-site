@@ -42,23 +42,23 @@ export function AboutHero() {
         />
       </div>
 
-      {/* Gradient overlay — heavy at bottom, lighter at top */}
+      {/* Gradient overlay: heavy at bottom, lighter at top */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to top, rgba(14,12,10,0.97) 0%, rgba(14,12,10,0.82) 30%, rgba(14,12,10,0.45) 60%, rgba(14,12,10,0.18) 100%)',
+            'linear-gradient(to top, rgba(38,45,49,0.97) 0%, rgba(38,45,49,0.82) 30%, rgba(38,45,49,0.45) 60%, rgba(38,45,49,0.18) 100%)',
         }}
       />
 
-      {/* Text — bottom-left */}
+      {/* Text, bottom left */}
       <div className="absolute bottom-0 left-0 right-0">
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pb-10 lg:pb-12">
           <div className="aw-eyebrow flex items-center gap-2.5 mb-5">
-            <span className="inline-block h-px w-5 shrink-0" style={{ background: '#CDB079' }} />
+            <span className="inline-block h-px w-5 shrink-0" style={{ background: '#7B9BB5' }} />
             <span
               className="text-[0.63rem] font-medium tracking-[0.2em] uppercase"
-              style={{ color: '#CDB079' }}
+              style={{ color: '#7B9BB5' }}
             >
               Associate Pastor&nbsp;&nbsp;·&nbsp;&nbsp;Crosswalk Church&nbsp;&nbsp;·&nbsp;&nbsp;Brentwood, TN
             </span>
@@ -67,25 +67,25 @@ export function AboutHero() {
           <h1
             className="aw-name leading-none mb-5 whitespace-nowrap uppercase"
             style={{
-              fontFamily: 'var(--font-cmg), system-ui, sans-serif',
-              fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 0.95,
+              fontFamily: 'var(--font-bebas), var(--font-cmg), sans-serif',
+              fontSize: 'clamp(3.4rem, 8vw, 7rem)',
+              fontWeight: 400,
+              letterSpacing: '0.01em',
+              lineHeight: 0.88,
               color: '#FFFFFF',
             }}
           >
-            Austin W<span style={{ color: '#C9984A' }}>.</span> Duncan
+            Austin W<span style={{ color: '#7B9BB5' }}>.</span> Duncan
           </h1>
 
-          <div className="aw-rule h-px w-12 mb-4" style={{ background: '#7A5C1E' }} />
+          <div className="aw-rule h-px w-12 mb-4" style={{ background: '#4F6B84' }} />
 
           <p
             className="aw-desc text-[1rem] leading-[1.8]"
             style={{
               fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontStyle: 'italic',
-              color: 'rgba(249,246,240,0.45)',
+              color: 'rgba(255,255,255,0.72)',
             }}
           >
             Pastor. Teacher. Student of Holy Scripture.

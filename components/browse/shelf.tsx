@@ -74,7 +74,7 @@ export default function Shelf({
             className={`absolute top-[3.2rem] z-30 hidden h-[5.5rem] w-10 items-center justify-center rounded-[3px] backdrop-blur-sm transition-opacity duration-200 lg:flex ${
               hidden ? 'pointer-events-none opacity-0' : 'opacity-0 group-hover/shelf:opacity-100'
             } ${dir === -1 ? 'left-0' : 'right-0'}`}
-            style={{ background: 'rgba(23,25,24,0.72)', color: '#FFFFFF' }}
+            style={{ background: 'rgba(28,36,39,0.72)', color: '#FFFFFF' }}
           >
             <Icon size={20} />
           </button>
@@ -101,7 +101,7 @@ export default function Shelf({
                   fontSize: '5.5rem',
                   fontWeight: 700,
                   color: 'transparent',
-                  WebkitTextStroke: '1.5px rgba(205,176,121,0.45)',
+                  WebkitTextStroke: '1.5px rgba(123,155,181,0.45)',
                 }}
               >
                 {i + 1}

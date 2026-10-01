@@ -42,6 +42,8 @@ const allUseCaseTags = [
   'Bible Study', 'Reference', 'Academic', 'Counseling', 'Evangelism',
 ].filter((tag) => books.some((b) => b.useCaseTags.includes(tag)))
 
+const DISPLAY = 'var(--font-bebas), var(--font-cmg), sans-serif'
+
 export default async function LibraryBrowsePage({
   searchParams,
 }: {
@@ -50,31 +52,30 @@ export default async function LibraryBrowsePage({
   const resolvedParams = await searchParams
   const initialCategory = resolvedParams?.category
   return (
-    <div style={{ background: '#FFFFFF', color: '#171918', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>
+    <div style={{ background: '#FFFFFF', color: '#1C2427', fontFamily: 'var(--font-cmg), system-ui, sans-serif' }}>
       {/* ── Header: the same voice as the Library landing ─────────────────── */}
       <div className="mx-auto max-w-[1500px] px-6 pt-10 lg:px-10 lg:pt-14">
         <p className="text-[0.9rem] font-semibold">
           <Link href="/library" className="underline decoration-2 underline-offset-4 hover:no-underline">
             Library
           </Link>
-          <span className="px-2" style={{ color: 'rgba(23,25,24,0.4)' }}>/</span>
-          <span style={{ color: 'rgba(23,25,24,0.6)' }}>{initialCategory ?? 'All books'}</span>
+          <span className="px-2" style={{ color: 'rgba(28,36,39,0.4)' }}>/</span>
+          <span style={{ color: 'rgba(28,36,39,0.6)' }}>{initialCategory ?? 'All books'}</span>
         </p>
-        <div className="mt-5 flex items-end justify-between gap-8 pb-8" style={{ borderBottom: '7px solid #171918' }}>
+        <div className="mt-5 flex items-end justify-between gap-8 pb-8" style={{ borderBottom: '7px solid #1C2427' }}>
           <h1
             style={{
-              fontWeight: 800,
-              fontSize: 'clamp(3rem, 10vw, 10rem)',
-              lineHeight: 0.82,
-              letterSpacing: '-0.055em',
-              marginLeft: '-0.05em',
+              fontFamily: DISPLAY, fontWeight: 400, textTransform: 'uppercase',
+              fontSize: 'clamp(3.72rem, 12.4vw, 12.4rem)',
+              lineHeight: 0.86,
+              letterSpacing: '0.01em',
             }}
           >
             {initialCategory ?? 'All books'}
           </h1>
-          <p className="hidden shrink-0 pb-1 text-right tabular-nums sm:block" style={{ fontWeight: 700, fontSize: 'clamp(1.1rem, 2vw, 2rem)', lineHeight: 1, letterSpacing: '-0.03em' }}>
+          <p className="hidden shrink-0 pb-1 text-right tabular-nums sm:block" style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'clamp(1.36rem, 2.48vw, 2.48rem)', lineHeight: 1, letterSpacing: '0.01em' }}>
             {books.length}
-            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(23,25,24,0.55)' }}>
+            <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: 'rgba(28,36,39,0.55)' }}>
               books in {availableCategories.length} subjects
             </span>
           </p>

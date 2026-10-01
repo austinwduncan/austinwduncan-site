@@ -71,7 +71,7 @@ export default function Footer() {
           <p className="text-xs text-zinc-600">
             &copy; {new Date().getFullYear()} Austin W. Duncan. All rights reserved.
           </p>
-          <div className="w-6 h-px" style={{ backgroundColor: '#cdb079', opacity: 0.5 }} />
+          <div className="w-6 h-px" style={{ backgroundColor: '#7B9BB5', opacity: 0.5 }} />
         </div>
       </div>
     </footer>

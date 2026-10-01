@@ -27,7 +27,7 @@ function CategoryLabel({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="text-[11px] font-semibold tracking-[0.14em] uppercase"
-      style={{ color: '#cdb079' }}
+      style={{ color: '#7B9BB5' }}
     >
       {children}
     </span>
@@ -59,7 +59,7 @@ export default function HeroSection({ featured, picks }: Props) {
             <div
               className="absolute inset-0"
               style={{
-                background: 'radial-gradient(ellipse at 28% 55%, rgba(205,176,121,0.07) 0%, transparent 60%)',
+                background: 'radial-gradient(ellipse at 28% 55%, rgba(123,155,181,0.07) 0%, transparent 60%)',
               }}
             />
           </div>
@@ -87,7 +87,7 @@ export default function HeroSection({ featured, picks }: Props) {
               <Link
                 href={featured.href}
                 className="inline-flex items-center gap-2 text-[14px] font-medium tracking-wide hover:opacity-75 transition-opacity"
-                style={{ color: '#cdb079' }}
+                style={{ color: '#7B9BB5' }}
               >
                 Listen Now <ArrowRight size={13} />
               </Link>
@@ -99,7 +99,7 @@ export default function HeroSection({ featured, picks }: Props) {
         {/* Secondary picks */}
         <div
           className="bg-white border-t-4 lg:border-t-0 lg:border-l border-zinc-200 px-8 py-10 flex flex-col"
-          style={{ borderTopColor: '#cdb079' }}
+          style={{ borderTopColor: '#7B9BB5' }}
         >
           <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-zinc-400 mb-7">
             Also —

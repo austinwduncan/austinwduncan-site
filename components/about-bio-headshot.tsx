@@ -52,7 +52,7 @@ export function AboutBioHeadshot() {
       >
         <p
           className="text-[0.63rem] font-medium tracking-[0.12em] uppercase mb-1"
-          style={{ color: '#9A9189' }}
+          style={{ color: '#8A949A' }}
         >
           Currently serving at
         </p>
@@ -60,12 +60,12 @@ export function AboutBioHeadshot() {
           style={{
             fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: '1.25rem',
-            color: '#1A1714',
+            color: '#262D31',
           }}
         >
           Crosswalk Church
         </p>
-        <p className="text-[0.82rem] mt-0.5" style={{ color: '#5A544C' }}>
+        <p className="text-[0.82rem] mt-0.5" style={{ color: '#4B555B' }}>
           Brentwood, Tennessee
         </p>
       </div>
@@ -77,7 +77,7 @@ export function AboutBioHeadshot() {
         }
         .aw-portrait:hover {
           transform: rotate(0deg) scale(1.025);
-          box-shadow: 0 0 0 2.5px #CDB079, 0 12px 40px rgba(0,0,0,0.12);
+          box-shadow: 0 0 0 2.5px #7B9BB5, 0 12px 40px rgba(0,0,0,0.12);
         }
         .aw-portrait-img {
           filter: sepia(0.38) brightness(0.97);

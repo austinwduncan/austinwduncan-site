@@ -102,7 +102,7 @@ export default function AnimatedHero({ slides }: { slides: HeroSlide[] }) {
       {/* Gold ambient glow */}
       <div
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse at 18% 82%, rgba(205,176,121,0.07) 0%, transparent 55%)' }}
+        style={{ background: 'radial-gradient(ellipse at 18% 82%, rgba(123,155,181,0.07) 0%, transparent 55%)' }}
       />
 
       {/* Slide content */}
@@ -117,10 +117,10 @@ export default function AnimatedHero({ slides }: { slides: HeroSlide[] }) {
         >
           {/* Section badge */}
           <div className="flex items-center gap-3 mb-5">
-            <div className="h-px w-10 flex-shrink-0" style={{ backgroundColor: '#cdb079' }} />
+            <div className="h-px w-10 flex-shrink-0" style={{ backgroundColor: '#7B9BB5' }} />
             <span
               className="text-[11px] font-bold tracking-[0.26em] uppercase"
-              style={{ color: '#cdb079' }}
+              style={{ color: '#7B9BB5' }}
             >
               {slide.section}
             </span>
@@ -143,7 +143,7 @@ export default function AnimatedHero({ slides }: { slides: HeroSlide[] }) {
             <Link
               href={slide.href}
               className="inline-flex items-center gap-2 text-[12px] font-bold tracking-[0.14em] uppercase transition-opacity hover:opacity-70"
-              style={{ color: '#cdb079' }}
+              style={{ color: '#7B9BB5' }}
             >
               {slide.cta} <ArrowRight size={12} />
             </Link>
@@ -172,13 +172,13 @@ export default function AnimatedHero({ slides }: { slides: HeroSlide[] }) {
                     className="absolute inset-y-0 left-0"
                     style={{
                       width: `${progress * 100}%`,
-                      backgroundColor: '#cdb079',
+                      backgroundColor: '#7B9BB5',
                       transition: 'width 0.1s linear',
                     }}
                   />
                 )}
                 {i < current && (
-                  <div className="absolute inset-0" style={{ backgroundColor: 'rgba(205,176,121,0.45)' }} />
+                  <div className="absolute inset-0" style={{ backgroundColor: 'rgba(123,155,181,0.45)' }} />
                 )}
               </button>
             ))}

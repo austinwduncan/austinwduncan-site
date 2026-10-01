@@ -73,7 +73,7 @@ export default function HomeHero({
     <section
       ref={sectionRef}
       className="relative overflow-hidden"
-      style={{ background: '#141210' }}
+      style={{ background: '#262D31' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -95,7 +95,7 @@ export default function HomeHero({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse at 5% 90%, rgba(205,176,121,0.14) 0%, transparent 55%)',
+            'radial-gradient(ellipse at 5% 90%, rgba(123,155,181,0.14) 0%, transparent 55%)',
         }}
       />
 
@@ -108,8 +108,8 @@ export default function HomeHero({
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-16 lg:py-24">
 
         {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-8" style={{ color: '#CDB079' }}>
-          <span className="inline-block h-px w-8" style={{ background: '#CDB079' }} />
+        <div className="flex items-center gap-3 mb-8" style={{ color: '#7B9BB5' }}>
+          <span className="inline-block h-px w-8" style={{ background: '#7B9BB5' }} />
           <span className="text-[0.65rem] font-medium tracking-[0.22em] uppercase">Austin W. Duncan</span>
         </div>
 
@@ -145,14 +145,14 @@ export default function HomeHero({
           <Link
             href={primaryCtaHref}
             className="inline-flex items-center gap-2 px-6 py-3 text-[0.8rem] font-medium tracking-[0.04em] text-white transition-opacity hover:opacity-85"
-            style={{ background: '#7A5C1E' }}
+            style={{ background: '#4F6B84' }}
           >
             {primaryCtaLabel} <ArrowRight size={13} />
           </Link>
           {secondaryCtaHref && secondaryCtaLabel && (
             <Link
               href={secondaryCtaHref}
-              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#CDB079] hover:border-[#CDB079]"
+              className="text-[0.8rem] font-medium pb-px border-b transition-colors hover:text-[#7B9BB5] hover:border-[#7B9BB5]"
               style={{ color: 'rgba(255,255,255,0.38)', borderColor: 'rgba(255,255,255,0.14)' }}
             >
               {secondaryCtaLabel}
@@ -173,7 +173,7 @@ export default function HomeHero({
                   fontFamily: 'var(--font-cmg), system-ui, sans-serif',
                   fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
                   fontWeight: 700,
-                  color: '#CDB079',
+                  color: '#7B9BB5',
                 }}
               >
                 <CountUp end={value} />{suffix ?? '+'}

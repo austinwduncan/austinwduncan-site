@@ -11,7 +11,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-geist-sans);
-  --color-gold: #cdb079;
+  --color-gold: #7B9BB5;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -167,7 +167,7 @@
   float: left;
   margin-right: 0.08em;
   margin-top: 0.06em;
-  color: #7A5C1E;
+  color: #4F6B84;
 }
 .article-prose h2 {
   font-family: var(--font-cmg), system-ui, sans-serif;
@@ -191,7 +191,7 @@
   letter-spacing: -0.02em;
   margin-top: 2.5rem;
   margin-bottom: 0.9rem;
-  color: #7A5C1E;
+  color: #4F6B84;
 }
 .article-prose p {
   margin-top: 0;
@@ -205,7 +205,7 @@
     45deg, transparent, transparent 12px,
     rgba(205,176,121,0.04) 12px, rgba(205,176,121,0.04) 13px
   );
-  border-left: 3px solid #CDB079;
+  border-left: 3px solid #7B9BB5;
   border-radius: 0 4px 4px 0;
   margin-left: 0;
   margin-right: 0;
@@ -219,7 +219,7 @@
   margin-bottom: 0.375rem;
 }
 .article-prose a {
-  color: #6E5A2E;
+  color: #4F6B84;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -255,7 +255,7 @@
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #7A5C1E;
+  color: #4F6B84;
   margin-top: 1rem;
   padding-top: 0.75rem;
   border-top: 1px solid #C8BFA8;
@@ -302,7 +302,7 @@
   its presence as typography, rules, icons, borders and single focal elements
   against the near-black.
 
-  Measured contrast on #171918: gold 8.48, bone 14.72, stone 7.34,
+  Measured contrast on #1C2427: gold 8.48, bone 14.72, stone 7.34,
   steel 4.72. All clear AA.
 
   Two hard rules:
@@ -313,13 +313,15 @@
   --awd-steel below.
 */
 :root {
-  --awd-black: #171918;      /* soft black   */
-  --awd-graphite: #2c302f;   /* graphite     */
-  --awd-gold: #cdb079;       /* antique gold */
-  --awd-bone: #ffffff;       /* white        */
-  --awd-stone: #aaa79e;      /* stone        */
+  /* The Crosswalk palette, adopted 2026-10-01. The awd names are kept so
+     nothing that reads them has to change. */
+  --awd-black: #1c2427;      /* ink, the darkest ground          */
+  --awd-graphite: #3d484c;   /* primary, muted teal gray         */
+  --awd-gold: #7b9bb5;       /* secondary, soft blue (the accent) */
+  --awd-bone: #ffffff;       /* white                            */
+  --awd-stone: #9db4c8;      /* secondary soft, metadata on dark */
 
-  --awd-steel: #748790;      /* muted steel blue */
+  --awd-steel: #9db4c8;
   --awd-accent-2: var(--awd-steel);
 }
 
@@ -348,13 +350,13 @@
    use Crosswalk's token names. Map them onto this site's palette here rather
    than rewriting a few thousand lines of class names. */
 :root {
-  --cw-primary: #2c302f;        /* graphite */
-  --cw-primary-deep: #171918;   /* soft black */
-  --cw-secondary: #cdb079;      /* antique gold */
-  --cw-secondary-soft: #e0cb9a; /* gold, lifted for dark surfaces */
-  --cw-accent: #6e5a2e;         /* gold that passes AA on light surfaces */
+  --cw-primary: #3d484c;        /* muted teal gray */
+  --cw-primary-deep: #262d31;   /* deeper shade for dark sections */
+  --cw-secondary: #7b9bb5;      /* soft blue: large type, rules, fills */
+  --cw-secondary-soft: #9db4c8; /* text and accents on dark */
+  --cw-accent: #4f6b84;         /* small text and links on light (AA) */
   --cw-white: #ffffff;
-  --cw-ink: #171918;
+  --cw-ink: #1c2427;
   --cw-header-h: 60px;
 }
 @theme inline {
@@ -364,7 +366,7 @@
   --color-primary-deep: var(--cw-primary-deep);
   --color-secondary-soft: var(--cw-secondary-soft);
   --color-ink: var(--cw-ink);
-  --font-display: var(--font-montserrat);
+  --font-display: var(--font-bebas);
   --font-body: var(--font-montserrat);
 }
 

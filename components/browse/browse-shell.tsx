@@ -26,7 +26,7 @@ import Shelf from '@/components/browse/shelf'
 
 const HEADING = 'var(--font-cmg), system-ui, sans-serif'
 const BONE = '#FFFFFF'
-const GOLD = '#CDB079'
+const GOLD = '#7B9BB5'
 const READ_KEY = 'read_articles'
 
 
@@ -150,7 +150,7 @@ export default function BrowseShell({
         <section
           key={billboard.href}
           className="relative -mt-[60px] overflow-hidden"
-          style={{ background: '#171918' }}
+          style={{ background: '#1C2427' }}
         >
           <div className="relative flex min-h-[58svh] items-end pt-32 lg:min-h-[66svh] lg:pt-36">
             {billboard.image && (
@@ -163,11 +163,11 @@ export default function BrowseShell({
               />
             )}
             <span aria-hidden className="absolute inset-0 hidden lg:block"
-              style={{ background: 'linear-gradient(90deg,#171918 0%,#171918 26%,rgba(23,25,24,.88) 46%,rgba(23,25,24,.3) 70%,transparent 92%)' }} />
+              style={{ background: 'linear-gradient(90deg,#1C2427 0%,#1C2427 26%,rgba(28,36,39,.88) 46%,rgba(28,36,39,.3) 70%,transparent 92%)' }} />
             <span aria-hidden className="absolute inset-0 hidden lg:block"
-              style={{ background: 'linear-gradient(0deg,#171918 0%,transparent 44%)' }} />
+              style={{ background: 'linear-gradient(0deg,#1C2427 0%,transparent 44%)' }} />
             <span aria-hidden className="absolute inset-0 lg:hidden"
-              style={{ background: 'linear-gradient(0deg,#171918 0%,#171918 20%,rgba(23,25,24,.78) 52%,rgba(23,25,24,.2) 84%,transparent 100%)' }} />
+              style={{ background: 'linear-gradient(0deg,#1C2427 0%,#1C2427 20%,rgba(28,36,39,.78) 52%,rgba(28,36,39,.2) 84%,transparent 100%)' }} />
 
             <div className="relative mx-auto w-full max-w-[1500px] px-6 pb-14 lg:px-10 lg:pb-20">
               <div className="max-w-xl">
@@ -197,7 +197,7 @@ export default function BrowseShell({
                   <Link
                     href={billboard.href}
                     className="group/cta inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.03]"
-                    style={{ fontFamily: HEADING, background: GOLD, color: '#171918' }}
+                    style={{ fontFamily: HEADING, background: GOLD, color: '#1C2427' }}
                   >
                     Read now
                     <ArrowRight size={14} className="transition-transform duration-200 group-hover/cta:translate-x-0.5" />
@@ -208,7 +208,7 @@ export default function BrowseShell({
                       style={{
                         fontFamily: HEADING,
                         borderColor: 'rgba(255,255,255,0.2)',
-                        background: 'rgba(23,25,24,0.4)',
+                        background: 'rgba(28,36,39,0.4)',
                         color: 'rgba(255,255,255,0.8)',
                       }}
                     >
@@ -246,7 +246,7 @@ export default function BrowseShell({
                       style={{
                         fontFamily: HEADING,
                         borderColor: on ? GOLD : 'rgba(255,255,255,0.14)',
-                        background: on ? 'rgba(205,176,121,0.1)' : 'transparent',
+                        background: on ? 'rgba(123,155,181,0.1)' : 'transparent',
                         color: on ? GOLD : 'rgba(255,255,255,0.6)',
                       }}
                     >

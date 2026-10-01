@@ -1,8 +1,13 @@
-import CategoryPage, { categoryMetadata } from "@/components/catalog/CategoryPage";
+import type { Metadata } from "next";
+import CategoryList from "@/components/bright/CategoryList";
 
 export const revalidate = 600;
-export const metadata = categoryMetadata("commentary");
+
+export const metadata: Metadata = {
+  title: "Forum & Pulpit",
+  description: "Cultural commentary and pastoral response to the moment, from Scripture.",
+};
 
 export default function Page() {
-  return <CategoryPage category="commentary" />;
+  return <CategoryList category="commentary" title="Forum & Pulpit" countLabel="pieces" />;
 }

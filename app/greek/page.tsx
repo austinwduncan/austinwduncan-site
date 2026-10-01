@@ -15,7 +15,7 @@ export default function GreekToolPage() {
         <div className="mb-10">
           <p
             className="text-[0.62rem] font-bold tracking-[0.22em] uppercase mb-3"
-            style={{ color: '#6E5A2E' }}
+            style={{ color: '#4F6B84' }}
           >
             Tool
           </p>
@@ -27,7 +27,7 @@ export default function GreekToolPage() {
               fontWeight: 700,
               letterSpacing: '-0.02em',
               lineHeight: 0.95,
-              color: '#1A1714',
+              color: '#262D31',
             }}
           >
             Greek Morphology
@@ -37,7 +37,7 @@ export default function GreekToolPage() {
             style={{
               fontFamily: 'var(--font-cmg), system-ui, sans-serif',
               fontSize: '0.95rem',
-              color: '#5A544C',
+              color: '#4B555B',
             }}
           >
             Paste any Greek NT text below. Click or hover any word to see its

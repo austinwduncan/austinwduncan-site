@@ -113,8 +113,8 @@ export default function GreekPopover({ word, entries, loading, onClose, anchorEl
         top: pos.top,
         left: pos.left,
         width: 320,
-        background: '#141210',
-        border: '1px solid rgba(205,176,121,0.28)',
+        background: '#262D31',
+        border: '1px solid rgba(123,155,181,0.28)',
         boxShadow: '0 16px 48px rgba(0,0,0,0.7)',
         zIndex: 9999,
       }}
@@ -257,10 +257,10 @@ function EntryPanel({
   if (compact) {
     return (
       <div className="px-4 py-2.5">
-        <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(205,176,121,0.6)', marginBottom: 3 }}>
+        <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(123,155,181,0.6)', marginBottom: 3 }}>
           {entry.parsing_human}
         </p>
-        <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', color: 'rgba(249,246,240,0.55)', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', color: 'rgba(255,255,255,0.55)', fontStyle: 'italic' }}>
           {entry.inflected_gloss}
         </p>
       </div>
@@ -277,10 +277,10 @@ function EntryPanel({
 
       {/* Gloss */}
       <div>
-        <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(205,176,121,0.6)', marginRight: 6 }}>
+        <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(123,155,181,0.6)', marginRight: 6 }}>
           Gloss:
         </span>
-        <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', color: 'rgba(249,246,240,0.6)' }}>
+        <span style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.82rem', color: 'rgba(255,255,255,0.6)' }}>
           {entry.gloss}
         </span>
       </div>
@@ -291,7 +291,7 @@ function EntryPanel({
           Here&rsquo;s what it means:
         </p>
         {aiLoading && !meaningText && (
-          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.85rem', color: 'rgba(249,246,240,0.25)', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.85rem', color: 'rgba(255,255,255,0.25)', fontStyle: 'italic' }}>
             &ldquo;{entry.inflected_gloss}&rdquo;
           </p>
         )}
@@ -314,12 +314,12 @@ function EntryPanel({
             Here&rsquo;s why the grammar makes it mean that:
           </p>
           {aiLoading && !whyText && (
-            <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.78rem', color: 'rgba(249,246,240,0.2)', fontStyle: 'italic', lineHeight: 1.6 }}>
+            <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.78rem', color: 'rgba(255,255,255,0.2)', fontStyle: 'italic', lineHeight: 1.6 }}>
               {significanceNote ?? 'Thinking…'}
             </p>
           )}
           {whyText && (
-            <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.88rem', color: 'rgba(249,246,240,0.75)', lineHeight: 1.65 }}>
+            <p style={{ fontFamily: 'var(--font-cmg), system-ui, sans-serif', fontSize: '0.88rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65 }}>
               {whyText}
             </p>
           )}
@@ -332,7 +332,7 @@ function EntryPanel({
           style={{
             fontFamily: 'var(--font-cmg), system-ui, sans-serif',
             fontSize: '0.72rem',
-            color: 'rgba(249,246,240,0.22)',
+            color: 'rgba(255,255,255,0.22)',
             lineHeight: 1.65,
             borderTop: '1px solid rgba(255,255,255,0.05)',
             paddingTop: 10,

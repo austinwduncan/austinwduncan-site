@@ -8,6 +8,8 @@ import type { Sermon } from "@/lib/sermons";
   else on stage), which is the wrong first impression. Real artwork or a still
   chosen in the builder shows; otherwise the title is set on black.
 */
+const DISPLAY = "var(--font-bebas), var(--font-cmg), sans-serif";
+
 export function artFor(s: Pick<Sermon, "heroStillUrl" | "artworkUrl" | "seriesArtworkUrl">): string | undefined {
   return s.artworkUrl ?? s.heroStillUrl ?? s.seriesArtworkUrl ?? undefined;
 }
@@ -34,25 +36,25 @@ export function Poster({
     <span
       aria-hidden
       className={`flex aspect-video w-full flex-col justify-end overflow-hidden ${size === "lg" ? "p-[6%]" : "p-[8%]"} ${className}`}
-      style={{ background: "#171918", color: "#FFFFFF", fontFamily: "var(--font-cmg), system-ui, sans-serif" }}
+      style={{ background: "#1C2427", color: "#FFFFFF", fontFamily: "var(--font-cmg), system-ui, sans-serif" }}
     >
       <span
         className="line-clamp-3 text-balance"
         style={{
-          fontWeight: 800,
-          fontSize: size === "lg" ? "clamp(1.6rem, 4.2vw, 3.8rem)" : "clamp(0.62rem, 1.05vw, 0.95rem)",
+          fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
+          fontSize: size === "lg" ? "clamp(1.98rem, 5.21vw, 4.71rem)" : "clamp(0.77rem, 1.3vw, 1.18rem)",
           lineHeight: 0.95,
-          letterSpacing: "-0.04em",
+          letterSpacing: "0.01em",
         }}
       >
         {piece.title}
       </span>
       {piece.passage && size === "lg" && (
-        <span className="mt-[4%] font-semibold" style={{ color: "#CDB079", fontSize: "clamp(0.8rem, 1.3vw, 1.2rem)" }}>
+        <span className="mt-[4%] font-semibold" style={{ color: "#7B9BB5", fontSize: "clamp(0.8rem, 1.3vw, 1.2rem)" }}>
           {piece.passage}
         </span>
       )}
-      <span className="mt-[5%] block h-[3px] w-[18%]" style={{ background: "#CDB079" }} />
+      <span className="mt-[5%] block h-[3px] w-[18%]" style={{ background: "#7B9BB5" }} />
     </span>
   );
 }

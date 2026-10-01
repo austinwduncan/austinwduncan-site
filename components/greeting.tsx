@@ -114,7 +114,7 @@ export default function Greeting() {
   return (
     <p
       className="text-sm font-light tracking-wide"
-      style={{ color: '#cdb079' }}
+      style={{ color: '#7B9BB5' }}
     >
       {text}
     </p>

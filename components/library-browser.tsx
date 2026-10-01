@@ -58,7 +58,7 @@ type Props = {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const GOLD = '#cdb079'
+const GOLD = '#7B9BB5'
 const REC_ORDER: Record<string, number> = {
   Essential: 0,
   'Highly Recommended': 1,
@@ -197,7 +197,7 @@ function BookCard({
       <button
         type="button"
         onClick={() => onClick(book)}
-        className="flex min-h-0 flex-1 flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cdb079]"
+        className="flex min-h-0 flex-1 flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7B9BB5]"
         aria-label={`View details for ${book.title}`}
       >
         {/* Cover */}

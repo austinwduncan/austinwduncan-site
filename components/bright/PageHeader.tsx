@@ -5,20 +5,22 @@ import Link from "next/link";
   Montserrat 800 word in sentence case, a count at the right, a thick black
   rule. Shared so the three sections cannot drift apart.
 */
-export const INK = "#171918";
-export const GOLD = "#CDB079";
-export const GOLD_INK = "#6E5A2E";
+export const INK = "#1C2427";
+export const GOLD = "#7B9BB5";
+export const GOLD_INK = "#4F6B84";
 export const MIST = "#F4F4F5";
 export const FACE = "var(--font-cmg), system-ui, sans-serif";
+/** Bebas Neue: every heading and numeral. Caps only, one weight. */
+export const DISPLAY = "var(--font-bebas), var(--font-cmg), sans-serif";
 
 export const pageStyle = { background: "#FFFFFF", color: INK, fontFamily: FACE } as const;
 export const wrap = "mx-auto max-w-[1500px] px-6 lg:px-10";
 
 export const h2Style = {
-  fontWeight: 800,
-  fontSize: "clamp(2rem, 4.6vw, 4.2rem)",
+  fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
+  fontSize: "clamp(2.48rem, 5.7vw, 5.21rem)",
   lineHeight: 0.92,
-  letterSpacing: "-0.045em",
+  letterSpacing: "0.01em",
 } as const;
 
 export function PageHeader({
@@ -41,13 +43,13 @@ export function PageHeader({
         <p className="mb-5 text-[0.9rem] font-semibold">
           {crumbs.map((c, i) => (
             <span key={i}>
-              {i > 0 && <span className="px-2" style={{ color: "rgba(23,25,24,0.4)" }}>/</span>}
+              {i > 0 && <span className="px-2" style={{ color: "rgba(28,36,39,0.4)" }}>/</span>}
               {c.href ? (
                 <Link href={c.href} className="underline decoration-2 underline-offset-4 hover:no-underline">
                   {c.label}
                 </Link>
               ) : (
-                <span style={{ color: "rgba(23,25,24,0.6)" }}>{c.label}</span>
+                <span style={{ color: "rgba(28,36,39,0.6)" }}>{c.label}</span>
               )}
             </span>
           ))}
@@ -57,11 +59,10 @@ export function PageHeader({
         <h1
           className="text-balance"
           style={{
-            fontWeight: 800,
-            fontSize: size === "xl" ? "clamp(4.2rem, 17vw, 19rem)" : "clamp(2.6rem, 7.4vw, 7.4rem)",
+            fontFamily: DISPLAY, fontWeight: 400, textTransform: "uppercase",
+            fontSize: size === "xl" ? "clamp(5.21rem, 21.08vw, 23.56rem)" : "clamp(3.22rem, 9.18vw, 9.18rem)",
             lineHeight: size === "xl" ? 0.8 : 0.9,
             letterSpacing: size === "xl" ? "-0.06em" : "-0.05em",
-            marginLeft: "-0.05em",
           }}
         >
           {title}
@@ -69,11 +70,11 @@ export function PageHeader({
         {count != null && (
           <p
             className="hidden shrink-0 pb-1 text-right tabular-nums sm:block"
-            style={{ fontWeight: 700, fontSize: "clamp(1.1rem, 2.2vw, 2.2rem)", lineHeight: 1, letterSpacing: "-0.03em" }}
+            style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: "clamp(1.36rem, 2.73vw, 2.73rem)", lineHeight: 1, letterSpacing: "0.01em" }}
           >
             {count}
             {countLabel && (
-              <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: "rgba(23,25,24,0.55)" }}>
+              <span className="mt-1 block text-[0.8rem] font-medium tracking-normal" style={{ color: "rgba(28,36,39,0.55)" }}>
                 {countLabel}
               </span>
             )}

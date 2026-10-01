@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Montserrat } from 'next/font/google'
+import { Bebas_Neue, Geist, Geist_Mono, Montserrat } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/nav'
@@ -26,6 +26,17 @@ const geistMono = Geist_Mono({
 const montserrat = Montserrat({
   variable: '--font-montserrat',
   subsets: ['latin'],
+  display: 'swap',
+})
+
+/*
+  Bebas Neue for every heading, matching the Crosswalk site. Body copy stays
+  Montserrat (CMG Sans). Bebas is caps only and has one weight.
+*/
+const bebas = Bebas_Neue({
+  variable: '--font-bebas',
+  subsets: ['latin'],
+  weight: '400',
   display: 'swap',
 })
 
@@ -87,7 +98,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${bebas.variable} h-full antialiased`}
     >
       <head>
         <script

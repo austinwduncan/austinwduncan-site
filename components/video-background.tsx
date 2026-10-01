@@ -97,7 +97,7 @@ export default function VideoBackground({
       <span
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(74% 48% at 50% 52%, rgba(23,25,24,${scrim}) 0%, rgba(23,25,24,${scrim * 0.85}) 38%, rgba(23,25,24,${scrim * 0.4}) 66%, transparent 88%)`,
+          background: `radial-gradient(74% 48% at 50% 52%, rgba(28,36,39,${scrim}) 0%, rgba(28,36,39,${scrim * 0.85}) 38%, rgba(28,36,39,${scrim * 0.4}) 66%, transparent 88%)`,
         }}
       />
       {/* Grain plate. Reads more with the lighter blur, so it sits a touch up. */}
@@ -110,7 +110,7 @@ export default function VideoBackground({
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(120% 95% at 50% 42%, transparent 45%, rgba(23,25,24,0.42) 80%, rgba(23,25,24,0.78) 100%)',
+            'radial-gradient(120% 95% at 50% 42%, transparent 45%, rgba(28,36,39,0.42) 80%, rgba(28,36,39,0.78) 100%)',
         }}
       />
       {/* Highlight roll-off: lifts the top the way print does. */}
