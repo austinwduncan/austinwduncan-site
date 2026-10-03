@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   turbopack: {},
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Every quality value used by lib/img.ts must be listed here, or the optimizer answers 400.
+    qualities: [75, 90],
     remotePatterns: [
       { protocol: 'https', hostname: 'i.ytimg.com' },
       { protocol: 'https', hostname: 'img.youtube.com' },

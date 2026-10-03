@@ -52,7 +52,7 @@ export function Poster({
   if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={optimizedImg(src, size === "lg" ? 1920 : 750, size === "lg" ? 88 : 75)} alt="" loading={lazy ? "lazy" : undefined} className={`aspect-video w-full object-cover ${className}`} style={{ background: "#E4E4E7" }} />
+      <img src={optimizedImg(src, size === "lg" ? 1920 : 750, size === "lg" ? 90 : 75)} alt="" loading={lazy ? "lazy" : undefined} className={`aspect-video w-full object-cover ${className}`} style={{ background: "#E4E4E7" }} />
     );
   }
   return (
