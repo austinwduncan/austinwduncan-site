@@ -37,7 +37,7 @@ export function Poster({
     return (
       <span className={`relative block aspect-video w-full overflow-hidden ${className}`} style={{ background: "#262D31" }}>
         <FramedImage
-          src={optimizedImg(piece.heroStillUrl, size === "lg" ? 1200 : 640)}
+          src={optimizedImg(piece.heroStillUrl, size === "lg" ? 1920 : 750, size === "lg" ? 90 : 75)}
           focalX={piece.heroFocalX ?? undefined}
           focalY={piece.heroFocalY ?? undefined}
           targetX={piece.heroTargetX ?? undefined}
@@ -52,7 +52,7 @@ export function Poster({
   if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={src} alt="" loading={lazy ? "lazy" : undefined} className={`aspect-video w-full object-cover ${className}`} style={{ background: "#E4E4E7" }} />
+      <img src={optimizedImg(src, size === "lg" ? 1920 : 750, size === "lg" ? 88 : 75)} alt="" loading={lazy ? "lazy" : undefined} className={`aspect-video w-full object-cover ${className}`} style={{ background: "#E4E4E7" }} />
     );
   }
   return (
